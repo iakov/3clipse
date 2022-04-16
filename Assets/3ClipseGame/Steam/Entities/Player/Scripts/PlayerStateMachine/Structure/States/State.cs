@@ -6,8 +6,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         
         protected readonly PlayerStateMachine Context;
         protected readonly StateFactory Factory;
-        
-        public State(PlayerStateMachine context, StateFactory factory)
+
+        protected State(PlayerStateMachine context, StateFactory factory)
         {
             Context = context;
             Factory = factory;
@@ -16,8 +16,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         public abstract void OnStateEnter();
         public abstract void OnStateUpdate();
         public abstract void OnStateExit();
-        public abstract bool TrySwitchState(out State newState);
 
-        protected void UpTime(float deltaTime) => StateTimer += deltaTime;
+        public abstract bool TrySwitchState(out State newState);
+        protected void AddTime(float deltaTime) => StateTimer += deltaTime;
     }
 }
