@@ -3,9 +3,11 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Scripts
 {
-    public class PlayerMover : MonoBehaviour
+    public class PlayerMover
     {
         #region Initialization
+
+        public PlayerMover(CharacterController playerController) => _playerController = playerController;
 
         private CharacterController _playerController;
         private readonly List<Move> _movesList = new List<Move>();
@@ -13,11 +15,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
         #endregion
 
         #region PublicMethods
-
-        public void StartWork()
-        {
-            _playerController = GetComponent<CharacterController>();
-        }
 
         public void ChangeMove(MoveType type, Vector3 newMove)
         {
@@ -34,7 +31,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
         public void UpdateWork()
         {
             var resultMove = Vector3.zero;
-            foreach (var move in _movesList) resultMove += move.MoveVector;
+            foreach (var move in _movesList) resultMove += move.MoveVector * Time.deltaTime;
             _playerController.Move(resultMove);
         }
 

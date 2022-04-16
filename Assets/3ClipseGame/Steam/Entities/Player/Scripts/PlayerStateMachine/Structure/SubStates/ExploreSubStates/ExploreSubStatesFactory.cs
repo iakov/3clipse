@@ -7,5 +7,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         public ExploreSubStatesFactory(PlayerStateMachine context) : base(context){}
         public SubState Walk() => new ExploreWalkSubState(_context, this);
         public SubState Idle() => new ExploreIdleSubState(_context, this);
+        public SubState Run() => new ExploreRunSubState(_context, this);
     }
 }

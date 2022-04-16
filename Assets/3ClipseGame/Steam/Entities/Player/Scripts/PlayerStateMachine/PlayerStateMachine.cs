@@ -1,3 +1,4 @@
+using System;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
@@ -12,8 +13,11 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
     {
         #region SerializeFields
 
-        [SerializeField] private float walkSpeed = 3f;
-        [SerializeField] private float gravity = -0.981f;
+        [Header("Explore Parameters" )]
+        [Space]
+        [Range(0, 10)] [SerializeField] private float walkSpeed = 3f;
+        [SerializeField] private AnimationCurve walkSpeedUpCurve;
+        [SerializeField] private AnimationCurve runModifierCurve;
         [SerializeField] private UnityEvent<State, bool> switchingState;
         [SerializeField] private UnityEvent<SubState, bool> switchingSubState;
 
@@ -22,12 +26,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         #region PublicGetters
 
         public float WalkSpeed => walkSpeed;
-        public float Gravity => gravity;
-        
-        public PlayerMover PlayerMover { get; private set; }
-        public CharacterController PlayerController { get; private set; }
-        public MovementInputHandler InputHandler { get; private set; }
-        
+        public AnimationCurve RunModifierCurve => runModifierCurve;
+        public AnimationCurve WalkSpeedUpCurve => walkSpeedUpCurve;
         public event UnityAction<State, bool> SwitchingState
         {
             add => switchingState.AddListener(value);
@@ -39,6 +39,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
             add => switchingSubState.AddListener(value);
             remove => switchingSubState.RemoveListener(value);
         }
+        
+        public PlayerMover PlayerMover { get; private set; }
+        public CharacterController PlayerController { get; private set; }
+        public MovementInputHandler InputHandler { get; private set; }
 
         #endregion
 
@@ -55,8 +59,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         {
             PlayerController = GetComponent<CharacterController>();
             InputHandler = GetComponent<MovementInputHandler>();
-            PlayerMover = GetComponent<PlayerMover>();
+            PlayerMover = new PlayerMover(PlayerController);
             
+            CheckForExceptions();
             _stateFactory = new StateFactory(this);
             _currentState = _stateFactory.ExploreState();
             _currentState.OnStateEnter();
@@ -77,6 +82,11 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
             _currentState.OnStateExit();
             _currentState = nextState;
             _currentState.OnStateEnter();
+        }
+
+        private void CheckForExceptions()
+        {
+            if (WalkSpeedUpCurve.length <= 1) throw new ArgumentException("SpeedUpCurve wrong function");
         }
 
         #endregion

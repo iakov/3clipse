@@ -10,16 +10,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
 
         private ExploreSubStatesFactory _factory;
 
-        public override void OnStateEnter()
-        {
-            AddTime(Time.deltaTime);
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, Vector3.zero);
-        }
-
-        public override void OnStateUpdate()
-        {
-            AddTime(Time.deltaTime);
-        }
+        public override void OnStateEnter() => Context.PlayerMover.ChangeMove(MoveType.StateMove, Vector3.zero);
+        
+        public override void OnStateUpdate() => AddTime(Time.deltaTime);
 
         public override void OnStateExit()
         {

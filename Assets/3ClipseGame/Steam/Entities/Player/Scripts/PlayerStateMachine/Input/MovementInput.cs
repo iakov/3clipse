@@ -35,6 +35,15 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""0def7729-3466-407b-bec4-cb0b0520919d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +101,17 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed638d5d-cbf3-4616-82dd-d5cf9c8af26f"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -101,6 +121,7 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
         // ExploreStateActionMap
         m_ExploreStateActionMap = asset.FindActionMap("ExploreStateActionMap", throwIfNotFound: true);
         m_ExploreStateActionMap_Walk = m_ExploreStateActionMap.FindAction("Walk", throwIfNotFound: true);
+        m_ExploreStateActionMap_Run = m_ExploreStateActionMap.FindAction("Run", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -161,11 +182,13 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_ExploreStateActionMap;
     private IExploreStateActionMapActions m_ExploreStateActionMapActionsCallbackInterface;
     private readonly InputAction m_ExploreStateActionMap_Walk;
+    private readonly InputAction m_ExploreStateActionMap_Run;
     public struct ExploreStateActionMapActions
     {
         private @MovementInput m_Wrapper;
         public ExploreStateActionMapActions(@MovementInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Walk => m_Wrapper.m_ExploreStateActionMap_Walk;
+        public InputAction @Run => m_Wrapper.m_ExploreStateActionMap_Run;
         public InputActionMap Get() { return m_Wrapper.m_ExploreStateActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -178,6 +201,9 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                 @Walk.started -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnWalk;
                 @Walk.performed -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnWalk;
                 @Walk.canceled -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnWalk;
+                @Run.started -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnRun;
+                @Run.performed -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnRun;
+                @Run.canceled -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnRun;
             }
             m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -185,6 +211,9 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                 @Walk.started += instance.OnWalk;
                 @Walk.performed += instance.OnWalk;
                 @Walk.canceled += instance.OnWalk;
+                @Run.started += instance.OnRun;
+                @Run.performed += instance.OnRun;
+                @Run.canceled += instance.OnRun;
             }
         }
     }
@@ -192,5 +221,6 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
     public interface IExploreStateActionMapActions
     {
         void OnWalk(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
     }
 }

@@ -8,6 +8,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input
     {
         [NonSerialized] public Vector2 CurrentInput;
         [NonSerialized] public Vector2 LastInput;
+        [NonSerialized] public bool IsRunPressed;
 
         private MovementInput _movementInput;
 
@@ -20,6 +21,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input
             _movementInput.ExploreStateActionMap.Walk.started += OnWalkChanged;
             _movementInput.ExploreStateActionMap.Walk.performed += OnWalkChanged;
             _movementInput.ExploreStateActionMap.Walk.canceled += OnWalkChanged;
+
+            _movementInput.ExploreStateActionMap.Run.started += OnJumpChanged;
+            _movementInput.ExploreStateActionMap.Run.canceled += OnJumpChanged;
         }
 
         private void OnDisable()
@@ -29,13 +33,16 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input
             _movementInput.ExploreStateActionMap.Walk.started -= OnWalkChanged;
             _movementInput.ExploreStateActionMap.Walk.performed -= OnWalkChanged;
             _movementInput.ExploreStateActionMap.Walk.canceled -= OnWalkChanged;
+            
+            _movementInput.ExploreStateActionMap.Run.started -= OnJumpChanged;
+            _movementInput.ExploreStateActionMap.Run.canceled -= OnJumpChanged;
         }
 
         private void OnWalkChanged(InputAction.CallbackContext context) => AddInputLog(context.ReadValue<Vector2>());
+        private void OnJumpChanged(InputAction.CallbackContext context) => IsRunPressed = context.ReadValueAsButton();
 
         private void AddInputLog(Vector2 newInput)
         {
-            Debug.Log("Input Catched");
             LastInput = CurrentInput;
             CurrentInput = newInput;
         }

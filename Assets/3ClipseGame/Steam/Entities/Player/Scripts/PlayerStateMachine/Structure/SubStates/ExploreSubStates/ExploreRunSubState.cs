@@ -3,17 +3,17 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
 {
-    public class ExploreWalkSubState : SubState
+    public class ExploreRunSubState : SubState
     {
-        public ExploreWalkSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
+        public ExploreRunSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
 
         private ExploreSubStatesFactory _factory;
         private float _timeToMaximumSpeed;
-        
+
         public override void OnStateEnter()
         {
-            _factory = (ExploreSubStatesFactory)Factory;
-            _timeToMaximumSpeed = Context.WalkSpeedUpCurve.keys[Context.WalkSpeedUpCurve.length - 1].time;
+            _factory = (ExploreSubStatesFactory) Factory;
+            _timeToMaximumSpeed = Context.RunModifierCurve.keys[Context.WalkSpeedUpCurve.length - 1].time;
         }
 
         public override void OnStateUpdate()
@@ -21,18 +21,20 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
             AddTime(Time.deltaTime);
             var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
             var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
-            var moveVector = rawMoveVector * Context.WalkSpeedUpCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed;
+            var moveVector = rawMoveVector * Context.RunModifierCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed;
             Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector);
         }
-        
-        public override void OnStateExit(){}
+
+        public override void OnStateExit()
+        {
+        }
 
         public override bool TrySwitchState(out State newState)
         {
             newState = null;
             
             if (Context.InputHandler.CurrentInput == Vector2.zero) newState = _factory.Idle();
-            if (Context.InputHandler.IsRunPressed) newState = _factory.Run();
+            else if (!Context.InputHandler.IsRunPressed) newState = _factory.Walk();
 
             return newState != null;
         }
