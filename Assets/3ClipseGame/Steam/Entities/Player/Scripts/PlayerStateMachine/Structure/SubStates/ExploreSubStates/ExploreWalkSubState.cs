@@ -8,21 +8,22 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         public ExploreWalkSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
 
         private ExploreSubStatesFactory _factory;
-        private float _timeToMaximumSpeed;
-        
+        private Vector3 _lastMoveVector;
+
         public override void OnStateEnter()
         {
             _factory = (ExploreSubStatesFactory)Factory;
-            _timeToMaximumSpeed = Context.WalkSpeedUpCurve.keys[Context.WalkSpeedUpCurve.length - 1].time;
+            _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove);
         }
 
         public override void OnStateUpdate()
         {
             AddTime(Time.deltaTime);
             var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
-            var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
-            var moveVector = rawMoveVector * Context.WalkSpeedUpCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed;
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector);
+            var moveVector = rawMoveVector * Context.WalkSpeed;
+            var t = StateTimer <= 1 ? StateTimer : 1f;
+            var interpolatedMoveVector = Vector3.Lerp(_lastMoveVector, moveVector, t * Context.SpeedInterpolation);
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector);
         }
         
         public override void OnStateExit(){}

@@ -13,7 +13,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         public override void OnStateEnter()
         {
             _factory = (ExploreSubStatesFactory) Factory;
-            _timeToMaximumSpeed = Context.RunModifierCurve.keys[Context.WalkSpeedUpCurve.length - 1].time;
+            _timeToMaximumSpeed = Context.RunModifierCurve.keys[Context.RunModifierCurve.length - 1].time;
         }
 
         public override void OnStateUpdate()

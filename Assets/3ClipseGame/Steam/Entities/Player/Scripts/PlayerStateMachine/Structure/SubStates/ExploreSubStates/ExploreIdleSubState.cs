@@ -9,10 +9,17 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
             _factory = (ExploreSubStatesFactory) factory;
 
         private ExploreSubStatesFactory _factory;
+        private Vector3 _lastMoveVector;
 
-        public override void OnStateEnter() => Context.PlayerMover.ChangeMove(MoveType.StateMove, Vector3.zero);
+        public override void OnStateEnter() => _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove);
         
-        public override void OnStateUpdate() => AddTime(Time.deltaTime);
+        public override void OnStateUpdate()
+        {
+            AddTime(Time.deltaTime);
+            var t = StateTimer <= 1 ? StateTimer : 1f;
+            var interpolatedMoveVector = Vector3.Lerp(_lastMoveVector, Vector3.zero, t * Context.SpeedInterpolation);
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector);
+        }
 
         public override void OnStateExit()
         {

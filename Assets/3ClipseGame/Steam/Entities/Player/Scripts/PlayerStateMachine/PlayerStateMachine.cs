@@ -16,7 +16,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         [Header("Explore Parameters" )]
         [Space]
         [Range(0, 10)] [SerializeField] private float walkSpeed = 3f;
-        [SerializeField] private AnimationCurve walkSpeedUpCurve;
+        [Range(1, 10)] [SerializeField] private float speedInterpolation = 6f;
         [SerializeField] private AnimationCurve runModifierCurve;
         [SerializeField] private UnityEvent<State, bool> switchingState;
         [SerializeField] private UnityEvent<SubState, bool> switchingSubState;
@@ -26,8 +26,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         #region PublicGetters
 
         public float WalkSpeed => walkSpeed;
+        public float SpeedInterpolation => speedInterpolation;
         public AnimationCurve RunModifierCurve => runModifierCurve;
-        public AnimationCurve WalkSpeedUpCurve => walkSpeedUpCurve;
         public event UnityAction<State, bool> SwitchingState
         {
             add => switchingState.AddListener(value);
@@ -86,7 +86,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
 
         private void CheckForExceptions()
         {
-            if (WalkSpeedUpCurve.length <= 1) throw new ArgumentException("SpeedUpCurve wrong function");
+            if (RunModifierCurve.length <= 1) throw new ArgumentException("SpeedUpCurve wrong function");
         }
 
         #endregion

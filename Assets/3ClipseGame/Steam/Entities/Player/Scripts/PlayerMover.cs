@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Scripts
@@ -26,6 +27,12 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
             }
             
             _movesList.Add(new Move(type, newMove));
+        }
+
+        public Vector3 GetLastMove(MoveType type)
+        {
+            foreach (var move in _movesList.Where(move => move.MoveType == type)) return move.MoveVector;
+            return Vector3.zero;
         }
 
         public void UpdateWork()
