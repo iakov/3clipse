@@ -44,6 +44,15 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""a90d34f9-30f8-4e43-af36-0a3d5d000be9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,17 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f0d4885-884d-470e-ada3-cc771064a9c4"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -122,6 +142,7 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
         m_ExploreStateActionMap = asset.FindActionMap("ExploreStateActionMap", throwIfNotFound: true);
         m_ExploreStateActionMap_Walk = m_ExploreStateActionMap.FindAction("Walk", throwIfNotFound: true);
         m_ExploreStateActionMap_Run = m_ExploreStateActionMap.FindAction("Run", throwIfNotFound: true);
+        m_ExploreStateActionMap_Crouch = m_ExploreStateActionMap.FindAction("Crouch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,12 +204,14 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
     private IExploreStateActionMapActions m_ExploreStateActionMapActionsCallbackInterface;
     private readonly InputAction m_ExploreStateActionMap_Walk;
     private readonly InputAction m_ExploreStateActionMap_Run;
+    private readonly InputAction m_ExploreStateActionMap_Crouch;
     public struct ExploreStateActionMapActions
     {
         private @MovementInput m_Wrapper;
         public ExploreStateActionMapActions(@MovementInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Walk => m_Wrapper.m_ExploreStateActionMap_Walk;
         public InputAction @Run => m_Wrapper.m_ExploreStateActionMap_Run;
+        public InputAction @Crouch => m_Wrapper.m_ExploreStateActionMap_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_ExploreStateActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -204,6 +227,9 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                 @Run.started -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnRun;
                 @Run.performed -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnRun;
                 @Run.canceled -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnRun;
+                @Crouch.started -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnCrouch;
+                @Crouch.performed -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnCrouch;
+                @Crouch.canceled -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnCrouch;
             }
             m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -214,6 +240,9 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
             }
         }
     }
@@ -222,5 +251,6 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
     {
         void OnWalk(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
     }
 }

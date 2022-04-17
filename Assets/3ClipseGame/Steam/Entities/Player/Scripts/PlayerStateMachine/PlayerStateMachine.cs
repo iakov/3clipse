@@ -9,6 +9,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MovementInputHandler))]
+    [RequireComponent(typeof(PlayerMover))]
+    
     public class PlayerStateMachine : MonoBehaviour
     {
         #region SerializeFields
@@ -17,6 +19,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         [Space]
         [Range(0, 10)] [SerializeField] private float walkSpeed = 3f;
         [Range(1, 10)] [SerializeField] private float speedInterpolation = 6f;
+        [Range(0, 3)] [SerializeField] private float crouchSpeedModifier = 1f;
         [SerializeField] private AnimationCurve runModifierCurve;
         [SerializeField] private UnityEvent<State, bool> switchingState;
         [SerializeField] private UnityEvent<SubState, bool> switchingSubState;
@@ -27,6 +30,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
 
         public float WalkSpeed => walkSpeed;
         public float SpeedInterpolation => speedInterpolation;
+        public float CrouchSpeedModifier => crouchSpeedModifier;
         public AnimationCurve RunModifierCurve => runModifierCurve;
         public event UnityAction<State, bool> SwitchingState
         {
@@ -59,7 +63,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         {
             PlayerController = GetComponent<CharacterController>();
             InputHandler = GetComponent<MovementInputHandler>();
-            PlayerMover = new PlayerMover(PlayerController);
+            PlayerMover = GetComponent<PlayerMover>();
             
             CheckForExceptions();
             _stateFactory = new StateFactory(this);

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
 {
     public class ExploreSubStatesFactory : SubStateFactory
@@ -8,5 +6,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         public SubState Walk() => new ExploreWalkSubState(_context, this);
         public SubState Idle() => new ExploreIdleSubState(_context, this);
         public SubState Run() => new ExploreRunSubState(_context, this);
+        public SubState Stop() => new ExploreStopSubState(_context, this);
+        public SubState Crouch() => new ExploreCrouchSubState(_context, this);
     }
 }

@@ -21,7 +21,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
             AddTime(Time.deltaTime);
             var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
             var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
-            var moveVector = rawMoveVector * Context.RunModifierCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed;
+            var moveVector = rawMoveVector * (Context.RunModifierCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed);
             Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector);
         }
 
@@ -33,7 +33,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         {
             newState = null;
             
-            if (Context.InputHandler.CurrentInput == Vector2.zero) newState = _factory.Idle();
+            if (Context.InputHandler.CurrentInput == Vector2.zero) newState = _factory.Stop();
+            else if (Context.InputHandler.IsCrouchPressed) newState = _factory.Crouch();
             else if (!Context.InputHandler.IsRunPressed) newState = _factory.Walk();
 
             return newState != null;

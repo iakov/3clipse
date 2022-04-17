@@ -2,7 +2,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
 {
     public abstract class State
     {
-        public float StateTimer { get; private set; } = 0f;
+        public float StateTimer { get; private set; }
         
         protected readonly PlayerStateMachine Context;
         protected readonly StateFactory Factory;

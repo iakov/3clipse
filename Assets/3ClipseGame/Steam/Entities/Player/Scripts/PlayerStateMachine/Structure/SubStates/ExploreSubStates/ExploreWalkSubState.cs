@@ -32,9 +32,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         {
             newState = null;
             
-            if (Context.InputHandler.CurrentInput == Vector2.zero) newState = _factory.Idle();
-            if (Context.InputHandler.IsRunPressed) newState = _factory.Run();
-
+            if (Context.InputHandler.CurrentInput == Vector2.zero) newState = _factory.Stop();
+            else if (Context.InputHandler.IsRunPressed) newState = _factory.Run();
+            else if (Context.InputHandler.IsCrouchPressed) newState = _factory.Crouch();
             return newState != null;
         }
     }

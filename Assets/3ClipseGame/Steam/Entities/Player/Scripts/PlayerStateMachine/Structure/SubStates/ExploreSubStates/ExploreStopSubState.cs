@@ -3,16 +3,16 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
 {
-    public class ExploreIdleSubState : SubState
+    public class ExploreStopSubState : SubState
     {
-        public ExploreIdleSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
+        public ExploreStopSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
 
         private ExploreSubStatesFactory _factory;
         private Vector3 _lastMoveVector;
 
         public override void OnStateEnter()
         {
-            _factory = (ExploreSubStatesFactory)Factory;
+            _factory = (ExploreSubStatesFactory) Factory;
             _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove);
         }
 
@@ -32,7 +32,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         {
             newState = null;
 
-            if (Context.InputHandler.IsCrouchPressed) newState = _factory.Crouch();
+            if (Context.PlayerMover.GetLastMove(MoveType.StateMove) == Vector3.zero) newState = _factory.Idle();
             else if (Context.InputHandler.CurrentInput != Vector2.zero) newState = _factory.Walk();
 
             return newState != null;
