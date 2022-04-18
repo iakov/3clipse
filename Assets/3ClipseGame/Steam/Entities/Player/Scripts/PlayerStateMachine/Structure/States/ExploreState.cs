@@ -1,3 +1,4 @@
+using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates;
 using UnityEngine;

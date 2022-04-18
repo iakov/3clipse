@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
 {
     public class PlayerMover : MonoBehaviour
     {

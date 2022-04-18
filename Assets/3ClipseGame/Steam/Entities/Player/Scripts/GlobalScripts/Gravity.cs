@@ -1,11 +1,11 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
 {
     public class Gravity : MonoBehaviour
     {
-        [SerializeField] private float gravity = -1f;
-        [SerializeField] private float gravityLimit = -20f;
+        [Range(0, -10)] [SerializeField] private float gravity = -2f;
+        [Range(0, -100)] [SerializeField] private float gravityLimit = -20f;
 
         private PlayerMover _playerMover;
         private CharacterController _playerController;

@@ -1,3 +1,4 @@
+using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
             var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
             var moveVector = rawMoveVector * (Context.RunModifierCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed);
             Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector);
+            Context.PlayerRotator.ChangeRotation(Quaternion.LookRotation( moveVector), Context.MoveRotatePriority);
         }
 
         public override void OnStateExit()

@@ -1,4 +1,5 @@
 using System;
+using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
@@ -7,10 +8,9 @@ using UnityEngine.Events;
 
 namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
 {
+    
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MovementInputHandler))]
-    [RequireComponent(typeof(PlayerMover))]
-    
     public class PlayerStateMachine : MonoBehaviour
     {
         #region SerializeFields
@@ -28,6 +28,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         
         #region PublicGetters
 
+        public uint MoveRotatePriority { get; } = 5;
         public float WalkSpeed => walkSpeed;
         public float SpeedInterpolation => speedInterpolation;
         public float CrouchSpeedModifier => crouchSpeedModifier;
@@ -44,9 +45,11 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
             remove => switchingSubState.RemoveListener(value);
         }
         
+        public PlayerRotator PlayerRotator { get; private set; }
         public PlayerMover PlayerMover { get; private set; }
         public CharacterController PlayerController { get; private set; }
         public MovementInputHandler InputHandler { get; private set; }
+        public Transform Transform { get; private set; }
 
         #endregion
 
@@ -59,11 +62,13 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         
         #region PublicMethods
         
-        public void StartWork()
+        public void Start()
         {
             PlayerController = GetComponent<CharacterController>();
             InputHandler = GetComponent<MovementInputHandler>();
             PlayerMover = GetComponent<PlayerMover>();
+            PlayerRotator = GetComponent<PlayerRotator>();
+            Transform = GetComponent<Transform>();
             
             CheckForExceptions();
             _stateFactory = new StateFactory(this);
