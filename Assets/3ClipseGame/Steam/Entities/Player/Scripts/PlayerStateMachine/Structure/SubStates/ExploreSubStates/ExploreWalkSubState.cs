@@ -24,8 +24,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
             var moveVector = rawMoveVector * Context.WalkSpeed;
             var t = StateTimer <= 1 ? StateTimer : 1f;
             var interpolatedMoveVector = Vector3.Lerp(_lastMoveVector, moveVector, t * Context.SpeedInterpolation);
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector);
-            Context.PlayerRotator.ChangeRotation(Quaternion.LookRotation( interpolatedMoveVector), Context.MoveRotatePriority);
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, true);
         }
         
         public override void OnStateExit(){}

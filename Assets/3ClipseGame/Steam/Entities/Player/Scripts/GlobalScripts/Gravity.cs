@@ -25,7 +25,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
 
             var gravitySquare = -Mathf.Pow(_ungroundedTimer * gravity, 2);
             gravitySquare = gravitySquare < gravityLimit ? gravityLimit : gravitySquare;
-            _playerMover.ChangeMove(MoveType.GravityMove, new Vector3(0f, gravitySquare, 0f));
+            _playerMover.ChangeMove(MoveType.GravityMove, new Vector3(0f, gravitySquare, 0f), false);
         }
     }
 }

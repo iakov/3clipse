@@ -23,8 +23,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
             var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
             var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
             var moveVector = rawMoveVector * (Context.RunModifierCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed);
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector);
-            Context.PlayerRotator.ChangeRotation(Quaternion.LookRotation( moveVector), Context.MoveRotatePriority);
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, true);
         }
 
         public override void OnStateExit()

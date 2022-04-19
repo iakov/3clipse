@@ -45,7 +45,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
             remove => switchingSubState.RemoveListener(value);
         }
         
-        public PlayerRotator PlayerRotator { get; private set; }
         public PlayerMover PlayerMover { get; private set; }
         public CharacterController PlayerController { get; private set; }
         public MovementInputHandler InputHandler { get; private set; }
@@ -67,7 +66,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
             PlayerController = GetComponent<CharacterController>();
             InputHandler = GetComponent<MovementInputHandler>();
             PlayerMover = GetComponent<PlayerMover>();
-            PlayerRotator = GetComponent<PlayerRotator>();
             Transform = GetComponent<Transform>();
             
             CheckForExceptions();

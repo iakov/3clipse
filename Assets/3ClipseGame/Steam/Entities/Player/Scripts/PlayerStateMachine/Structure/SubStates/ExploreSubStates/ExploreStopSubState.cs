@@ -22,9 +22,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
             AddTime(Time.deltaTime);
             var t = StateTimer <= 1 ? StateTimer : 1f;
             var interpolatedMoveVector = Vector3.Lerp(_lastMoveVector, Vector3.zero, t * Context.SpeedInterpolation);
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector);
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, true);
             if (interpolatedMoveVector == Vector3.zero) return;
-            Context.PlayerRotator.ChangeRotation(Quaternion.LookRotation( interpolatedMoveVector), Context.MoveRotatePriority);
         }
 
         public override void OnStateExit()

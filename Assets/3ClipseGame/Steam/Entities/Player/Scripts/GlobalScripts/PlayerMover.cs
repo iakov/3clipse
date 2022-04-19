@@ -8,7 +8,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
     {
         #region Initialization
 
+        [SerializeField] private float rotationSpeed = 1f;
         private CharacterController _playerController;
+        private Transform _cameraTransform;
+        private Transform _playerTransform;
         private readonly List<Move> _movesList = new List<Move>();
 
         #endregion
@@ -18,22 +21,25 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
         private void Start()
         {
             _playerController = GetComponent<CharacterController>();
+            _playerTransform = GetComponent<Transform>();
+            if (Camera.main != null) _cameraTransform = Camera.main.transform;
         }
 
         #endregion
 
         #region PublicMethods
 
-        public void ChangeMove(MoveType type, Vector3 newMove)
+        public void ChangeMove(MoveType type, Vector3 newMove, bool isRotatedWithCamera)
         {
             foreach (var move in _movesList)
             {
                 if (move.MoveType != type) continue;
                 move.MoveVector = newMove;
+                move.IsRotatedWithCamera = isRotatedWithCamera;
                 return;
             }
             
-            _movesList.Add(new Move(type, newMove));
+            _movesList.Add(new Move(type, newMove, isRotatedWithCamera));
         }
 
         public Vector3 GetLastMove(MoveType type)
@@ -46,8 +52,20 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
         public void UpdateWork()
         {
             var resultMove = Vector3.zero;
-            foreach (var move in _movesList) resultMove += move.MoveVector * Time.deltaTime;
-            _playerController.Move(resultMove);
+            foreach (var move in _movesList)
+            {
+                if (move.IsRotatedWithCamera)
+                {
+                    var direction = move.MoveVector.x * _cameraTransform.right  + move.MoveVector.z * _cameraTransform.forward;
+                    resultMove += direction;
+                }
+                else resultMove += move.MoveVector;
+            }
+            _playerController.Move(resultMove * Time.deltaTime);
+            
+            resultMove.y = 0f;
+            if (resultMove == Vector3.zero) return;
+            _playerTransform.rotation = Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(resultMove), rotationSpeed);
         }
 
         #endregion
@@ -56,14 +74,16 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
 
         private class Move
         {
-            public Move(MoveType type, Vector3 moveVector)
+            public Move(MoveType type, Vector3 moveVector, bool isRotatedWithCamera)
             {
                 MoveType = type;
                 MoveVector = moveVector;
+                IsRotatedWithCamera = isRotatedWithCamera;
             }
             
             public readonly MoveType MoveType;
             public Vector3 MoveVector;
+            public bool IsRotatedWithCamera;
         }
 
         #endregion
