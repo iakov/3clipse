@@ -21,25 +21,24 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         [Range(1, 10)] [SerializeField] private float speedInterpolation = 6f;
         [Range(0, 3)] [SerializeField] private float crouchSpeedModifier = 1f;
         [SerializeField] private AnimationCurve runModifierCurve;
-        [SerializeField] private UnityEvent<State, bool> switchingState;
-        [SerializeField] private UnityEvent<SubState, bool> switchingSubState;
+        [SerializeField] private UnityEvent<State, State> switchingState;
+        [SerializeField] private UnityEvent<SubState, SubState> switchingSubState;
 
         #endregion
         
         #region PublicGetters
-
-        public uint MoveRotatePriority { get; } = 5;
+        
         public float WalkSpeed => walkSpeed;
         public float SpeedInterpolation => speedInterpolation;
         public float CrouchSpeedModifier => crouchSpeedModifier;
         public AnimationCurve RunModifierCurve => runModifierCurve;
-        public event UnityAction<State, bool> SwitchingState
+        public event UnityAction<State, State> SwitchingState
         {
             add => switchingState.AddListener(value);
             remove => switchingState.RemoveListener(value);
         }
 
-        public event UnityAction<SubState, bool> SwitchingSubState
+        public event UnityAction<SubState, SubState> SwitchingSubState
         {
             add => switchingSubState.AddListener(value);
             remove => switchingSubState.RemoveListener(value);
@@ -58,10 +57,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         private StateFactory _stateFactory;
 
         #endregion
-        
-        #region PublicMethods
-        
-        public void Start()
+
+        #region MonoBehaviourMethods
+
+        private void Awake()
         {
             PlayerController = GetComponent<CharacterController>();
             InputHandler = GetComponent<MovementInputHandler>();
@@ -73,6 +72,20 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
             _currentState = _stateFactory.ExploreState();
             _currentState.OnStateEnter();
         }
+
+        private void OnEnable()
+        {
+            _currentState.SwitchingSubState += SwitchSubState;
+        }
+
+        private void OnDisable()
+        {
+            _currentState.SwitchingSubState -= SwitchSubState;
+        }
+
+        #endregion
+
+        #region PublicMethods
 
         public void UpdateWork()
         {
@@ -86,14 +99,17 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
 
         private void SwitchState(State nextState)
         {
+            switchingState?.Invoke(_currentState, nextState);
             _currentState.OnStateExit();
             _currentState = nextState;
             _currentState.OnStateEnter();
         }
 
+        private void SwitchSubState(SubState current, SubState next) => switchingSubState?.Invoke(current, next);
+
         private void CheckForExceptions()
         {
-            if (RunModifierCurve.length <= 1) throw new ArgumentException("SpeedUpCurve wrong function");
+            if (RunModifierCurve.length <= 1) throw new ArgumentException("RunModifierCurve wrong function");
         }
 
         #endregion

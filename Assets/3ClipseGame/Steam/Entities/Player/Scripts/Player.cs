@@ -1,4 +1,5 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
+using _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Scripts
@@ -6,6 +7,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
     [RequireComponent(typeof(PlayerStateMachine.PlayerStateMachine))]
     [RequireComponent(typeof(Gravity))]
     [RequireComponent(typeof(PlayerMover))]
+    [RequireComponent(typeof(PlayerAnimationsController))]
     public class Player : MonoBehaviour
     {
         private PlayerMover _playerMover;
