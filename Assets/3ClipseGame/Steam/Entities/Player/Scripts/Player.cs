@@ -1,5 +1,6 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
 using Assets._3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsControllers;
 using UnityEngine;
 
 namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts

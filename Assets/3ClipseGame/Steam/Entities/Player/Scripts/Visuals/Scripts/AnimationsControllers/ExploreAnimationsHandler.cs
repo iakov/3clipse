@@ -1,0 +1,42 @@
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates;
+using UnityEngine;
+
+namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsControllers
+{
+    public class ExploreAnimationsHandler : StateAnimationsHandler
+    {
+        public ExploreAnimationsHandler(Animator animator) : base(animator) {}
+        private static readonly int IsRunning = Animator.StringToHash("IsRunning");
+        private static readonly int IsWalking = Animator.StringToHash("IsWalking");
+        private static readonly int IsCrouching = Animator.StringToHash("IsCrouching");
+
+        public override void OnStateEnter()
+        {
+            
+        }
+
+        public override void OnStateExit()
+        {
+            
+        }
+        
+        public override void ApplyLeavingSubState(SubState currentSubState)
+        {
+            if(currentSubState.GetType() == typeof(ExploreRunSubState)) Animator.SetBool(IsRunning, false);
+        }
+
+        public override void ApplyEnteringSubState(SubState newSubState)
+        {
+            if (newSubState.GetType() == typeof(ExploreIdleSubState))
+            {
+                Animator.SetBool(IsWalking, false);
+                Animator.SetBool(IsRunning, false);
+                Animator.SetBool(IsCrouching, false);
+            }
+            else if(newSubState.GetType() == typeof(ExploreWalkSubState)) Animator.SetBool(IsWalking, true);
+            else if (newSubState.GetType() == typeof(ExploreRunSubState)) Animator.SetBool(IsRunning, true);
+            else if(newSubState.GetType() == typeof(ExploreCrouchSubState)) Animator.SetBool(IsCrouching, true);
+        }
+    }
+}

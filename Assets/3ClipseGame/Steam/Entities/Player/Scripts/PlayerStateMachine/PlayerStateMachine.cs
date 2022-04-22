@@ -88,6 +88,7 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
 
         public void UpdateWork()
         {
+            if (_currentState == null) return;
             if (_currentState.TrySwitchState(out var nextState)) SwitchState(nextState);
             _currentState.OnStateUpdate();
         }
