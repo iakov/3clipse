@@ -1,13 +1,19 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
+namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
 {
     public class ExploreCrouchSubState : SubState
     {
+        #region Initialization
+
         public ExploreCrouchSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
         private ExploreSubStatesFactory _factory;
+
+        #endregion
+
+        #region MonoBehaviourMethods
 
         public override void OnStateEnter()
         {
@@ -30,5 +36,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
             if (!Context.InputHandler.IsCrouchPressed) newState = _factory.Idle();
             return newState != null;
         }
+
+        #endregion
     }
 }

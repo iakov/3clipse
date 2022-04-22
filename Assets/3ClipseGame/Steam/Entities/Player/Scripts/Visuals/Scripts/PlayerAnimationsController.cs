@@ -1,22 +1,32 @@
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts
+namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts
 {
     public class PlayerAnimationsController : MonoBehaviour
     {
+        #region Initialization
+
         private Animator _animator;
         private static readonly int IsRunning = Animator.StringToHash("IsRunning");
         private static readonly int IsWalking = Animator.StringToHash("IsWalking");
         private static readonly int IsCrouching = Animator.StringToHash("IsCrouching");
 
+        #endregion
+
+        #region MonoBehaviourMethods
+
         private void Start()
         {
             _animator = GetComponent<Animator>();
         }
-        
+
+        #endregion
+
+        #region EventHandlers
+
         public void OnStateChanged(State currentState, State nextState)
         {
             
@@ -27,6 +37,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts
             ApplyNewSubState(newSubState);
             ApplyCurrentSubState(currentSubState);
         }
+
+        #endregion
+
+        #region PrivateMethods
 
         private void ApplyCurrentSubState(SubState currentSubState)
         {
@@ -45,5 +59,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts
             else if (newSubState.GetType() == typeof(ExploreRunSubState)) _animator.SetBool(IsRunning, true);
             else if(newSubState.GetType() == typeof(ExploreCrouchSubState)) _animator.SetBool(IsCrouching, true);
         }
+
+        #endregion
     }
 }

@@ -1,10 +1,18 @@
-namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States
+namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States
 {
     public class StateFactory
     {
-        public StateFactory(PlayerStateMachine context) => _context = context;
-        protected PlayerStateMachine _context;
+        #region Initialization
 
-        public State ExploreState() => new ExploreState(_context, this);
+        public StateFactory(PlayerStateMachine context) => Context = context;
+        protected readonly PlayerStateMachine Context;
+
+        #endregion
+
+        #region Methods
+
+        public State ExploreState() => new ExploreState(Context, this);
+
+        #endregion
     }
 }

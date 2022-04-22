@@ -1,15 +1,20 @@
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States
+namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States
 {
     public class ExploreState : State
     {
-        public ExploreState(PlayerStateMachine context, StateFactory factory) : base(context, factory){}
+        #region Initialization
 
+        public ExploreState(PlayerStateMachine context, StateFactory factory) : base(context, factory){}
         private ExploreSubStatesFactory _subStateFactory;
         private SubState _currentSubState;
+
+        #endregion
+
+        #region StateMethods
 
         public override void OnStateEnter()
         {
@@ -33,6 +38,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
             return false;
         }
 
+        #endregion
+
+        #region PrivateMethods
+
         private void SwitchSubState(SubState nextSubState)
         {
             SwitchSubState(_currentSubState, nextSubState);
@@ -40,5 +49,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
             _currentSubState = nextSubState;
             _currentSubState.OnStateEnter();
         }
+
+        #endregion
     }
 }

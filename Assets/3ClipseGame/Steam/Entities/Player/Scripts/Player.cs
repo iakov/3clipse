@@ -1,21 +1,27 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
-using _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts
+namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts
 {
-    [RequireComponent(typeof(PlayerStateMachine.PlayerStateMachine))]
+    [RequireComponent(typeof(Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine))]
     [RequireComponent(typeof(Gravity))]
     [RequireComponent(typeof(PlayerMover))]
     [RequireComponent(typeof(PlayerAnimationsController))]
     public class Player : MonoBehaviour
     {
+        #region PrivateFields
+
         private PlayerMover _playerMover;
-        private PlayerStateMachine.PlayerStateMachine _playerStateMachine;
+        private Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine _playerStateMachine;
+
+        #endregion
+
+        #region MonoBehaviourMethods
 
         private void Awake()
         {
-            _playerStateMachine = GetComponent<PlayerStateMachine.PlayerStateMachine>();
+            _playerStateMachine = GetComponent<Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine>();
             _playerMover = GetComponent<PlayerMover>();
         }
 
@@ -24,5 +30,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
             _playerStateMachine.UpdateWork();
             _playerMover.UpdateWork();
         }
+
+        #endregion
     }
 }

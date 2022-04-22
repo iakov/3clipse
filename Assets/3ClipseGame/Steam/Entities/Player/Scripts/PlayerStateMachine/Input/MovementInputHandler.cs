@@ -2,16 +2,20 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input
+namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input
 {
     public class MovementInputHandler : MonoBehaviour
     {
+        #region Initialization
         [NonSerialized] public Vector2 CurrentInput;
         [NonSerialized] public Vector2 LastInput;
         [NonSerialized] public bool IsRunPressed;
         [NonSerialized] public bool IsCrouchPressed;
 
         private MovementInput _movementInput;
+        #endregion
+
+        #region MonoBehaviourMethods
 
         private void OnEnable()
         {
@@ -45,6 +49,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input
             _movementInput.ExploreStateActionMap.Crouch.canceled -= OnCrouchChanged;
         }
 
+        #endregion
+
+        #region EventHandlers
+
         private void OnWalkChanged(InputAction.CallbackContext context)
         {
             AddInputLog(context.ReadValue<Vector2>());
@@ -53,10 +61,17 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input
         private void OnJumpChanged(InputAction.CallbackContext context) => IsRunPressed = context.ReadValueAsButton();
         private void OnCrouchChanged(InputAction.CallbackContext context) => IsCrouchPressed = context.ReadValueAsButton();
 
+
+        #endregion
+
+        #region PrivateMethods
+
         private void AddInputLog(Vector2 newInput)
         {
             LastInput = CurrentInput;
             CurrentInput = newInput;
         }
+
+        #endregion
     }
 }

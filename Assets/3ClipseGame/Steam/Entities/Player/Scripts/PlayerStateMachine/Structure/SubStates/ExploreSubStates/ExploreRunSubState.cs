@@ -1,15 +1,22 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
+namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
 {
     public class ExploreRunSubState : SubState
     {
+        #region Initialization
+
         public ExploreRunSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
 
         private ExploreSubStatesFactory _factory;
         private float _timeToMaximumSpeed;
+
+
+        #endregion
+
+        #region MonoBehaviourMethods
 
         public override void OnStateEnter()
         {
@@ -40,5 +47,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
 
             return newState != null;
         }
+
+        #endregion
     }
 }
