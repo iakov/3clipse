@@ -1,4 +1,4 @@
-namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States
 {
     public class StateFactory
     {

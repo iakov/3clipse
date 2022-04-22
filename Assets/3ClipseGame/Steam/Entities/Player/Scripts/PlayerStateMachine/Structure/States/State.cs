@@ -1,7 +1,7 @@
 using System;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
 
-namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States
 {
     public abstract class State
     {

@@ -1,11 +1,10 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsControllers;
+using _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsControllers;
 using UnityEngine;
 
-namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Scripts
 {
-    [RequireComponent(typeof(Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine))]
+    [RequireComponent(typeof(global::_3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine))]
     [RequireComponent(typeof(Gravity))]
     [RequireComponent(typeof(PlayerMover))]
     [RequireComponent(typeof(PlayerAnimationsController))]
@@ -14,7 +13,7 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts
         #region PrivateFields
 
         private PlayerMover _playerMover;
-        private Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine _playerStateMachine;
+        private global::_3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine _playerStateMachine;
 
         #endregion
 
@@ -22,7 +21,7 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts
 
         private void Awake()
         {
-            _playerStateMachine = GetComponent<Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine>();
+            _playerStateMachine = GetComponent<global::_3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine>();
             _playerMover = GetComponent<PlayerMover>();
         }
 

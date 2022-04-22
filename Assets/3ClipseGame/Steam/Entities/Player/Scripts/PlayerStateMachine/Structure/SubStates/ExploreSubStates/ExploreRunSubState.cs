@@ -1,8 +1,8 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using UnityEngine;
 
-namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
 {
     public class ExploreRunSubState : SubState
     {
@@ -40,8 +40,10 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.S
         public override bool TrySwitchState(out State newState)
         {
             newState = null;
-            
-            if (Context.InputHandler.CurrentInput == Vector2.zero) newState = _factory.Stop();
+
+            if (!Context.PlayerController.isGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
+                    Context.PlayerController.radius)) newState = _factory.Fall();
+            else if (Context.InputHandler.CurrentInput == Vector2.zero) newState = _factory.Stop();
             else if (Context.InputHandler.IsCrouchPressed) newState = _factory.Crouch();
             else if (!Context.InputHandler.IsRunPressed) newState = _factory.Walk();
 

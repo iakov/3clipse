@@ -1,4 +1,4 @@
-namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
 {
     public class ExploreSubStatesFactory : SubStateFactory
     {
@@ -15,6 +15,7 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.S
         public SubState Run() => new ExploreRunSubState(Context, this);
         public SubState Stop() => new ExploreStopSubState(Context, this);
         public SubState Crouch() => new ExploreCrouchSubState(Context, this);
+        public SubState Fall() => new ExploreFallSubState(Context, this);
 
         #endregion
     }

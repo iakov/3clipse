@@ -1,8 +1,8 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using UnityEngine;
 
-namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
 {
     public class ExploreCrouchSubState : SubState
     {
@@ -33,7 +33,9 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.S
         {
             newState = null;
 
-            if (!Context.InputHandler.IsCrouchPressed) newState = _factory.Idle();
+            if (!Context.PlayerController.isGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
+                    Context.PlayerController.radius)) newState = _factory.Fall();
+            else if (!Context.InputHandler.IsCrouchPressed) newState = _factory.Idle();
             return newState != null;
         }
 

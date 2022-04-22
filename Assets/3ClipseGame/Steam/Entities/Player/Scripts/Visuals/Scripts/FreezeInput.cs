@@ -1,7 +1,7 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
 using UnityEngine;
 
-namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts
 {
     public class FreezeInput : StateMachineBehaviour
     {

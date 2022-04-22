@@ -1,9 +1,8 @@
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
 using UnityEngine;
 
-namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsControllers
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsControllers
 {
     public class PlayerAnimationsController : MonoBehaviour
     {

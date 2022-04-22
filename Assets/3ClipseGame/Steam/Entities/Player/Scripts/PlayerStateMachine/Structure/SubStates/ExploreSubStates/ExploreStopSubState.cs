@@ -1,8 +1,8 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using UnityEngine;
 
-namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
 {
     public class ExploreStopSubState : SubState
     {
@@ -29,7 +29,6 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.S
             var t = StateTimer <= 1 ? StateTimer : 1f;
             var interpolatedMoveVector = Vector3.Lerp(_lastMoveVector, Vector3.zero, t * Context.SpeedInterpolation);
             Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, true);
-            if (interpolatedMoveVector == Vector3.zero) return;
         }
 
         public override void OnStateExit()
@@ -40,7 +39,9 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.S
         {
             newState = null;
 
-            if (Context.PlayerMover.GetLastMove(MoveType.StateMove) == Vector3.zero) newState = _factory.Idle();
+            if (!Context.PlayerController.isGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
+                    Context.PlayerController.radius)) newState = _factory.Fall();
+            else if (Context.PlayerMover.GetLastMove(MoveType.StateMove) == Vector3.zero) newState = _factory.Idle();
             else if (Context.InputHandler.CurrentInput != Vector2.zero) newState = _factory.Walk();
 
             return newState != null;

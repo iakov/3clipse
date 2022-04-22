@@ -1,12 +1,12 @@
 using System;
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
 using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
+namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MovementInputHandler))]
@@ -19,9 +19,9 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         [Range(0, 10)] [SerializeField] private float walkSpeed = 3f;
         [Range(1, 10)] [SerializeField] private float speedInterpolation = 6f;
         [Range(0, 3)] [SerializeField] private float crouchSpeedModifier = 1f;
-        [SerializeField] private AnimationCurve _runModifierCurve;
-        [SerializeField] private UnityEvent<State, State> _switchingState;
-        [SerializeField] private UnityEvent<SubState, SubState> _switchingSubState;
+        [SerializeField] private AnimationCurve runModifierCurve;
+        [SerializeField] private UnityEvent<State, State> switchingState;
+        [SerializeField] private UnityEvent<SubState, SubState> switchingSubState;
 
         #endregion
         
@@ -30,17 +30,17 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         public float WalkSpeed => walkSpeed;
         public float SpeedInterpolation => speedInterpolation;
         public float CrouchSpeedModifier => crouchSpeedModifier;
-        public AnimationCurve RunModifierCurve => _runModifierCurve;
+        public AnimationCurve RunModifierCurve => runModifierCurve;
         public event UnityAction<State, State> SwitchingState
         {
-            add => _switchingState.AddListener(value);
-            remove => _switchingState.RemoveListener(value);
+            add => switchingState.AddListener(value);
+            remove => switchingState.RemoveListener(value);
         }
 
         public event UnityAction<SubState, SubState> SwitchingSubState
         {
-            add => _switchingSubState.AddListener(value);
-            remove => _switchingSubState.RemoveListener(value);
+            add => switchingSubState.AddListener(value);
+            remove => switchingSubState.RemoveListener(value);
         }
         
         public PlayerMover PlayerMover { get; private set; }
@@ -99,13 +99,13 @@ namespace Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
 
         private void SwitchState(State nextState)
         {
-            _switchingState?.Invoke(_currentState, nextState);
+            switchingState?.Invoke(_currentState, nextState);
             _currentState.OnStateExit();
             _currentState = nextState;
             _currentState.OnStateEnter();
         }
 
-        private void SwitchSubState(SubState current, SubState next) => _switchingSubState?.Invoke(current, next);
+        private void SwitchSubState(SubState current, SubState next) => switchingSubState?.Invoke(current, next);
 
         private void CheckForExceptions()
         {
