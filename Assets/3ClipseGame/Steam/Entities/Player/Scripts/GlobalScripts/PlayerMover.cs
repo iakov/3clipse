@@ -13,6 +13,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
         private Transform _cameraTransform;
         private Transform _playerTransform;
         private readonly List<Move> _movesList = new List<Move>();
+        public static bool IsFreezed = false;
 
         #endregion
 
@@ -51,6 +52,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
 
         public void UpdateWork()
         {
+            if (IsFreezed) return;
+            
             var resultMove = Vector3.zero;
             foreach (var move in _movesList)
             {
