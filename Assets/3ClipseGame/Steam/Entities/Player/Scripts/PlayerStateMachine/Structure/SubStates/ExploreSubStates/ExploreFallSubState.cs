@@ -1,24 +1,25 @@
+using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
 namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
 {
     public class ExploreFallSubState : SubState
     {
-        public ExploreFallSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
+        public ExploreFallSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory) =>
+            _factory = (ExploreSubStatesFactory) factory;
         
         private ExploreSubStatesFactory _factory;
-        private Vector3 _lastMove;
-        
+
         public override void OnStateEnter()
         {
-            _factory = (ExploreSubStatesFactory) Factory;
+            Context.PlayerGravity.RestartGravity();
+            var lastMove = Context.PlayerMover.GetLastMove(MoveType.StateMove);
+            lastMove.y = 0;
+            Context.PlayerMover.ChangeMove(MoveType.StateMove,lastMove, true);
         }
 
-        public override void OnStateUpdate()
-        {
-        }
+        public override void OnStateUpdate(){}
 
         public override void OnStateExit(){}
 
@@ -26,9 +27,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         {
             newState = null;
 
-            if (Physics.Raycast(Context.Transform.position, Vector3.down, Context.PlayerController.radius * 2)) newState = _factory.Idle();
+            if ((Context.PlayerController.collisionFlags & CollisionFlags.Below) != 0) newState = _factory.Idle();
 
-            return newState != null;
+                return newState != null;
         }
     }
 }

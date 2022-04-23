@@ -8,7 +8,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
     {
         #region Initialization
 
-        public ExploreRunSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
+        public ExploreRunSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory) =>
+            _factory = (ExploreSubStatesFactory) factory;
 
         private ExploreSubStatesFactory _factory;
         private float _timeToMaximumSpeed;
@@ -20,7 +21,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
 
         public override void OnStateEnter()
         {
-            _factory = (ExploreSubStatesFactory) Factory;
             _timeToMaximumSpeed = Context.RunModifierCurve.keys[Context.RunModifierCurve.length - 1].time;
         }
 
@@ -41,7 +41,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         {
             newState = null;
 
-            if (!Context.PlayerController.isGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
+            if (Context.InputHandler.IsJumpPressed) newState = _factory.Jump();
+            else if (!Context.PlayerController.isGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
                     Context.PlayerController.radius)) newState = _factory.Fall();
             else if (Context.InputHandler.CurrentInput == Vector2.zero) newState = _factory.Stop();
             else if (Context.InputHandler.IsCrouchPressed) newState = _factory.Crouch();

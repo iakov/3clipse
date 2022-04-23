@@ -8,17 +8,16 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
     {
         #region Initialization
 
-        public ExploreCrouchSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
+        public ExploreCrouchSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory) =>
+            _factory = (ExploreSubStatesFactory) factory;
+        
         private ExploreSubStatesFactory _factory;
 
         #endregion
 
         #region MonoBehaviourMethods
 
-        public override void OnStateEnter()
-        {
-            _factory = (ExploreSubStatesFactory) Factory;
-        }
+        public override void OnStateEnter(){}
 
         public override void OnStateUpdate()
         {

@@ -4,6 +4,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
 {
     public class Gravity : MonoBehaviour
     {
+        #region Initialization
+
         [Range(0, -10)] [SerializeField] private float gravity = -2f;
         [Range(0, -100)] [SerializeField] private float gravityLimit = -20f;
 
@@ -11,6 +13,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
         private CharacterController _playerController;
 
         private float _ungroundedTimer;
+
+        #endregion
+
+        #region MonoBehaviourMethods
 
         private void Start()
         {
@@ -27,5 +33,13 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
             gravitySquare = gravitySquare < gravityLimit ? gravityLimit : gravitySquare;
             _playerMover.ChangeMove(MoveType.GravityMove, new Vector3(0f, gravitySquare, 0f), false);
         }
+
+        #endregion
+
+        #region PublicMethods
+
+        public void RestartGravity() => _ungroundedTimer = 1f;
+
+        #endregion
     }
 }

@@ -16,6 +16,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         public SubState Stop() => new ExploreStopSubState(Context, this);
         public SubState Crouch() => new ExploreCrouchSubState(Context, this);
         public SubState Fall() => new ExploreFallSubState(Context, this);
+        public SubState Jump() => new ExploreJumpSubState(Context, this);
 
         #endregion
     }

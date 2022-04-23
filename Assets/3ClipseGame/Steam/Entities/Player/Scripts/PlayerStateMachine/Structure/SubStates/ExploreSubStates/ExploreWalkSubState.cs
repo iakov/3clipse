@@ -8,7 +8,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
     {
         #region Initialization
 
-        public ExploreWalkSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory){}
+        public ExploreWalkSubState(PlayerStateMachine context, SubStateFactory factory) : base(context, factory) =>
+            _factory = (ExploreSubStatesFactory) factory;
 
         private ExploreSubStatesFactory _factory;
         private Vector3 _lastMoveVector;
@@ -20,7 +21,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
 
         public override void OnStateEnter()
         {
-            _factory = (ExploreSubStatesFactory)Factory;
             _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove);
         }
 
@@ -40,9 +40,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         {
             newState = null;
 
-            if (!Context.PlayerController.isGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
+            if (Context.InputHandler.IsJumpPressed) newState = _factory.Jump();
+            else if (!Context.PlayerController.isGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
                     Context.PlayerController.radius)) newState = _factory.Fall();
-            if (Context.InputHandler.CurrentInput == Vector2.zero) newState = _factory.Stop();
+            else if (Context.InputHandler.CurrentInput == Vector2.zero) newState = _factory.Stop();
             else if (Context.InputHandler.IsRunPressed) newState = _factory.Run();
             else if (Context.InputHandler.IsCrouchPressed) newState = _factory.Crouch();
             return newState != null;

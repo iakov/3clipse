@@ -13,7 +13,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
         #region PrivateFields
 
         private PlayerMover _playerMover;
-        private global::_3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine _playerStateMachine;
+        private PlayerStateMachine.PlayerStateMachine _playerStateMachine;
 
         #endregion
 
@@ -21,7 +21,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
 
         private void Awake()
         {
-            _playerStateMachine = GetComponent<global::_3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.PlayerStateMachine>();
+            _playerStateMachine = GetComponent<PlayerStateMachine.PlayerStateMachine>();
             _playerMover = GetComponent<PlayerMover>();
         }
 

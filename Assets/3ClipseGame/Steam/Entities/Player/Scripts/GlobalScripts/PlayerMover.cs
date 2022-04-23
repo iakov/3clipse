@@ -60,6 +60,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
                 if (move.IsRotatedWithCamera)
                 {
                     var direction = move.MoveVector.x * _cameraTransform.right  + move.MoveVector.z * _cameraTransform.forward;
+                    direction.y = move.MoveVector.y;
                     resultMove += direction;
                 }
                 else resultMove += move.MoveVector;

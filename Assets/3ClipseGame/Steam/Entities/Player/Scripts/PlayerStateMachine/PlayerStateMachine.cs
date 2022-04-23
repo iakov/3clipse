@@ -1,8 +1,8 @@
 using System;
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
-using Assets._3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,6 +19,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         [Range(0, 10)] [SerializeField] private float walkSpeed = 3f;
         [Range(1, 10)] [SerializeField] private float speedInterpolation = 6f;
         [Range(0, 3)] [SerializeField] private float crouchSpeedModifier = 1f;
+        [SerializeField] private float jumpStrength = 2f;
         [SerializeField] private AnimationCurve runModifierCurve;
         [SerializeField] private UnityEvent<State, State> switchingState;
         [SerializeField] private UnityEvent<SubState, SubState> switchingSubState;
@@ -30,6 +31,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         public float WalkSpeed => walkSpeed;
         public float SpeedInterpolation => speedInterpolation;
         public float CrouchSpeedModifier => crouchSpeedModifier;
+        public float JumpStrength => jumpStrength;
         public AnimationCurve RunModifierCurve => runModifierCurve;
         public event UnityAction<State, State> SwitchingState
         {
@@ -46,6 +48,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
         public PlayerMover PlayerMover { get; private set; }
         public CharacterController PlayerController { get; private set; }
         public MovementInputHandler InputHandler { get; private set; }
+        public Gravity PlayerGravity { get; private set; }
         public Transform Transform { get; private set; }
 
         #endregion
@@ -65,6 +68,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine
             InputHandler = GetComponent<MovementInputHandler>();
             PlayerMover = GetComponent<PlayerMover>();
             Transform = GetComponent<Transform>();
+            PlayerGravity = GetComponent<Gravity>();
             
             CheckForExceptions();
             _stateFactory = new StateFactory(this);

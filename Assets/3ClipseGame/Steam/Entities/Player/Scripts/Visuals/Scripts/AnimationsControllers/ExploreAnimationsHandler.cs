@@ -13,6 +13,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsC
         private static readonly int IsWalking = Animator.StringToHash("IsWalking");
         private static readonly int IsCrouching = Animator.StringToHash("IsCrouching");
         private static readonly int IsFalling = Animator.StringToHash("IsFalling");
+        private static readonly int IsJumping = Animator.StringToHash("IsJumping");
 
         #endregion
 
@@ -31,6 +32,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsC
         public override void ApplyLeavingSubState(SubState currentSubState)
         {
             if(currentSubState.GetType() == typeof(ExploreRunSubState)) Animator.SetBool(IsRunning, false);
+            if(currentSubState.GetType() == typeof(ExploreJumpSubState)) Animator.SetBool(IsJumping, false);
         }
 
         public override void ApplyEnteringSubState(SubState newSubState)
@@ -46,6 +48,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsC
             else if (newSubState.GetType() == typeof(ExploreRunSubState)) Animator.SetBool(IsRunning, true);
             else if(newSubState.GetType() == typeof(ExploreCrouchSubState)) Animator.SetBool(IsCrouching, true);
             else if(newSubState.GetType() == typeof(ExploreFallSubState)) Animator.SetBool(IsFalling, true);
+            else if (newSubState.GetType() == typeof(ExploreJumpSubState)) Animator.SetTrigger(IsJumping);
+            
         }
 
         #endregion
