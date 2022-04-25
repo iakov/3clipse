@@ -1,5 +1,6 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates.ExploreSubStates
@@ -20,7 +21,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structur
         public override void OnStateUpdate()
         {
             var jumpMoveVector = _lastMoveVector + Vector3.up * Context.JumpStrength;
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, jumpMoveVector, true);
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, jumpMoveVector, RotationType.RotateOnBeginning);
         }
 
         public override void OnStateExit()

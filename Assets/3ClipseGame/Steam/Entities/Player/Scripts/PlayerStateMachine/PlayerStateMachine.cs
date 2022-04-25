@@ -3,6 +3,7 @@ using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Structure.SubStates;
+using Assets._3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
 using UnityEngine;
 using UnityEngine.Events;
 
