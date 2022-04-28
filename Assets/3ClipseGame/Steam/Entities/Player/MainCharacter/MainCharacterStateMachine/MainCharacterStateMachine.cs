@@ -1,0 +1,123 @@
+using System;
+using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
+using _3ClipseGame.Steam.Entities.Player.Scripts;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine.Input;
+using UnityEngine;
+using UnityEngine.Events;
+
+namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine
+{
+    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(MovementInputHandler))]
+    public class MainCharacterStateMachine : MonoBehaviour
+    {
+        #region SerializeFields
+
+        [Header("Explore Parameters" )]
+        [Space]
+        [Range(0, 10)] [SerializeField] private float walkSpeed = 3f;
+        [Range(1, 10)] [SerializeField] private float speedInterpolation = 6f;
+        [Range(0, 3)] [SerializeField] private float crouchSpeedModifier = 1f;
+        [SerializeField] private float jumpStrength = 2f;
+        [SerializeField] private AnimationCurve runModifierCurve;
+        [SerializeField] private LayerMask walkableLayerMask;
+        [SerializeField] private UnityEvent<MainCharacterState, MainCharacterState> switchingState;
+        [SerializeField] private UnityEvent<MainCharacterSubState, MainCharacterSubState> switchingSubState;
+
+        #endregion
+        
+        #region PublicGetters
+        
+        public float WalkSpeed => walkSpeed;
+        public float SpeedInterpolation => speedInterpolation;
+        public float CrouchSpeedModifier => crouchSpeedModifier;
+        public float JumpStrength => jumpStrength;
+        public AnimationCurve RunModifierCurve => runModifierCurve;
+        public LayerMask WalkableLayerMask => walkableLayerMask;
+        public event UnityAction<MainCharacterState, MainCharacterState> SwitchingState
+        {
+            add => switchingState.AddListener(value);
+            remove => switchingState.RemoveListener(value);
+        }
+
+        public event UnityAction<MainCharacterSubState, MainCharacterSubState> SwitchingSubState
+        {
+            add => switchingSubState.AddListener(value);
+            remove => switchingSubState.RemoveListener(value);
+        }
+        
+        public PlayerMover PlayerMover { get; private set; }
+        public Animator MainCharacterAnimator { get; private set; }
+        public CharacterController PlayerController { get; private set; }
+        public MovementInputHandler InputHandler { get; private set; }
+        public Transform Transform { get; private set; }
+
+        #endregion
+
+        #region PrivateFields
+
+        private MainCharacterState _currentMainCharacterState;
+        private MainCharacterStateFactory _mainCharacterStateFactory;
+
+        #endregion
+
+        #region MonoBehaviourMethods
+
+        private void Awake()
+        {
+            PlayerController = GetComponent<CharacterController>();
+            InputHandler = GetComponent<MovementInputHandler>();
+            PlayerMover = GetComponent<PlayerMover>();
+            Transform = PlayerController.transform;
+            MainCharacterAnimator = GetComponent<Animator>();
+            
+            CheckForExceptions();
+            _mainCharacterStateFactory = new MainCharacterStateFactory(this);
+            _currentMainCharacterState = _mainCharacterStateFactory.ExploreState();
+            _currentMainCharacterState.OnStateEnter();
+        }
+
+        private void OnEnable()
+        {
+            _currentMainCharacterState.SwitchingSubState += SwitchSubMainCharacterState;
+        }
+
+        private void OnDisable()
+        {
+            _currentMainCharacterState.SwitchingSubState -= SwitchSubMainCharacterState;
+        }
+
+        #endregion
+
+        #region PublicMethods
+
+        public void UpdateWork()
+        {
+            if (_currentMainCharacterState == null) return;
+            if (_currentMainCharacterState.TrySwitchState(out var nextState)) SwitchState(nextState);
+            _currentMainCharacterState.OnStateUpdate();
+        }
+
+        #endregion
+
+        #region Functions
+
+        private void SwitchState(MainCharacterState nextMainCharacterState)
+        {
+            switchingState?.Invoke(_currentMainCharacterState, nextMainCharacterState);
+            _currentMainCharacterState.OnStateExit();
+            _currentMainCharacterState = nextMainCharacterState;
+            _currentMainCharacterState.OnStateEnter();
+        }
+
+        private void SwitchSubMainCharacterState(MainCharacterSubState current, MainCharacterSubState next) => switchingSubState?.Invoke(current, next);
+
+        private void CheckForExceptions()
+        {
+            if (RunModifierCurve.length <= 1) throw new ArgumentException("RunModifierCurve wrong function");
+        }
+
+        #endregion
+    }
+}
