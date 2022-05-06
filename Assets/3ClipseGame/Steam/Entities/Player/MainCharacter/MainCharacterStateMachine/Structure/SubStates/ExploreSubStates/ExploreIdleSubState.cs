@@ -16,11 +16,12 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         #endregion
 
-        #region MonoBehaviourMethods
+        #region SubStaateMethods
 
         public override void OnStateEnter()
         {
             _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove);
+            Context.PlayerGravity.RestartGravity();
         }
 
         public override void OnStateUpdate()
@@ -38,6 +39,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
         {
             newMainCharacterState = null;
+            if (StateTimer < 0.1f) return false;
 
             if (Context.InputHandler.IsJumpPressed) newMainCharacterState = _factory.Jump();
             else if (!Context.PlayerController.isGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,

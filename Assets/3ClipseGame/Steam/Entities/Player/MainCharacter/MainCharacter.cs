@@ -1,8 +1,5 @@
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Scripts.AnimationsControllers;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
-using _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerStateMachine;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter

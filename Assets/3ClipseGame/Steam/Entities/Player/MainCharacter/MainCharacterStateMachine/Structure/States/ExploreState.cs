@@ -44,7 +44,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         private void SwitchSubState(MainCharacterSubState nextMainCharacterSubState)
         {
-            SwitchSubState(_currentMainCharacterSubState, nextMainCharacterSubState);
+            base.SwitchSubState(_currentMainCharacterSubState, nextMainCharacterSubState);
             _currentMainCharacterSubState.OnStateExit();
             _currentMainCharacterSubState = nextMainCharacterSubState;
             _currentMainCharacterSubState.OnStateEnter();

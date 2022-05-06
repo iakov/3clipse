@@ -83,7 +83,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
         {
             resultMove.y = 0f;
             if (resultMove == Vector3.zero) return;
-            _playerTransform.rotation = Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(resultMove), rotationSpeed);
+            _playerTransform.rotation = Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(resultMove), rotationSpeed * Time.deltaTime);
         }
 
         #endregion

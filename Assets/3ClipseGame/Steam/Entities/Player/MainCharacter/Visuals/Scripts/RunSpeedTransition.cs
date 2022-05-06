@@ -36,6 +36,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Scripts
             animator.SetFloat(WalkSpeed, currentSpeed);
         }
 
+        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) => animator.SetFloat(WalkSpeed, minSpeed);
+        
+
         #endregion
     }
 }

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844237b9ff6fd7448aa059a6fd0c2153, type: 3}
+  m_Name: MainCharacterSounds
+  m_EditorClassIdentifier: 
+  materialsStepSounds:
+  - materials:
+    - {fileID: 2100000, guid: 6ca201a9654219d4bb9c3f07592e74ff, type: 2}
+    stepClips:
+    - {fileID: 8300000, guid: bee1dafc08c3902419d4f6d30905c3f2, type: 3}
+  - materials:
+    - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+    stepClips:
+    - {fileID: 8300000, guid: 6eef383bdc45dcb45b493407c9e886ec, type: 3}
+  defaultStepSound:
+  - {fileID: 8300000, guid: caf1b4ab8e4260044acb90b8ace4f8d3, type: 3}

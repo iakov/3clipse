@@ -47,6 +47,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             remove => switchingSubState.RemoveListener(value);
         }
         
+        public Gravity PlayerGravity { get; private set; }
         public PlayerMover PlayerMover { get; private set; }
         public Animator MainCharacterAnimator { get; private set; }
         public CharacterController PlayerController { get; private set; }
@@ -69,6 +70,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             PlayerController = GetComponent<CharacterController>();
             InputHandler = GetComponent<MovementInputHandler>();
             PlayerMover = GetComponent<PlayerMover>();
+            PlayerGravity = GetComponent<Gravity>();
             Transform = PlayerController.transform;
             MainCharacterAnimator = GetComponent<Animator>();
             
@@ -78,15 +80,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             _currentMainCharacterState.OnStateEnter();
         }
 
-        private void OnEnable()
-        {
-            _currentMainCharacterState.SwitchingSubState += SwitchSubMainCharacterState;
-        }
-
-        private void OnDisable()
-        {
-            _currentMainCharacterState.SwitchingSubState -= SwitchSubMainCharacterState;
-        }
+        private void OnEnable() => _currentMainCharacterState.SwitchingSubState += SwitchSubState;
+        private void OnDisable() => _currentMainCharacterState.SwitchingSubState -= SwitchSubState;
+        
 
         #endregion
 
@@ -111,7 +107,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             _currentMainCharacterState.OnStateEnter();
         }
 
-        private void SwitchSubMainCharacterState(MainCharacterSubState current, MainCharacterSubState next) => switchingSubState?.Invoke(current, next);
+        private void SwitchSubState(MainCharacterSubState current, MainCharacterSubState next) => switchingSubState?.Invoke(current, next);
 
         private void CheckForExceptions()
         {

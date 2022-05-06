@@ -3,7 +3,7 @@ using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States
 {
-    public abstract class MainCharacterState
+    public abstract class MainCharacterState : IStateMachine
     {
         #region Initialization
 

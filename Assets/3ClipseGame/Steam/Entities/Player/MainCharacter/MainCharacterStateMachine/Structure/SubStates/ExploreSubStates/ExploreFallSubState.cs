@@ -25,8 +25,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
             
-            var legsRay = new Ray(Context.MainCharacterAnimator.bodyPosition, Vector3.down);
-            if (Physics.SphereCast(legsRay, Context.PlayerController.radius, Context.PlayerController.height/2, Context.WalkableLayerMask)) newMainCharacterState = _factory.Idle();
+            var legsRay = new Ray(Context.MainCharacterAnimator.GetBoneTransform(HumanBodyBones.LeftFoot).position, Vector3.down);
+            if (Physics.Raycast(legsRay, 0.5f, Context.WalkableLayerMask)) newMainCharacterState = _factory.Idle();
 
             return newMainCharacterState != null;
         }
