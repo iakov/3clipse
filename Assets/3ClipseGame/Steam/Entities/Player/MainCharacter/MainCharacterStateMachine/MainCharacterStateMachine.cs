@@ -49,7 +49,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         
         public Gravity PlayerGravity { get; private set; }
         public PlayerMover PlayerMover { get; private set; }
-        public Animator MainCharacterAnimator { get; private set; }
+        public MainCharacter MainCharacter { get; private set; }
         public CharacterController PlayerController { get; private set; }
         public MovementInputHandler InputHandler { get; private set; }
         public Transform Transform { get; private set; }
@@ -72,7 +72,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             PlayerMover = GetComponent<PlayerMover>();
             PlayerGravity = GetComponent<Gravity>();
             Transform = PlayerController.transform;
-            MainCharacterAnimator = GetComponent<Animator>();
+            MainCharacter = GetComponent<MainCharacter>();
             
             CheckForExceptions();
             _mainCharacterStateFactory = new MainCharacterStateFactory(this);

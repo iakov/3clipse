@@ -10,7 +10,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
         [Range(0, -100)] [SerializeField] private float gravityLimit = -20f;
 
         private PlayerMover _playerMover;
-        private CharacterController _playerController;
+        private MainCharacter.MainCharacter _mainCharacter;
 
         private float _ungroundedTimer;
 
@@ -21,12 +21,12 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
         private void Start()
         {
             _playerMover = GetComponent<PlayerMover>();
-            _playerController = GetComponent<CharacterController>();
+            _mainCharacter = GetComponent<MainCharacter.MainCharacter>();
         }
 
         private void Update()
         {
-            if (_playerController.isGrounded) _ungroundedTimer = 1f;
+            if (_mainCharacter.IsGrounded) _ungroundedTimer = 1f;
             else _ungroundedTimer += Time.deltaTime;
 
             var gravitySquare = -Mathf.Pow(_ungroundedTimer * gravity, 2);

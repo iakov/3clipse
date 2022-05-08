@@ -10,10 +10,18 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter
     [RequireComponent(typeof(PlayerAnimationsController))]
     public class MainCharacter : MonoBehaviour
     {
+        #region PublicFields
+
+        public bool IsGrounded { get; private set; }
+
+        #endregion
+        
         #region PrivateFields
         
         private PlayerMover _playerMover;
         private MainCharacterStateMachine.MainCharacterStateMachine _mainCharacterStateMachine;
+        private Animator _mainCharacterAnimator;
+        private CharacterController _characterController;
 
         #endregion
 
@@ -23,12 +31,17 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter
         {
             _mainCharacterStateMachine = GetComponent<MainCharacterStateMachine.MainCharacterStateMachine>();
             _playerMover = GetComponent<PlayerMover>();
+            _mainCharacterAnimator = GetComponent<Animator>();
+            _characterController = GetComponent<CharacterController>();
         }
 
         private void Update()
         {
             _mainCharacterStateMachine.UpdateWork();
             _playerMover.UpdateWork();
+
+            var legsRay = new Ray(_mainCharacterAnimator.GetBoneTransform(HumanBodyBones.Spine).position, Vector3.down);
+            IsGrounded = Physics.Raycast(legsRay, _characterController.height/1.5f, _mainCharacterStateMachine.WalkableLayerMask);
         }
 
         #endregion

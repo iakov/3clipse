@@ -76,6 +76,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
                 }
                 else resultMove += move.MoveVector;
             }
+            
             _playerController.Move(resultMove * Time.deltaTime);
         }
 

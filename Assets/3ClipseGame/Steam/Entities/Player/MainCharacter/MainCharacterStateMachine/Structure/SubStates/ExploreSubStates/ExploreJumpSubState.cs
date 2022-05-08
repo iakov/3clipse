@@ -25,6 +25,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateUpdate()
         {
+            AddTime(Time.deltaTime);
             var jumpMoveVector = _lastMoveVector + Vector3.up * Context.JumpStrength;
             Context.PlayerMover.ChangeMove(MoveType.StateMove, jumpMoveVector, RotationType.RotateOnBeginning);
         }
@@ -38,7 +39,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
 
-            if (Context.PlayerController.isGrounded) newMainCharacterState = _factory.Idle();
+            if (Context.MainCharacter.IsGrounded && StateTimer > 0.1f) newMainCharacterState = _factory.Idle();
             else if(Context.PlayerMover.GetLastMove(MoveType.StateMove).y + Context.PlayerMover.GetLastMove(MoveType.GravityMove).y < 0) newMainCharacterState = _factory.Fall();
 
             return newMainCharacterState != null;
