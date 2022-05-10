@@ -1,5 +1,6 @@
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates
@@ -20,7 +21,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateEnter()
         {
-            _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove);
+            _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove, false);
         }
 
         public override void OnStateUpdate()
@@ -42,7 +43,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             if (Context.InputHandler.IsJumpPressed) newMainCharacterState = _factory.Jump();
             else if (!Context.PlayerController.isGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
                     Context.PlayerController.radius)) newMainCharacterState = _factory.Fall();
-            else if (Context.PlayerMover.GetLastMove(MoveType.StateMove) == Vector3.zero) newMainCharacterState = _factory.Idle();
+            else if (Context.PlayerMover.GetLastMove(MoveType.StateMove, false) == Vector3.zero) newMainCharacterState = _factory.Idle();
             else if (Context.InputHandler.CurrentInput != Vector2.zero) newMainCharacterState = _factory.Walk();
 
             return newMainCharacterState != null;

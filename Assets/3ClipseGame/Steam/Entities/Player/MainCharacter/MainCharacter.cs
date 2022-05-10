@@ -1,5 +1,6 @@
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Scripts.AnimationsControllers;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter

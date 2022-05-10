@@ -1,5 +1,6 @@
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates
@@ -20,7 +21,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateEnter()
         {
-            _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove);
+            _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove, false);
             _lastMoveVector.y = 0f;
             Context.PlayerGravity.RestartGravity();
         }

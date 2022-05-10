@@ -1,5 +1,6 @@
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates
@@ -20,14 +21,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateEnter()
         {
-            _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove);
+            _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove, true);
         }
 
         public override void OnStateUpdate()
         {
             AddTime(Time.deltaTime);
             var jumpMoveVector = _lastMoveVector + Vector3.up * Context.JumpStrength;
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, jumpMoveVector, RotationType.RotateOnBeginning);
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, jumpMoveVector, RotationType.NoRotation);
         }
 
         public override void OnStateExit()
@@ -40,7 +41,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             newMainCharacterState = null;
 
             if (Context.MainCharacter.IsGrounded && StateTimer > 0.1f) newMainCharacterState = _factory.Idle();
-            else if(Context.PlayerMover.GetLastMove(MoveType.StateMove).y + Context.PlayerMover.GetLastMove(MoveType.GravityMove).y < 0) newMainCharacterState = _factory.Fall();
+            else if(Context.PlayerMover.GetLastMove(MoveType.StateMove, false).y + Context.PlayerMover.GetLastMove(MoveType.GravityMove, false).y < 0) newMainCharacterState = _factory.Fall();
 
             return newMainCharacterState != null;
         }

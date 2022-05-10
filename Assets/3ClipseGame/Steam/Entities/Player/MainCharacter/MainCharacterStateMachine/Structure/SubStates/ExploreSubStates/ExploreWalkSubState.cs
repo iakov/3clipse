@@ -1,5 +1,6 @@
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates
@@ -12,18 +13,12 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             _factory = (ExploreSubStatesFactory) factory;
 
         private ExploreSubStatesFactory _factory;
-        private Vector3 _lastMoveVector;
-
 
         #endregion
 
         #region SubStateMethods
 
-        public override void OnStateEnter()
-        {
-            _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove);
-            _lastMoveVector.y = 0f;
-        }
+        public override void OnStateEnter(){}
 
         public override void OnStateUpdate()
         {
