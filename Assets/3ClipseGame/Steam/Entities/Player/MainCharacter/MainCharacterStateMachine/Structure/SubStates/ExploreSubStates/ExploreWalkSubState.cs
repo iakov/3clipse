@@ -22,6 +22,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public override void OnStateEnter()
         {
             _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove);
+            _lastMoveVector.y = 0f;
         }
 
         public override void OnStateUpdate()
@@ -29,9 +30,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             AddTime(Time.deltaTime);
             var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
             var moveVector = rawMoveVector * Context.WalkSpeed;
-            var t = StateTimer <= 1 ? StateTimer : 1f;
-            var interpolatedMoveVector = Vector3.Lerp(_lastMoveVector, moveVector, t * Context.SpeedInterpolation);
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, RotationType.RotateWithCamera);
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateWithCamera);
         }
         
         public override void OnStateExit(){}

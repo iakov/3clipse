@@ -92,7 +92,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
         #region PrivateClasses
 
         private class Move
-        {
+        { 
             public Move(MoveType type, Vector3 moveVector, RotationType rotationType, Transform cameraTransform)
             {
                 MoveType = type;
