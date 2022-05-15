@@ -22,13 +22,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public override void OnStateEnter()
         {
             _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove, true);
+            _lastMoveVector.y = 0f;
+            var jumpMoveVector = _lastMoveVector + Vector3.up * Context.JumpStrength;
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, jumpMoveVector, RotationType.NoRotation);
         }
 
         public override void OnStateUpdate()
         {
             AddTime(Time.deltaTime);
-            var jumpMoveVector = _lastMoveVector + Vector3.up * Context.JumpStrength;
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, jumpMoveVector, RotationType.NoRotation);
         }
 
         public override void OnStateExit()
