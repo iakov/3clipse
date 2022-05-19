@@ -1,0 +1,74 @@
+{
+    "name": "HUDInputActions",
+    "maps": [
+        {
+            "name": "HUDActions",
+            "id": "ae8d0ee5-ee0e-4338-8cc4-8911ac11bec3",
+            "actions": [
+                {
+                    "name": "ToggleMainMenu",
+                    "type": "Button",
+                    "id": "20841473-99bd-433a-83a0-4f3524412efb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleInventoryMenu",
+                    "type": "Button",
+                    "id": "d29367a0-ad6a-4dcb-8209-5b1d2fc0920c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleSkillsMenu",
+                    "type": "Button",
+                    "id": "8c3e7de4-1f9e-4d5d-a6b9-17edb762b2e3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8570186c-a1fe-4951-9bf8-ba491430a5d0",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleMainMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "31400c18-7545-4d19-9239-3f354b18e961",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleInventoryMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c1897a8-f9e1-4d71-9aa5-2f5021ca765a",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleSkillsMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

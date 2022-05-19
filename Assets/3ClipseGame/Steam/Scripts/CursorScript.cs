@@ -1,9 +1,13 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts.GlobalScripts
+namespace _3ClipseGame.Steam.Scripts
 {
     public class CursorScript : MonoBehaviour
     {
-        private void Start() => Cursor.lockState = CursorLockMode.Locked;
+        public static CursorScript Instance { get; private set; }
+        
+        private void Awake() => Instance = this;
+        private void Start() => SwitchCursorMode(CursorLockMode.Locked);
+        public void SwitchCursorMode(CursorLockMode mode) => Cursor.lockState = mode;
     }
 }

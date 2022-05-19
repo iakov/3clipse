@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -85,7 +84,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
             resultMove = _movesList.Aggregate(Vector3.zero, (current, move) => current + move.GetRotatedVector());
             
             _playerController.Move(resultMove * Time.deltaTime);
-            Debug.Log(resultMove);
         }
 
         private void UpdateRotation(Vector3 resultMove)
