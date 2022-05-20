@@ -1,8 +1,8 @@
-using _3ClipseGame.Steam.Scripts;
+using _3ClipseGame.Steam.Globals.Scripts;
+using _3ClipseGame.Steam.UI.Scripts.TabSystem;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace _3ClipseGame.Steam.UI.Scripts.TabSystem
+namespace _3ClipseGame.Steam.Globals.UI.Scripts.TabSystem
 {
     public class SwitchTabGroup : MonoBehaviour
     {
@@ -17,6 +17,7 @@ namespace _3ClipseGame.Steam.UI.Scripts.TabSystem
             
             Game.Instance.InputManager.MoveInputHandler.Deactivate();
             Game.Instance.CursorScript.SwitchCursorMode(CursorLockMode.Confined);
+            Game.Instance.CameraManager.SwitchCamera(CameraManager.CameraType.MainMenu);
             menuTabGroup.OnTabClicked(activeTab);
         }
 
@@ -27,6 +28,7 @@ namespace _3ClipseGame.Steam.UI.Scripts.TabSystem
             
             Game.Instance.InputManager.MoveInputHandler.Activate();
             Game.Instance.CursorScript.SwitchCursorMode(CursorLockMode.Locked);
+            Game.Instance.CameraManager.SwitchCamera(CameraManager.CameraType.MainCharacter);
         }
     }
 }

@@ -1,3 +1,4 @@
+using _3ClipseGame.Steam.Globals.UI.Scripts.TabSystem;
 using _3ClipseGame.Steam.UI.Scripts.TabSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,9 +10,13 @@ namespace _3ClipseGame.Steam.Input.HUDInput
     {
         [SerializeField] private SwitchTabGroup switchTabGroup;
         
+        [Header("Menu Tabs")]
         [SerializeField] private TabButton menuInventoryTab;
         [SerializeField] private TabButton menuMainTab;
         [SerializeField] private TabButton menuSkillsTab;
+
+        [Header("HUD Components")] 
+        [SerializeField] private GameObject elementalWheel;
         
         private HUDInputActions _hudInputActions;
 
@@ -25,6 +30,9 @@ namespace _3ClipseGame.Steam.Input.HUDInput
             _hudInputActions.HUDActions.ToggleMainMenu.started += OnToggleMainMenu;
             _hudInputActions.HUDActions.ToggleInventoryMenu.started += OnToggleInventoryMenu;
             _hudInputActions.HUDActions.ToggleSkillsMenu.started += OnToggleSkillsMenu;
+
+            _hudInputActions.HUDActions.ShowElementalWheel.started += OnToggleElementalWheel;
+            _hudInputActions.HUDActions.ShowElementalWheel.canceled += OnToggleElementalWheel;
         }
 
         private void OnDisable()
@@ -36,5 +44,6 @@ namespace _3ClipseGame.Steam.Input.HUDInput
         private void OnToggleMainMenu(InputAction.CallbackContext context) => switchTabGroup.SwitchTabToMenu(menuMainTab);
         private void OnToggleInventoryMenu(InputAction.CallbackContext context) => switchTabGroup.SwitchTabToMenu(menuInventoryTab);
         private void OnToggleSkillsMenu(InputAction.CallbackContext context) => switchTabGroup.SwitchTabToMenu(menuSkillsTab);
+        private void OnToggleElementalWheel(InputAction.CallbackContext context) => elementalWheel.SetActive(context.ReadValueAsButton());
     }
 }

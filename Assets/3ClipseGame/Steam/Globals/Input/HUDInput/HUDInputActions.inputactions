@@ -31,13 +31,22 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ShowElementalWheel",
+                    "type": "Button",
+                    "id": "b16af61f-1d5f-4ceb-ac9d-37108dc5da8a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "8570186c-a1fe-4951-9bf8-ba491430a5d0",
-                    "path": "<Keyboard>/i",
+                    "path": "<Keyboard>/o",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -48,7 +57,7 @@
                 {
                     "name": "",
                     "id": "31400c18-7545-4d19-9239-3f354b18e961",
-                    "path": "<Keyboard>/o",
+                    "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -64,6 +73,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ToggleSkillsMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2637e3c-cb47-4cbb-b0f1-b1861b10b3fb",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShowElementalWheel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
