@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using _3ClipseGame.Steam.UI.Scripts.TabSystem;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.UI.Scripts.TabSystem
+namespace _3ClipseGame.Steam.Globals.UI.Scripts.TabSystem
 {
     public class TabGroup : MonoBehaviour
     {
-        [SerializeField] private List<TabButton> tabButtons;
+        private List<TabButton> _tabButtons;
         [SerializeField] private Sprite tabIdle;
         [SerializeField] private Sprite tabHover;
         [SerializeField] private Sprite tabActive;
@@ -15,8 +16,8 @@ namespace _3ClipseGame.Steam.UI.Scripts.TabSystem
 
         public void Subscribe(TabButton button)
         {
-            tabButtons ??= new List<TabButton>();
-            tabButtons.Add(button);
+            _tabButtons ??= new List<TabButton>();
+            _tabButtons.Add(button);
         }
 
         public void OnTabEnter(TabButton button)
@@ -32,7 +33,7 @@ namespace _3ClipseGame.Steam.UI.Scripts.TabSystem
         public void OnTabClicked(TabButton button)
         {
             ResetTabs();
-            foreach (var tabButton in tabButtons.Where(tabButton => tabButton != button))
+            foreach (var tabButton in _tabButtons.Where(tabButton => tabButton != button))
             {
                 tabButton.SetTabActive(false);
                 tabButton.backgroundImage.sprite = tabIdle;
@@ -45,7 +46,7 @@ namespace _3ClipseGame.Steam.UI.Scripts.TabSystem
 
         private void ResetTabs()
         {
-            foreach (var button in tabButtons.Where(button => button != _currentActiveButton))
+            foreach (var button in _tabButtons.Where(button => button != _currentActiveButton))
                 button.backgroundImage.sprite = tabIdle;
         }
     }

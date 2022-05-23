@@ -12,7 +12,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         private CharacterController _playerController;
         private Transform _cameraTransform;
         private Transform _playerTransform;
-        private readonly List<Move> _movesList = new List<Move>();
+        private readonly List<Move> _movesList = new();
         public static bool IsFreezed = false;
 
         #endregion
@@ -23,7 +23,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         {
             _playerController = GetComponent<CharacterController>();
             _playerTransform = GetComponent<Transform>();
-            if (Camera.main != null) _cameraTransform = Camera.main.transform;
+            if (UnityEngine.Camera.main != null) _cameraTransform = UnityEngine.Camera.main.transform;
         }
 
         #endregion

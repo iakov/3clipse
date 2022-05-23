@@ -1,13 +1,12 @@
-using System;
-using _3ClipseGame.Steam.Globals.UI.Scripts.TabSystem;
-using _3ClipseGame.Steam.UI.Scripts.TabSystem;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace _3ClipseGame.Steam.Input.MenuInput
+namespace _3ClipseGame.Steam.Globals.Input.MenuInput
 {
     public class MenuInputHandler : MonoBehaviour
     {
-        [SerializeField] private SwitchTabGroup switchTabGroup;
+        [SerializeField] private UnityEvent switchModeToHUD;
+        
         private MenuInputActions _menuInputActions;
 
         private void OnEnable()
@@ -17,7 +16,7 @@ namespace _3ClipseGame.Steam.Input.MenuInput
             _menuInputActions.Enable();
             _menuInputActions.MenuActions.Enable();
 
-            _menuInputActions.MenuActions.Exit.started += context => { switchTabGroup.SwitchTabToHUD(); };
+            _menuInputActions.MenuActions.Exit.started += _ => { switchModeToHUD?.Invoke(); };
         }
 
         private void OnDisable()

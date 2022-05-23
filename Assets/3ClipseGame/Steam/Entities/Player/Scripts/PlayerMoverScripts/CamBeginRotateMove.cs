@@ -6,7 +6,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
     {
         public CamBeginRotateMove(MoveType moveType, Vector3 inputVector, Transform mainCameraTransform) : base(moveType, inputVector, mainCameraTransform)
         {
-            _rotatedVector = inputVector.x * mainCameraTransform.right + inputVector.z * mainCameraTransform.forward;
+            var cameraForward = MainCameraTransform.forward;
+            cameraForward.y = 0;
+            _rotatedVector =  RawVector.x * MainCameraTransform.right + RawVector.z * cameraForward.normalized;
         }
         
         private Vector3 _rotatedVector;

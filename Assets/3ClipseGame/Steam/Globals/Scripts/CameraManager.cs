@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cinemachine;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Globals.Scripts
@@ -11,10 +12,18 @@ namespace _3ClipseGame.Steam.Globals.Scripts
 
         [SerializeField] private CameraStatesDictionary cameraStatesDictionary;
         [SerializeField] private Animator cameraAnimator;
+        [SerializeField] private float mainCameraToMenuTransitionTime = 0.5f;
+
+        private CinemachineBlenderSettings _blendSettings;
+
+        private float _beforeDisableXCameraSpeed;
+        private float _beforeDisableYCameraSpeed;
 
         #endregion
 
         #region PublicMethods
+
+        public float GetTransitionTime() => mainCameraToMenuTransitionTime;
 
         public void SwitchCamera(CameraType cameraType)
         {
