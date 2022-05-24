@@ -3,7 +3,7 @@ using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
-using _3ClipseGame.Steam.Input.PlayerInput;
+using _3ClipseGame.Steam.Global.Input.PlayerInput;
 using UnityEngine;
 using UnityEngine.Events;
 
