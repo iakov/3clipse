@@ -47,10 +47,11 @@ namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
 
         #region Coroutines
 
-        protected IEnumerator TrackBlendCompletion()
+        protected IEnumerator TrackBlendCompletion(ICinemachineCamera stateCamera)
         {
             yield return null;
             while (stateDrivenCamera.IsBlending) yield return null;
+            if (stateDrivenCamera.LiveChild != stateCamera) yield break; 
             blendCompleted?.Invoke();
         }
 

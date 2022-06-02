@@ -1,6 +1,7 @@
 using _3ClipseGame.Steam.Global.Input.MenuInput;
 using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using _3ClipseGame.Steam.Global.UI.Scripts.TabSystem;
+using Cinemachine;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
@@ -12,6 +13,9 @@ namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
         [Header("Input")] 
         [SerializeField] private MenuInputHandler menuInputHandler;
         [SerializeField] private TabGroup menuTabGroup;
+
+        [Header("Camera")] 
+        [SerializeField] private CinemachineVirtualCamera virtualCamera;
 
         #endregion
         
@@ -33,7 +37,7 @@ namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
         {
             cameraAnimatorController.SwitchCamera(CameraAnimatorController.CameraType.MainMenu);
             blendBegan?.Invoke();
-            StartCoroutine(TrackBlendCompletion());
+            StartCoroutine(TrackBlendCompletion(virtualCamera));
             
             uiManager.SwitchHUD(false);
             Time.timeScale = timeScale;

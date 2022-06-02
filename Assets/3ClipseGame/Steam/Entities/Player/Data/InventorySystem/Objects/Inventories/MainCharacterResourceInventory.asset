@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5a933067e07524c96044f2564c9e4b, type: 3}
   m_Name: MainCharacterResourceInventory
   m_EditorClassIdentifier: 
+  slotsAmount: 10
