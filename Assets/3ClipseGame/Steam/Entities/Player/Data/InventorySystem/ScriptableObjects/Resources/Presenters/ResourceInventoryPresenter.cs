@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
 
         #region PrivateFields
 
-        private List<GameObject> _slots = new();
+        private List<ResourceSlotPresenter> _slots = new();
 
         #endregion
 
@@ -34,41 +33,27 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
         private void OnItemAdded(ResourceSlot resourceSlot)
         {
             ChangeData(resourceSlot);
-            SortIconsByName();
-            ClearIcons();
-            RefreshIcons();
         }
         
         private void ChangeData(ResourceSlot resourceSlot)
         {
-            ResourceSlotPresenter presenter = null;
-            foreach (var slot in _slots)
+            foreach (var slot in _slots.Where(slot => slot.ResourceSlot == resourceSlot))
             {
-                presenter = slot.GetComponent<ResourceSlotPresenter>();
-                if(presenter.ResourceSlot == resourceSlot) presenter.UpdateView();
+                slot.UpdateView();
+                return;
             }
-
-            if (presenter == null) throw new ArgumentException("Something went wrong");
-        }
-
-        private void SortIconsByName()
-        {
-            //TODO: Make sort of items in alphabet order
-        }
-
-        private void ClearIcons()
-        {
-            foreach (var slot in _slots) Destroy(slot);
-            _slots.Clear();
+            
+            _slots.Add(Instantiate(slotPrefab, panel).GetComponent<ResourceSlotPresenter>());
+            _slots[^1].ResourceSlot = resourceSlot;
+            _slots[^1].UpdateView();
         }
 
         private void RefreshIcons()
         {
-            for (var i = 0; i < resourceInventory.slotsAmount; i++)
+            for (var i = 0; i < resourceInventory.Slots.Count; i++)
             {
-                _slots.Add( Instantiate(slotPrefab, panel));
-                var resourceSlot = _slots[i].GetComponent<ResourceSlotPresenter>(); 
-                resourceSlot.ResourceSlot = resourceInventory.Slots[i];
+                _slots.Add( Instantiate(slotPrefab, panel).GetComponent<ResourceSlotPresenter>());
+                _slots[i].ResourceSlot = resourceInventory.Slots[i];
             }
         }
         

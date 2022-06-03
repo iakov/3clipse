@@ -22,7 +22,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Test
         {
             var randomNumber = Random.Range(0, possibleDrops.Count);
             var randomAmount = Random.Range(1, 20);
-            resourceInventory.AddItem(possibleDrops[randomNumber], randomAmount, out var amountLeft);
+            var isSuccess = resourceInventory.AddItem(possibleDrops[randomNumber], randomAmount, out var amountLeft);
+            if(!isSuccess) Debug.Log(amountLeft + " extra " + possibleDrops[randomNumber].name + " were sent to trove)");
         }
     }
 }

@@ -13,7 +13,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
 
         public List<ResourceSlot> Slots;
         public event Action<ResourceSlot> ItemAdded;
-        public int slotsAmount;
 
         #endregion
 
@@ -22,7 +21,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
         private void OnEnable()
         {
             Slots ??= new List<ResourceSlot>();
-            while (Slots.Count != slotsAmount) Slots.Add(new ResourceSlot());
         }
 
         #endregion
@@ -32,22 +30,18 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
         public bool AddItem(Resource item, int amount, out int amountLeft)
         {
             amountLeft = amount;
-            
-            while (amountLeft != 0)
-            {
-                if (!TryFindResourceSlot(item, out var itemSlot) & !TryFindEmptySlot(out var emptySlot)) return false;
-                var currentSlot = itemSlot ?? emptySlot;
-                currentSlot.Resource = item;
-                currentSlot.AddAmount(amountLeft, out amountLeft);
-                ItemAdded?.Invoke(currentSlot);
-            }
-            
-            return true;
+
+            if (!TryFindResourceSlot(item, out var itemSlot)) itemSlot = AddResourceSlot(item, amount, out amountLeft);
+            else itemSlot.AddAmount(amount, out amountLeft);
+
+            ItemAdded?.Invoke(itemSlot);
+
+            return amountLeft == 0;
         }
 
-        public bool TryFindResourceSlot(Resource resource, out ResourceSlot slotPresenter)
+        private bool TryFindResourceSlot(Resource resource, out ResourceSlot slotPresenter)
         {
-            foreach (var slot in Slots.Where(slot => slot.Resource == resource && !slot.IsFull))
+            foreach (var slot in Slots.Where(slot => slot.Resource == resource))
             {
                 slotPresenter = slot;
                 return true;
@@ -57,16 +51,13 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
             return false;
         }
 
-        public bool TryFindEmptySlot(out ResourceSlot slotPresenter)
-        { 
-            foreach (var slot in Slots.Where(slot => slot.IsEmpty))
-            {
-                slotPresenter = slot;
-                return true;
-            }
-
-            slotPresenter = null;
-            return false;
+        private ResourceSlot AddResourceSlot(Resource item, int amount, out int amountLeft)
+        {
+            var newSlot = new ResourceSlot();
+            newSlot.Resource = item;
+            newSlot.AddAmount(amount, out amountLeft);
+            Slots.Add(newSlot);
+            return newSlot;
         }
 
         #endregion
