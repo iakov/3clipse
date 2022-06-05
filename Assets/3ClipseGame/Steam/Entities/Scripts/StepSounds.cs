@@ -6,18 +6,32 @@ namespace _3ClipseGame.Steam.Entities.Scripts
 {
     public class StepSounds : MonoBehaviour
     {
+        #region SerializeFields
+
         [SerializeField] private StepSoundsStorage soundsStorage;
         [SerializeField] private float rayDistance;
         [SerializeField] private LayerMask soundsDetectLayer;
 
+        #endregion
+
+        #region PrivateMethods
+
         private Transform _transform;
         private AudioSource _audioSource;
+
+        #endregion
+
+        #region MonoBehaviourMethods
 
         private void Start()
         {
             _transform = GetComponent<Transform>();
             _audioSource = GetComponent<AudioSource>();
         }
+
+        #endregion
+
+        #region PublicMethods
 
         public void PlaySound()
         {
@@ -31,5 +45,7 @@ namespace _3ClipseGame.Steam.Entities.Scripts
             _audioSource.clip = randomSound;
             _audioSource.Play();
         }
+
+        #endregion
     }
 }

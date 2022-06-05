@@ -22,8 +22,12 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
 
         #region MonoBehaviourMethods
 
-        private void Start() => RefreshIcons();
-        private void OnEnable() => resourceInventory.ItemAdded += OnItemAdded;
+        private void OnEnable()
+        {
+            resourceInventory.ItemAdded += OnItemAdded;
+            UpdateIcons();
+        }
+
         private void OnDisable() => resourceInventory.ItemAdded -= OnItemAdded;
 
         #endregion
@@ -48,12 +52,15 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
             _slots[^1].UpdateView();
         }
 
-        private void RefreshIcons()
+        private void UpdateIcons()
         {
-            for (var i = 0; i < resourceInventory.Slots.Count; i++)
+            foreach(var slot in _slots) Destroy(slot.gameObject);
+            _slots.Clear();
+            foreach (var slot in resourceInventory.Slots)
             {
-                _slots.Add( Instantiate(slotPrefab, panel).GetComponent<ResourceSlotPresenter>());
-                _slots[i].ResourceSlot = resourceInventory.Slots[i];
+                _slots.Add(Instantiate(slotPrefab, panel).GetComponent<ResourceSlotPresenter>());
+                _slots[^1].ResourceSlot = slot;
+                _slots[^1].UpdateView();
             }
         }
         
