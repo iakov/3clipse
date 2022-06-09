@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _3ClipseGame.Steam.Entities.Player.Data.Inventory.Scripts.ScriptableObjects.Resources.Item;
+using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.ResourceInventorySystem.ScriptableObjects;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObjects.Resources
@@ -26,6 +26,16 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
         #endregion
 
         #region PublicMethods
+
+        public bool RemoveItem(Resource item, int amount)
+        {
+            var resourceSlot = Slots.Find(slot => slot.Resource == item);
+            if (!resourceSlot.TryTakeAmount(amount)) return false;
+            if (!resourceSlot.IsEmpty) return true;
+            Slots.Remove(resourceSlot);
+            ItemAdded?.Invoke(resourceSlot);
+            return true;
+        }
 
         public bool AddItem(Resource item, int amount, out int amountLeft)
         {

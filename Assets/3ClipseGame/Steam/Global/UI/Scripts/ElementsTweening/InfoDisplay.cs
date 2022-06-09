@@ -1,5 +1,6 @@
 using System;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObjects;
+using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem;
 using UnityEngine;
 using UnityEngine.UI;
 

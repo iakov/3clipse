@@ -44,6 +44,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
             foreach (var slot in _slots.Where(slot => slot.ResourceSlot == resourceSlot))
             {
                 slot.UpdateView();
+                if(slot.ResourceSlot.IsEmpty) UpdateIcons();
                 return;
             }
             
