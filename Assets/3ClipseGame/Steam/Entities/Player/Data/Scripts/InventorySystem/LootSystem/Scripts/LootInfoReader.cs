@@ -12,7 +12,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         [SerializeField] private RectTransform lootInfoPanel;
         [SerializeField] private GameObject displayIconPrefab;
-        [SerializeField] private GameObject turnOnAndOffPanel;
 
         #endregion
 
@@ -22,37 +21,43 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         #endregion
 
+        #region MonoBehaviourMethods
+
+        private void Update()
+        {
+            foreach (var element in _currentDisplayedIcons.Keys.Where(element => element == null))
+            {
+                Destroy(_currentDisplayedIcons[element]);
+                _currentDisplayedIcons.Remove(element);
+                break;
+            }
+        }
+
+        #endregion
+        
         #region TriggerMethods
         private void OnTriggerEnter(Collider other)
         {
             if (!other.gameObject.TryGetComponent<PickableLoot>(out var lootComponent) || _currentDisplayedIcons.ContainsKey(lootComponent)) return;
 
-            if (_currentDisplayedIcons.Count == 0) turnOnAndOffPanel.gameObject.SetActive(true);
-            
             var displayObject = Instantiate(displayIconPrefab, lootInfoPanel);
-
             var imageComponents = displayObject.GetComponentsInChildren<Image>();
             var textComponent = displayObject.GetComponentInChildren<Text>();
-
             var imageComponent = imageComponents.ToList().Find(o => o.gameObject.GetInstanceID() != displayObject.gameObject.GetInstanceID());
             
             if (imageComponent == null | textComponent == null) throw new Exception("Prefab doesnt have image or text component");
             
-            
-            _currentDisplayedIcons.Add(lootComponent, displayObject);
-
             imageComponent.sprite = lootComponent.Item.UIImage;
             textComponent.text = "x" + lootComponent.Amount;
+            _currentDisplayedIcons.Add(lootComponent, displayObject);
         }
 
         private void OnTriggerExit(Collider other)
         {
             if (!other.gameObject.TryGetComponent<PickableLoot>(out var lootComponent) || !_currentDisplayedIcons.ContainsKey(lootComponent)) return;
-            
+
             Destroy(_currentDisplayedIcons[lootComponent]);
             _currentDisplayedIcons.Remove(lootComponent);
-
-            if (_currentDisplayedIcons.Count == 0) turnOnAndOffPanel.gameObject.SetActive(false);
         }
         
         #endregion

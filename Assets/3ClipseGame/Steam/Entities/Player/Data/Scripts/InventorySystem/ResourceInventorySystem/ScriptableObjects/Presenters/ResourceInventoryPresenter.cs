@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObjects.Resources.Presenters;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObjects.Resources.Presenters
+namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.ResourceInventorySystem.ScriptableObjects.Presenters
 {
     public class ResourceInventoryPresenter : MonoBehaviour
     {

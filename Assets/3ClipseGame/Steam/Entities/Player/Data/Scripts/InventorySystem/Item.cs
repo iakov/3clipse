@@ -23,22 +23,26 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem
         public string Description => description;
         public string ID => id;
         public Sprite UIImage => uiImage;
-        public ItemType TypeOfItem { get; set; }
 
         #endregion
 
         #region PublicMethods
 
-        public void DropOnGround(int dropAmount)
+        public void DropOnGround(int dropAmount, Vector3 position)
         {
             if (lootPrefab == null) throw new Exception("Object prefab is null");
+            
             if (!lootPrefab.TryGetComponent<Rigidbody>(out var rigidbody)) throw new Exception("Prefab must have Rigidbody on it");
-            if (!Instantiate(lootPrefab).TryGetComponent<PickableLoot>(out var lootComponent))
-                    throw new Exception("Prefab must have Loot component on it");
+            if (!lootPrefab.TryGetComponent<PickableLoot>(out var lootComponent)) throw new Exception("Prefab must have Loot component on it");
+            
+            var instantiatedObject = Instantiate(lootPrefab, position, Quaternion.identity);
+            rigidbody = instantiatedObject.GetComponent<Rigidbody>();
+            lootComponent = instantiatedObject.GetComponent<PickableLoot>();
+            
             lootComponent.Item = this;
             lootComponent.Amount = dropAmount;
 
-            rigidbody.AddForce(new Vector3(Random.Range(0f, 1f) * 10, 10f, Random.Range(0f, 1f) * 10));
+            rigidbody.AddForce(new Vector3(Random.Range(0f, 1f) * 10, 100f, Random.Range(0f, 1f) * 10));
         }
 
         #endregion

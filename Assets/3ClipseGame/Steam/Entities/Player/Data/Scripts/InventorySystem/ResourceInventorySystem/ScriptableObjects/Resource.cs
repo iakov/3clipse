@@ -11,12 +11,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.Resour
 
         #endregion
 
-        #region MonoBehaviourMethods
-
-        private void Awake() => TypeOfItem = ItemType.Resource;
-
-        #endregion
-
         #region PublicGetters
 
         public int MaximumAmountInSlot => maximumAmountInSlot;

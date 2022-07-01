@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.ResourceInventorySystem.ScriptableObjects;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObjects.Resources
+namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.ResourceInventorySystem.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New Resource Inventory", menuName = "Inventory/Resources/Resource Inventory")]
     public class ResourceInventory : ScriptableObject
@@ -37,16 +36,18 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ScriptableObje
             return true;
         }
 
-        public bool AddItem(Resource item, int amount, out int amountLeft)
+        public void AddItem(Resource item, int amount)
         {
-            amountLeft = amount;
-
+            int amountLeft;
+            
             if (!TryFindResourceSlot(item, out var itemSlot)) itemSlot = AddResourceSlot(item, amount, out amountLeft);
             else itemSlot.AddAmount(amount, out amountLeft);
 
             ItemAdded?.Invoke(itemSlot);
 
-            return amountLeft == 0;
+            if (amountLeft == 0) return;
+            
+            Debug.Log("New " + amountLeft + " " + item.name + " added to remote storage");
         }
 
         private bool TryFindResourceSlot(Resource resource, out ResourceSlot slotPresenter)
