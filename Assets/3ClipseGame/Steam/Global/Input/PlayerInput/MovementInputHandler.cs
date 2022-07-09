@@ -1,10 +1,11 @@
 using System;
+using _3ClipseGame.Steam.Global.Input.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace _3ClipseGame.Steam.Global.Input.PlayerInput
 {
-    public class MovementInputHandler : MonoBehaviour
+    public class MovementInputHandler : InputHandler
     {
         #region Initialization
         [NonSerialized] public Vector2 CurrentInput;
@@ -55,7 +56,7 @@ namespace _3ClipseGame.Steam.Global.Input.PlayerInput
 
         #region PublicMethods
 
-        public void Disable()
+        public override void Disable()
         {
             CurrentInput = Vector2.zero;
             IsRunPressed = false;
@@ -64,7 +65,7 @@ namespace _3ClipseGame.Steam.Global.Input.PlayerInput
             _movementInput.Disable();
         }
 
-        public void Enable() => _movementInput.Enable();
+        public override void Enable() => _movementInput.Enable();
 
         #endregion
 

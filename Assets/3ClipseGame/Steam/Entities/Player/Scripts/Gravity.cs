@@ -7,8 +7,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
     {
         #region Initialization
 
-        [Range(0, -10)] [SerializeField] private float gravity = -2f;
-        [Range(0, -100)] [SerializeField] private float gravityLimit = -20f;
+        [Range(0, -10)] [SerializeField] private float gravity = -9.8f;
+        [Range(0, -100)] [SerializeField] private float gravityLimit = -30f;
 
         private PlayerMover _playerMover;
         private MainCharacter.MainCharacter _mainCharacter;
@@ -27,12 +27,12 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts
 
         private void Update()
         {
-            if (_mainCharacter.IsGrounded) _ungroundedTimer = 1f;
+            if (_mainCharacter.IsGrounded) _ungroundedTimer = 0f;
             else _ungroundedTimer += Time.deltaTime;
 
-            var gravitySquare = -Mathf.Pow(_ungroundedTimer * gravity, 2);
-            gravitySquare = gravitySquare < gravityLimit ? gravityLimit : gravitySquare;
-            _playerMover.ChangeMove(MoveType.GravityMove, new Vector3(0f, gravitySquare, 0f), RotationType.NoRotation);
+            var fallSpeed = gravity * _ungroundedTimer;
+            fallSpeed = fallSpeed < gravityLimit ? gravityLimit : fallSpeed;
+            _playerMover.ChangeMove(MoveType.GravityMove, new Vector3(0f, fallSpeed, 0f), RotationType.NoRotation);
         }
 
         #endregion

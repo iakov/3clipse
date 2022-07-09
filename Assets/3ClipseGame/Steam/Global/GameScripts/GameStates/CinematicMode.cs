@@ -1,5 +1,5 @@
-using _3ClipseGame.Steam.Global.Input.HUDInput;
-using _3ClipseGame.Steam.Global.Input.MenuInput;
+using System.Collections.Generic;
+using _3ClipseGame.Steam.Global.Input.Scripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
@@ -8,9 +8,8 @@ namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
     {
         #region Input
 
-        [Header("Input")] 
-        [SerializeField] private MenuInputHandler menuInput;
-        [SerializeField] private HUDInputHandler hudInput;
+        [Header("Input")]
+        [SerializeField] private List<InputHandler> listInputHandlers;
 
         #endregion
 
@@ -21,9 +20,8 @@ namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
             uiManager.SwitchMenu(false);
             uiManager.SwitchHUD(false);
             pointerManager.SwitchPointerMode(CursorLockMode.Locked);
-            
-            menuInput.Disable();
-            hudInput.Disable();
+
+            foreach (var inputHandler in listInputHandlers) inputHandler.Disable();
         }
 
         public override void Disable(){}

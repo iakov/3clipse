@@ -1,5 +1,6 @@
 using _3ClipseGame.Steam.Entities.Player.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Global.GameScripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Scripts
@@ -10,11 +11,11 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Scripts
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            PlayerMover.IsFreezed = true;
+            Game.Instance.CinematicMode.StartEnable();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) =>
-            PlayerMover.IsFreezed = false;
+            Game.Instance.PlayMode.StartEnable();
 
         #endregion
     }

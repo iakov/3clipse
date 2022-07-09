@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Global.Input
+namespace _3ClipseGame.Steam.Global.Input.Scripts
 {
     public class PointerManager : MonoBehaviour
     {

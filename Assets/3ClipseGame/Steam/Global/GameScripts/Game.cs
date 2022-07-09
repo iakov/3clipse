@@ -8,7 +8,7 @@ namespace _3ClipseGame.Steam.Global.GameScripts
     {
         #region Singleton
 
-        public Game Instance { get; private set; }
+        public static Game Instance { get; private set; }
 
         #endregion
 

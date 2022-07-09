@@ -1,9 +1,10 @@
+using _3ClipseGame.Steam.Global.Input.Scripts;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace _3ClipseGame.Steam.Global.Input.MenuInput
 {
-    public class MenuInputHandler : MonoBehaviour
+    public class MenuInputHandler : InputHandler
     {
         #region Serialization
 
@@ -27,7 +28,7 @@ namespace _3ClipseGame.Steam.Global.Input.MenuInput
 
         #region PublicMethods
 
-        public void Enable()
+        public override void Enable()
         {
             _menuInputActions.Enable();
             _menuInputActions.MenuActions.Enable();
@@ -35,7 +36,7 @@ namespace _3ClipseGame.Steam.Global.Input.MenuInput
             _menuInputActions.MenuActions.Exit.started += _ => { switchModeToHUD?.Invoke(); };
         }
 
-        public void Disable()
+        public override void Disable()
         {
             _menuInputActions.MenuActions.Disable();
             _menuInputActions.Disable();

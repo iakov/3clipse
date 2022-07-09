@@ -1,3 +1,4 @@
+using _3ClipseGame.Steam.Global.Input.Scripts;
 using _3ClipseGame.Steam.Global.UI.Scripts.TabSystem;
 using UnityEngine;
 using UnityEngine.Events;
@@ -5,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace _3ClipseGame.Steam.Global.Input.HUDInput
 {
-    public class HUDInputHandler : MonoBehaviour
+    public class HUDInputHandler : InputHandler
     {
         #region Serialization
 
@@ -38,7 +39,7 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
 
         #region PublicMethods
 
-        public void Enable()
+        public override void Enable()
         {
             _hudInputActions.Enable();
             _hudInputActions.HUDActions.Enable();
@@ -51,7 +52,7 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
             _hudInputActions.HUDActions.ShowElementalWheel.canceled += OnToggleElementalWheel;
         }
 
-        public void Disable()
+        public override void Disable()
         {
             _hudInputActions.HUDActions.Disable();
             _hudInputActions.Disable();

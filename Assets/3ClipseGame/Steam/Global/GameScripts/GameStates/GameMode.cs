@@ -1,5 +1,6 @@
 using System.Collections;
 using _3ClipseGame.Steam.Global.Input;
+using _3ClipseGame.Steam.Global.Input.Scripts;
 using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using _3ClipseGame.Steam.Global.UI.Scripts;
 using Cinemachine;
