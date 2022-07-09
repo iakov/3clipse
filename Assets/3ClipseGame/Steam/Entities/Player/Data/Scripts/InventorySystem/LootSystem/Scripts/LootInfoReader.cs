@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts
 {
+    [RequireComponent(typeof(SphereCollider))]
     public class LootInfoReader : MonoBehaviour
     {
         #region SerializeFields
@@ -25,7 +26,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         private void Update()
         {
-            foreach (var element in _currentDisplayedIcons.Keys.Where(element => element == null))
+            foreach (var element in _currentDisplayedIcons.Keys.Where(element => !element))
             {
                 Destroy(_currentDisplayedIcons[element]);
                 _currentDisplayedIcons.Remove(element);
@@ -47,7 +48,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
             
             if (imageComponent == null | textComponent == null) throw new Exception("Prefab doesnt have image or text component");
             
-            imageComponent.sprite = lootComponent.Item.UIImage;
+            imageComponent.sprite = lootComponent.Resource.UIImage;
             textComponent.text = "x" + lootComponent.Amount;
             _currentDisplayedIcons.Add(lootComponent, displayObject);
         }

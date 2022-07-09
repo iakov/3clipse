@@ -10,7 +10,6 @@ using UnityEngine.Events;
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine
 {
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(MovementInputHandler))]
     public class MainCharacterStateMachine : MonoBehaviour
     {
         #region SerializeFields
@@ -69,7 +68,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         private void Awake()
         {
             PlayerController = GetComponent<CharacterController>();
-            InputHandler = GetComponent<MovementInputHandler>();
+            InputHandler = GetComponentInParent<MovementInputHandler>();
             PlayerMover = GetComponent<PlayerMover>();
             PlayerGravity = GetComponent<Gravity>();
             Transform = PlayerController.transform;

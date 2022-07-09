@@ -1,15 +1,16 @@
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
 {
+    [RequireComponent(typeof(PlayerMover))]
     public class MainAnimalStateMachine : MonoBehaviour
     {
         #region SerializeFields
         
         [SerializeField] private Transform mainCharacterTransform;
         [SerializeField] private float walkSpeed;
-        [SerializeField] private float horizontalMoveOffset;
 
         #endregion
 
@@ -17,7 +18,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
 
         public Transform MainCharacterTransform => mainCharacterTransform;
         public float WalkSpeed => walkSpeed;
-        public float HorizontalMoveOffset => horizontalMoveOffset;
+        public PlayerMover AnimalMover { get; private set; }
 
         #endregion
         
@@ -30,6 +31,11 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
 
         #region MonoBehaviourMethods
 
+        private void Awake()
+        {
+            AnimalMover = GetComponent<PlayerMover>();
+        }
+
         private void Start()
         {
             _mainAnimalStateFactory = new AnimalStateFactory(this);
@@ -41,7 +47,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
 
         #region PublicMethods
 
-        public void ManualUpdate()
+        public void UpdateWork()
         {
             if(_currentMainAnimalState.TrySwitchState(out var newState)) SwitchState(newState);
             _currentMainAnimalState.OnStateUpdate();

@@ -330,15 +330,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1593988576040644011}
   - component: {fileID: 4683410454663608273}
-  - component: {fileID: 1266713635170003508}
-  - component: {fileID: 1266713635170003507}
-  - component: {fileID: 1266713635170003504}
-  - component: {fileID: 1266713635170003505}
-  - component: {fileID: 1266713635170003510}
-  - component: {fileID: 1266713635170003511}
   - component: {fileID: 1266713635170003531}
-  - component: {fileID: 2566757339584289629}
   - component: {fileID: 8068294117309363463}
+  - component: {fileID: 3509417527760246225}
   m_Layer: 0
   m_Name: MainCharacter
   m_TagString: Untagged
@@ -361,7 +355,6 @@ Transform:
   - {fileID: 8141350328156141014}
   - {fileID: 2015628977146408212}
   - {fileID: 6507330817031703871}
-  - {fileID: 1380532986011966897}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -385,150 +378,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!143 &1266713635170003508
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113644557250770705}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1.8
-  m_Radius: 0.2
-  m_SlopeLimit: 35
-  m_StepOffset: 0.1
-  m_SkinWidth: 0.0001
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &1266713635170003507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113644557250770705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 548281f4c58242f408be376f8bce85e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1266713635170003504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113644557250770705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c9946174e520ad48936c4a890c55a89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 6
---- !u!114 &1266713635170003505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113644557250770705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edc93d83cf7bf684289fa8e3a55580f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: -2
-  gravityLimit: -30
---- !u!114 &1266713635170003510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113644557250770705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f62f1eed3c925142b271bceafa6d0ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 2
-  speedInterpolation: 6
-  crouchSpeedModifier: 1
-  jumpStrength: 8
-  runModifierCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 2
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  walkableLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  switchingState:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1266713635170003531}
-        m_TargetAssemblyTypeName: _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsControllers.PlayerAnimationsController,
-          Assembly-CSharp
-        m_MethodName: OnStateChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  switchingSubState:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1266713635170003531}
-        m_TargetAssemblyTypeName: _3ClipseGame.Steam.Entities.Player.Scripts.Visuals.Scripts.AnimationsControllers.PlayerAnimationsController,
-          Assembly-CSharp
-        m_MethodName: OnSubStateChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1266713635170003511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113644557250770705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91601cabed2bd2c44b333dae4f65e8de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1266713635170003531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,23 +390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34ae7e4b6e680a64f9b0f120231765a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2566757339584289629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113644557250770705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0ec0695db4efe4a90e174b15f96b4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundsStorage: {fileID: 11400000, guid: 625f036408f723843b322d0a16bae878, type: 2}
-  rayDistance: 1
-  soundsDetectLayer:
-    serializedVersion: 2
-    m_Bits: 17
 --- !u!82 &8068294117309363463
 AudioSource:
   m_ObjectHideFlags: 0
@@ -654,6 +486,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3509417527760246225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113644557250770705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0ec0695db4efe4a90e174b15f96b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsStorage: {fileID: 11400000, guid: 625f036408f723843b322d0a16bae878, type: 2}
+  rayDistance: 1
+  soundsDetectLayer:
+    serializedVersion: 2
+    m_Bits: 17
 --- !u!1 &2202618434770916426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,67 +1402,6 @@ Transform:
   m_Father: {fileID: 5798304783836057541}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4916467131763548508
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1380532986011966897}
-  - component: {fileID: 2683348497673486919}
-  - component: {fileID: 724500641283222491}
-  m_Layer: 0
-  m_Name: LootInfoTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1380532986011966897
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4916467131763548508}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1593988576040644011}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &2683348497673486919
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4916467131763548508}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &724500641283222491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4916467131763548508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d39513e4b551078428606f27fa14e4b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lootInfoPanel: {fileID: 0}
-  displayIconPrefab: {fileID: 0}
-  turnOnAndOffPanel: {fileID: 0}
 --- !u!1 &4953541326598356683
 GameObject:
   m_ObjectHideFlags: 0

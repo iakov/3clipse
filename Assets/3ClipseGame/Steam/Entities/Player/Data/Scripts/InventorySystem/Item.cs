@@ -26,30 +26,31 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem
 
         #endregion
 
+        #region PrivateFields
+
+        private float dropStrength = 100f;
+
+        #endregion
+
         #region PublicMethods
 
-        public void DropOnGround(int dropAmount, Vector3 position)
+        public void DropOnGround(Vector3 position, int amount)
         {
             if (lootPrefab == null) throw new Exception("Object prefab is null");
             
-            if (!lootPrefab.TryGetComponent<Rigidbody>(out var rigidbody)) throw new Exception("Prefab must have Rigidbody on it");
-            if (!lootPrefab.TryGetComponent<PickableLoot>(out var lootComponent)) throw new Exception("Prefab must have Loot component on it");
+            if (!lootPrefab.GetComponent<Rigidbody>()) throw new Exception("Prefab must have Rigidbody on it");
             
             var instantiatedObject = Instantiate(lootPrefab, position, Quaternion.identity);
-            rigidbody = instantiatedObject.GetComponent<Rigidbody>();
-            lootComponent = instantiatedObject.GetComponent<PickableLoot>();
-            
-            lootComponent.Item = this;
-            lootComponent.Amount = dropAmount;
+            var rigidbody = instantiatedObject.GetComponent<Rigidbody>();
 
-            rigidbody.AddForce(new Vector3(Random.Range(0f, 1f) * 10, 100f, Random.Range(0f, 1f) * 10));
+            if (!instantiatedObject.TryGetComponent<PickableLoot>(out var lootComponent)) lootComponent = instantiatedObject.AddComponent<PickableLoot>();
+            lootComponent.Resource = this;
+            lootComponent.Amount = amount;
+
+            rigidbody.AddForce(new Vector3(Random.Range(0f, 1f) * dropStrength, dropStrength, Random.Range(0f, 1f) * dropStrength));
+            rigidbody.freezeRotation = true;
         }
 
         #endregion
-        
-        public enum ItemType
-        {
-            Resource, Equipment
-        }
     }
 }

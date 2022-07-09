@@ -4,7 +4,11 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 {
     public class PickableLoot : MonoBehaviour
     {
-        public Item Item;
+        #region PublicFields
+
+        public Item Resource;
         public int Amount;
+
+        #endregion
     }
 }

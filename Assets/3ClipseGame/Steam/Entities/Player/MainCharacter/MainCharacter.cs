@@ -1,4 +1,3 @@
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Scripts.AnimationsControllers;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
@@ -8,7 +7,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter
     [RequireComponent(typeof(MainCharacterStateMachine.MainCharacterStateMachine))]
     [RequireComponent(typeof(Gravity))]
     [RequireComponent(typeof(PlayerMover))]
-    [RequireComponent(typeof(PlayerAnimationsController))]
     public class MainCharacter : MonoBehaviour
     {
         #region PublicFields
@@ -32,7 +30,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter
         {
             _mainCharacterStateMachine = GetComponent<MainCharacterStateMachine.MainCharacterStateMachine>();
             _playerMover = GetComponent<PlayerMover>();
-            _mainCharacterAnimator = GetComponent<Animator>();
+            _mainCharacterAnimator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
         }
 
@@ -41,8 +39,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter
             _mainCharacterStateMachine.UpdateWork();
             _playerMover.UpdateWork();
 
-            var legsRay = new Ray(_mainCharacterAnimator.GetBoneTransform(HumanBodyBones.Spine).position, Vector3.down);
-            IsGrounded = Physics.Raycast(legsRay, _characterController.height/1.5f, _mainCharacterStateMachine.WalkableLayerMask);
+            var legsRay = new Ray(transform.position + _characterController.center , Vector3.down);
+            IsGrounded = Physics.SphereCast(legsRay, _characterController.radius, _characterController.height/2 - _characterController.radius + 0.05f, _mainCharacterStateMachine.WalkableLayerMask);
         }
 
         #endregion

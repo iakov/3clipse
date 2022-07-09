@@ -16,6 +16,7 @@ namespace _3ClipseGame.Steam.Global.GameScripts
 
         public MenuMode MenuMode { get; private set; }
         public PlayMode PlayMode { get; private set; }
+        public CinematicMode CinematicMode { get; private set; }
 
         #endregion
 
@@ -27,6 +28,7 @@ namespace _3ClipseGame.Steam.Global.GameScripts
         {
             MenuMode = GetComponentInChildren<MenuMode>();
             PlayMode = GetComponentInChildren<PlayMode>();
+            CinematicMode = GetComponentInChildren<CinematicMode>();
         }
 
         #endregion
