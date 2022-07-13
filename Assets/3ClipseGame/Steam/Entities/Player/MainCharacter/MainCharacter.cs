@@ -40,7 +40,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter
             _playerMover.UpdateWork();
 
             var legsRay = new Ray(transform.position + _characterController.center , Vector3.down);
-            IsGrounded = Physics.SphereCast(legsRay, _characterController.radius, _characterController.height/2 - _characterController.radius + 0.05f, _mainCharacterStateMachine.WalkableLayerMask);
+            IsGrounded = Physics.SphereCast(legsRay, _characterController.radius - 0.05f, _characterController.height/2 - _characterController.radius + 0.1f, _mainCharacterStateMachine.WalkableLayerMask);
         }
 
         #endregion

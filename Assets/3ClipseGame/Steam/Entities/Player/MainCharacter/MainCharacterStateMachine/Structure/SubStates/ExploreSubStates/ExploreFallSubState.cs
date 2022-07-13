@@ -15,7 +15,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         #region SubStateMethods
 
         public override void OnStateEnter(){}
-
         public override void OnStateUpdate(){}
 
         public override void OnStateExit(){}
