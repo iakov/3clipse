@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using CharacterController = _3ClipseGame.Steam.Entities.CustomController.CharacterController;
 
 namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
 {
@@ -9,7 +10,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         #region Initialization
 
         [SerializeField] private float rotationSpeed = 1f;
-        private CharacterController _playerController;
+        private Rigidbody _rigidbody;
         private Transform _cameraTransform;
         private Transform _playerTransform;
         private readonly List<Move> _movesList = new();
@@ -21,9 +22,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
 
         private void Start()
         {
-            _playerController = GetComponent<CharacterController>();
+            _rigidbody = GetComponent<Rigidbody>();
             _playerTransform = GetComponent<Transform>();
-            if (UnityEngine.Camera.main != null) _cameraTransform = UnityEngine.Camera.main.transform;
+            if (Camera.main != null) _cameraTransform = Camera.main.transform;
         }
 
         #endregion
@@ -82,8 +83,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         private void UpdateMove(out Vector3 resultMove)
         {
             resultMove = _movesList.Aggregate(Vector3.zero, (current, move) => current + move.GetRotatedVector());
-            
-            _playerController.Move(resultMove * Time.deltaTime);
+            transform.position += resultMove * Time.deltaTime;
         }
 
         private void UpdateRotation(Vector3 resultMove)

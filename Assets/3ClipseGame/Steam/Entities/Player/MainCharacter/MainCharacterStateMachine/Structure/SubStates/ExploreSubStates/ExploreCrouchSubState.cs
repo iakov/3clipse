@@ -1,5 +1,4 @@
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
-using _3ClipseGame.Steam.Entities.Player.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
@@ -33,8 +32,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
 
-            if (!Context.PlayerController.isGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
-                    Context.PlayerController.radius)) newMainCharacterState = _factory.Fall();
+            if (!Context.PlayerController.IsGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
+                    Context.PlayerController.Radius)) newMainCharacterState = _factory.Fall();
             else if (!Context.InputHandler.IsCrouchPressed) newMainCharacterState = _factory.Idle();
             return newMainCharacterState != null;
         }

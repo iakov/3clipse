@@ -11,9 +11,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         #endregion
 
-        #region MonoBehaviourMethods
+        #region PublicMethods
 
-        private void OnDestroy()
+        public void Drop()
         {
             foreach (var dropElement in possibleDropResources)
                 dropElement.dropItem.DropOnGround(transform.position, dropElement.GetFinalAmountOfDrop());

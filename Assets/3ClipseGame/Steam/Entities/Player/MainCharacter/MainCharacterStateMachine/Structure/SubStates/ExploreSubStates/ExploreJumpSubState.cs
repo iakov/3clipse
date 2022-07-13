@@ -40,7 +40,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
 
-            if (Context.MainCharacter.IsGrounded && StateTimer > 0.1f) newMainCharacterState = _factory.Idle();
+            if (Context.PlayerController.IsGrounded && StateTimer > 0.1f) newMainCharacterState = _factory.Idle();
             else if(Context.PlayerMover.GetLastMove(MoveType.StateMove, false).y + Context.PlayerMover.GetLastMove(MoveType.GravityMove, false).y < 0) newMainCharacterState = _factory.Fall();
 
             return newMainCharacterState != null;

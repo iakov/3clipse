@@ -23,7 +23,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
             
-            if (Context.MainCharacter.IsGrounded) newMainCharacterState = _factory.Idle();
+            if (Context.PlayerController.IsGrounded) newMainCharacterState = _factory.Idle();
 
             return newMainCharacterState != null;
         }

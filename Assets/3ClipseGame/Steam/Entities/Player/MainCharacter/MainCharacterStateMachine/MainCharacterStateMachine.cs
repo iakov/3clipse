@@ -6,6 +6,7 @@ using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using _3ClipseGame.Steam.Global.Input.PlayerInput;
 using UnityEngine;
 using UnityEngine.Events;
+using CharacterController = _3ClipseGame.Steam.Entities.CustomController.CharacterController;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine
 {
@@ -47,7 +48,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             remove => switchingSubState.RemoveListener(value);
         }
         
-        public Gravity PlayerGravity { get; private set; }
         public PlayerMover PlayerMover { get; private set; }
         public MainCharacter MainCharacter { get; private set; }
         public CharacterController PlayerController { get; private set; }
@@ -70,7 +70,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             PlayerController = GetComponent<CharacterController>();
             InputHandler = GetComponentInParent<MovementInputHandler>();
             PlayerMover = GetComponent<PlayerMover>();
-            PlayerGravity = GetComponent<Gravity>();
             Transform = PlayerController.transform;
             MainCharacter = GetComponent<MainCharacter>();
             

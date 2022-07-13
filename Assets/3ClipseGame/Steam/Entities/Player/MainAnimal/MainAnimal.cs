@@ -1,4 +1,5 @@
 using UnityEngine;
+using CharacterController = _3ClipseGame.Steam.Entities.CustomController.CharacterController;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal
 {
