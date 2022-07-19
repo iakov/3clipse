@@ -25,6 +25,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
         [SerializeField] private float _gravityLimit = -30f;
 
         [Header("Horizontal Move Offset")] 
+        [SerializeField] private float _minimumMoveDistance = 0.01f;
         [SerializeField] private float _stepOffset;
 
         private Rigidbody _rigidbody;
@@ -106,8 +107,10 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
             MoveHorizontal(horizontalMove);
             MoveVertical(verticalMove);
-
+            
             Velocity = _verticalVelocity + _horizontalVelocity;
+            if (Velocity.magnitude < _minimumMoveDistance) Velocity = Vector3.zero;
+            
             _transform.position += Velocity;
         }
 

@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
 {
@@ -10,11 +12,16 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         #region SerializeFields
 
         [SerializeField] private Transform mainCharacterTransform;
-        [SerializeField] private float walkSpeed;
         [Header("Uncontrolled State Parameters")]
+        [SerializeField] private float waitTime;
+        
         [SerializeField] private float followWalkDistance;
         [SerializeField] private AnimationCurve followWalkSpeed;
         
+        [SerializeField] private float stopWalkDistance;
+
+        [SerializeField] private Transform[] possibleFollowTargets;
+
         [SerializeField] private float followRunDistance;
         [SerializeField] private AnimationCurve followRunSpeed;
 
@@ -24,12 +31,16 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
 
         public Transform MainCharacterTransform => mainCharacterTransform;
         public Transform AnimalTransform { get; private set; }
-        public float WalkSpeed => walkSpeed;
+        public Transform CurrentTarget { get; set; }
         public PlayerMover AnimalMover { get; private set; }
         public float FollowWalkDistance => followWalkDistance;
         public AnimationCurve FollowWalkSpeed => followWalkSpeed;
-        public float FollowFollowRunDistance => followRunDistance;
+        public float FollowRunDistance => followRunDistance;
         public AnimationCurve FollowRunSpeed => followRunSpeed;
+        public float StopWalkDistance => stopWalkDistance;
+        public float WaitTime => waitTime;
+        public Transform[] PossibleFollowTargets => possibleFollowTargets;
+        public NavMeshAgent AnimalAgent { get; private set; }
 
         #endregion
         
@@ -46,6 +57,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         {
             AnimalMover = GetComponent<PlayerMover>();
             AnimalTransform = GetComponent<Transform>();
+            AnimalAgent = GetComponent<NavMeshAgent>();
         }
 
         private void Start()

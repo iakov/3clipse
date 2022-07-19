@@ -1,5 +1,6 @@
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates;
+using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States
 {
@@ -9,6 +10,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
         private AnimalSubState _currentSubState;
         private UncontrolledSubStatesFactory _subStateFactory;
+        private Vector3 _currentTarget;
 
         public override void OnStateEnter()
         {
@@ -19,7 +21,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
         public override void OnStateUpdate()
         {
-            if (_currentSubState.TrySwitchState(out var newState)) SwitchState((AnimalSubState)newState);
+            if (_currentSubState.TrySwitchState(out var newState)) SwitchState((AnimalSubState) newState);
+            
+            Debug.Log(_currentSubState.GetType());
+
             _currentSubState.OnStateUpdate();
         }
 
