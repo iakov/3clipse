@@ -22,7 +22,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         [Range(0, 3)] [SerializeField] private float crouchSpeedModifier = 1f;
         [SerializeField] private float jumpStrength = 2f;
         [SerializeField] private AnimationCurve runModifierCurve;
-        [SerializeField] private LayerMask walkableLayerMask;
         [SerializeField] private UnityEvent<MainCharacterState, MainCharacterState> switchingState;
         [SerializeField] private UnityEvent<MainCharacterSubState, MainCharacterSubState> switchingSubState;
 
@@ -35,7 +34,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public float CrouchSpeedModifier => crouchSpeedModifier;
         public float JumpStrength => jumpStrength;
         public AnimationCurve RunModifierCurve => runModifierCurve;
-        public LayerMask WalkableLayerMask => walkableLayerMask;
+        public LayerMask WalkableLayerMask => PlayerController.WalkableLayers;
         public event UnityAction<MainCharacterState, MainCharacterState> SwitchingState
         {
             add => switchingState.AddListener(value);

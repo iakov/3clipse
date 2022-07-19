@@ -2,10 +2,10 @@ using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Struc
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates
 {
-    public class UncontrolledWalkSubState : AnimalSubState
+    public class UncontrolledFollowRunSubState : AnimalSubState
     {
-        public UncontrolledWalkSubState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory){}
-        
+        public UncontrolledFollowRunSubState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory){}
+
         public override void OnStateEnter(){}
 
         public override void OnStateUpdate(){}
@@ -16,6 +16,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         {
             newAnimalState = null;
 
+            //conditions
+            
             return newAnimalState != null;
         }
     }

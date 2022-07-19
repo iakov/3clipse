@@ -8,17 +8,28 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
     public class MainAnimalStateMachine : MonoBehaviour
     {
         #region SerializeFields
-        
+
         [SerializeField] private Transform mainCharacterTransform;
         [SerializeField] private float walkSpeed;
+        [Header("Uncontrolled State Parameters")]
+        [SerializeField] private float followWalkDistance;
+        [SerializeField] private AnimationCurve followWalkSpeed;
+        
+        [SerializeField] private float followRunDistance;
+        [SerializeField] private AnimationCurve followRunSpeed;
 
         #endregion
 
         #region PublicGetters
 
         public Transform MainCharacterTransform => mainCharacterTransform;
+        public Transform AnimalTransform { get; private set; }
         public float WalkSpeed => walkSpeed;
         public PlayerMover AnimalMover { get; private set; }
+        public float FollowWalkDistance => followWalkDistance;
+        public AnimationCurve FollowWalkSpeed => followWalkSpeed;
+        public float FollowFollowRunDistance => followRunDistance;
+        public AnimationCurve FollowRunSpeed => followRunSpeed;
 
         #endregion
         
@@ -34,6 +45,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         private void Awake()
         {
             AnimalMover = GetComponent<PlayerMover>();
+            AnimalTransform = GetComponent<Transform>();
         }
 
         private void Start()

@@ -30,7 +30,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter
         private void Update()
         {
             _mainCharacterStateMachine.UpdateWork();
-            _playerMover.UpdateWork();
         }
 
         #endregion

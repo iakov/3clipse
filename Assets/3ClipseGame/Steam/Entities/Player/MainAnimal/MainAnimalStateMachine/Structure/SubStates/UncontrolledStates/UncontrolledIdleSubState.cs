@@ -6,7 +6,13 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 {
     public class UncontrolledIdleSubState : AnimalSubState
     {
+        #region Initialize
+
         public UncontrolledIdleSubState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory){}
+
+        #endregion
+
+        #region SubStateMethods
 
         public override void OnStateEnter()
         {
@@ -20,9 +26,11 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         {
             newAnimalState = null;
             
-            //if Distance to MainCharacter more than number => Go to UcontrolledJumpSubstate
+            Debug.Log(Vector3.Distance(Context.AnimalTransform.position, Context.MainCharacterTransform.position));
 
             return newAnimalState != null;
         }
+
+        #endregion
     }
 }

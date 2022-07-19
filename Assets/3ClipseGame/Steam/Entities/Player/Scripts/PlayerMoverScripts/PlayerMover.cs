@@ -10,7 +10,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         #region Initialization
 
         [SerializeField] private float rotationSpeed = 1f;
-        private Rigidbody _rigidbody;
+        private CharacterController _characterController;
         private Transform _cameraTransform;
         private Transform _playerTransform;
         private readonly List<Move> _movesList = new();
@@ -22,9 +22,17 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
 
         private void Start()
         {
-            _rigidbody = GetComponent<Rigidbody>();
+            _characterController = GetComponent<CharacterController>();
             _playerTransform = GetComponent<Transform>();
             if (Camera.main != null) _cameraTransform = Camera.main.transform;
+        }
+
+        private void Update()
+        {
+            if (IsFreezed) return;
+            
+            UpdateMove(out var resultMove);
+            UpdateRotation(resultMove);
         }
 
         #endregion
@@ -53,14 +61,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
             return Vector3.zero;
         }
 
-        public void UpdateWork()
-        {
-            if (IsFreezed) return;
-            
-            UpdateMove(out var resultMove);
-            UpdateRotation(resultMove);
-        }
-
         #endregion
 
         #region PrivateMethods
@@ -83,7 +83,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         private void UpdateMove(out Vector3 resultMove)
         {
             resultMove = _movesList.Aggregate(Vector3.zero, (current, move) => current + move.GetRotatedVector());
-            transform.position += resultMove * Time.deltaTime;
+            _characterController.Move(resultMove);
         }
 
         private void UpdateRotation(Vector3 resultMove)
