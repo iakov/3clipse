@@ -173,7 +173,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		private void MoveHorizontal(Vector3 move)
 		{
-			if (move.magnitude < minMoveDistance) return;
+			if ((move / Time.deltaTime).magnitude < minMoveDistance) return;
 			
 			var top = new Vector3(Center.x, Center.y + Height / 2 - Radius + skinWidth, Center.z);
 			var bottom = new Vector3(Center.x, Center.y - Height / 2 + Radius + stepOffset - skinWidth, Center.z);

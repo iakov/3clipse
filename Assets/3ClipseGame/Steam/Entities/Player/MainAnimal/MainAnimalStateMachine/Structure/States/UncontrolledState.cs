@@ -23,7 +23,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         {
             if (_currentSubState.TrySwitchState(out var newState)) SwitchState((AnimalSubState) newState);
             
-            Debug.Log(_currentSubState.GetType());
+            // Debug.Log(_currentSubState.GetType());
 
             _currentSubState.OnStateUpdate();
         }
