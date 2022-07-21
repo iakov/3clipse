@@ -3,7 +3,7 @@ using CharacterController = _3ClipseGame.Steam.Entities.CustomController.Charact
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal
 {
-    [RequireComponent(typeof(CharacterController))]
+    /*[RequireComponent(typeof(CharacterController))]*/
     public class MainAnimal : MonoBehaviour
     {
         #region SerializeFields
@@ -27,7 +27,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal
 
         private void Awake()
         {
-            AnimalController = GetComponent<CharacterController>();
+            /*AnimalController = GetComponent<CharacterController>();*/
             _mainAnimalStateMachine = GetComponent<MainAnimalStateMachine.MainAnimalStateMachine>();
         }
 

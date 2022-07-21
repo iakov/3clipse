@@ -14,9 +14,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         public override void OnStateEnter(){}
         public override void OnStateUpdate()
         {
+            AddTime(Time.deltaTime);
             Context.AnimalAgent.SetDestination(Context.CurrentTarget.position);
             _distanceBetweenPlayerAndAnimal = Vector3.Distance(Context.AnimalTransform.position, Context.MainCharacterTransform.position);
-            Context.AnimalAgent.speed = Context.FollowWalkSpeed.Evaluate(_distanceBetweenPlayerAndAnimal);
+            Context.AnimalAgent.speed = Context.FollowRunSpeed.Evaluate(_distanceBetweenPlayerAndAnimal);
         }
 
         public override void OnStateExit(){}

@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 7878028964876370162}
   - component: {fileID: 7878028964876370161}
   - component: {fileID: 7878028964876370160}
-  - component: {fileID: 7878028964876370175}
   - component: {fileID: 7878028964876370174}
   - component: {fileID: 7878028964876370173}
   - component: {fileID: 7878028964876370172}
@@ -173,8 +172,6 @@ MonoBehaviour:
   walkableLayers:
     serializedVersion: 2
     m_Bits: 1
-  gravity: -9.81
-  gravityLimit: -30
   groundDetectionDistance: 0.1
   minMoveDistance: 0.01
 --- !u!23 &7878028964876370161
@@ -227,18 +224,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7878028964876370170}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &7878028964876370175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7878028964876370170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91601cabed2bd2c44b333dae4f65e8de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7878028964876370174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,10 +307,10 @@ GameObject:
   - component: {fileID: 7878028965152469055}
   - component: {fileID: 7878028965152469043}
   - component: {fileID: 7878028965152469042}
-  - component: {fileID: 7878028965152469041}
   - component: {fileID: 7878028965152469045}
   - component: {fileID: 7878028965152469044}
   - component: {fileID: 7878028965152469046}
+  - component: {fileID: 4374001487689133800}
   m_Layer: 3
   m_Name: Animal
   m_TagString: Player
@@ -391,28 +376,6 @@ CapsuleCollider:
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 0.22, z: 0}
---- !u!114 &7878028965152469041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7878028965152469052}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a016c008fb44ee4581d81e30f8b7f14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slopeLimit: 45
-  stepOffset: 0.3
-  skinWidth: 0.01
-  walkableLayers:
-    serializedVersion: 2
-    m_Bits: 1
-  gravity: -9.81
-  gravityLimit: -30
-  groundDetectionDistance: 0.1
-  minMoveDistance: 0.01
 --- !u!114 &7878028965152469045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +479,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &4374001487689133800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7878028965152469052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70507900bf34e4892ff47a631a31e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: -9.81
+  gravityLimit: -30
 --- !u!1 &7878028965193722936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,8 +1283,6 @@ MonoBehaviour:
   walkableLayers:
     serializedVersion: 2
     m_Bits: 0
-  gravity: 0
-  gravityLimit: 0
   groundDetectionDistance: 0
   minMoveDistance: 0.01
 --- !u!1 &7878028966444927493

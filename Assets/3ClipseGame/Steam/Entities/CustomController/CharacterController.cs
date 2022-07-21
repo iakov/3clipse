@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
@@ -19,10 +18,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		public LayerMask walkableLayers;
 
-		[Header("Move Parameters")] [SerializeField]
-		private float gravity;
-
-		[SerializeField] private float gravityLimit;
+		[Header("Move Parameters")]
 		[SerializeField] private float groundDetectionDistance;
 		[SerializeField] [Min(0.01f)] private float minMoveDistance = 0.01f;
 
@@ -45,7 +41,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		private float _ungroundedTimer;
 
-		private Vector3 _position;
+		private Vector3 _deltaPosition;
 		private Vector3 _upDirection;
 
 		private Rigidbody _rigidbody;
@@ -54,6 +50,8 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		private PlayerMover _playerMover;
 
 		private readonly List<RaycastHit> _contacts = new();
+
+		private bool _isKinematicByDefault;
 
 		#endregion
 
@@ -65,17 +63,21 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			_capsuleCollider = GetComponent<CapsuleCollider>();
 			_transform = GetComponent<Transform>();
 			_playerMover = GetComponent<PlayerMover>();
-
+		
 			SetRigidbodyParams();
 			SetColliderParams();
 		}
-
+		
+		private void OnEnable() => _rigidbody.isKinematic = false;
+		private void OnDisable() => _rigidbody.isKinematic = _isKinematicByDefault;
+		
 		private void SetRigidbodyParams()
 		{
-			_rigidbody.isKinematic = false;
+			_isKinematicByDefault = _rigidbody.isKinematic;
+			_rigidbody.useGravity = false;
 			_rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 		}
-
+		
 		private void SetColliderParams()
 		{
 			_capsuleCollider.direction = 1;
@@ -87,23 +89,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		#region PhysicsMethods
 
-		private void FixedUpdate()
-		{
-			SetIsGrounded();
-			SetGravity();
-		}
-
-		private void SetGravity()
-		{
-			if (IsGrounded) _ungroundedTimer = 0f;
-			else _ungroundedTimer += Time.deltaTime;
-
-			if (IsGrounded) _ungroundedTimer = 0.5f;
-
-			var fallSpeed = gravity * _ungroundedTimer;
-			fallSpeed = fallSpeed < gravityLimit ? gravityLimit : fallSpeed;
-			_playerMover.ChangeMove(MoveType.GravityMove, new Vector3(0f, fallSpeed, 0f), RotationType.NoRotation);
-		}
+		private void FixedUpdate() => SetIsGrounded();
 
 		private void SetIsGrounded()
 		{
@@ -126,15 +112,15 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		private void SetPreMoveVariables(Vector3 motion)
 		{
-			_position = _rigidbody.position;
 			_upDirection = _transform.up;
 			Velocity = motion;
+			_deltaPosition = Vector3.zero;
 		}
 
 		private void SetState()
 		{
-			Velocity = _position - _transform.position;
-			_transform.position = _position;
+			Velocity = _deltaPosition;
+			_transform.position += _deltaPosition;
 		}
 		private void ClearOldData() => _contacts.Clear();
 
@@ -163,11 +149,11 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 				var lowestCapsuleSphereCenter = Center.y - Height / 2 + Radius;
 				var distanceToLowestCapsuleSphereCenter = lowestCapsuleSphereCenter - Center.y;
 				var travelDistanceToCollision = distanceToCollisionSphereCenter - distanceToLowestCapsuleSphereCenter;
-				_position.y += travelDistanceToCollision;
+				_deltaPosition.y += travelDistanceToCollision;
 			}
 			else
 			{
-				_position += move;
+				_deltaPosition += move;
 			}
 		}
 
@@ -180,10 +166,10 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 			if (Physics.CapsuleCast(top, bottom, Radius + skinWidth, move, out var hitInfo, move.magnitude))
 			{
-				_position += Vector3.ProjectOnPlane(move, hitInfo.normal) * 0.7f;
+				_deltaPosition += Vector3.ProjectOnPlane(move, hitInfo.normal) * 0.7f;
 				_contacts.Add(hitInfo);
 			}
-			else _position += move;
+			else _deltaPosition += move;
 		}
 
 		private void HandleCollisions()

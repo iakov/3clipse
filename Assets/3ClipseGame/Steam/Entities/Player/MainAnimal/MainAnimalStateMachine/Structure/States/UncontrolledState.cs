@@ -22,9 +22,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         public override void OnStateUpdate()
         {
             if (_currentSubState.TrySwitchState(out var newState)) SwitchState((AnimalSubState) newState);
-            
-            Debug.Log(_currentSubState.GetType());
-
             _currentSubState.OnStateUpdate();
         }
 

@@ -23,7 +23,12 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             Context.AnimalAgent.enabled = false;
         }
 
-        public override void OnStateUpdate() => AddTime(Time.deltaTime);
+        public override void OnStateUpdate()
+        {
+            AddTime(Time.deltaTime);
+            
+            Context.AnimalTransform.LookAt(Context.MainCharacterTransform);
+        }
 
         public override void OnStateExit()
         {
