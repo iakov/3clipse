@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
@@ -7,174 +9,191 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 	[RequireComponent(typeof(CapsuleCollider))]
 	public class CharacterController : MonoBehaviour
 	{
+		#region SerializeFields
+
+		[Header("Global Parameters")] [SerializeField]
+		private float slopeLimit = 45f;
+
+		[SerializeField] private float stepOffset = 0.3f;
+		[SerializeField] [Min(0.01f)] private float skinWidth = 0.01f;
+
+		public LayerMask walkableLayers;
+
+		[Header("Move Parameters")] [SerializeField]
+		private float gravity;
+
+		[SerializeField] private float gravityLimit;
+		[SerializeField] private float groundDetectionDistance;
+		[SerializeField] [Min(0.01f)] private float minMoveDistance = 0.01f;
+
+		#endregion
+
 		#region PublicFields
-        public Vector3 Center => _capsuleCollider.center + _transform.position;
-        public LayerMask WalkableLayers;
-        public bool IsGrounded { get; private set; }
-        public float Radius => _capsuleCollider.radius;
-        public float Height => _capsuleCollider.height;
-        public Vector3 Velocity { get; private set; }
 
-        #endregion
+		public Vector3 Center => _capsuleCollider == null
+			? Vector3.negativeInfinity
+			: _capsuleCollider.center + _transform.position;
 
-        #region PrivateFields
-        
-        [Header("Vertical Move Parameters")]
-        [SerializeField] private float _groundDetectionDistance = 0.1f;
-        [SerializeField] private float _gravity = -9.81f;
-        [SerializeField] private float _gravityLimit = -30f;
+		public bool IsGrounded { get; private set; }
+		public float Radius => _capsuleCollider == null ? -1f : _capsuleCollider.radius;
+		public float Height => _capsuleCollider == null ? -1f : _capsuleCollider.height;
+		public Vector3 Velocity { get; set; }
 
-        [Header("Horizontal Move Offset")] 
-        [SerializeField] private float _stepOffset;
+		#endregion
 
-        private Rigidbody _rigidbody;
-        private CapsuleCollider _capsuleCollider;
-        private Transform _transform;
-        private PlayerMover _playerMover;
+		#region PrivateFields
 
-        private float _ungroundedTimer;
-        
-        private Vector3 _horizontalVelocity;
-        private Vector3 _verticalVelocity;
-        private Vector3 _moveDirection;
-        private Vector3 _verticalHitPoint;
-        private Vector3 _horizontalHitPoint;
+		private float _ungroundedTimer;
 
-        #endregion
+		private Vector3 _position;
+		private Vector3 _upDirection;
 
-        #region MonoBehaviourMethods
+		private Rigidbody _rigidbody;
+		private CapsuleCollider _capsuleCollider;
+		private Transform _transform;
+		private PlayerMover _playerMover;
 
-        private void Awake()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-            _capsuleCollider = GetComponent<CapsuleCollider>();
-            _transform = GetComponent<Transform>();
-            _playerMover = GetComponent<PlayerMover>();
+		private readonly List<RaycastHit> _contacts = new();
 
-            SetRigidbodyParams();
-            SetColliderParams();
-        }
-        
-        private void SetRigidbodyParams()
-        {
-            _rigidbody.isKinematic = true;
-        }
+		#endregion
 
-        private void SetColliderParams()
-        {
-            
-        }
+		#region Initialization
 
-        private void FixedUpdate()
-        {
-            SetIsGrounded();
-            SetGravity();
-        }
+		private void Awake()
+		{
+			_rigidbody = GetComponent<Rigidbody>();
+			_capsuleCollider = GetComponent<CapsuleCollider>();
+			_transform = GetComponent<Transform>();
+			_playerMover = GetComponent<PlayerMover>();
 
-        #endregion
-        
-        #region PhysicsMethods
+			SetRigidbodyParams();
+			SetColliderParams();
+		}
 
-        private void SetGravity()
-        {
-            if (IsGrounded) _ungroundedTimer = 0f;
-            else _ungroundedTimer += Time.deltaTime;
+		private void SetRigidbodyParams()
+		{
+			_rigidbody.isKinematic = false;
+			_rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+		}
 
-            if (IsGrounded) _ungroundedTimer = 0.5f;
+		private void SetColliderParams()
+		{
+			_capsuleCollider.direction = 1;
+			if (_capsuleCollider.height <= _capsuleCollider.radius * 2)
+				_capsuleCollider.height = _capsuleCollider.radius * 2 + 0.01f;
+		}
 
-            var fallSpeed = _gravity * _ungroundedTimer;
-            fallSpeed = fallSpeed < _gravityLimit ? _gravityLimit : fallSpeed;
-            _playerMover.ChangeMove(MoveType.GravityMove, new Vector3(0f, fallSpeed, 0f), RotationType.NoRotation);
-        }
+		#endregion
 
-        private void SetIsGrounded()
-        {
-            IsGrounded = Physics.SphereCast(Center, Radius, Vector3.down, out var _,
-                Height / 2 - Radius + _groundDetectionDistance, WalkableLayers);
-        }
+		#region PhysicsMethods
 
-        #endregion
+		private void FixedUpdate()
+		{
+			SetIsGrounded();
+			SetGravity();
+		}
 
-        #region MoveMethods
+		private void SetGravity()
+		{
+			if (IsGrounded) _ungroundedTimer = 0f;
+			else _ungroundedTimer += Time.deltaTime;
 
-        public void Move(Vector3 moveDirection)
-        {
-            moveDirection *= Time.deltaTime;
-            
-            var verticalMove = new Vector3(0f, moveDirection.y, 0f);
-            var horizontalMove = new Vector3(moveDirection.x, 0f, moveDirection.z);
+			if (IsGrounded) _ungroundedTimer = 0.5f;
 
-            MoveHorizontal(horizontalMove);
-            MoveVertical(verticalMove);
+			var fallSpeed = gravity * _ungroundedTimer;
+			fallSpeed = fallSpeed < gravityLimit ? gravityLimit : fallSpeed;
+			_playerMover.ChangeMove(MoveType.GravityMove, new Vector3(0f, fallSpeed, 0f), RotationType.NoRotation);
+		}
 
-            Velocity = _verticalVelocity + _horizontalVelocity;
-            _transform.position += Velocity;
-        }
+		private void SetIsGrounded()
+		{
+			IsGrounded = Physics.SphereCast(Center, Radius, Vector3.down, out _,
+				Height / 2 - Radius + groundDetectionDistance, walkableLayers);
+		}
 
-        private void MoveVertical(Vector3 move)
-        {
-            var maxDistance = Height / 2 - Radius + Mathf.Abs(move.y);
-            var isHitted = Physics.SphereCast(Center, Radius, move.normalized, out var overlapHit, maxDistance);
+		#endregion
 
-            if (isHitted)
-            {
-                var distanceToCollisionSphereCenter = (overlapHit.distance * move.normalized).y;
-                var lowestCapsuleSphereCenter = Center.y - Height / 2 + Radius;
-                var distanceToLowestCapsuleSphereCenter = lowestCapsuleSphereCenter - Center.y;
-                var travelDistanceToCollision = distanceToCollisionSphereCenter - distanceToLowestCapsuleSphereCenter;
-                _verticalVelocity = new Vector3(0f, travelDistanceToCollision, 0f);
-            }
-            else
-            {
-                _verticalVelocity = move;
-            }
+		#region MoveMethods
 
-            _verticalHitPoint = overlapHit.point;
-        }
+		public void Move(Vector3 motion)
+		{
+			SetPreMoveVariables(motion);
+			ClearOldData();
+			MoveWithCollisions();
+			HandleCollisions();
+			SetState();
+		}
 
-        private void MoveHorizontal(Vector3 move)
-        {
-            var point1 = new Vector3(Center.x, Center.y - Height / 2 + Radius, Center.z);
-            var point2 = new Vector3(Center.x, Center.y + Height / 2 - Radius, Center.z);
-            
-            var isHitted = Physics.CapsuleCast(point1, point2, Radius, move.normalized, out var overlapHit, move.magnitude * 2);
+		private void SetPreMoveVariables(Vector3 motion)
+		{
+			_position = _rigidbody.position;
+			_upDirection = _transform.up;
+			Velocity = motion;
+		}
 
-            if (isHitted)
-            {
-                _horizontalVelocity = Vector3.zero;
+		private void SetState() => _transform.position = _position;
+		private void ClearOldData() => _contacts.Clear();
 
-                _horizontalHitPoint = overlapHit.point;
-            }
-            else
-            {
-                _horizontalVelocity = move;
-                _horizontalHitPoint = Vector3.zero;
-            }
-        }
+		private void MoveWithCollisions()
+		{
+			if (!(Velocity.sqrMagnitude > minMoveDistance)) return;
 
-        #endregion
+			var verticalMove = new Vector3(0f, Velocity.y, 0f);
+			verticalMove *= Time.deltaTime;
 
-        #region Debugging
+			var lateralVelocity = new Vector3(Velocity.x, 0, Velocity.z);
+			lateralVelocity *= Time.deltaTime;
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(Center, 0.02f);
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawLine(Center, Center + _horizontalVelocity * 30);
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(Center, Center + _verticalVelocity * 5);
-            
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(_verticalHitPoint, 0.02f);
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(_horizontalHitPoint, 0.02f);
-            
-            Gizmos.color = Color.black;
-            Gizmos.DrawWireSphere(new Vector3(Center.x, Center.y - Height / 2 + Radius, Center.z), Radius);
-            Gizmos.DrawWireSphere(new Vector3(Center.x, Center.y + Height / 2 - Radius, Center.z), Radius);
-        }
-        
-        #endregion
+			MoveVertical(verticalMove);
+			MoveHorizontal(lateralVelocity);
+		}
+
+		private void MoveVertical(Vector3 move)
+		{
+			var maxDistance = Height / 2 - Radius + Mathf.Abs(move.y);
+			var isHitted = Physics.SphereCast(Center, Radius, move.normalized, out var overlapHit, maxDistance);
+
+			if (isHitted)
+			{
+				var distanceToCollisionSphereCenter = (overlapHit.distance * move.normalized).y;
+				var lowestCapsuleSphereCenter = Center.y - Height / 2 + Radius;
+				var distanceToLowestCapsuleSphereCenter = lowestCapsuleSphereCenter - Center.y;
+				var travelDistanceToCollision = distanceToCollisionSphereCenter - distanceToLowestCapsuleSphereCenter;
+				_position.y += travelDistanceToCollision;
+			}
+			else
+			{
+				_position += move;
+			}
+		}
+
+		private void MoveHorizontal(Vector3 move)
+		{
+			if (move.magnitude < minMoveDistance) return;
+			
+			var top = new Vector3(Center.x, Center.y + Height / 2 - Radius + skinWidth, Center.z);
+			var bottom = new Vector3(Center.x, Center.y - Height / 2 + Radius + stepOffset - skinWidth, Center.z);
+
+			if (Physics.CapsuleCast(top, bottom, Radius + skinWidth, move, out var hitInfo, move.magnitude))
+			{
+				_position += Vector3.ProjectOnPlane(move, hitInfo.normal) * 0.7f;
+				_contacts.Add(hitInfo);
+			}
+			else _position += move;
+		}
+
+		private void HandleCollisions()
+		{
+			if (_contacts.Count <= 0) return;
+
+			foreach (var contact in _contacts)
+			{
+				var angle = Vector3.Angle(_upDirection, contact.normal);
+
+				//if (angle >= slopeLimit) _position -= Vector3.Cross(contact.normal, contact.transform.forward);
+			}
+		}
+
+		#endregion
 	}
 }

@@ -34,7 +34,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public float CrouchSpeedModifier => crouchSpeedModifier;
         public float JumpStrength => jumpStrength;
         public AnimationCurve RunModifierCurve => runModifierCurve;
-        public LayerMask WalkableLayerMask => PlayerController.WalkableLayers;
+        public LayerMask WalkableLayerMask => PlayerController.walkableLayers;
         public event UnityAction<MainCharacterState, MainCharacterState> SwitchingState
         {
             add => switchingState.AddListener(value);
