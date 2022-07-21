@@ -5,15 +5,11 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 {
     public class UncontrolledFollowWalkSubState : AnimalSubState
     {
-<<<<<<< HEAD
-        public UncontrolledFollowWalkSubState(MainAnimalStateMachine context, AnimalSubStateFactory factory) : base(context, factory){}
-=======
         public UncontrolledFollowWalkSubState(MainAnimalStateMachine context, AnimalSubStateFactory factory) : base(context, factory)
             => _factory = (UncontrolledSubStatesFactory) factory;
 
         private float _distanceBetweenPlayerAndAnimal;
         private UncontrolledSubStatesFactory _factory;
->>>>>>> 60b0e68092cb23e487f64654f07b63b41a792a22
 
         public override void OnStateEnter(){}
 

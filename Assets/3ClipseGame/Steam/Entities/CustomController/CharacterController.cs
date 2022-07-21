@@ -131,7 +131,11 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			Velocity = motion;
 		}
 
-		private void SetState() => _transform.position = _position;
+		private void SetState()
+		{
+			Velocity = _position - _transform.position;
+			_transform.position = _position;
+		}
 		private void ClearOldData() => _contacts.Clear();
 
 		private void MoveWithCollisions()
