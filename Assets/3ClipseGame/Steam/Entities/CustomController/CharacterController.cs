@@ -51,7 +51,9 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		private readonly List<RaycastHit> _contacts = new();
 
-		private bool _isKinematicByDefault;
+		private Vector3 _capsuleBottomPoint => new(Center.x, Center.y - Height / 2 + Radius - skinWidth, Center.z);
+		private Vector3 _capsuleNoStepPoint => new(Center.x, Center.y - Height / 2 + Radius + stepOffset - skinWidth, Center.z);
+		private Vector3 _capsuleUpperPoint => new(Center.x, Center.y + Height / 2 - Radius + skinWidth, Center.z);
 
 		#endregion
 
@@ -68,14 +70,13 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			SetColliderParams();
 		}
 		
-		private void OnEnable() => _rigidbody.isKinematic = false;
-		private void OnDisable() => _rigidbody.isKinematic = _isKinematicByDefault;
-		
 		private void SetRigidbodyParams()
 		{
-			_isKinematicByDefault = _rigidbody.isKinematic;
 			_rigidbody.useGravity = false;
 			_rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+			_rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+			_rigidbody.freezeRotation = true;
 		}
 		
 		private void SetColliderParams()
@@ -119,8 +120,10 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		private void SetState()
 		{
+			var overlaps = new Collider[5];
 			Velocity = _deltaPosition;
 			_transform.position += _deltaPosition;
+			if (Physics.OverlapCapsuleNonAlloc(_capsuleUpperPoint, _capsuleBottomPoint, Radius, overlaps) != 0) DePenetrate();
 		}
 		private void ClearOldData() => _contacts.Clear();
 
@@ -150,6 +153,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 				var distanceToLowestCapsuleSphereCenter = lowestCapsuleSphereCenter - Center.y;
 				var travelDistanceToCollision = distanceToCollisionSphereCenter - distanceToLowestCapsuleSphereCenter;
 				_deltaPosition.y += travelDistanceToCollision;
+				_contacts.Add(overlapHit);
 			}
 			else
 			{
@@ -160,14 +164,18 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		private void MoveHorizontal(Vector3 move)
 		{
 			if ((move / Time.deltaTime).magnitude < minMoveDistance) return;
-			
-			var top = new Vector3(Center.x, Center.y + Height / 2 - Radius + skinWidth, Center.z);
-			var bottom = new Vector3(Center.x, Center.y - Height / 2 + Radius + stepOffset - skinWidth, Center.z);
+
+			var top = _capsuleUpperPoint + _deltaPosition;
+			var bottom = _capsuleNoStepPoint + _deltaPosition;
 
 			if (Physics.CapsuleCast(top, bottom, Radius + skinWidth, move, out var hitInfo, move.magnitude))
 			{
-				_deltaPosition += Vector3.ProjectOnPlane(move, hitInfo.normal) * 0.7f;
-				_contacts.Add(hitInfo);
+				var slideMove = Vector3.ProjectOnPlane(move, hitInfo.normal) * 0.7f;
+				if (Physics.CapsuleCast(top, bottom, Radius + skinWidth, slideMove, out var slideHitInfo,
+					    slideMove.magnitude)) _deltaPosition += slideMove * slideHitInfo.distance;
+				else _deltaPosition += slideMove;
+				
+				if(Physics.CheckCapsule(top + _deltaPosition, bottom + _deltaPosition, Radius)) DePenetrate();
 			}
 			else _deltaPosition += move;
 		}
@@ -181,6 +189,22 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 				var angle = Vector3.Angle(_upDirection, contact.normal);
 
 				//if (angle >= slopeLimit) _position -= Vector3.Cross(contact.normal, contact.transform.forward);
+			}
+		}
+		
+		private void DePenetrate()
+		{
+			var overlaps = new Collider[5];
+			var overlapsNum = Physics.OverlapCapsuleNonAlloc(_capsuleNoStepPoint, _capsuleUpperPoint, Radius, overlaps);
+
+			if (overlapsNum <= 0) return;
+			for (var i = 0; i < overlapsNum; i++)
+			{
+				if (overlaps[i].transform == _transform || !Physics.ComputePenetration(_capsuleCollider, _transform.position,
+					    transform.rotation,
+					    overlaps[i], overlaps[i].transform.position, overlaps[i].transform.rotation,
+					    out var direction, out var distance)) continue;
+				_transform.position += direction * (distance + skinWidth);
 			}
 		}
 
