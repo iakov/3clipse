@@ -10,7 +10,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
         public UncontrolledIdleSubState(MainAnimalStateMachine context, AnimalSubStateFactory factory) : base(context, factory) 
             => _factory = (UncontrolledSubStatesFactory) factory;
-
+        
+        private float _distanceBetweenPlayerAndAnimal;
         private UncontrolledSubStatesFactory _factory;
             
         #endregion
@@ -26,6 +27,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         public override void OnStateUpdate()
         {
             AddTime(Time.deltaTime);
+            _distanceBetweenPlayerAndAnimal = Vector3.Distance(Context.AnimalTransform.position, Context.MainCharacterTransform.position);
+            
+            // Debug.Log(_distanceBetweenPlayerAndAnimal);
+            
+            if (_distanceBetweenPlayerAndAnimal < Context.WalkBackDistance)
+            {
+                Context.AnimalTransform.position += Vector3.back * Time.deltaTime * Context.WalkBackSpeed;
+            }
             
             Context.AnimalTransform.LookAt(Context.MainCharacterTransform);
         }
@@ -40,7 +49,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         {
             newAnimalState = null;
 
-            if (Vector3.Distance(Context.AnimalTransform.position, Context.MainCharacterTransform.position) > Context.FollowWalkDistance)
+            if (_distanceBetweenPlayerAndAnimal > Context.FollowWalkDistance)
                 newAnimalState = _factory.Walk();
             
             else if (StateTimer > Context.WaitTime) newAnimalState = _factory.Entertain();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
@@ -19,6 +20,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         [SerializeField] private AnimationCurve followWalkSpeed;
         
         [SerializeField] private float stopWalkDistance;
+        
+        [SerializeField] private float walkBackDistance;
+        [SerializeField] private float walkBackSpeed;
 
         [SerializeField] private Transform[] possibleFollowTargets;
 
@@ -38,6 +42,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         public float FollowRunDistance => followRunDistance;
         public AnimationCurve FollowRunSpeed => followRunSpeed;
         public float StopWalkDistance => stopWalkDistance;
+        public float WalkBackDistance => walkBackDistance;
+        public float WalkBackSpeed => walkBackSpeed;
         public float WaitTime => waitTime;
         public Transform[] PossibleFollowTargets => possibleFollowTargets;
         public NavMeshAgent AnimalAgent { get; private set; }
