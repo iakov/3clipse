@@ -51,9 +51,9 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		private readonly List<RaycastHit> _contacts = new();
 
-		private Vector3 _capsuleBottomPoint => new(Center.x, Center.y - Height / 2 + Radius - skinWidth, Center.z);
-		private Vector3 _capsuleNoStepPoint => new(Center.x, Center.y - Height / 2 + Radius + stepOffset - skinWidth, Center.z);
-		private Vector3 _capsuleUpperPoint => new(Center.x, Center.y + Height / 2 - Radius + skinWidth, Center.z);
+		private Vector3 _capsuleBottomPoint => new(Center.x, Center.y - Height / 2 + Radius, Center.z);
+		private Vector3 _capsuleNoStepPoint => new(Center.x, Center.y - Height / 2 + Radius + stepOffset, Center.z);
+		private Vector3 _capsuleUpperPoint => new(Center.x, Center.y + Height / 2 - Radius, Center.z);
 
 		#endregion
 
@@ -104,108 +104,62 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		public void Move(Vector3 motion)
 		{
-			SetPreMoveVariables(motion);
-			ClearOldData();
-			MoveWithCollisions();
-			HandleCollisions();
-			SetState();
+			PrepareForMove();
+			ProceedMove(motion);
+			ApplyChanges();
 		}
 
-		private void SetPreMoveVariables(Vector3 motion)
+		private void PrepareForMove()
 		{
-			_upDirection = _transform.up;
-			Velocity = motion;
 			_deltaPosition = Vector3.zero;
+			Velocity = Vector3.zero;
+			_contacts.Clear();
 		}
 
-		private void SetState()
+		private void ProceedMove(Vector3 move)
 		{
-			var overlaps = new Collider[5];
-			Velocity = _deltaPosition;
-			_transform.position += _deltaPosition;
-			if (Physics.OverlapCapsuleNonAlloc(_capsuleUpperPoint, _capsuleBottomPoint, Radius, overlaps) != 0) DePenetrate();
-		}
-		private void ClearOldData() => _contacts.Clear();
-
-		private void MoveWithCollisions()
-		{
-			if (!(Velocity.sqrMagnitude > minMoveDistance)) return;
-
-			var verticalMove = new Vector3(0f, Velocity.y, 0f);
-			verticalMove *= Time.deltaTime;
-
-			var lateralVelocity = new Vector3(Velocity.x, 0, Velocity.z);
-			lateralVelocity *= Time.deltaTime;
-
-			MoveVertical(verticalMove);
-			MoveHorizontal(lateralVelocity);
-		}
-
-		private void MoveVertical(Vector3 move)
-		{
-			var maxDistance = Height / 2 - Radius + Mathf.Abs(move.y);
-			var isHitted = Physics.SphereCast(Center, Radius, move.normalized, out var overlapHit, maxDistance);
-
-			if (isHitted)
+			if (move.magnitude < minMoveDistance) return;
+			move *= Time.deltaTime;
+			
+			//Proceed vertical move
+			var verticalMove = new Vector3(0f, move.y, 0f);
+			
+			if (CheckForCollision(verticalMove, out var hitInfo, false))
 			{
-				var distanceToCollisionSphereCenter = (overlapHit.distance * move.normalized).y;
-				var lowestCapsuleSphereCenter = Center.y - Height / 2 + Radius;
-				var distanceToLowestCapsuleSphereCenter = lowestCapsuleSphereCenter - Center.y;
-				var travelDistanceToCollision = distanceToCollisionSphereCenter - distanceToLowestCapsuleSphereCenter;
-				_deltaPosition.y += travelDistanceToCollision;
-				_contacts.Add(overlapHit);
+				_deltaPosition += hitInfo.distance * verticalMove.normalized - verticalMove;
+				_contacts.Add(hitInfo);
 			}
 			else
 			{
-				_deltaPosition += move;
+				_deltaPosition += verticalMove;
 			}
-		}
+			
+			//Proceed horizontal move
+			var horizontalMove = new Vector3(move.x, 0f, move.z);
 
-		private void MoveHorizontal(Vector3 move)
-		{
-			if ((move / Time.deltaTime).magnitude < minMoveDistance) return;
-
-			var top = _capsuleUpperPoint + _deltaPosition;
-			var bottom = _capsuleNoStepPoint + _deltaPosition;
-
-			if (Physics.CapsuleCast(top, bottom, Radius + skinWidth, move, out var hitInfo, move.magnitude))
+			if (CheckForCollision(horizontalMove, out hitInfo, false))
 			{
-				var slideMove = Vector3.ProjectOnPlane(move, hitInfo.normal) * 0.7f;
-				if (Physics.CapsuleCast(top, bottom, Radius + skinWidth, slideMove, out var slideHitInfo,
-					    slideMove.magnitude)) _deltaPosition += slideMove * slideHitInfo.distance;
-				else _deltaPosition += slideMove;
 				
-				if(Physics.CheckCapsule(top + _deltaPosition, bottom + _deltaPosition, Radius)) DePenetrate();
 			}
-			else _deltaPosition += move;
+			else
+			{
+				_deltaPosition += horizontalMove;
+			}
 		}
 
-		private void HandleCollisions()
+		private bool CheckForCollision(Vector3 move, out RaycastHit hitInfo, bool isIgnoreStep)
 		{
-			if (_contacts.Count <= 0) return;
-
-			foreach (var contact in _contacts)
-			{
-				var angle = Vector3.Angle(_upDirection, contact.normal);
-
-				//if (angle >= slopeLimit) _position -= Vector3.Cross(contact.normal, contact.transform.forward);
-			}
+			var backPointBottom = isIgnoreStep ? _capsuleNoStepPoint - move : _capsuleBottomPoint - move;
+			var backPointUpper = _capsuleUpperPoint - move;
+			
+			return Physics.CapsuleCast(backPointBottom, backPointUpper, Radius, move.normalized,
+				out hitInfo, move.magnitude * 2);
 		}
-		
-		private void DePenetrate()
-		{
-			var overlaps = new Collider[5];
-			var overlapsNum = Physics.OverlapCapsuleNonAlloc(_capsuleNoStepPoint, _capsuleUpperPoint, Radius, overlaps);
 
-			if (overlapsNum <= 0) return;
-			for (var i = 0; i < overlapsNum; i++)
-			{
-				if (overlaps[i].transform == _transform || !Physics.ComputePenetration(_capsuleCollider, _transform.position,
-					    transform.rotation,
-					    overlaps[i], overlaps[i].transform.position, overlaps[i].transform.rotation,
-					    out var direction, out var distance)) continue;
-				_transform.position += direction * (distance + skinWidth);
-			}
+		private void ApplyChanges()
+		{
+			Velocity = _deltaPosition;
+			_transform.position += _deltaPosition;
 		}
 
 		#endregion
