@@ -30,7 +30,8 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			? Vector3.negativeInfinity
 			: _capsuleCollider.center + _transform.position;
 
-		public bool IsGrounded { get; private set; }
+		public bool IsGrounded => Physics.SphereCast(Center, Radius, Vector3.down, out _,
+			Height / 2 - Radius + groundDetectionDistance, walkableLayers);
 		public float Radius => _capsuleCollider == null ? -1f : _capsuleCollider.radius;
 		public float Height => _capsuleCollider == null ? -1f : _capsuleCollider.height;
 		public Vector3 Velocity { get; set; }
@@ -84,18 +85,6 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			_capsuleCollider.direction = 1;
 			if (_capsuleCollider.height <= _capsuleCollider.radius * 2)
 				_capsuleCollider.height = _capsuleCollider.radius * 2 + 0.01f;
-		}
-
-		#endregion
-
-		#region PhysicsMethods
-
-		private void FixedUpdate() => SetIsGrounded();
-
-		private void SetIsGrounded()
-		{
-			IsGrounded = Physics.SphereCast(Center, Radius, Vector3.down, out _,
-				Height / 2 - Radius + groundDetectionDistance, walkableLayers);
 		}
 
 		#endregion

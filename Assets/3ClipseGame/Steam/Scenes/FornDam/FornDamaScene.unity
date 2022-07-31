@@ -34910,7 +34910,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 0.3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -34935,8 +34935,8 @@ MonoBehaviour:
   skinWidth: 0.01
   walkableLayers:
     serializedVersion: 2
-    m_Bits: 0
-  groundDetectionDistance: 0
+    m_Bits: 1
+  groundDetectionDistance: 0.1
   minMoveDistance: 0.01
 --- !u!114 &1014769333
 MonoBehaviour:
@@ -35017,7 +35017,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
       propertyPath: walkBackSpeed
-      value: 1
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: stopWalkDistance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
       propertyPath: walkBackDistance
@@ -44175,7 +44179,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -199.9999}
+  m_AnchoredPosition: {x: 250, y: -199.21669}
   m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1449555030
@@ -45062,7 +45066,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 325385676}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9998608
+  m_Size: 0.99612397
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

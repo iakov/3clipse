@@ -4,6 +4,7 @@ using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Struc
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 using UnityEngine.AI;
+using CharacterController = _3ClipseGame.Steam.Entities.CustomController.CharacterController;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
 {
@@ -47,6 +48,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         public float WaitTime => waitTime;
         public Transform[] PossibleFollowTargets => possibleFollowTargets;
         public NavMeshAgent AnimalAgent { get; private set; }
+        public CustomController.CharacterController AnimalController { get; private set; }
 
         #endregion
         
@@ -64,6 +66,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
             AnimalMover = GetComponent<PlayerMover>();
             AnimalTransform = GetComponent<Transform>();
             AnimalAgent = GetComponent<NavMeshAgent>();
+            AnimalController = GetComponent<CharacterController>();
         }
 
         private void Start()

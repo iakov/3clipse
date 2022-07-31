@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
         public UncontrolledIdleSubState(MainAnimalStateMachine context, AnimalSubStateFactory factory) : base(context, factory) 
             => _factory = (UncontrolledSubStatesFactory) factory;
-        
+
         private float _distanceBetweenPlayerAndAnimal;
         private UncontrolledSubStatesFactory _factory;
             
@@ -22,30 +23,30 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         {
             Context.AnimalMover.ChangeMove(MoveType.StateMove, Vector3.zero, RotationType.RotateOnBeginning);
             Context.AnimalAgent.enabled = false;
+            Context.AnimalAgent.enabled = true;
         }
 
         public override void OnStateUpdate()
         {
             AddTime(Time.deltaTime);
             _distanceBetweenPlayerAndAnimal = Vector3.Distance(Context.AnimalTransform.position, Context.MainCharacterTransform.position);
-            
-            // Debug.Log(_distanceBetweenPlayerAndAnimal);
-            
+
             if (_distanceBetweenPlayerAndAnimal < Context.WalkBackDistance)
             {
-                Context.AnimalTransform.position += Vector3.back * Time.deltaTime * Context.WalkBackSpeed;
-            }
-            
+                // Debug.Log(Context.MainCharacterTransform.position);
+                
+                // Vector3 movingPosition = Context.AnimalTransform.position;
+                //
+                // movingPosition+= Vector3.back * Time.deltaTime * Context.WalkBackSpeed;
+                // movingPosition += Vector3.left * Time.deltaTime * Context.WalkBackSpeed;
+                // Context.AnimalTransform.position = movingPosition;
+            } 
             Context.AnimalTransform.LookAt(Context.MainCharacterTransform);
         }
 
-        public override void OnStateExit()
-        {
-            Context.CurrentTarget = Context.PossibleFollowTargets[Random.Range(0, Context.PossibleFollowTargets.Length)];
-            Context.AnimalAgent.enabled = true;
-        }
+        public override void OnStateExit() => Context.CurrentTarget = Context.PossibleFollowTargets[Random.Range(0, Context.PossibleFollowTargets.Length)];
 
-        public override bool TrySwitchState(out AnimalState newAnimalState)
+            public override bool TrySwitchState(out AnimalState newAnimalState)
         {
             newAnimalState = null;
 
