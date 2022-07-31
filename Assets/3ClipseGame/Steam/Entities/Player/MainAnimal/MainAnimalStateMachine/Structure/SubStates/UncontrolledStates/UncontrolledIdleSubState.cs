@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates
 {
@@ -30,17 +31,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         {
             AddTime(Time.deltaTime);
             _distanceBetweenPlayerAndAnimal = Vector3.Distance(Context.AnimalTransform.position, Context.MainCharacterTransform.position);
-
-            if (_distanceBetweenPlayerAndAnimal < Context.WalkBackDistance)
-            {
-                // Debug.Log(Context.MainCharacterTransform.position);
-                
-                // Vector3 movingPosition = Context.AnimalTransform.position;
-                //
-                // movingPosition+= Vector3.back * Time.deltaTime * Context.WalkBackSpeed;
-                // movingPosition += Vector3.left * Time.deltaTime * Context.WalkBackSpeed;
-                // Context.AnimalTransform.position = movingPosition;
-            } 
             Context.AnimalTransform.LookAt(Context.MainCharacterTransform);
         }
 
