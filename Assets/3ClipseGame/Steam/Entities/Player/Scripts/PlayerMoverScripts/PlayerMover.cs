@@ -28,7 +28,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
             if (Camera.main != null) _cameraTransform = Camera.main.transform;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (IsFreezed) return;
             
@@ -84,14 +84,14 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         private void UpdateMove(out Vector3 resultMove)
         {
             resultMove = _movesList.Aggregate(Vector3.zero, (current, move) => current + move.GetRotatedVector());
-            _characterController.Move(resultMove);
+            _characterController.Move(resultMove * Time.fixedDeltaTime);
         }
 
         private void UpdateRotation(Vector3 resultMove)
         {
             resultMove.y = 0f;
             if (resultMove == Vector3.zero) return;
-            _playerTransform.rotation = Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(resultMove), rotationSpeed * Time.deltaTime);
+            _characterController.Rotate(Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(resultMove), rotationSpeed * Time.fixedDeltaTime));
         }
 
         #endregion

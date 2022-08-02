@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
@@ -10,17 +11,19 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 	{
 		#region SerializeFields
 
-		[Header("Global Parameters")] [SerializeField]
-		private float slopeLimit = 45f;
-
-		[SerializeField] private float stepOffset = 0.3f;
+		[Header("Global Parameters")] 
+		public LayerMask walkableLayers;
 		[SerializeField] [Min(0.01f)] private float skinWidth = 0.01f;
 
-		public LayerMask walkableLayers;
-
-		[Header("Move Parameters")]
-		[SerializeField] private float groundDetectionDistance;
-		[SerializeField] [Min(0.01f)] private float minMoveDistance = 0.01f;
+		[Header("Move Parameters")] 
+		[SerializeField] private float slopeSlide = 60f;
+		[SerializeField] private float stepOffset = 0.3f;
+		[SerializeField] private float groundDetectionDistance = 0.1f;
+		
+		[Header("Slope Parameters")]
+		[SerializeField] [Min(0f)] private float slopeSlideSpeed = 2f;
+		[SerializeField] private float slopeLimit = 35f;
+		[SerializeField] private AnimationCurve slideSpeedUpModifier;
 
 		#endregion
 
@@ -34,26 +37,22 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		public float Radius => _capsuleCollider == null ? -1f : _capsuleCollider.radius;
 		public float Height => _capsuleCollider == null ? -1f : _capsuleCollider.height;
 		public Vector3 Velocity { get; set; }
+		public float CurrentSlope { get; private set; }
 
 		#endregion
 
 		#region PrivateFields
 
-		private float _ungroundedTimer;
-
-		private Vector3 _deltaPosition;
-		private Vector3 _upDirection;
+		private float _slideTimer;
+		
+		private Vector3 _position;
 
 		private Rigidbody _rigidbody;
 		private CapsuleCollider _capsuleCollider;
 		private Transform _transform;
-		private PlayerMover _playerMover;
 
 		private readonly List<RaycastHit> _contacts = new();
-
-		private Vector3 _capsuleBottomPoint => new(Center.x, Center.y - Height / 2 + Radius, Center.z);
-		private Vector3 _capsuleNoStepPoint => new(Center.x, Center.y - Height / 2 + Radius + stepOffset, Center.z);
-		private Vector3 _capsuleUpperPoint => new(Center.x, Center.y + Height / 2 - Radius, Center.z);
+		
 
 		#endregion
 
@@ -64,12 +63,11 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			_rigidbody = GetComponent<Rigidbody>();
 			_capsuleCollider = GetComponent<CapsuleCollider>();
 			_transform = GetComponent<Transform>();
-			_playerMover = GetComponent<PlayerMover>();
-		
+
 			SetRigidbodyParams();
 			SetColliderParams();
 		}
-		
+
 		private void SetRigidbodyParams()
 		{
 			_rigidbody.useGravity = false;
@@ -78,7 +76,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 			_rigidbody.freezeRotation = true;
 		}
-		
+
 		private void SetColliderParams()
 		{
 			_capsuleCollider.direction = 1;
@@ -90,7 +88,11 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		#region PhysicsMethods
 
-		private void FixedUpdate() => SetIsGrounded();
+		private void FixedUpdate()
+		{
+			SetIsGrounded();
+			if(Velocity != Vector3.zero) _rigidbody.MovePosition(_position);
+		}
 
 		private void SetIsGrounded()
 		{
@@ -100,67 +102,100 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		#endregion
 
-		#region MoveMethods
+		#region PublicMoveMethods
 
 		public void Move(Vector3 motion)
 		{
 			PrepareForMove();
 			ProceedMove(motion);
+			HandleSlopeSlide();
 			ApplyChanges();
 		}
 
+		public void Rotate(Quaternion rotation) => _rigidbody.MoveRotation(rotation);
+		
+		#endregion
+
+		#region PrivateMoveMethods
+
 		private void PrepareForMove()
 		{
-			_deltaPosition = Vector3.zero;
+			_position = _transform.position;
 			Velocity = Vector3.zero;
 			_contacts.Clear();
 		}
 
 		private void ProceedMove(Vector3 move)
 		{
-			if (move.magnitude < minMoveDistance) return;
-			move *= Time.deltaTime;
-			
-			//Proceed vertical move
+			//Handle vertical movement
 			var verticalMove = new Vector3(0f, move.y, 0f);
-			
-			if (CheckForCollision(verticalMove, out var hitInfo, false))
+			var capsuleOffset = Height / 2 - Radius;
+			if (Physics.SphereCast(Center, Radius + skinWidth, verticalMove, out var hitInfo,
+				    verticalMove.magnitude + capsuleOffset))
 			{
-				_deltaPosition += hitInfo.distance * verticalMove.normalized - verticalMove;
+				_position += verticalMove.normalized * (hitInfo.distance - capsuleOffset);
 				_contacts.Add(hitInfo);
 			}
 			else
 			{
-				_deltaPosition += verticalMove;
+				_position += verticalMove;
 			}
-			
-			//Proceed horizontal move
-			var horizontalMove = new Vector3(move.x, 0f, move.z);
 
-			if (CheckForCollision(horizontalMove, out hitInfo, false))
+			//Handle horizontal movement
+			var horizontalMove = new Vector3(move.x, 0f, move.z);
+			var direction = horizontalMove.normalized;
+			var distance = horizontalMove.magnitude;
+
+			for (var i = 0; i < 5; i++)
 			{
+				var origin = _position + _capsuleCollider.center - direction * Radius;
+				var bottom = origin - Vector3.up * (capsuleOffset - stepOffset);
+				var top = origin + Vector3.up * capsuleOffset;
+
+				if (Physics.CapsuleCast(top, bottom, Radius, direction, out hitInfo, distance + Radius))
+				{
+					var slideAngle = Vector3.Angle(Vector3.up, hitInfo.normal);
+					var safeDistance = hitInfo.distance - Radius - skinWidth;
+					_position += direction * safeDistance;
+					_contacts.Add(hitInfo);
+
+					if (slideAngle >= slopeLimit && slideAngle <= 145) break;
+					
+					direction = Vector3.ProjectOnPlane(direction, hitInfo.normal);
+					distance -= safeDistance;
+				}
+				else
+				{
+					_position += direction * distance;
+					break;
+				}
+			}
+		}
+
+		private void HandleSlopeSlide()
+		{
+			if (!IsGrounded || !Physics.Raycast(Center, Vector3.down, out var hit)) return;
+
+			var angle = Vector3.Angle(Vector3.up, hit.normal);
+			var slideMove = new Vector3(hit.normal.x, -hit.normal.y, hit.normal.z);
+			
+			if (angle >= slopeSlide)
+			{
+				_slideTimer += Time.fixedDeltaTime;
+				var maxSlideTime = slideSpeedUpModifier.keys[slideSpeedUpModifier.length - 1].time;
+				if (_slideTimer > maxSlideTime) _slideTimer = maxSlideTime;
+				var slideModifier = slideSpeedUpModifier.Evaluate(_slideTimer);
 				
+				_position += slideMove * (Time.fixedDeltaTime * slopeSlideSpeed * slideModifier);
 			}
 			else
 			{
-				_deltaPosition += horizontalMove;
+				_slideTimer = 0f;
 			}
 		}
 
-		private bool CheckForCollision(Vector3 move, out RaycastHit hitInfo, bool isIgnoreStep)
-		{
-			var backPointBottom = isIgnoreStep ? _capsuleNoStepPoint - move : _capsuleBottomPoint - move;
-			var backPointUpper = _capsuleUpperPoint - move;
-			
-			return Physics.CapsuleCast(backPointBottom, backPointUpper, Radius, move.normalized,
-				out hitInfo, move.magnitude * 2);
-		}
-
-		private void ApplyChanges()
-		{
-			Velocity = _deltaPosition;
-			_transform.position += _deltaPosition;
-		}
+		private void ApplyChanges() => Velocity = _position - _transform.position;
+		
 
 		#endregion
 	}
