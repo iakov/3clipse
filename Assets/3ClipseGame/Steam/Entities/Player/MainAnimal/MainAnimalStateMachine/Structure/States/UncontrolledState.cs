@@ -17,6 +17,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             _subStateFactory = new UncontrolledSubStatesFactory(Context);
             _currentSubState = _subStateFactory.Idle();
             _currentSubState.OnStateEnter();
+            Context.AnimalAgent.enabled = true;
         }
 
         public override void OnStateUpdate()
@@ -28,6 +29,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         public override void OnStateExit()
         {
             _currentSubState.OnStateExit();
+            Context.AnimalAgent.enabled = false;
         }
 
         public override bool TrySwitchState(out AnimalState newAnimalState)
@@ -43,6 +45,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             _currentSubState.OnStateExit();
             _currentSubState = newAnimalSubState;
             _currentSubState.OnStateEnter();
+        }
+
+        private void RayCast()
+        {
+            float maxDistance = Context.WalkBackDistance;
+            RaycastHit hit;
+
+            // bool isHit = Physics.Raycast();
         }
     }
 }
