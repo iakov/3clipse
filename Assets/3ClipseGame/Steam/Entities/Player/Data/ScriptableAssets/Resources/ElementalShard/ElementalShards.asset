@@ -17,5 +17,5 @@ MonoBehaviour:
     caves
   id: elemental_shard_fire
   uiImage: {fileID: 21300000, guid: d8238a5585addc04ea3bbc0dad6c3e19, type: 3}
-  lootPrefab: {fileID: 8503595561917610468, guid: 6fd79cd3794800344a6ba2d0145d77d5, type: 3}
+  lootPrefab: {fileID: 235127972727830183, guid: 6fd79cd3794800344a6ba2d0145d77d5, type: 3}
   maximumAmountInSlot: 99

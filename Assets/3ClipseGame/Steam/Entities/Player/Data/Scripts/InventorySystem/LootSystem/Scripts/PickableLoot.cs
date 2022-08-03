@@ -1,3 +1,4 @@
+using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.ResourceInventorySystem.ScriptableObjects;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts
@@ -6,7 +7,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
     {
         #region PublicFields
 
-        public Item Resource;
+        public Resource Resource;
         public int Amount;
 
         #endregion

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,10 +14,15 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         #region PublicMethods
 
-        public void Drop()
+        public IEnumerator Drop(float dropRate = 0.05f)
         {
             foreach (var dropElement in possibleDropResources)
+            {
                 dropElement.dropItem.DropOnGround(transform.position, dropElement.GetFinalAmountOfDrop());
+                yield return new WaitForSeconds(dropRate);
+            }
+            
+            yield break;
         }
 
         #endregion

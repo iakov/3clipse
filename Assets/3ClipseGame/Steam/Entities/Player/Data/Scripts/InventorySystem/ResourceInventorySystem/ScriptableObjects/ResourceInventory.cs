@@ -47,6 +47,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.Resour
 
             if (amountLeft == 0) return;
             
+            //Send to storage on campfire
             Debug.Log("New " + amountLeft + " " + item.name + " added to remote storage");
         }
 

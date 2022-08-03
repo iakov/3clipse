@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.CustomController
@@ -16,7 +14,6 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		[SerializeField] [Min(0.01f)] private float skinWidth = 0.01f;
 
 		[Header("Move Parameters")] 
-		[SerializeField] private float slopeSlide = 60f;
 		[SerializeField] private float stepOffset = 0.3f;
 		[SerializeField] private float groundDetectionDistance = 0.1f;
 		
@@ -154,16 +151,14 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 				if (Physics.CapsuleCast(top, bottom, Radius, direction, out hitInfo, distance + Radius))
 				{
-					var slideAngle = Vector3.Angle(Vector3.up, hitInfo.normal);
 					var safeDistance = hitInfo.distance - Radius - skinWidth;
 					_position += direction * safeDistance;
 					_contacts.Add(hitInfo);
-
-					if (slideAngle >= slopeLimit && slideAngle <= 145) break;
 					
 					direction = Vector3.ProjectOnPlane(direction, hitInfo.normal);
 					distance -= safeDistance;
 				}
+				
 				else
 				{
 					_position += direction * distance;
@@ -179,7 +174,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			var angle = Vector3.Angle(Vector3.up, hit.normal);
 			var slideMove = new Vector3(hit.normal.x, -hit.normal.y, hit.normal.z);
 			
-			if (angle >= slopeSlide)
+			if (angle >= slopeLimit)
 			{
 				_slideTimer += Time.fixedDeltaTime;
 				var maxSlideTime = slideSpeedUpModifier.keys[slideSpeedUpModifier.length - 1].time;
