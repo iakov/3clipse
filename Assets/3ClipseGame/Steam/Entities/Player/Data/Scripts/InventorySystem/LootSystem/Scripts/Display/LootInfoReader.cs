@@ -13,7 +13,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         public Action<GameObject, bool> DisplayListChanged;
         
-        public Action PickUpInitiated;
+        public Action<PickableLoot> PickUpInitiated;
         public Action PickUpFinished;
 
         #endregion
@@ -53,17 +53,21 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
         private void OnEnable() => pickUpItem.started += InstantiatePickUp;
         private void OnDisable() => pickUpItem.started -= InstantiatePickUp;
 
+        #endregion
+        
+        #region PickUpHandler
+
         private void InstantiatePickUp(InputAction.CallbackContext context)
         {
-            PickUpInitiated?.Invoke();
-
-            var pickableLoot = _currentDisplayedIcons.First(element => _optionChooser.CurrentOption.gameObject == element.Value.gameObject);
-            Destroy(_currentDisplayedIcons[pickableLoot.Key]);
-            _currentDisplayedIcons.Remove(pickableLoot.Key);
+            if (_currentDisplayedIcons.Count == 0) return;
             
+            var pickedLoot = _currentDisplayedIcons.First(element => _optionChooser.CurrentOption.gameObject == element.Value.gameObject);
+            PickUpInitiated?.Invoke(pickedLoot.Key);
+            
+            _currentDisplayedIcons.Remove(pickedLoot.Key);
+            Destroy(pickedLoot.Value);
             
             PickUpFinished?.Invoke();
-            Destroy(pickableLoot.Key.gameObject);
         }
 
         #endregion

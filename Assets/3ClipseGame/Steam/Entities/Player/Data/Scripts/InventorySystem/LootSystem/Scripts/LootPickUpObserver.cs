@@ -1,10 +1,17 @@
 using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts.Display;
+using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts.Pool;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts
 {
     public class LootPickUpObserver : MonoBehaviour
     {
+        #region SerializeFields
+
+        [SerializeField] private ObjectPool pool;
+
+        #endregion
+        
         #region PrivateFields
 
         private InventoryStorage _inventoryStorage;
@@ -29,8 +36,11 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         #region PrivateMethods
 
-        private void PickUpItem() => 
+        private void PickUpItem(PickableLoot loot)
+        {
             _inventoryStorage.AddResources(_lootOptionChooser.CurrentOption.Resource, _lootOptionChooser.CurrentOption.Amount);
+            pool.PutObjectInPool(loot.gameObject);
+        }
 
         #endregion
     }

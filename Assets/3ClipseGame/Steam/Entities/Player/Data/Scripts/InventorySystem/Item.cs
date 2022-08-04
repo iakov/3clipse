@@ -13,7 +13,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem
         [TextArea(0, 10)] [SerializeField] private string description;
         [SerializeField] private string id;
         [SerializeField] private Sprite uiImage;
-        [SerializeField] private GameObject lootPrefab;
 
         #endregion
 
@@ -23,7 +22,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem
         public string Description => description;
         public string ID => id;
         public Sprite UIImage => uiImage;
-        public GameObject LootPrefab => lootPrefab;
 
         #endregion
     }

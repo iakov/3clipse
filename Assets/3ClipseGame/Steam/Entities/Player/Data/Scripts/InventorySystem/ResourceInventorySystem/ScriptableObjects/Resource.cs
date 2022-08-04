@@ -11,6 +11,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.Resour
         #region SerializeFields
 
         [SerializeField] private int maximumAmountInSlot = 99;
+        [SerializeField] private Color shaderColor;
 
         #endregion
 
@@ -28,18 +29,18 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.Resour
         
         #region PublicMethods
 
-        public void DropOnGround(Vector3 position, int amount)
+        public void DropOnGround(GameObject pooledObject, int amount, Vector3 position, Transform parent = null)
         {
-            if(amount == 0) return;
-            
-            if (LootPrefab == null) throw new Exception("Object prefab is null");
-            
-            if (!LootPrefab.GetComponent<Rigidbody>()) throw new Exception("Prefab must have Rigidbody on it");
-            
-            var instantiatedObject = Instantiate(LootPrefab, position, Quaternion.identity);
-            var rigidbody = instantiatedObject.GetComponent<Rigidbody>();
+            if(!pooledObject.GetComponent<Renderer>()) throw new Exception("Prefab must have Renderer on it");
+            if (!pooledObject.GetComponent<Rigidbody>()) throw new Exception("Prefab must have Rigidbody on it");
 
-            if (!instantiatedObject.TryGetComponent<PickableLoot>(out var lootComponent)) lootComponent = instantiatedObject.AddComponent<PickableLoot>();
+            pooledObject.transform.parent = parent;
+            pooledObject.SetActive(true);
+
+            var rigidbody = pooledObject.GetComponent<Rigidbody>();
+            var renderer = pooledObject.GetComponent<Renderer>();
+
+            if (!pooledObject.TryGetComponent<PickableLoot>(out var lootComponent)) lootComponent = pooledObject.AddComponent<PickableLoot>();
             lootComponent.Resource = this;
             lootComponent.Amount = amount;
 

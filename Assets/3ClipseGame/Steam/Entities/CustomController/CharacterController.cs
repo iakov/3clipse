@@ -117,7 +117,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		private void PrepareForMove()
 		{
-			_position = _transform.position;
+			_position = _rigidbody.position;
 			Velocity = Vector3.zero;
 			_contacts.Clear();
 		}
@@ -142,13 +142,13 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			var horizontalMove = new Vector3(move.x, 0f, move.z);
 			var direction = horizontalMove.normalized;
 			var distance = horizontalMove.magnitude;
-
+			
 			for (var i = 0; i < 5; i++)
 			{
 				var origin = _position + _capsuleCollider.center - direction * Radius;
 				var bottom = origin - Vector3.up * (capsuleOffset - stepOffset);
 				var top = origin + Vector3.up * capsuleOffset;
-
+			
 				if (Physics.CapsuleCast(top, bottom, Radius, direction, out hitInfo, distance + Radius))
 				{
 					var safeDistance = hitInfo.distance - Radius - skinWidth;
