@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,7 +144,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -282,14 +282,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a016c008fb44ee4581d81e30f8b7f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slopeLimit: 20
-  stepOffset: 0.3
-  skinWidth: 0.01
   walkableLayers:
     serializedVersion: 2
     m_Bits: 1
+  skinWidth: 0.01
+  stepOffset: 0.3
   groundDetectionDistance: 0.1
-  minMoveDistance: 0.01
+  slopeSlideSpeed: 2
+  slopeLimit: 20
+  slideSpeedUpModifier:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!23 &7878028964876370161
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -529,6 +535,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   stopWalkDistance: 2
+  walkBackDistance: 0
+  walkBackSpeed: 0
   possibleFollowTargets:
   - {fileID: 7878028966391504293}
   - {fileID: 7878028965900519421}
@@ -632,7 +640,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -986,14 +994,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a016c008fb44ee4581d81e30f8b7f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slopeLimit: 45
-  stepOffset: 0.3
-  skinWidth: 0.01
   walkableLayers:
     serializedVersion: 2
     m_Bits: 0
+  skinWidth: 0.01
+  stepOffset: 0.3
   groundDetectionDistance: 0
-  minMoveDistance: 0.01
+  slopeSlideSpeed: 2
+  slopeLimit: 45
+  slideSpeedUpModifier:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &8989225322103796658
 PrefabInstance:
   m_ObjectHideFlags: 0

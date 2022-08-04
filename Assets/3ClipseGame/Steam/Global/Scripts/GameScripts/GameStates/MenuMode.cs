@@ -1,10 +1,11 @@
+using _3ClipseGame.Steam.Global.GameScripts.GameStates;
 using _3ClipseGame.Steam.Global.Input.MenuInput;
 using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using _3ClipseGame.Steam.Global.UI.Scripts.TabSystem;
 using Cinemachine;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
+namespace _3ClipseGame.Steam.Global.Scripts.GameScripts.GameStates
 {
     public class MenuMode : GameMode
     {
@@ -21,13 +22,13 @@ namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
         
         #region Initialization
 
-        private TabButton _activeTabButton;
+        private _3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton _activeTabButton;
         
         #endregion
 
         #region GameModeMethods
 
-        public void EnableWithTab(TabButton button)
+        public void EnableWithTab(_3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton button)
         {
             StartEnable();
             _activeTabButton = button;

@@ -1,4 +1,5 @@
 using _3ClipseGame.Steam.Global.GameScripts.GameStates;
+using _3ClipseGame.Steam.Global.Scripts.GameScripts.GameStates;
 using UnityEngine;
 using PlayMode = _3ClipseGame.Steam.Global.GameScripts.GameStates.PlayMode;
 
