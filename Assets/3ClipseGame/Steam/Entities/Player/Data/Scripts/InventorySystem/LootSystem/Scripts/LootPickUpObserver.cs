@@ -5,16 +5,11 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 {
     public class LootPickUpObserver : MonoBehaviour
     {
-        #region SerializeFields
-
-        [SerializeField] private ChooseOption lootOptionChooser;
-
-        #endregion
-
-        #region PrivateMethods
+        #region PrivateFields
 
         private InventoryStorage _inventoryStorage;
         private LootInfoReader _lootInfoReader;
+        private ChooseOption _lootOptionChooser;
 
         #endregion
 
@@ -22,8 +17,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         private void Awake()
         {
-            _lootInfoReader = GetComponentInChildren<LootInfoReader>();
-            _inventoryStorage = GetComponent<InventoryStorage>();
+            _lootInfoReader = GetComponent<LootInfoReader>();
+            _inventoryStorage = GetComponentInParent<InventoryStorage>();
+            _lootOptionChooser = GetComponent<ChooseOption>();
         }
 
         private void OnEnable() => _lootInfoReader.PickUpInitiated += PickUpItem;
@@ -34,7 +30,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
         #region PrivateMethods
 
         private void PickUpItem() => 
-            _inventoryStorage.AddResources(lootOptionChooser.CurrentOption.Resource, lootOptionChooser.CurrentOption.Amount);
+            _inventoryStorage.AddResources(_lootOptionChooser.CurrentOption.Resource, _lootOptionChooser.CurrentOption.Amount);
 
         #endregion
     }

@@ -12,6 +12,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
         #region Events
 
         public Action<GameObject, bool> DisplayListChanged;
+        
         public Action PickUpInitiated;
         public Action PickUpFinished;
 
