@@ -16,5 +16,5 @@ MonoBehaviour:
   description: Heals you
   id: carrot
   uiImage: {fileID: 21300000, guid: 97f74b1246dc03842bc0f1d94744e681, type: 3}
-  lootPrefab: {fileID: 8671558313201864439, guid: ed815088cc3b51041968dda9cc06fa7b, type: 3}
   maximumAmountInSlot: 99
+  shaderColor: {r: 0.8679245, g: 0.5282303, b: 0.12691349, a: 0}

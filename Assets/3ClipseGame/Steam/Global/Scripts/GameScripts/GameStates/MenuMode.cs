@@ -30,12 +30,14 @@ namespace _3ClipseGame.Steam.Global.Scripts.GameScripts.GameStates
 
         public void EnableWithTab(_3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton button)
         {
+            Debug.Log("enable requested");
             StartEnable();
             _activeTabButton = button;
         }
         
         public override void StartEnable()
         {
+            Debug.Log("enable started");
             cameraAnimatorController.SwitchCamera(CameraAnimatorController.CameraType.MainMenu);
             blendBegan?.Invoke();
             StartCoroutine(TrackBlendCompletion(virtualCamera));

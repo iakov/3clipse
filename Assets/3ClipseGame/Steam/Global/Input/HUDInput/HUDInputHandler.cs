@@ -1,5 +1,4 @@
 using _3ClipseGame.Steam.Global.Input.Scripts;
-using _3ClipseGame.Steam.Global.UI.Scripts.TabSystem;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -11,15 +10,15 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
         #region Serialization
 
         [Header("Menu Tabs")]
-        [SerializeField] private TabButton menuInventoryTab;
-        [SerializeField] private TabButton menuMainTab;
-        [SerializeField] private TabButton menuSkillsTab;
+        [SerializeField] private _3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton menuInventoryTab;
+        [SerializeField] private _3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton menuMainTab;
+        [SerializeField] private _3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton menuSkillsTab;
 
         [Header("HUD Components")] 
         [SerializeField] private GameObject elementalWheel;
 
         [Header("Events")]
-        [SerializeField] private UnityEvent<TabButton> switchModeToMenu;
+        [SerializeField] private UnityEvent<_3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton> switchModeToMenu;
         
         #endregion
 
@@ -44,9 +43,9 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
             _hudInputActions.Enable();
             _hudInputActions.HUDActions.Enable();
 
-            _hudInputActions.HUDActions.ToggleMainMenu.started += _ => { switchModeToMenu?.Invoke(menuMainTab);};
-            _hudInputActions.HUDActions.ToggleInventoryMenu.started += _ => {switchModeToMenu?.Invoke(menuInventoryTab);};
-            _hudInputActions.HUDActions.ToggleSkillsMenu.started += _ => {switchModeToMenu?.Invoke(menuSkillsTab);};
+            _hudInputActions.HUDActions.ToggleMainMenu.started += _ => { switchModeToMenu?.Invoke(menuMainTab.GetComponent<UI.Scripts.TabSystem.TabButton>());};
+            _hudInputActions.HUDActions.ToggleInventoryMenu.started += _ => {switchModeToMenu?.Invoke(menuInventoryTab.GetComponent<UI.Scripts.TabSystem.TabButton>());};
+            _hudInputActions.HUDActions.ToggleSkillsMenu.started += _ => {switchModeToMenu?.Invoke(menuSkillsTab.GetComponent<UI.Scripts.TabSystem.TabButton>());};
 
             _hudInputActions.HUDActions.ShowElementalWheel.started += OnToggleElementalWheel;
             _hudInputActions.HUDActions.ShowElementalWheel.canceled += OnToggleElementalWheel;
