@@ -15,24 +15,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ToggleInventoryMenu",
-                    "type": "Button",
-                    "id": "d29367a0-ad6a-4dcb-8209-5b1d2fc0920c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ToggleSkillsMenu",
-                    "type": "Button",
-                    "id": "8c3e7de4-1f9e-4d5d-a6b9-17edb762b2e3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ShowElementalWheel",
                     "type": "Button",
                     "id": "b16af61f-1d5f-4ceb-ac9d-37108dc5da8a",
@@ -46,33 +28,11 @@
                 {
                     "name": "",
                     "id": "8570186c-a1fe-4951-9bf8-ba491430a5d0",
-                    "path": "<Keyboard>/o",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ToggleMainMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "31400c18-7545-4d19-9239-3f354b18e961",
                     "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ToggleInventoryMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4c1897a8-f9e1-4d71-9aa5-2f5021ca765a",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ToggleSkillsMenu",
+                    "action": "ToggleMainMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -9,17 +9,23 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
     {
         #region Serialization
 
-        [Header("Menu Tabs")]
-        [SerializeField] private _3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton menuInventoryTab;
-        [SerializeField] private _3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton menuMainTab;
-        [SerializeField] private _3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton menuSkillsTab;
-
         [Header("HUD Components")] 
         [SerializeField] private GameObject elementalWheel;
+        [SerializeField] private UI.Scripts.TabSystem.TabButton mainTab;
 
         [Header("Events")]
-        [SerializeField] private UnityEvent<_3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton> switchModeToMenu;
+        [SerializeField] private UnityEvent<UI.Scripts.TabSystem.TabButton> switchModeToMenu;
         
+        #endregion
+
+        #region Public
+
+        public event UnityAction<UI.Scripts.TabSystem.TabButton> SwitchingModeToMenu
+        {
+            add => switchModeToMenu.AddListener(value);
+            remove => switchModeToMenu.RemoveListener(value);
+        }
+
         #endregion
 
         #region Initialization
@@ -43,9 +49,7 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
             _hudInputActions.Enable();
             _hudInputActions.HUDActions.Enable();
 
-            _hudInputActions.HUDActions.ToggleMainMenu.started += _ => { switchModeToMenu?.Invoke(menuMainTab.GetComponent<UI.Scripts.TabSystem.TabButton>());};
-            _hudInputActions.HUDActions.ToggleInventoryMenu.started += _ => {switchModeToMenu?.Invoke(menuInventoryTab.GetComponent<UI.Scripts.TabSystem.TabButton>());};
-            _hudInputActions.HUDActions.ToggleSkillsMenu.started += _ => {switchModeToMenu?.Invoke(menuSkillsTab.GetComponent<UI.Scripts.TabSystem.TabButton>());};
+            _hudInputActions.HUDActions.ToggleMainMenu.started += SwitchModeToMain;
 
             _hudInputActions.HUDActions.ShowElementalWheel.started += OnToggleElementalWheel;
             _hudInputActions.HUDActions.ShowElementalWheel.canceled += OnToggleElementalWheel;
@@ -63,6 +67,11 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
         
         private void OnToggleElementalWheel(InputAction.CallbackContext context) =>
             elementalWheel.SetActive(context.ReadValueAsButton());
+
+        private void SwitchModeToMain(InputAction.CallbackContext context)
+        {
+            switchModeToMenu?.Invoke(mainTab);
+        }
 
         #endregion
     }

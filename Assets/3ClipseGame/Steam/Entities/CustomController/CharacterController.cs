@@ -52,7 +52,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		
 
 		#endregion
-
+		
 		#region Initialization
 
 		private void Awake()

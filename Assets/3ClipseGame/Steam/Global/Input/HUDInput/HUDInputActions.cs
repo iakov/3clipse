@@ -37,24 +37,6 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ToggleInventoryMenu"",
-                    ""type"": ""Button"",
-                    ""id"": ""d29367a0-ad6a-4dcb-8209-5b1d2fc0920c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ToggleSkillsMenu"",
-                    ""type"": ""Button"",
-                    ""id"": ""8c3e7de4-1f9e-4d5d-a6b9-17edb762b2e3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ShowElementalWheel"",
                     ""type"": ""Button"",
                     ""id"": ""b16af61f-1d5f-4ceb-ac9d-37108dc5da8a"",
@@ -68,33 +50,11 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8570186c-a1fe-4951-9bf8-ba491430a5d0"",
-                    ""path"": ""<Keyboard>/o"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleMainMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""31400c18-7545-4d19-9239-3f354b18e961"",
                     ""path"": ""<Keyboard>/i"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ToggleInventoryMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4c1897a8-f9e1-4d71-9aa5-2f5021ca765a"",
-                    ""path"": ""<Keyboard>/p"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleSkillsMenu"",
+                    ""action"": ""ToggleMainMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -117,8 +77,6 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
         // HUDActions
         m_HUDActions = asset.FindActionMap("HUDActions", throwIfNotFound: true);
         m_HUDActions_ToggleMainMenu = m_HUDActions.FindAction("ToggleMainMenu", throwIfNotFound: true);
-        m_HUDActions_ToggleInventoryMenu = m_HUDActions.FindAction("ToggleInventoryMenu", throwIfNotFound: true);
-        m_HUDActions_ToggleSkillsMenu = m_HUDActions.FindAction("ToggleSkillsMenu", throwIfNotFound: true);
         m_HUDActions_ShowElementalWheel = m_HUDActions.FindAction("ShowElementalWheel", throwIfNotFound: true);
     }
 
@@ -180,16 +138,12 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_HUDActions;
     private IHUDActionsActions m_HUDActionsActionsCallbackInterface;
     private readonly InputAction m_HUDActions_ToggleMainMenu;
-    private readonly InputAction m_HUDActions_ToggleInventoryMenu;
-    private readonly InputAction m_HUDActions_ToggleSkillsMenu;
     private readonly InputAction m_HUDActions_ShowElementalWheel;
     public struct HUDActionsActions
     {
         private @HUDInputActions m_Wrapper;
         public HUDActionsActions(@HUDInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @ToggleMainMenu => m_Wrapper.m_HUDActions_ToggleMainMenu;
-        public InputAction @ToggleInventoryMenu => m_Wrapper.m_HUDActions_ToggleInventoryMenu;
-        public InputAction @ToggleSkillsMenu => m_Wrapper.m_HUDActions_ToggleSkillsMenu;
         public InputAction @ShowElementalWheel => m_Wrapper.m_HUDActions_ShowElementalWheel;
         public InputActionMap Get() { return m_Wrapper.m_HUDActions; }
         public void Enable() { Get().Enable(); }
@@ -203,12 +157,6 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
                 @ToggleMainMenu.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnToggleMainMenu;
                 @ToggleMainMenu.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnToggleMainMenu;
                 @ToggleMainMenu.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnToggleMainMenu;
-                @ToggleInventoryMenu.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnToggleInventoryMenu;
-                @ToggleInventoryMenu.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnToggleInventoryMenu;
-                @ToggleInventoryMenu.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnToggleInventoryMenu;
-                @ToggleSkillsMenu.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnToggleSkillsMenu;
-                @ToggleSkillsMenu.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnToggleSkillsMenu;
-                @ToggleSkillsMenu.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnToggleSkillsMenu;
                 @ShowElementalWheel.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnShowElementalWheel;
                 @ShowElementalWheel.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnShowElementalWheel;
                 @ShowElementalWheel.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnShowElementalWheel;
@@ -219,12 +167,6 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
                 @ToggleMainMenu.started += instance.OnToggleMainMenu;
                 @ToggleMainMenu.performed += instance.OnToggleMainMenu;
                 @ToggleMainMenu.canceled += instance.OnToggleMainMenu;
-                @ToggleInventoryMenu.started += instance.OnToggleInventoryMenu;
-                @ToggleInventoryMenu.performed += instance.OnToggleInventoryMenu;
-                @ToggleInventoryMenu.canceled += instance.OnToggleInventoryMenu;
-                @ToggleSkillsMenu.started += instance.OnToggleSkillsMenu;
-                @ToggleSkillsMenu.performed += instance.OnToggleSkillsMenu;
-                @ToggleSkillsMenu.canceled += instance.OnToggleSkillsMenu;
                 @ShowElementalWheel.started += instance.OnShowElementalWheel;
                 @ShowElementalWheel.performed += instance.OnShowElementalWheel;
                 @ShowElementalWheel.canceled += instance.OnShowElementalWheel;
@@ -235,8 +177,6 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
     public interface IHUDActionsActions
     {
         void OnToggleMainMenu(InputAction.CallbackContext context);
-        void OnToggleInventoryMenu(InputAction.CallbackContext context);
-        void OnToggleSkillsMenu(InputAction.CallbackContext context);
         void OnShowElementalWheel(InputAction.CallbackContext context);
     }
 }

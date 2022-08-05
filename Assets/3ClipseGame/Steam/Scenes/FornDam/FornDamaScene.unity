@@ -12180,7 +12180,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.0338984, y: 1}
+    m_SensorSize: {x: 1.2105844, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -35036,7 +35036,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.021184798, y: 0.97850895, z: -0.15688266, w: -0.13213387}
+  m_LocalRotation: {x: -0.021184804, y: 0.97850895, z: -0.15688266, w: -0.13213389}
   m_LocalPosition: {x: 6.5392575, y: 3.961, z: 48.691307}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -46020,10 +46020,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af8e24b05ec5d014abaf162a52609b4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuInventoryTab: {fileID: 851257337}
-  menuMainTab: {fileID: 27956387}
-  menuSkillsTab: {fileID: 477032979}
   elementalWheel: {fileID: 433244660}
+  mainTab: {fileID: 27956387}
   switchModeToMenu:
     m_PersistentCalls:
       m_Calls:
@@ -46046,7 +46044,7 @@ MonoBehaviour:
         m_MethodName: EnableWithTab
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 27956387}
           m_ObjectArgumentAssemblyTypeName: _3ClipseGame.Steam.Global.UI.Scripts.TabSystem.TabButton,
             Assembly-CSharp
           m_IntArgument: 0
@@ -59623,7 +59621,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.0338984, y: 1}
+    m_SensorSize: {x: 1.2105844, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -59940,7 +59938,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.0338984, y: 1}
+    m_SensorSize: {x: 1.2105844, y: 1}
   m_Transitions:
     m_BlendHint: 2
     m_InheritPosition: 0
@@ -60224,7 +60222,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.0338984, y: 1}
+    m_SensorSize: {x: 1.2105844, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -60385,7 +60383,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7687367824126861667}
-  m_LocalRotation: {x: -0.0211848, y: 0.97850895, z: -0.15688264, w: -0.1321339}
+  m_LocalRotation: {x: -0.021184802, y: 0.97850895, z: -0.15688264, w: -0.13213392}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -60430,7 +60428,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.0338984, y: 1}
+    m_SensorSize: {x: 1.2105844, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
