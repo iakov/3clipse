@@ -1,7 +1,7 @@
 using System;
+using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
-using _3ClipseGame.Steam.Entities.Player.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using _3ClipseGame.Steam.Global.Input.PlayerInput;
 using UnityEngine;
@@ -20,6 +20,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         [Range(0, 10)] [SerializeField] private float walkSpeed = 3f;
         [Range(1, 10)] [SerializeField] private float speedInterpolation = 6f;
         [Range(0, 3)] [SerializeField] private float crouchSpeedModifier = 1f;
+        [SerializeField] private float runStaminaReduce = -5f;
+        [SerializeField] private float jumpStaminaReduce = -5f;
         [SerializeField] private float jumpStrength = 2f;
         [SerializeField] private AnimationCurve runModifierCurve;
         [SerializeField] private UnityEvent<MainCharacterState, MainCharacterState> switchingState;
@@ -33,6 +35,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public float SpeedInterpolation => speedInterpolation;
         public float CrouchSpeedModifier => crouchSpeedModifier;
         public float JumpStrength => jumpStrength;
+        public float RunStaminaReduce => runStaminaReduce;
+        public float JumpStaminaReduce => jumpStaminaReduce;
         public AnimationCurve RunModifierCurve => runModifierCurve;
         public LayerMask WalkableLayerMask => PlayerController.walkableLayers;
         public event UnityAction<MainCharacterState, MainCharacterState> SwitchingState
@@ -52,6 +56,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public CharacterController PlayerController { get; private set; }
         public MovementInputHandler InputHandler { get; private set; }
         public Transform Transform { get; private set; }
+        public Stamina Stamina { get; private set; }
 
         #endregion
 
@@ -71,6 +76,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             PlayerMover = GetComponent<PlayerMover>();
             Transform = PlayerController.transform;
             MainCharacter = GetComponent<MainCharacter>();
+            Stamina = GetComponent<Stamina>();
             
             CheckForExceptions();
             _mainCharacterStateFactory = new MainCharacterStateFactory(this);

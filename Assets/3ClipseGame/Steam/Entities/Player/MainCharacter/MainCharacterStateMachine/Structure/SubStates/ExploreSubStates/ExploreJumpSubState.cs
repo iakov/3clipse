@@ -24,6 +24,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             _lastMoveVector.y = 0f;
             var jumpMoveVector = _lastMoveVector + Vector3.up * Context.JumpStrength;
             Context.PlayerMover.ChangeMove(MoveType.StateMove, jumpMoveVector, RotationType.NoRotation);
+            
+            Context.Stamina.IsRecovering = false;
+            Context.Stamina.AddValue(Context.JumpStaminaReduce);
         }
 
         public override void OnStateUpdate()
@@ -34,6 +37,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public override void OnStateExit()
         {
             Context.InputHandler.IsJumpPressed = false;
+            Context.Stamina.IsRecovering = true;
         }
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)

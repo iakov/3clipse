@@ -23,6 +23,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public override void OnStateEnter()
         {
             _timeToMaximumSpeed = Context.RunModifierCurve.keys[Context.RunModifierCurve.length - 1].time;
+            Context.Stamina.IsRecovering = false;
         }
 
         public override void OnStateUpdate()
@@ -32,10 +33,13 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
             var moveVector = rawMoveVector * (Context.RunModifierCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed);
             Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
+            
+            Context.Stamina.AddValue(Context.RunStaminaReduce * Time.deltaTime);
         }
 
         public override void OnStateExit()
         {
+            Context.Stamina.IsRecovering = true;
         }
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)

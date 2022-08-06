@@ -14,10 +14,16 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         #region SubStateMethods
 
-        public override void OnStateEnter(){}
+        public override void OnStateEnter()
+        {
+            Context.Stamina.IsRecovering = false;
+        }
         public override void OnStateUpdate(){}
 
-        public override void OnStateExit(){}
+        public override void OnStateExit()
+        {
+            Context.Stamina.IsRecovering = true;
+        }
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
         {

@@ -1,5 +1,4 @@
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates
@@ -33,18 +32,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             
             var distanceToLeft = Vector3.Distance(animalPosition, -mainCharacterRight);
             var distanceToRight = Vector3.Distance(animalPosition, mainCharacterRight);
-
-            if (distanceToRight < distanceToLeft)
-            {
-                Debug.Log("Right");
-                nextDirection = mainCharacterRight;
-            }
-            else
-            {
-                Debug.Log("Left");
-                nextDirection = -mainCharacterRight;
-            }
             
+            if (distanceToRight < distanceToLeft) nextDirection = mainCharacterRight;
+            else nextDirection = -mainCharacterRight;
+
             Context.AnimalAgent.SetDestination (Context.MainCharacterTransform.forward + nextDirection + animalPosition);
         }
 
