@@ -12180,7 +12180,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.2105844, y: 1}
+    m_SensorSize: {x: 1.185226, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -12196,7 +12196,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109543256}
-  m_LocalRotation: {x: 0.14189506, y: -0.00000007425342, z: 0.000000010643889, w: 0.9898817}
+  m_LocalRotation: {x: 0.14189507, y: -0.000000040188855, z: 0.00000000576089, w: 0.9898817}
   m_LocalPosition: {x: 5.2900004, y: 2.6682513, z: -14.834457}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21865,7 +21865,7 @@ GameObject:
   - component: {fileID: 675888430}
   - component: {fileID: 675888432}
   - component: {fileID: 675888433}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Looter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35036,7 +35036,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.021184804, y: 0.97850895, z: -0.15688266, w: -0.13213389}
+  m_LocalRotation: {x: -0.021184798, y: 0.97850895, z: -0.15688266, w: -0.1321339}
   m_LocalPosition: {x: 6.5392575, y: 3.961, z: 48.691307}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -35677,7 +35677,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.3
   m_Speed: 2
-  m_Acceleration: 8
+  m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 200
   m_StoppingDistance: 0.3
@@ -36143,7 +36143,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
       propertyPath: walkBackDistance
-      value: 1.31
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[1].time
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[0].value
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[0].inSlope
+      value: -6.3333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[1].inSlope
+      value: -6.3333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[0].outSlope
+      value: -6.3333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[1].outSlope
+      value: -6.3333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878028965152469044, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: walkBackSpeed.m_Curve.Array.data[1].tangentMode
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 7878028965152469052, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
       propertyPath: m_Layer
@@ -36151,7 +36203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878028965152469052, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7878028965152469053, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
       propertyPath: m_LocalPosition.y
@@ -59621,7 +59673,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.2105844, y: 1}
+    m_SensorSize: {x: 1.185226, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -59938,7 +59990,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.2105844, y: 1}
+    m_SensorSize: {x: 1.185226, y: 1}
   m_Transitions:
     m_BlendHint: 2
     m_InheritPosition: 0
@@ -60222,7 +60274,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.2105844, y: 1}
+    m_SensorSize: {x: 1.185226, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -60383,7 +60435,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7687367824126861667}
-  m_LocalRotation: {x: -0.021184802, y: 0.97850895, z: -0.15688264, w: -0.13213392}
+  m_LocalRotation: {x: -0.021184798, y: 0.9785089, z: -0.15688264, w: -0.1321339}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -60428,7 +60480,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.2105844, y: 1}
+    m_SensorSize: {x: 1.185226, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

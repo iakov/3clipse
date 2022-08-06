@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
@@ -23,7 +21,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         [SerializeField] private float stopWalkDistance;
         
         [SerializeField] private float walkBackDistance;
-        [SerializeField] private float walkBackSpeed;
+        [SerializeField] private AnimationCurve walkBackSpeed;
 
         [SerializeField] private Transform[] possibleFollowTargets;
 
@@ -35,6 +33,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         #region PublicGetters
 
         public Transform MainCharacterTransform => mainCharacterTransform;
+        public CharacterController MainCharacterController { get; private set; }
         public Transform AnimalTransform { get; private set; }
         public Transform CurrentTarget { get; set; }
         public PlayerMover AnimalMover { get; private set; }
@@ -44,11 +43,11 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         public AnimationCurve FollowRunSpeed => followRunSpeed;
         public float StopWalkDistance => stopWalkDistance;
         public float WalkBackDistance => walkBackDistance;
-        public float WalkBackSpeed => walkBackSpeed;
+        public AnimationCurve WalkBackSpeed => walkBackSpeed;
         public float WaitTime => waitTime;
         public Transform[] PossibleFollowTargets => possibleFollowTargets;
         public NavMeshAgent AnimalAgent { get; private set; }
-        public CustomController.CharacterController AnimalController { get; private set; }
+        public CharacterController AnimalController { get; private set; }
 
         #endregion
         
@@ -67,6 +66,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
             AnimalTransform = GetComponent<Transform>();
             AnimalAgent = GetComponent<NavMeshAgent>();
             AnimalController = GetComponent<CharacterController>();
+            MainCharacterController = MainCharacterTransform.GetComponent<CharacterController>();
         }
 
         private void Start()

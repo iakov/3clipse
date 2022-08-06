@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
-using UnityEngine.ProBuilder.Shapes;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates
 {
@@ -42,7 +40,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
             if (_distanceBetweenPlayerAndAnimal > Context.FollowWalkDistance)
                 newAnimalState = _factory.Walk();
-            
+            else if (_distanceBetweenPlayerAndAnimal < Context.WalkBackDistance) newAnimalState = _factory.WalkBack();
             else if (StateTimer > Context.WaitTime) newAnimalState = _factory.Entertain();
 
             return newAnimalState != null;

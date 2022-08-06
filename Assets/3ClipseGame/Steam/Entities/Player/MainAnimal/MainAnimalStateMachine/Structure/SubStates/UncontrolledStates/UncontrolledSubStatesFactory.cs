@@ -8,6 +8,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         public AnimalSubState Walk() => new UncontrolledFollowWalkSubState(Context, this);
         public AnimalSubState Run() => new UncontrolledFollowRunSubState(Context, this);
         public AnimalSubState Entertain() => new UncontrolledEntertainSubState(Context, this);
+        public AnimalSubState WalkBack() => new UncontrolledWalkBackSubState(Context, this);
 
     }
 }
