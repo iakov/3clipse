@@ -19,6 +19,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             _currentSubState.OnStateEnter();
             
             Context.AnimalAgent.enabled = true;
+            Context.AnimalController.enabled = false;
         }
 
         public override void OnStateUpdate()

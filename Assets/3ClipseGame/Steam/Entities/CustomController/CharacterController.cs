@@ -145,9 +145,9 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			{
 				var origin = _position + _capsuleCollider.center - direction * Radius;
 				var top = origin + Vector3.up * capsuleOffset;
-				var capsuleNoStep = origin + Vector3.down * (Height / 2 - stepOffset - Radius);
+				var bottom = origin + Vector3.down * (capsuleOffset - stepOffset);
 
-				var isWalled = Physics.CapsuleCast(capsuleNoStep, top, Radius, direction, out hitInfo, distance + Radius);
+				var isWalled = Physics.CapsuleCast(bottom, top, Radius, direction, out hitInfo, distance + Radius);
 				
 				if (isWalled && !hitInfo.collider.isTrigger)
 				{
@@ -189,7 +189,9 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			}
 		}
 
-		private void ApplyChanges() => Velocity = _position - _transform.position;
+		private void ApplyChanges(){
+			Velocity = _position - _transform.position;
+		}
 
 		private void OnDrawGizmos()
 		{
