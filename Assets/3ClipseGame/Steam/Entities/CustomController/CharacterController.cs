@@ -50,7 +50,6 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		private Transform _transform;
 
 		private readonly List<RaycastHit> _contacts = new();
-		
 
 		#endregion
 		
@@ -110,8 +109,6 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			ApplyChanges();
 		}
 
-		public void Rotate(Quaternion rotation) => _rigidbody.MoveRotation(rotation);
-		
 		#endregion
 
 		#region PrivateMoveMethods

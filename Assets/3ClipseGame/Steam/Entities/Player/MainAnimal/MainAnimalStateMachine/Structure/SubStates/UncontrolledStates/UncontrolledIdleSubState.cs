@@ -34,7 +34,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
         public override void OnStateExit() => Context.CurrentTarget = Context.PossibleFollowTargets[Random.Range(0, Context.PossibleFollowTargets.Length)];
 
-            public override bool TrySwitchState(out AnimalState newAnimalState)
+        public override bool TrySwitchState(out AnimalState newAnimalState)
         {
             newAnimalState = null;
 

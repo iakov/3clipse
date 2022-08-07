@@ -1,4 +1,5 @@
 using System;
+using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
@@ -35,6 +36,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
 
         [Header("Controlled State Parameters")] 
         [SerializeField] private float walkSpeed;
+        [SerializeField] private AnimationCurve runSpeed;
+
+        [SerializeField] private float runStaminaReduce = -5f;
+        [SerializeField] private float jumpStaminaReduce = -5f;
 
         #endregion
 
@@ -46,6 +51,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         public float FollowWalkDistance => followWalkDistance;
         public float FollowRunDistance => followRunDistance;
         public float WalkSpeed => walkSpeed;
+        public AnimationCurve RunSpeed => runSpeed;
+        public float RunStaminaReduce => runStaminaReduce;
+        public float JumpStaminaReduce => jumpStaminaReduce;
         public bool IsSwitching { get; private set; }
         public Transform MainCharacterTransform => mainCharacterTransform;
         public Transform AnimalTransform { get; private set; }
@@ -59,6 +67,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         public PlayerMover AnimalMover { get; private set; }
         public NavMeshAgent AnimalAgent { get; private set; }
         public MovementInputHandler InputHandler { get; private set; }
+        public Stamina Stamina { get; private set; }
 
         #endregion
         
@@ -79,6 +88,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
             AnimalController = GetComponent<CharacterController>();
             MainCharacterController = MainCharacterTransform.GetComponent<CharacterController>();
             InputHandler = GetComponentInParent<MovementInputHandler>();
+            Stamina = GetComponent<Stamina>();
         }
 
         private void Start()
@@ -125,6 +135,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
             if (FollowWalkSpeed.length < 2) throw new ArgumentException("FollowWalkSpeed curve is not initialized");
             if(FollowRunSpeed.length < 2) throw new ArgumentException("FollowRunSpeed curve is not initialized");
             if(WalkBackSpeed.length < 2) throw new ArgumentException("WalkBackSpeed curve is not initialized");
+            if(RunSpeed.length < 2) throw new ArgumentException("RunSpeed curve is not initialized");
+
         }
 
         #endregion
