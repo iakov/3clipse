@@ -19,6 +19,11 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             Factory = factory;
         }
 
+        protected MainCharacterState()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region AbstractMethods

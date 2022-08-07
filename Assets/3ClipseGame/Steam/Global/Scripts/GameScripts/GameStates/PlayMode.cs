@@ -14,7 +14,7 @@ namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
         [Header("Input")]
         [SerializeField] private MovementInputHandler movementInputHandler;
         [SerializeField] private HUDInputHandler hudInputHandler;
-        [SerializeField] private CameraControllsHandler cameraControlsHandler;
+        [SerializeField] private CameraControlsHandler cameraControlsHandler;
 
         [Header("Cameras")] 
         [SerializeField] private CinemachineFreeLook freeLookCamera;

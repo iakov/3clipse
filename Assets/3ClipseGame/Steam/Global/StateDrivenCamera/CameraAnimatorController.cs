@@ -22,8 +22,10 @@ namespace _3ClipseGame.Steam.Global.StateDrivenCamera
 
         #region MonoBehaviourMethods
 
-        private void Awake() => _currentStateName = cameraStatesDictionary.FindStateNameByType(CameraType.MainCharacter);
-        private void Start() => _cameraAnimator = GetComponent<Animator>();
+        private void Awake(){
+            _currentStateName = cameraStatesDictionary.FindStateNameByType(CameraType.MainCharacter);
+            _cameraAnimator = GetComponent<Animator>();
+        }
 
         #endregion
 

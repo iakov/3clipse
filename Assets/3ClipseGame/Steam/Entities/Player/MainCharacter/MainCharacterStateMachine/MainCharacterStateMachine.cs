@@ -4,6 +4,7 @@ using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using _3ClipseGame.Steam.Global.Input.PlayerInput;
+using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using UnityEngine;
 using UnityEngine.Events;
 using CharacterController = _3ClipseGame.Steam.Entities.CustomController.CharacterController;
@@ -26,6 +27,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         [SerializeField] private AnimationCurve runModifierCurve;
         [SerializeField] private UnityEvent<MainCharacterState, MainCharacterState> switchingState;
         [SerializeField] private UnityEvent<MainCharacterSubState, MainCharacterSubState> switchingSubState;
+        [SerializeField] private CameraAnimatorController cameraController;
 
         #endregion
         
@@ -57,6 +59,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public MovementInputHandler InputHandler { get; private set; }
         public Transform Transform { get; private set; }
         public Stamina Stamina { get; private set; }
+        public CameraAnimatorController CameraController => cameraController;
 
         #endregion
 
@@ -78,9 +81,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             MainCharacter = GetComponent<MainCharacter>();
             Stamina = GetComponent<Stamina>();
             
-            CheckForExceptions();
             _mainCharacterStateFactory = new MainCharacterStateFactory(this);
             _currentMainCharacterState = _mainCharacterStateFactory.ExploreState();
+        }
+
+        private void Start()
+        {
+            CheckForExceptions();
+            
             _currentMainCharacterState.OnStateEnter();
         }
 
@@ -101,11 +109,13 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         #endregion
 
-        #region Functions
+        #region PrivateMethods
 
         private void SwitchState(MainCharacterState nextMainCharacterState)
         {
+            InputHandler.IsSwitchPressed = false;
             switchingState?.Invoke(_currentMainCharacterState, nextMainCharacterState);
+            
             _currentMainCharacterState.OnStateExit();
             _currentMainCharacterState = nextMainCharacterState;
             _currentMainCharacterState.OnStateEnter();

@@ -62,6 +62,15 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchToAnimal"",
+                    ""type"": ""Button"",
+                    ""id"": ""82ce1e03-2d9f-405e-a409-ec349b05eb31"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,137 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a95ba849-844d-44f2-9955-29b51a0397db"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchToAnimal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""AnimalStateActionMap"",
+            ""id"": ""dd4d8f63-789e-4935-bba5-947bed5727ca"",
+            ""actions"": [
+                {
+                    ""name"": ""Walk"",
+                    ""type"": ""Value"",
+                    ""id"": ""dc17c77a-19d3-4435-a4a5-4cd701b8b341"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": ""NormalizeVector2"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SwitchToCharacter"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca22bd3c-a0ae-4956-af36-427e1c21e7ca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""358627c6-28e0-4a0d-bdbc-328d64c57d95"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Walk"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""7a66b864-7906-43ea-971c-f6391ef76e78"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""249f20a0-bc07-4ff6-a7ee-9e3a0cc07655"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""ad82156c-07e2-4c0e-8b69-99cfa4ac9274"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""09d60fa4-8aa5-43a1-bb54-327cd1ab06b1"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""39d66387-a1c2-4dd5-a300-541721d7010b"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchToCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""FightStateActionMap"",
+            ""id"": ""7b0901a2-607b-4f03-9b6f-dbbd1109867e"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""91001d4e-13c3-4c24-bb58-4112a62ab8ad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""253dd304-e12f-4da6-8e7a-981635c11797"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +304,14 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
         m_ExploreStateActionMap_Run = m_ExploreStateActionMap.FindAction("Run", throwIfNotFound: true);
         m_ExploreStateActionMap_Crouch = m_ExploreStateActionMap.FindAction("Crouch", throwIfNotFound: true);
         m_ExploreStateActionMap_Jump = m_ExploreStateActionMap.FindAction("Jump", throwIfNotFound: true);
+        m_ExploreStateActionMap_SwitchToAnimal = m_ExploreStateActionMap.FindAction("SwitchToAnimal", throwIfNotFound: true);
+        // AnimalStateActionMap
+        m_AnimalStateActionMap = asset.FindActionMap("AnimalStateActionMap", throwIfNotFound: true);
+        m_AnimalStateActionMap_Walk = m_AnimalStateActionMap.FindAction("Walk", throwIfNotFound: true);
+        m_AnimalStateActionMap_SwitchToCharacter = m_AnimalStateActionMap.FindAction("SwitchToCharacter", throwIfNotFound: true);
+        // FightStateActionMap
+        m_FightStateActionMap = asset.FindActionMap("FightStateActionMap", throwIfNotFound: true);
+        m_FightStateActionMap_Newaction = m_FightStateActionMap.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,6 +375,7 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_ExploreStateActionMap_Run;
     private readonly InputAction m_ExploreStateActionMap_Crouch;
     private readonly InputAction m_ExploreStateActionMap_Jump;
+    private readonly InputAction m_ExploreStateActionMap_SwitchToAnimal;
     public struct ExploreStateActionMapActions
     {
         private @MovementInput m_Wrapper;
@@ -235,6 +384,7 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_ExploreStateActionMap_Run;
         public InputAction @Crouch => m_Wrapper.m_ExploreStateActionMap_Crouch;
         public InputAction @Jump => m_Wrapper.m_ExploreStateActionMap_Jump;
+        public InputAction @SwitchToAnimal => m_Wrapper.m_ExploreStateActionMap_SwitchToAnimal;
         public InputActionMap Get() { return m_Wrapper.m_ExploreStateActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +406,9 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnJump;
+                @SwitchToAnimal.started -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnSwitchToAnimal;
+                @SwitchToAnimal.performed -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnSwitchToAnimal;
+                @SwitchToAnimal.canceled -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnSwitchToAnimal;
             }
             m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -272,15 +425,102 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @SwitchToAnimal.started += instance.OnSwitchToAnimal;
+                @SwitchToAnimal.performed += instance.OnSwitchToAnimal;
+                @SwitchToAnimal.canceled += instance.OnSwitchToAnimal;
             }
         }
     }
     public ExploreStateActionMapActions @ExploreStateActionMap => new ExploreStateActionMapActions(this);
+
+    // AnimalStateActionMap
+    private readonly InputActionMap m_AnimalStateActionMap;
+    private IAnimalStateActionMapActions m_AnimalStateActionMapActionsCallbackInterface;
+    private readonly InputAction m_AnimalStateActionMap_Walk;
+    private readonly InputAction m_AnimalStateActionMap_SwitchToCharacter;
+    public struct AnimalStateActionMapActions
+    {
+        private @MovementInput m_Wrapper;
+        public AnimalStateActionMapActions(@MovementInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Walk => m_Wrapper.m_AnimalStateActionMap_Walk;
+        public InputAction @SwitchToCharacter => m_Wrapper.m_AnimalStateActionMap_SwitchToCharacter;
+        public InputActionMap Get() { return m_Wrapper.m_AnimalStateActionMap; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AnimalStateActionMapActions set) { return set.Get(); }
+        public void SetCallbacks(IAnimalStateActionMapActions instance)
+        {
+            if (m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface != null)
+            {
+                @Walk.started -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnWalk;
+                @Walk.performed -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnWalk;
+                @Walk.canceled -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnWalk;
+                @SwitchToCharacter.started -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnSwitchToCharacter;
+                @SwitchToCharacter.performed -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnSwitchToCharacter;
+                @SwitchToCharacter.canceled -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnSwitchToCharacter;
+            }
+            m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Walk.started += instance.OnWalk;
+                @Walk.performed += instance.OnWalk;
+                @Walk.canceled += instance.OnWalk;
+                @SwitchToCharacter.started += instance.OnSwitchToCharacter;
+                @SwitchToCharacter.performed += instance.OnSwitchToCharacter;
+                @SwitchToCharacter.canceled += instance.OnSwitchToCharacter;
+            }
+        }
+    }
+    public AnimalStateActionMapActions @AnimalStateActionMap => new AnimalStateActionMapActions(this);
+
+    // FightStateActionMap
+    private readonly InputActionMap m_FightStateActionMap;
+    private IFightStateActionMapActions m_FightStateActionMapActionsCallbackInterface;
+    private readonly InputAction m_FightStateActionMap_Newaction;
+    public struct FightStateActionMapActions
+    {
+        private @MovementInput m_Wrapper;
+        public FightStateActionMapActions(@MovementInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_FightStateActionMap_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_FightStateActionMap; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(FightStateActionMapActions set) { return set.Get(); }
+        public void SetCallbacks(IFightStateActionMapActions instance)
+        {
+            if (m_Wrapper.m_FightStateActionMapActionsCallbackInterface != null)
+            {
+                @Newaction.started -= m_Wrapper.m_FightStateActionMapActionsCallbackInterface.OnNewaction;
+                @Newaction.performed -= m_Wrapper.m_FightStateActionMapActionsCallbackInterface.OnNewaction;
+                @Newaction.canceled -= m_Wrapper.m_FightStateActionMapActionsCallbackInterface.OnNewaction;
+            }
+            m_Wrapper.m_FightStateActionMapActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Newaction.started += instance.OnNewaction;
+                @Newaction.performed += instance.OnNewaction;
+                @Newaction.canceled += instance.OnNewaction;
+            }
+        }
+    }
+    public FightStateActionMapActions @FightStateActionMap => new FightStateActionMapActions(this);
     public interface IExploreStateActionMapActions
     {
         void OnWalk(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnSwitchToAnimal(InputAction.CallbackContext context);
+    }
+    public interface IAnimalStateActionMapActions
+    {
+        void OnWalk(InputAction.CallbackContext context);
+        void OnSwitchToCharacter(InputAction.CallbackContext context);
+    }
+    public interface IFightStateActionMapActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

@@ -10,11 +10,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
         private float _distanceBetweenPlayerAndAnimal;
         private UncontrolledSubStatesFactory _factory;
+        private int _layerBeforeEnter;
 
         public override void OnStateEnter()
         {
             Context.AnimalAgent.enabled = true;
             Context.AnimalAgent.acceleration = 20;
+
+            _layerBeforeEnter = Context.gameObject.layer;
             Context.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         }
 
@@ -42,6 +45,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         public override void OnStateExit()
         {
             Context.AnimalAgent.enabled = false;
+            Context.gameObject.layer = _layerBeforeEnter;
         }
 
         public override bool TrySwitchState(out AnimalState newAnimalState)

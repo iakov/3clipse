@@ -21,14 +21,8 @@ namespace _3ClipseGame.Steam.Global.Input.MenuInput
         #region MonoBehaviourMethods
 
         private void Awake() => _menuInputActions = new MenuInputActions();
-        private void OnEnable() => Enable();
-        private void OnDisable() => Disable();
 
-        #endregion
-
-        #region PublicMethods
-
-        public override void Enable()
+        private void OnEnable()
         {
             _menuInputActions.Enable();
             _menuInputActions.MenuActions.Enable();
@@ -36,11 +30,19 @@ namespace _3ClipseGame.Steam.Global.Input.MenuInput
             _menuInputActions.MenuActions.Exit.started += _ => { switchModeToHUD?.Invoke(); };
         }
 
-        public override void Disable()
+        private void OnDisable()
         {
             _menuInputActions.MenuActions.Disable();
             _menuInputActions.Disable();
         }
+
+        #endregion
+
+        #region PublicMethods
+
+        public override void Enable() => OnEnable();
+
+        public override void Disable() => OnDisable();
 
         #endregion
     }

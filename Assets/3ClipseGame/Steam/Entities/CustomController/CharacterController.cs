@@ -149,7 +149,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 				var bottom = origin - Vector3.up * (capsuleOffset - stepOffset);
 				var top = origin + Vector3.up * capsuleOffset;
 			
-				if (Physics.CapsuleCast(top, bottom, Radius, direction, out hitInfo, distance + Radius))
+				if (Physics.CapsuleCast(top, bottom, Radius, direction, out hitInfo, distance + Radius) && !hitInfo.collider.isTrigger)
 				{
 					var safeDistance = hitInfo.distance - Radius - skinWidth;
 					_position += direction * safeDistance;

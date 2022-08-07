@@ -18,7 +18,13 @@ namespace _3ClipseGame.Steam.Global.UI.Scripts.Specifications
         
         private void Awake() => _staminaSlider = GetComponent<Slider>();
         
-        private void OnEnable() => stamina.StaminaChanged += OnStaminaChanged;
+        private void OnEnable()
+        {
+            StartCoroutine(ChangeSlider());
+            stamina.StaminaChanged += OnStaminaChanged;
+        }
+        
+        private void OnDisable() => stamina.StaminaChanged -= OnStaminaChanged;
 
         private void OnStaminaChanged() => StartCoroutine(ChangeSlider());
         

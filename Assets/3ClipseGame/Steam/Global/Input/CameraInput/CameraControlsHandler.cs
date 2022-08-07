@@ -1,13 +1,26 @@
+using _3ClipseGame.Steam.Global.Input.Scripts;
 using Cinemachine;
-using UnityEngine;
 
 namespace _3ClipseGame.Steam.Global.Input.CameraInput
 {
-    public class CameraControllsHandler : MonoBehaviour
+    public class CameraControlsHandler : InputHandler
     {
         #region Initialization
 
-        private CinemachineFreeLook _freeLookCamera;
+        private CinemachineStateDrivenCamera _stateDrivenCamera;
+
+        private CinemachineFreeLook _freeLookCamera
+        {
+            get
+            {
+                if (_stateDrivenCamera == null) return null;
+
+                var freeLookCamera = _stateDrivenCamera.LiveChild.VirtualCameraGameObject.GetComponent<CinemachineFreeLook>();
+                
+                return freeLookCamera == null ? null : freeLookCamera;
+            }
+        }
+        
         private CameraControlls _cameraControlls;
         
         private float _beforeDisableYValue;
@@ -20,8 +33,9 @@ namespace _3ClipseGame.Steam.Global.Input.CameraInput
         private void Awake()
         {
             _cameraControlls = new CameraControlls();
-            _freeLookCamera = GetComponent<CinemachineFreeLook>();
+            _stateDrivenCamera = GetComponent<CinemachineStateDrivenCamera>();
         } 
+        
         private void OnEnable() => Enable(); 
         private void OnDisable() => Disable();
 
@@ -29,7 +43,7 @@ namespace _3ClipseGame.Steam.Global.Input.CameraInput
 
         #region PublicMethods
 
-        public void Enable()
+        public override void Enable()
         {
             _cameraControlls.Enable();
 
@@ -39,7 +53,7 @@ namespace _3ClipseGame.Steam.Global.Input.CameraInput
             _freeLookCamera.m_YAxis.m_MaxSpeed = _beforeDisableYValue;
         }
 
-        public void Disable()
+        public override void Disable()
         {
             _cameraControlls.Disable();
             

@@ -37,14 +37,8 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
         #region MonoBehaviourMethods
 
         private void Awake() => _hudInputActions = new HUDInputActions();
-        private void OnEnable() => Enable();
-        private void OnDisable() => Disable();
 
-        #endregion
-
-        #region PublicMethods
-
-        public override void Enable()
+        private void OnEnable()
         {
             _hudInputActions.Enable();
             _hudInputActions.HUDActions.Enable();
@@ -55,11 +49,19 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
             _hudInputActions.HUDActions.ShowElementalWheel.canceled += OnToggleElementalWheel;
         }
 
-        public override void Disable()
+        private void OnDisable()
         {
             _hudInputActions.HUDActions.Disable();
             _hudInputActions.Disable();
         }
+
+        #endregion
+
+        #region PublicMethods
+
+        public override void Enable() => OnEnable();
+
+        public override void Disable() => OnDisable();
 
         #endregion
 

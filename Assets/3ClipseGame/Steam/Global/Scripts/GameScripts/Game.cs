@@ -1,9 +1,10 @@
 using _3ClipseGame.Steam.Global.GameScripts.GameStates;
 using _3ClipseGame.Steam.Global.Scripts.GameScripts.GameStates;
+using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using UnityEngine;
 using PlayMode = _3ClipseGame.Steam.Global.GameScripts.GameStates.PlayMode;
 
-namespace _3ClipseGame.Steam.Global.GameScripts
+namespace _3ClipseGame.Steam.Global.Scripts.GameScripts
 {
     public class Game : MonoBehaviour
     {
@@ -17,7 +18,9 @@ namespace _3ClipseGame.Steam.Global.GameScripts
 
         public MenuMode MenuMode { get; private set; }
         public PlayMode PlayMode { get; private set; }
-        public CinematicMode CinematicMode { get; private set; }
+        public CinematicMode CinematicMode { get; set; }
+        
+        public CameraAnimatorController StateDrivenCamera;
 
         #endregion
 

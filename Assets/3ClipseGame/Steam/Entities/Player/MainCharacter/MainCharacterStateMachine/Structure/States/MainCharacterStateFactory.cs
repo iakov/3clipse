@@ -12,6 +12,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         #region Methods
 
         public MainCharacterState ExploreState() => new ExploreMainCharacterState(Context, this);
+        public MainCharacterState AnimalControlState() => new AnimalControlState(Context, this);
 
         #endregion
     }
