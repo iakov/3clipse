@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -146,10 +147,12 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			for (var i = 0; i < 5; i++)
 			{
 				var origin = _position + _capsuleCollider.center - direction * Radius;
-				var bottom = origin - Vector3.up * (capsuleOffset - stepOffset);
 				var top = origin + Vector3.up * capsuleOffset;
-			
-				if (Physics.CapsuleCast(top, bottom, Radius, direction, out hitInfo, distance + Radius) && !hitInfo.collider.isTrigger)
+				var capsuleNoStep = origin + Vector3.down * (Height / 2 - stepOffset - Radius);
+
+				var isWalled = Physics.CapsuleCast(capsuleNoStep, top, Radius, direction, out hitInfo, distance + Radius);
+				
+				if (isWalled && !hitInfo.collider.isTrigger)
 				{
 					var safeDistance = hitInfo.distance - Radius - skinWidth;
 					_position += direction * safeDistance;
@@ -190,7 +193,15 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		}
 
 		private void ApplyChanges() => Velocity = _position - _transform.position;
-		
+
+		private void OnDrawGizmos()
+		{
+			Gizmos.color = Color.green;
+			foreach (var contact in _contacts)
+			{
+				Gizmos.DrawWireSphere(contact.point, 0.05f);
+			}
+		}
 
 		#endregion
 	}

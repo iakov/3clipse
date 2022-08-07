@@ -1,3 +1,4 @@
+using _3ClipseGame.Steam.Global.GameScripts.GameStates;
 using _3ClipseGame.Steam.Global.Input.CameraInput;
 using _3ClipseGame.Steam.Global.Input.HUDInput;
 using _3ClipseGame.Steam.Global.Input.PlayerInput;
@@ -5,7 +6,7 @@ using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using Cinemachine;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
+namespace _3ClipseGame.Steam.Global.Scripts.GameScripts.GameStates
 {
     public class PlayMode : GameMode
     {
@@ -18,7 +19,9 @@ namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
 
         [Header("Cameras")] 
         [SerializeField] private CinemachineFreeLook freeLookCamera;
-        
+
+        private ICinemachineCamera _lastCinemachineCamera;
+
         #endregion
 
         #region Initialization
@@ -33,9 +36,11 @@ namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
         {
             cameraAnimatorController.SwitchCamera(_previousCameraType);
             blendBegan?.Invoke();
-            StartCoroutine(TrackBlendCompletion(freeLookCamera));
-            
-            pointerManager.SwitchPointerMode(CursorLockMode.Locked);
+
+            if (_lastCinemachineCamera == null) StartCoroutine(TrackBlendCompletion(freeLookCamera));
+            else StartCoroutine(TrackBlendCompletion(_lastCinemachineCamera));
+
+                pointerManager.SwitchPointerMode(CursorLockMode.Locked);
             uiManager.SwitchMenu(false);
             Time.timeScale = timeScale;
 
@@ -44,6 +49,8 @@ namespace _3ClipseGame.Steam.Global.GameScripts.GameStates
         
         public override void Disable()
         {
+            _lastCinemachineCamera = stateDrivenCamera.LiveChild;
+            
             movementInputHandler.Disable();
             hudInputHandler.Disable();
             cameraControlsHandler.Disable();

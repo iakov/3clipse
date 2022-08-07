@@ -18,16 +18,22 @@ namespace _3ClipseGame.Steam.Global.Input.PlayerInput
         [NonSerialized] public bool IsJumpPressed;
 
         private MovementInput _movementInput;
+        private InputActionMap _lastActionMap;
         
         #endregion
 
         #region MonoBehaviourMethods
 
-        private void OnEnable()
+        private void Awake()
         {
             _movementInput = new MovementInput();
+            _lastActionMap = _movementInput.ExploreStateActionMap;
+        }
+        
+        private void OnEnable()
+        {
             _movementInput.Enable();
-            _movementInput.ExploreStateActionMap.Enable();
+            _lastActionMap.Enable();
 
             //Set Explore Handlers
             _movementInput.ExploreStateActionMap.Walk.started += OnWalkChanged;
@@ -84,6 +90,7 @@ namespace _3ClipseGame.Steam.Global.Input.PlayerInput
             _movementInput.FightStateActionMap.Disable();
             
             _movementInput.AnimalStateActionMap.Enable();
+            _lastActionMap = _movementInput.AnimalStateActionMap;
         }
 
         public void SwitchToExploreControls()
@@ -92,6 +99,7 @@ namespace _3ClipseGame.Steam.Global.Input.PlayerInput
             _movementInput.FightStateActionMap.Disable();
             
             _movementInput.ExploreStateActionMap.Enable();
+            _lastActionMap = _movementInput.ExploreStateActionMap;
         }
 
         public void SwitchToFightControls()
@@ -100,6 +108,7 @@ namespace _3ClipseGame.Steam.Global.Input.PlayerInput
             _movementInput.ExploreStateActionMap.Disable();
             
             _movementInput.FightStateActionMap.Enable();
+            _lastActionMap = _movementInput.FightStateActionMap;
         }
 
         public override void Disable() => OnDisable();
@@ -114,7 +123,6 @@ namespace _3ClipseGame.Steam.Global.Input.PlayerInput
         {
             LastInput = CurrentInput;
             CurrentInput = newInput;
-            Debug.Log(CurrentInput);
         }
 
         #endregion

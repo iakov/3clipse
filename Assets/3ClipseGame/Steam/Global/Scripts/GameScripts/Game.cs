@@ -2,7 +2,7 @@ using _3ClipseGame.Steam.Global.GameScripts.GameStates;
 using _3ClipseGame.Steam.Global.Scripts.GameScripts.GameStates;
 using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using UnityEngine;
-using PlayMode = _3ClipseGame.Steam.Global.GameScripts.GameStates.PlayMode;
+using PlayMode = _3ClipseGame.Steam.Global.Scripts.GameScripts.GameStates.PlayMode;
 
 namespace _3ClipseGame.Steam.Global.Scripts.GameScripts
 {

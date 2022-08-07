@@ -11,16 +11,15 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
 
         [Header("HUD Components")] 
         [SerializeField] private GameObject elementalWheel;
-        [SerializeField] private UI.Scripts.TabSystem.TabButton mainTab;
 
         [Header("Events")]
-        [SerializeField] private UnityEvent<UI.Scripts.TabSystem.TabButton> switchModeToMenu;
+        [SerializeField] private UnityEvent switchModeToMenu;
         
         #endregion
 
         #region Public
 
-        public event UnityAction<UI.Scripts.TabSystem.TabButton> SwitchingModeToMenu
+        public event UnityAction SwitchingModeToMenu
         {
             add => switchModeToMenu.AddListener(value);
             remove => switchModeToMenu.RemoveListener(value);
@@ -72,7 +71,7 @@ namespace _3ClipseGame.Steam.Global.Input.HUDInput
 
         private void SwitchModeToMain(InputAction.CallbackContext context)
         {
-            switchModeToMenu?.Invoke(mainTab);
+            switchModeToMenu?.Invoke();
         }
 
         #endregion

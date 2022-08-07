@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,21 +9,29 @@ namespace _3ClipseGame.Steam.Global.UI.Scripts.TabSystem
     {
         #region PrivateInitialization
 
+        [SerializeField] private TabButton defaultTab;
+        
         private List<TabButton> _tabButtons;
         
         private TabButton _currentActiveButton;
         private TabButton _currentScopedButton;
         
-
         #endregion
 
         #region PublicMethods
 
-        public void Subscribe(TabButton button)
+        private void Awake()
         {
-            _tabButtons ??= new List<TabButton>();
-            _tabButtons.Add(button);
+            _tabButtons = GetComponentsInChildren<TabButton>().ToList();
+            _currentActiveButton = defaultTab;
         }
+
+        private void OnEnable(){
+            _currentActiveButton.SetTabActive(true);
+            ResetTabs();
+        }
+
+        private void OnDisable() => _currentActiveButton = defaultTab;
 
         public void OnTabEnter(TabButton button)
         {
@@ -50,17 +59,14 @@ namespace _3ClipseGame.Steam.Global.UI.Scripts.TabSystem
         {
             if (_tabButtons == null) _tabButtons = new List<TabButton>();
             
-            foreach (var tabButton in _tabButtons.Where(tabButton => tabButton != _currentActiveButton && tabButton != _currentScopedButton))
-            {
+            foreach (var tabButton in _tabButtons.Where(tabButton => tabButton != _currentActiveButton && tabButton != _currentScopedButton)) 
                 tabButton.SetTabActive(false);
-                tabButton.BackgroundImage.sprite = tabButton.tabIdle;
-            }
+            
             
             _currentActiveButton.SetTabActive(true);
-            _currentActiveButton.BackgroundImage.sprite = _currentActiveButton.tabActive;
 
             if (_currentScopedButton == null || _currentActiveButton == _currentScopedButton) return;
-            _currentScopedButton.BackgroundImage.sprite = _currentScopedButton.tabHover;
+            _currentScopedButton.SetTabScoped();
         }
 
         #endregion
