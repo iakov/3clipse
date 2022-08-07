@@ -1,3 +1,4 @@
+using System;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using UnityEngine;
 
@@ -15,7 +16,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         public override void OnStateUpdate()
         {
             AddTime(Time.deltaTime);
-            Context.AnimalAgent.SetDestination(Context.CurrentTarget.position);
+            
+            if (Context.AnimalAgent.isOnNavMesh) Context.AnimalAgent.SetDestination(Context.CurrentTarget.position);
+            
             _distanceBetweenPlayerAndAnimal = Vector3.Distance(Context.AnimalTransform.position, Context.MainCharacterTransform.position);
             Context.AnimalAgent.speed = Context.FollowRunSpeed.Evaluate(_distanceBetweenPlayerAndAnimal);
         }

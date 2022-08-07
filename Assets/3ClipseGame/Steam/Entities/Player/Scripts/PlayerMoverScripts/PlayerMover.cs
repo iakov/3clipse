@@ -16,15 +16,17 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         private Transform _playerTransform;
         private readonly List<Move> _movesList = new();
         public static bool IsFreezed = false;
+        private Rigidbody _rigidbody;
 
         #endregion
 
         #region MonoBehaviourMethods
 
-        private void Start()
+        private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
             _playerTransform = GetComponent<Transform>();
+            _rigidbody = GetComponent<Rigidbody>();
             if (Camera.main != null) _cameraTransform = Camera.main.transform;
         }
 
@@ -91,7 +93,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         {
             resultMove.y = 0f;
             if (resultMove == Vector3.zero) return;
-            _characterController.Rotate(Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(resultMove), rotationSpeed * Time.fixedDeltaTime));
+            _rigidbody.rotation = Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(resultMove), rotationSpeed * Time.fixedDeltaTime);
         }
 
         #endregion

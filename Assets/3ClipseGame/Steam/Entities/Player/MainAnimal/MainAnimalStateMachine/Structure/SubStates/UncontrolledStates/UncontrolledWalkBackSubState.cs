@@ -39,7 +39,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             if (distanceToRight < distanceToLeft) nextDirection = mainCharacterRight;
             else nextDirection = -mainCharacterRight;
 
-            Context.AnimalAgent.SetDestination (Context.MainCharacterTransform.forward + nextDirection + animalPosition);
+             if (Context.AnimalAgent.isOnNavMesh) Context.AnimalAgent.SetDestination (Context.MainCharacterTransform.forward + nextDirection + animalPosition);
         }
 
         public override void OnStateExit()

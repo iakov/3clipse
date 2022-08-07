@@ -11,7 +11,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         
         private ControlledSubStatesFactory _factory;
 
-        public override void OnStateEnter(){}
+        public override void OnStateEnter()
+        {
+        }
         public override void OnStateUpdate()
         {
             var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
@@ -26,6 +28,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             newAnimalState = null;
 
             if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = _factory.Idle();
+            else if (Context.InputHandler.IsRunPressed) newAnimalState = _factory.Run();
 
             return newAnimalState != null;
         }
