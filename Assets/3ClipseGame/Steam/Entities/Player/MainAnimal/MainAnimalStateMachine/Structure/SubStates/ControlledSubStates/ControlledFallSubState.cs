@@ -4,10 +4,16 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 {
     public class ControlledFallSubState : AnimalSubState
     {
+        #region Initialization
+
         public ControlledFallSubState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory) 
             => _factory = (ControlledSubStatesFactory) factory;
 
         private ControlledSubStatesFactory _factory;
+        
+        #endregion
+
+        #region SubStateMethods
 
         public override void OnStateEnter()
         {
@@ -29,5 +35,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
             return newAnimalState != null;
         }
+        
+        #endregion
     }
 }
