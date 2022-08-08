@@ -24,6 +24,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
             var moveVector = rawMoveVector * (Context.RunSpeed.Evaluate(currentEvaluateTime) * Context.WalkSpeed);
             Context.AnimalMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
+            
+            Context.Stamina.AddValue(Context.RunStaminaReduce * Time.deltaTime);
         }
 
         public override void OnStateExit()
@@ -38,7 +40,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             if (Context.InputHandler.IsJumpPressed) newAnimalState = _factory.Jump();
             else if (Context.Stamina.StaminaValue == 0) newAnimalState = _factory.Walk();
             else if (!Context.InputHandler.IsRunPressed) newAnimalState = _factory.Walk();
-            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = _factory.Idle();
+            else if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down,
+                         Context.AnimalController.Radius)) newAnimalState = _factory.Fall();
+            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = _factory.Stop();
+            else if (Context.InputHandler.IsCrouchPressed) newAnimalState = _factory.Crouch();
 
             return newAnimalState != null;
         }

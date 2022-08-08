@@ -38,6 +38,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             else if (Context.InputHandler.CurrentInput == Vector2.zero) newMainCharacterState = _factory.Stop();
             else if (Context.InputHandler.IsRunPressed) newMainCharacterState = _factory.Run();
             else if (Context.InputHandler.IsCrouchPressed) newMainCharacterState = _factory.Crouch();
+            
             return newMainCharacterState != null;
         }
 

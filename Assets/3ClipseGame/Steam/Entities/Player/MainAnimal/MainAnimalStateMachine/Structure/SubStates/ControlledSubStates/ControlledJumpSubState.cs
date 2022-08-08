@@ -7,7 +7,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
     public class ControlledJumpSubState : AnimalSubState
     {
         public ControlledJumpSubState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory)
-            => _factory = (ControlledSubStatesFactory)factory;
+            => _factory = (ControlledSubStatesFactory) factory;
 
         private ControlledSubStatesFactory _factory;
         private Vector3 _lastMoveVector;
@@ -39,6 +39,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             newAnimalState = null;
 
             if (Context.AnimalController.IsGrounded && StateTimer > 0.1f) newAnimalState = _factory.Idle();
+            else if (Context.AnimalMover.GetLastMove(MoveType.StateMove, false).y + Context.AnimalMover.GetLastMove(MoveType.GravityMove, false).y < 0)
+                newAnimalState = _factory.Fall();
             
             return newAnimalState != null;
         }

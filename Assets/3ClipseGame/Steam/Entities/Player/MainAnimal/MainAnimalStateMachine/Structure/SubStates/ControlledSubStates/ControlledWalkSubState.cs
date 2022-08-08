@@ -14,7 +14,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         public override void OnStateEnter() { }
         public override void OnStateUpdate()
         {
-            Debug.Log("Walk");
             var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
             var moveVector = rawMoveVector * Context.WalkSpeed;
             Context.AnimalMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
@@ -27,9 +26,12 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             newAnimalState = null;
 
             if (Context.InputHandler.IsJumpPressed) newAnimalState = _factory.Jump();
-            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = _factory.Idle();
             else if (Context.InputHandler.IsRunPressed) newAnimalState = _factory.Run();
-
+            else if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down, 0.1f))
+                newAnimalState = _factory.Fall();
+            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = _factory.Stop();
+            else if (Context.InputHandler.IsCrouchPressed) newAnimalState = _factory.Crouch();
+            
             return newAnimalState != null;
         }
     }

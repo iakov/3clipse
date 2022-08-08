@@ -32,9 +32,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, RotationType.NoRotation);
         }
 
-        public override void OnStateExit()
-        {
-        }
+        public override void OnStateExit(){}
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
         {

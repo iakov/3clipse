@@ -35,6 +35,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         [SerializeField] private AnimationCurve followRunSpeed;
 
         [Header("Controlled State Parameters")] 
+        [Range(1, 10)] [SerializeField] private float speedInterpolation = 6f;
+        [Range(0, 3)] [SerializeField] private float crouchSpeedModifier = 1f;
         [SerializeField] private float walkSpeed;
         [SerializeField] private AnimationCurve runSpeed;
         [SerializeField] private float jumpStrength;
@@ -56,6 +58,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
         public float RunStaminaReduce => runStaminaReduce;
         public float JumpStaminaReduce => jumpStaminaReduce;
         public float JumpStrength => jumpStrength;
+        public float SpeedInterpolation => speedInterpolation;
+        public float CrouchSpeedModifier => crouchSpeedModifier;
         public bool IsSwitching { get; private set; }
         public Transform MainCharacterTransform => mainCharacterTransform;
         public Transform AnimalTransform { get; private set; }
