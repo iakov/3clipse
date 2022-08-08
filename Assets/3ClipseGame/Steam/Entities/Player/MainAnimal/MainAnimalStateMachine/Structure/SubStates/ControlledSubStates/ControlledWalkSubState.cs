@@ -11,11 +11,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         
         private ControlledSubStatesFactory _factory;
 
-        public override void OnStateEnter()
-        {
-        }
+        public override void OnStateEnter() { }
         public override void OnStateUpdate()
         {
+            Debug.Log("Walk");
             var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
             var moveVector = rawMoveVector * Context.WalkSpeed;
             Context.AnimalMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
@@ -27,7 +26,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         {
             newAnimalState = null;
 
-            if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = _factory.Idle();
+            if (Context.InputHandler.IsJumpPressed) newAnimalState = _factory.Jump();
+            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = _factory.Idle();
             else if (Context.InputHandler.IsRunPressed) newAnimalState = _factory.Run();
 
             return newAnimalState != null;

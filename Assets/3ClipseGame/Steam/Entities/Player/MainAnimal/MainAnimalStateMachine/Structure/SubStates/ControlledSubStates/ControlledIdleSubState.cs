@@ -24,7 +24,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         {
             newAnimalState = null;
 
-            if (Context.InputHandler.CurrentInput != Vector2.zero) newAnimalState = _factory.Walk();
+            if (Context.InputHandler.IsJumpPressed) newAnimalState = _factory.Jump();
+            else if (Context.InputHandler.CurrentInput != Vector2.zero) newAnimalState = _factory.Walk();
 
             return newAnimalState != null;
         }

@@ -205,6 +205,15 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""56dd842d-a53a-4db4-840d-49786a9e8dc3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -284,6 +293,17 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40992d1f-8e68-4cc7-86d5-b8704d56388f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -330,6 +350,7 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
         m_AnimalStateActionMap_Walk = m_AnimalStateActionMap.FindAction("Walk", throwIfNotFound: true);
         m_AnimalStateActionMap_SwitchToCharacter = m_AnimalStateActionMap.FindAction("SwitchToCharacter", throwIfNotFound: true);
         m_AnimalStateActionMap_Run = m_AnimalStateActionMap.FindAction("Run", throwIfNotFound: true);
+        m_AnimalStateActionMap_Jump = m_AnimalStateActionMap.FindAction("Jump", throwIfNotFound: true);
         // FightStateActionMap
         m_FightStateActionMap = asset.FindActionMap("FightStateActionMap", throwIfNotFound: true);
         m_FightStateActionMap_Newaction = m_FightStateActionMap.FindAction("New action", throwIfNotFound: true);
@@ -460,6 +481,7 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_AnimalStateActionMap_Walk;
     private readonly InputAction m_AnimalStateActionMap_SwitchToCharacter;
     private readonly InputAction m_AnimalStateActionMap_Run;
+    private readonly InputAction m_AnimalStateActionMap_Jump;
     public struct AnimalStateActionMapActions
     {
         private @MovementInput m_Wrapper;
@@ -467,6 +489,7 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
         public InputAction @Walk => m_Wrapper.m_AnimalStateActionMap_Walk;
         public InputAction @SwitchToCharacter => m_Wrapper.m_AnimalStateActionMap_SwitchToCharacter;
         public InputAction @Run => m_Wrapper.m_AnimalStateActionMap_Run;
+        public InputAction @Jump => m_Wrapper.m_AnimalStateActionMap_Jump;
         public InputActionMap Get() { return m_Wrapper.m_AnimalStateActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -485,6 +508,9 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                 @Run.started -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnRun;
                 @Run.performed -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnRun;
                 @Run.canceled -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnRun;
+                @Jump.started -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_AnimalStateActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -498,6 +524,9 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -548,6 +577,7 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
         void OnWalk(InputAction.CallbackContext context);
         void OnSwitchToCharacter(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
     public interface IFightStateActionMapActions
     {

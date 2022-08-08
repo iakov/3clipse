@@ -58,6 +58,9 @@ namespace _3ClipseGame.Steam.Global.Input.PlayerInput
 
             _movementInput.AnimalStateActionMap.Run.started += OnRunChanged;
             _movementInput.AnimalStateActionMap.Run.canceled += OnRunChanged;
+
+            _movementInput.AnimalStateActionMap.Jump.started += OnJumpChanged;
+            _movementInput.AnimalStateActionMap.Jump.canceled += OnJumpChanged;
             
             _movementInput.AnimalStateActionMap.SwitchToCharacter.started += OnSwitch;
         }
