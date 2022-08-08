@@ -18,6 +18,7 @@ namespace _3ClipseGame.Steam.Entities.Scripts
 
         private Transform _transform;
         private AudioSource _audioSource;
+        private CapsuleCollider _capsuleCollider;
 
         #endregion
 
@@ -27,6 +28,7 @@ namespace _3ClipseGame.Steam.Entities.Scripts
         {
             _transform = GetComponent<Transform>();
             _audioSource = GetComponent<AudioSource>();
+            _capsuleCollider = GetComponentInParent<CapsuleCollider>();
         }
 
         #endregion
@@ -36,8 +38,9 @@ namespace _3ClipseGame.Steam.Entities.Scripts
         public void PlaySound()
         {
             var position = _transform.position;
-            var ray = new Ray(new Vector3(position.x, position.y + 0.2f, position.z), Vector3.down);
-            if(!Physics.Raycast(ray, out var raycastHit, rayDistance)) Debug.Log("Hmmm");
+            var bottomPosition = position + _capsuleCollider.center + Vector3.down * _capsuleCollider.height / 2;
+            var ray = new Ray(new Vector3(bottomPosition.x, bottomPosition.y, bottomPosition.z), Vector3.down);
+            if (!Physics.Raycast(ray, out var raycastHit, rayDistance, soundsDetectLayer)) throw new ArgumentException("Cannot detect ground");
             
             var groundMaterial = raycastHit.collider.gameObject.GetComponent<Renderer>().material;
             var sounds = soundsStorage.TryGetStepSounds(groundMaterial);
