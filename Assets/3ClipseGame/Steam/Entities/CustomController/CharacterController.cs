@@ -126,7 +126,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			Sweep(lateralVelocity.normalized, lateralVelocity.magnitude, stepOffset, 145);
 			
 			var verticalVelocity = new Vector3(0, move.y, 0);
-			Sweep(verticalVelocity.normalized, verticalVelocity.magnitude, 0);  //Set to slopeLimit to make it slide automatically
+			Sweep(verticalVelocity.normalized, verticalVelocity.magnitude, 0);
 		}
 
 		private void Sweep(Vector3 direction, float distance, float verticalOffset, float minSlideAngle = 0, float maxSlideAngle = 360)
