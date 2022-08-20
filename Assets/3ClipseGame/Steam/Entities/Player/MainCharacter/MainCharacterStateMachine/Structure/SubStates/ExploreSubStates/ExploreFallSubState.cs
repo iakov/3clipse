@@ -18,7 +18,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             Context.Stamina.IsRecovering = false;
         }
-        public override void OnStateUpdate(){}
 
         public override void OnStateExit()
         {

@@ -32,7 +32,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateUpdate()
         {
-            AddTime(Time.deltaTime);
+            base.OnStateUpdate();
+            
             if (_currentMainCharacterSubState.TrySwitchState(out var nextSubState)) SwitchSubState((MainCharacterSubState)nextSubState);
             _currentMainCharacterSubState.OnStateUpdate();
         }
