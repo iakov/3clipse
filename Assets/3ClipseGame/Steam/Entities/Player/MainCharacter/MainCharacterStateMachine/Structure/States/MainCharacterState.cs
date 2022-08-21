@@ -1,5 +1,6 @@
 using System;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
+using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States
 {
@@ -7,7 +8,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
     {
         #region Initialization
 
-        public float StateTimer { get; private set; }
+        protected float StateTimer { get; private set; }
         public event Action<MainCharacterSubState, MainCharacterSubState> SwitchingSubState; 
 
         protected readonly MainCharacterStateMachine Context;
@@ -18,18 +19,13 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             Context = context;
             Factory = factory;
         }
-
-        protected MainCharacterState()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         #endregion
 
         #region AbstractMethods
 
         public abstract void OnStateEnter();
-        public abstract void OnStateUpdate();
+        public virtual void OnStateUpdate() => AddTime(Time.deltaTime);
         public abstract void OnStateExit();
 
         public abstract bool TrySwitchState(out MainCharacterState newMainCharacterState);
@@ -38,7 +34,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         #region ProtectedMethods
 
-        protected void AddTime(float deltaTime) => StateTimer += deltaTime;
+        private void AddTime(float deltaTime) => StateTimer += deltaTime;
         protected void SwitchSubState(MainCharacterSubState current, MainCharacterSubState next) => SwitchingSubState?.Invoke(current, next);
 
         #endregion

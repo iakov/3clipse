@@ -4,7 +4,6 @@ using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using _3ClipseGame.Steam.Global.Input.PlayerInput;
-using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using UnityEngine;
 using UnityEngine.Events;
 using CharacterController = _3ClipseGame.Steam.Entities.CustomController.CharacterController;
@@ -16,18 +15,24 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
     {
         #region SerializeFields
 
-        [Header("Explore Parameters" )]
+        [Header("Explore Parameters")] 
         [Space]
+        [Header("Walk")]
         [Range(0, 10)] [SerializeField] private float walkSpeed = 3f;
         [Range(1, 10)] [SerializeField] private float speedInterpolation = 6f;
-        [Range(0, 3)] [SerializeField] private float crouchSpeedModifier = 1f;
-        [SerializeField] private float runStaminaReduce = -5f;
+        [Header("Crouch")]
+        [Range(0, 2)] [SerializeField] private float crouchSpeedModifier = 0.5f;
+        [Header("Jump")]
         [SerializeField] private float jumpStaminaReduce = -5f;
         [SerializeField] private float jumpStrength = 2f;
+        [Header("Run")]
+        [SerializeField] private float runStaminaReduce = -5f;
         [SerializeField] private AnimationCurve runModifierCurve;
+        [Space]
+        [Space]
+        [Header("Events")]
         [SerializeField] private UnityEvent<MainCharacterState, MainCharacterState> switchingState;
         [SerializeField] private UnityEvent<MainCharacterSubState, MainCharacterSubState> switchingSubState;
-        [SerializeField] private CameraAnimatorController cameraController;
 
         #endregion
         
@@ -41,6 +46,15 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public float JumpStaminaReduce => jumpStaminaReduce;
         public AnimationCurve RunModifierCurve => runModifierCurve;
         public LayerMask WalkableLayerMask => PlayerController.walkableLayers;
+
+        public PlayerMover PlayerMover { get; private set; }
+        public MainCharacter MainCharacter { get; private set; }
+        public CharacterController PlayerController { get; private set; }
+        public MovementInputHandler InputHandler { get; private set; }
+        public Transform Transform { get; private set; }
+        public Stamina Stamina { get; private set; }
+        public Animator CharacterAnimator { get; private set; }
+        
         public event UnityAction<MainCharacterState, MainCharacterState> SwitchingState
         {
             add => switchingState.AddListener(value);
@@ -52,14 +66,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             add => switchingSubState.AddListener(value);
             remove => switchingSubState.RemoveListener(value);
         }
-        
-        public PlayerMover PlayerMover { get; private set; }
-        public MainCharacter MainCharacter { get; private set; }
-        public CharacterController PlayerController { get; private set; }
-        public MovementInputHandler InputHandler { get; private set; }
-        public Transform Transform { get; private set; }
-        public Stamina Stamina { get; private set; }
-        public CameraAnimatorController CameraController => cameraController;
 
         #endregion
 
@@ -80,6 +86,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             Transform = PlayerController.transform;
             MainCharacter = GetComponent<MainCharacter>();
             Stamina = GetComponent<Stamina>();
+            CharacterAnimator = GetComponentInChildren<Animator>();
             
             _mainCharacterStateFactory = new MainCharacterStateFactory(this);
             _currentMainCharacterState = _mainCharacterStateFactory.ExploreState();

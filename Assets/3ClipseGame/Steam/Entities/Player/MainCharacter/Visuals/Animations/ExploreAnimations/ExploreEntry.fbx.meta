@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 10d45b12ef87d5646a21bd5bf7fdf276
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
@@ -60,14 +60,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.73913044
+      - time: 0.73324805
         functionName: PlaySound
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 6d0ec0695db4efe4a90e174b15f96b4d, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.8886633
+      - time: 0.8612123
         functionName: PlaySound
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 6d0ec0695db4efe4a90e174b15f96b4d, type: 3}
@@ -911,6 +911,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

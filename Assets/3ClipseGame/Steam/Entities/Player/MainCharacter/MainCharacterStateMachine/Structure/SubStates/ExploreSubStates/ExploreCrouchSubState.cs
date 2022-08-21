@@ -15,18 +15,26 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         #endregion
 
-        #region MonoBehaviourMethods
+        #region SubStateMethods
 
-        public override void OnStateEnter(){}
+        public override void OnStateEnter()
+        {
+            
+        }
 
         public override void OnStateUpdate()
         {
+            base.OnStateUpdate();
+            
             var rawInput = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
-            var moveVector = rawInput * Context.CrouchSpeedModifier;
+            var moveVector =  Context.WalkSpeed * Context.CrouchSpeedModifier * rawInput;
             Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateWithCamera);
         }
 
-        public override void OnStateExit(){}
+        public override void OnStateExit()
+        {
+            
+        }
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
         {

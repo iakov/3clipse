@@ -29,11 +29,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             Context.Stamina.AddValue(Context.JumpStaminaReduce);
         }
 
-        public override void OnStateUpdate()
-        {
-            AddTime(Time.deltaTime);
-        }
-
         public override void OnStateExit()
         {
             Context.InputHandler.IsJumpPressed = false;

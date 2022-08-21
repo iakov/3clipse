@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,11 +16,10 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		[Header("Move Parameters")] 
 		[SerializeField] private float stepOffset = 0.3f;
 		[SerializeField] private float groundDetectionDistance = 0.1f;
+		[SerializeField] private float minMoveDistance = 0.001f;
 		
 		[Header("Slope Parameters")]
-		[SerializeField] [Min(0f)] private float slopeSlideSpeed = 2f;
 		[SerializeField] private float slopeLimit = 35f;
-		[SerializeField] private AnimationCurve slideSpeedUpModifier;
 
 		#endregion
 
@@ -50,6 +48,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		private Transform _transform;
 
 		private readonly List<RaycastHit> _contacts = new();
+		private readonly Collider[] _overlaps = new Collider[5];
 
 		#endregion
 		
@@ -104,8 +103,9 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		public void Move(Vector3 motion)
 		{
 			PrepareForMove();
+			HandleSlope();
 			ProceedMove(motion);
-			HandleSlopeSlide();
+			DePenetrate();
 			ApplyChanges();
 		}
 
@@ -122,43 +122,35 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		private void ProceedMove(Vector3 move)
 		{
-			//Handle vertical movement
-			var verticalMove = new Vector3(0f, move.y, 0f);
-			var capsuleOffset = Height / 2 - Radius;
-			if (Physics.SphereCast(Center, Radius + skinWidth, verticalMove, out var hitInfo,
-				    verticalMove.magnitude + capsuleOffset))
-			{
-				_position += verticalMove.normalized * (hitInfo.distance - capsuleOffset);
-				_contacts.Add(hitInfo);
-			}
-			else
-			{
-				_position += verticalMove;
-			}
-
-			//Handle horizontal movement
-			var horizontalMove = new Vector3(move.x, 0f, move.z);
-			var direction = horizontalMove.normalized;
-			var distance = horizontalMove.magnitude;
+			var lateralVelocity = new Vector3(move.x, 0, move.z);
+			Sweep(lateralVelocity.normalized, lateralVelocity.magnitude, stepOffset, 145);
 			
-			for (var i = 0; i < 5; i++)
+			var verticalVelocity = new Vector3(0, move.y, 0);
+			Sweep(verticalVelocity.normalized, verticalVelocity.magnitude, 0);
+		}
+
+		private void Sweep(Vector3 direction, float distance, float verticalOffset, float minSlideAngle = 0, float maxSlideAngle = 360)
+		{
+			var capsuleOffset = Height / 2 - Radius;
+
+			for (var i = 0; i < 5 && distance > minMoveDistance; i++)
 			{
 				var origin = _position + _capsuleCollider.center - direction * Radius;
+				var bottom = origin - Vector3.up * (capsuleOffset - verticalOffset);
 				var top = origin + Vector3.up * capsuleOffset;
-				var bottom = origin + Vector3.down * (capsuleOffset - stepOffset);
 
-				var isWalled = Physics.CapsuleCast(bottom, top, Radius, direction, out hitInfo, distance + Radius);
-				
-				if (isWalled && !hitInfo.collider.isTrigger)
+				if (Physics.CapsuleCast(top, bottom, Radius, direction, out var hitInfo, distance + Radius, walkableLayers, QueryTriggerInteraction.Ignore))
 				{
+					var slideAngle = Vector3.Angle(Vector3.up, hitInfo.normal);
 					var safeDistance = hitInfo.distance - Radius - skinWidth;
 					_position += direction * safeDistance;
 					_contacts.Add(hitInfo);
-					
+
+					 if (slideAngle >= minSlideAngle && slideAngle <= maxSlideAngle) break;
+
 					direction = Vector3.ProjectOnPlane(direction, hitInfo.normal);
 					distance -= safeDistance;
 				}
-				
 				else
 				{
 					_position += direction * distance;
@@ -166,40 +158,37 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 				}
 			}
 		}
-
-		private void HandleSlopeSlide()
+		
+		private void DePenetrate()
 		{
-			if (!IsGrounded || !Physics.Raycast(Center, Vector3.down, out var hit)) return;
+			var capsuleOffset = Height / 2 - Radius;
+			var top = _position + Vector3.up * capsuleOffset;
+			var bottom = _position + Vector3.down * capsuleOffset;
+			var overlapsNum = Physics.OverlapCapsuleNonAlloc(top, bottom, Radius, _overlaps, walkableLayers, QueryTriggerInteraction.Ignore);
 
-			var angle = Vector3.Angle(Vector3.up, hit.normal);
-			var slideMove = new Vector3(hit.normal.x, -hit.normal.y, hit.normal.z);
+			if (overlapsNum <= 0) return;
 			
-			if (angle >= slopeLimit)
+			for (var i = 0; i < overlapsNum; i++)
 			{
-				_slideTimer += Time.fixedDeltaTime;
-				var maxSlideTime = slideSpeedUpModifier.keys[slideSpeedUpModifier.length - 1].time;
-				if (_slideTimer > maxSlideTime) _slideTimer = maxSlideTime;
-				var slideModifier = slideSpeedUpModifier.Evaluate(_slideTimer);
+				if (_overlaps[i].transform == _transform || !Physics.ComputePenetration(
+					    _capsuleCollider, _position, _transform.rotation,
+					    _overlaps[i], _overlaps[i].transform.position, _overlaps[i].transform.rotation,
+					    out var direction, out var distance)) continue;
 				
-				_position += slideMove * (Time.fixedDeltaTime * slopeSlideSpeed * slideModifier);
+				_position += direction * (distance + skinWidth);
 			}
-			else
-			{
-				_slideTimer = 0f;
-			}
+		}
+
+		private void HandleSlope()
+		{
+			if (!IsGrounded || !Physics.SphereCast(Center, Radius, Vector3.down, out var hit)) return;
+
+			CurrentSlope = Vector3.Angle(Vector3.up, hit.normal);
+			
 		}
 
 		private void ApplyChanges(){
 			Velocity = _position - _transform.position;
-		}
-
-		private void OnDrawGizmos()
-		{
-			Gizmos.color = Color.green;
-			foreach (var contact in _contacts)
-			{
-				Gizmos.DrawWireSphere(contact.point, 0.05f);
-			}
 		}
 
 		#endregion

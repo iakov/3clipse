@@ -1,5 +1,4 @@
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
-using _3ClipseGame.Steam.Entities.Player.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
@@ -17,7 +16,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         #endregion
 
-        #region MonoBehaviourMethods
+        #region SubStateMethods
 
         public override void OnStateEnter()
         {
@@ -26,13 +25,17 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateUpdate()
         {
-            AddTime(Time.deltaTime);
+            base.OnStateUpdate();
+            
             var t = StateTimer <= 1 ? StateTimer : 1f;
             var interpolatedMoveVector = Vector3.Lerp(_lastMoveVector, Vector3.zero, t * Context.SpeedInterpolation);
             Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, RotationType.NoRotation);
         }
 
-        public override void OnStateExit(){}
+        public override void OnStateExit()
+        {
+            
+        }
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
         {
