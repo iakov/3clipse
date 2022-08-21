@@ -1,3 +1,4 @@
+using System;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
@@ -42,7 +43,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         public override bool TrySwitchState(out AnimalState newAnimalState)
         {
             newAnimalState = null;
-
+            
             if (Context.InputHandler.IsJumpPressed) newAnimalState = _factory.Jump();
             else if (Context.Stamina.StaminaValue == 0) newAnimalState = _factory.Walk();
             else if (!Context.InputHandler.IsRunPressed) newAnimalState = _factory.Walk();
