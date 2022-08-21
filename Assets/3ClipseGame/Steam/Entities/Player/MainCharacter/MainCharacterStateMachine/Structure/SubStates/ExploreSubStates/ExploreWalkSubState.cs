@@ -12,6 +12,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             _factory = (ExploreSubStatesFactory) factory;
 
         private ExploreSubStatesFactory _factory;
+        
+        private static readonly int IsWalking = Animator.StringToHash("IsWalking");
 
         #endregion
 
@@ -19,7 +21,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateEnter()
         {
-            
+            Context.CharacterAnimator.SetBool(IsWalking, true);
         }
 
         public override void OnStateUpdate()
@@ -33,7 +35,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateExit()
         {
-            
+            Context.CharacterAnimator.SetBool(IsWalking, false);
         }
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
