@@ -13,6 +13,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         private ExploreSubStatesFactory _factory;
         private float _timeToMaximumSpeed;
+        
+        private static readonly int IsRunning = Animator.StringToHash("IsRunning");
+        private static readonly int IsWalking = Animator.StringToHash("IsWalking");
 
         #endregion
 
@@ -20,6 +23,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateEnter()
         {
+            Context.CharacterAnimator.SetBool(IsRunning, true);
+            Context.CharacterAnimator.SetBool(IsWalking, true);
+            
             _timeToMaximumSpeed = Context.RunModifierCurve.keys[Context.RunModifierCurve.length - 1].time;
             Context.Stamina.IsRecovering = false;
         }
@@ -38,6 +44,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateExit()
         {
+            Context.CharacterAnimator.SetBool(IsRunning, false);
+            Context.CharacterAnimator.SetBool(IsWalking, false);
+            
             Context.Stamina.IsRecovering = true;
         }
 
