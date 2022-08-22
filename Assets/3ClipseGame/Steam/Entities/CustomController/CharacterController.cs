@@ -4,7 +4,6 @@ using UnityEngine;
 namespace _3ClipseGame.Steam.Entities.CustomController
 {
 	[RequireComponent(typeof(Rigidbody))]
-	[RequireComponent(typeof(CapsuleCollider))]
 	public class CharacterController : MonoBehaviour
 	{
 		#region SerializeFields
@@ -57,7 +56,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		private void Awake()
 		{
 			_rigidbody = GetComponent<Rigidbody>();
-			_capsuleCollider = GetComponent<CapsuleCollider>();
+			_capsuleCollider = GetComponentInChildren<CapsuleCollider>();
 			_transform = GetComponent<Transform>();
 
 			SetRigidbodyParams();
@@ -107,6 +106,11 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			ProceedMove(motion);
 			DePenetrate();
 			ApplyChanges();
+		}
+
+		public void Rotate(Quaternion rotation)
+		{
+			_capsuleCollider.transform.rotation = rotation;
 		}
 
 		#endregion

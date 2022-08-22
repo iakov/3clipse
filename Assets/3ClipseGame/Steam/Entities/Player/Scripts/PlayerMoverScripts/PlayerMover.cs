@@ -14,6 +14,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         private CharacterController _characterController;
         private Transform _cameraTransform;
         private Transform _playerTransform;
+        private CapsuleCollider _capsuleCollider;
         private readonly List<Move> _movesList = new();
         public static bool IsFreezed = false;
         private Rigidbody _rigidbody;
@@ -27,6 +28,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
             _characterController = GetComponent<CharacterController>();
             _playerTransform = GetComponent<Transform>();
             _rigidbody = GetComponent<Rigidbody>();
+            _capsuleCollider = GetComponentInChildren<CapsuleCollider>();
+            
             if (Camera.main != null) _cameraTransform = Camera.main.transform;
         }
 
@@ -93,7 +96,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         {
             resultMove.y = 0f;
             if (resultMove == Vector3.zero) return;
-            _rigidbody.rotation = Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(resultMove), rotationSpeed * Time.fixedDeltaTime);
+            
+            var rotation = Quaternion.Slerp(_capsuleCollider.transform.rotation, Quaternion.LookRotation(resultMove), rotationSpeed * Time.fixedDeltaTime);
+            _characterController.Rotate(rotation);
         }
 
         #endregion

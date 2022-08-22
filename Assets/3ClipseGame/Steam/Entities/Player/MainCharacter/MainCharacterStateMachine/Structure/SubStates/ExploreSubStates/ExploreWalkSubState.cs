@@ -42,10 +42,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
 
-            if (!Context.PlayerController.IsGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down, 0.1f)) newMainCharacterState = _factory.Fall();
+            if (!Context.PlayerController.IsGrounded && !Context.PlayerController.IsGrounded) newMainCharacterState = _factory.Fall();
             else if (Context.InputHandler.IsJumpPressed) newMainCharacterState = _factory.Jump();
             else if (Context.InputHandler.CurrentInput == Vector2.zero) newMainCharacterState = _factory.Stop();
-            else if (Context.InputHandler.IsRunPressed) newMainCharacterState = _factory.Run();
+            else if (Context.InputHandler.IsRunPressed && Context.Stamina.StaminaValue / Context.Stamina.staminaMax > 0.3f) newMainCharacterState = _factory.Run();
             else if (Context.InputHandler.IsCrouchPressed) newMainCharacterState = _factory.Crouch();
             
             return newMainCharacterState != null;
