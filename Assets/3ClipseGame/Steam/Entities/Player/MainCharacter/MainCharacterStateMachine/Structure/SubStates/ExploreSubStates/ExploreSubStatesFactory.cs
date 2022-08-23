@@ -17,6 +17,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public MainCharacterSubState Crouch() => new ExploreCrouchSubState(Context, this);
         public MainCharacterSubState Fall() => new ExploreFallSubState(Context, this);
         public MainCharacterSubState Jump() => new ExploreJumpSubState(Context, this);
+        public MainCharacterSubState Slide() => new ExploreSlideSubState(Context, this);
 
         #endregion
     }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12308,7 +12308,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.84754264, y: 1}
+    m_SensorSize: {x: 1.2469325, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -12324,7 +12324,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109543256}
-  m_LocalRotation: {x: 0.14189507, y: -0.00000004018885, z: 0.0000000057608895, w: 0.9898817}
+  m_LocalRotation: {x: 0.14189506, y: -0.000000074253414, z: 0.00000001064389, w: 0.9898817}
   m_LocalPosition: {x: 5.5060005, y: 1.7072513, z: -3.0844574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17965,7 +17965,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.84754264, y: 1}
+    m_SensorSize: {x: 1.2469325, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -33163,7 +33163,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802288209}
-  m_LocalRotation: {x: 0.4001618, y: 0.002228252, z: -0.0009729604, w: 0.9164413}
+  m_LocalRotation: {x: 0.40016177, y: 0.0022282118, z: -0.0009729431, w: 0.9164413}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -33208,7 +33208,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.84754264, y: 1}
+    m_SensorSize: {x: 1.2469325, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -35969,7 +35969,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.15806137, y: -0.054932747, z: 0.008807275, w: 0.98586076}
+  m_LocalRotation: {x: 0.15806139, y: -0.054932684, z: 0.008807261, w: 0.98586076}
   m_LocalPosition: {x: 6.0292645, y: 3, z: 51.21916}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -36753,6 +36753,102 @@ PrefabInstance:
       propertyPath: pool
       value: 
       objectReference: {fileID: 945464967}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[1].time
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[0].value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[1].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[1].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[0].inSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[1].inSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[0].inSlope
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[1].inSlope
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[0].outSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[1].outSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[0].outSlope
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[1].outSlope
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: slideModifierCurve.m_Curve.Array.data[1].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
+      propertyPath: crouchModifierCurve.m_Curve.Array.data[1].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
     - target: {fileID: 1284409746, guid: 394308d694bf13d4d8568dd50825ac34, type: 3}
       propertyPath: switchingState.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -41704,7 +41800,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110753915}
-  m_LocalRotation: {x: 0.43318737, y: 0.0021914435, z: -0.0010532619, w: 0.90130067}
+  m_LocalRotation: {x: 0.43318734, y: 0.0021914125, z: -0.0010532469, w: 0.90130067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -41749,7 +41845,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.84754264, y: 1}
+    m_SensorSize: {x: 1.2469325, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -48204,7 +48300,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 325385677}
   m_HandleRect: {fileID: 325385676}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -58688,7 +58784,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.84754264, y: 1}
+    m_SensorSize: {x: 1.2469325, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -62513,7 +62609,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.84754264, y: 1}
+    m_SensorSize: {x: 1.2469325, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -62830,7 +62926,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.84754264, y: 1}
+    m_SensorSize: {x: 1.2469325, y: 1}
   m_Transitions:
     m_BlendHint: 2
     m_InheritPosition: 0
@@ -63101,7 +63197,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.84754264, y: 1}
+    m_SensorSize: {x: 1.2469325, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -63285,7 +63381,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7687367824126861667}
-  m_LocalRotation: {x: 0.15806137, y: -0.05493275, z: 0.008807275, w: 0.98586076}
+  m_LocalRotation: {x: 0.15806137, y: -0.054932687, z: 0.008807263, w: 0.98586076}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -63330,7 +63426,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.84754264, y: 1}
+    m_SensorSize: {x: 1.2469325, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

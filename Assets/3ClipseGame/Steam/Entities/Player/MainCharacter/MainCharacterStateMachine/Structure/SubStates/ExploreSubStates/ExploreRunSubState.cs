@@ -59,7 +59,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             else if (!Context.PlayerController.IsGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
                     Context.PlayerController.Radius)) newMainCharacterState = _factory.Fall();
             else if (Context.InputHandler.CurrentInput == Vector2.zero) newMainCharacterState = _factory.Stop();
-            else if (Context.InputHandler.IsCrouchPressed) newMainCharacterState = _factory.Crouch();
+            else if (Context.InputHandler.IsCrouchPressed) newMainCharacterState = _factory.Slide();
             else if (!Context.InputHandler.IsRunPressed) newMainCharacterState = _factory.Walk();
 
             return newMainCharacterState != null;

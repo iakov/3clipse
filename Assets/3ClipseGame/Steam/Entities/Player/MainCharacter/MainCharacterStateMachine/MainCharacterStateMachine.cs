@@ -28,6 +28,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         [Header("Run")]
         [SerializeField] private float runStaminaReduce = -5f;
         [SerializeField] private AnimationCurve runModifierCurve;
+        [Header("Slide")]
+        [SerializeField] private AnimationCurve slideModifierCurve;
         [Space]
         [Space]
         [Header("Events")]
@@ -45,6 +47,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public float RunStaminaReduce => runStaminaReduce;
         public float JumpStaminaReduce => jumpStaminaReduce;
         public AnimationCurve RunModifierCurve => runModifierCurve;
+        public AnimationCurve SlideModifierCurve => slideModifierCurve;
         public LayerMask WalkableLayerMask => PlayerController.walkableLayers;
 
         public PlayerMover PlayerMover { get; private set; }
@@ -133,6 +136,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         private void CheckForExceptions()
         {
             if (RunModifierCurve.length <= 1) throw new ArgumentException("RunModifierCurve wrong function");
+            if (SlideModifierCurve.length <= 1) throw new ArgumentException("SlideModifierCurve wrong function");
         }
 
         #endregion
