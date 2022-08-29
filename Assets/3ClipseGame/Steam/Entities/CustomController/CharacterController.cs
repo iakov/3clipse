@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +19,10 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		[SerializeField] private float groundDetectionDistance = 0.1f;
 		[SerializeField] private float minMoveDistance = 0.001f;
 		
+		[Header("Rotate Parameters")]
+		[SerializeField] private RotationInterpolation rotationInterpolationType;
+		[SerializeField] [Min(1)] private int interpolationSteps = 5;
+		
 		[Header("Slope Parameters")]
 		[SerializeField] private float slopeLimit = 35f;
 
@@ -27,11 +33,12 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		public Vector3 Center => _capsuleCollider == null
 			? Vector3.negativeInfinity
 			: _capsuleCollider.center + _transform.position;
-
 		public bool IsGrounded { get; private set; }
 		public float Radius => _capsuleCollider == null ? -1f : _capsuleCollider.radius;
 		public float Height => _capsuleCollider == null ? -1f : _capsuleCollider.height;
 		public Vector3 Velocity { get; set; }
+		public float DeltaRotation { get; private set; }
+		public float DeltaRotationRaw { get; private set; }
 		public float CurrentSlope { get; private set; }
 
 		#endregion
@@ -48,6 +55,8 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		private readonly List<RaycastHit> _contacts = new();
 		private readonly Collider[] _overlaps = new Collider[5];
+
+		private Quaternion _currentRotateTarget;
 
 		#endregion
 		
@@ -86,6 +95,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		private void FixedUpdate()
 		{
 			SetIsGrounded();
+			
 			if(Velocity != Vector3.zero) _rigidbody.MovePosition(_position);
 		}
 
@@ -97,7 +107,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		#endregion
 
-		#region PublicMoveMethods
+		#region PublicMethods
 
 		public void Move(Vector3 motion)
 		{
@@ -110,7 +120,8 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		public void Rotate(Quaternion rotation)
 		{
-			_capsuleCollider.transform.rotation = rotation;
+			var oldRotation = _capsuleCollider.transform.rotation;
+			ProceedRotation(rotation, oldRotation);
 		}
 
 		#endregion
@@ -193,6 +204,83 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 
 		private void ApplyChanges(){
 			Velocity = _position - _transform.position;
+		}
+
+		#endregion
+
+		#region PrivateRotateMethods
+
+		private void ProceedRotation(Quaternion newRotation, Quaternion oldRotation)
+		{
+			if (newRotation == _currentRotateTarget) return;
+			_currentRotateTarget = newRotation;
+			
+			DeltaRotationRaw = Quaternion.Angle(newRotation, oldRotation);
+			if (newRotation.y - oldRotation.y < 0) DeltaRotationRaw *= -1;
+
+			switch (rotationInterpolationType)
+			{
+				case RotationInterpolation.None:
+					RotateNoInterpolation(newRotation);
+					break;
+				case RotationInterpolation.Linear:
+					StopAllCoroutines();
+					StartCoroutine(RotateLinear(newRotation));
+					break;
+				case RotationInterpolation.Spherical:
+					StopAllCoroutines();
+					StartCoroutine(RotateSpherical(newRotation));
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
+		
+		private IEnumerator RotateLinear(Quaternion rotation)
+		{
+			var oldRotation = _capsuleCollider.transform.rotation;
+			var stepNumber = 1;
+			
+			while (stepNumber <= interpolationSteps)
+			{
+				_capsuleCollider.transform.rotation = Quaternion.Lerp(oldRotation, rotation, (float) stepNumber/interpolationSteps);
+				DeltaRotation = Quaternion.Angle(_transform.rotation, oldRotation);
+				if (_capsuleCollider.transform.rotation.y - oldRotation.y < 0) DeltaRotation *= -1;
+
+				stepNumber++;
+				oldRotation = _capsuleCollider.transform.rotation;
+				yield return null;
+			}
+		}
+		private IEnumerator RotateSpherical(Quaternion rotation)
+		{
+			var oldRotation = _capsuleCollider.transform.rotation;
+			var stepNumber = 1;
+			
+			while (stepNumber <= interpolationSteps)
+			{
+				_capsuleCollider.transform.rotation = Quaternion.Slerp(oldRotation, rotation, (float) stepNumber/interpolationSteps);
+				DeltaRotation = Quaternion.Angle(_transform.rotation, oldRotation);
+				if (_transform.rotation.y - oldRotation.y < 0) DeltaRotation *= -1;
+
+				stepNumber++;
+				oldRotation = _capsuleCollider.transform.rotation;
+				yield return null;
+			}
+		}
+
+		private void RotateNoInterpolation(Quaternion rotation)
+		{
+			_capsuleCollider.transform.rotation = rotation;
+		}
+
+		#endregion
+
+		#region PrivateStructs
+
+		private enum RotationInterpolation
+		{
+			Linear, Spherical, None
 		}
 
 		#endregion

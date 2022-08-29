@@ -14,6 +14,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         private ExploreSubStatesFactory _factory;
         
         private static readonly int IsWalking = Animator.StringToHash("IsWalking");
+        private static readonly int DeltaRotation = Animator.StringToHash("DeltaRotation");
 
         #endregion
 
@@ -28,9 +29,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             base.OnStateUpdate();
             
-            var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
-            var moveVector = rawMoveVector * Context.WalkSpeed;
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
+            Move();
+            Rotate();
         }
 
         public override void OnStateExit()
@@ -49,6 +49,21 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             else if (Context.InputHandler.IsCrouchPressed) newMainCharacterState = _factory.Crouch();
             
             return newMainCharacterState != null;
+        }
+
+        private void Move()
+        {
+            var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
+            var moveVector = rawMoveVector * Context.WalkSpeed;
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
+        }
+
+        private void Rotate()
+        {
+            var rotatedMove = Context.PlayerMover.GetLastMove(MoveType.StateMove, true);
+            if (rotatedMove == Vector3.zero) return;
+            
+            Context.PlayerController.Rotate(Quaternion.LookRotation(rotatedMove));
         }
 
         #endregion

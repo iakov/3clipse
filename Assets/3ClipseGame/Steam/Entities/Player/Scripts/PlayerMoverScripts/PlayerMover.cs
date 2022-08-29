@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,14 +9,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
     {
         #region Initialization
 
-        [SerializeField] private float rotationSpeed = 1f;
         private CharacterController _characterController;
         private Transform _cameraTransform;
-        private Transform _playerTransform;
-        private CapsuleCollider _capsuleCollider;
         private readonly List<Move> _movesList = new();
         public static bool IsFreezed = false;
-        private Rigidbody _rigidbody;
 
         #endregion
 
@@ -26,9 +21,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
-            _playerTransform = GetComponent<Transform>();
-            _rigidbody = GetComponent<Rigidbody>();
-            _capsuleCollider = GetComponentInChildren<CapsuleCollider>();
             
             if (Camera.main != null) _cameraTransform = Camera.main.transform;
         }
@@ -37,8 +29,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
         {
             if (IsFreezed) return;
             
-            UpdateMove(out var resultMove);
-            UpdateRotation(resultMove);
+            UpdateMove();
         }
 
         #endregion
@@ -86,19 +77,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
             }
         }
 
-        private void UpdateMove(out Vector3 resultMove)
+        private void UpdateMove()
         {
-            resultMove = _movesList.Aggregate(Vector3.zero, (current, move) => current + move.GetRotatedVector());
+            var resultMove = _movesList.Aggregate(Vector3.zero, (current, move) => current + move.GetRotatedVector());
             _characterController.Move(resultMove * Time.fixedDeltaTime);
-        }
-
-        private void UpdateRotation(Vector3 resultMove)
-        {
-            resultMove.y = 0f;
-            if (resultMove == Vector3.zero) return;
-            
-            var rotation = Quaternion.Slerp(_capsuleCollider.transform.rotation, Quaternion.LookRotation(resultMove), rotationSpeed * Time.fixedDeltaTime);
-            _characterController.Rotate(rotation);
         }
 
         #endregion

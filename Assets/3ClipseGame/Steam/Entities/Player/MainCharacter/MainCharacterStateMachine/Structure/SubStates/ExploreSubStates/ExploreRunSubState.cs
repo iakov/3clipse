@@ -34,12 +34,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             base.OnStateUpdate();
             
-            var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
-            var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
-            var moveVector = rawMoveVector * (Context.RunModifierCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed);
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
-            
-            Context.Stamina.AddValue(Context.RunStaminaReduce * Time.deltaTime);
+            Move();
+            Rotate();
+            ReduceStamina();
         }
 
         public override void OnStateExit()
@@ -63,6 +60,26 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             else if (!Context.InputHandler.IsRunPressed) newMainCharacterState = _factory.Walk();
 
             return newMainCharacterState != null;
+        }
+
+        private void Move()
+        {
+            var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
+            var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
+            var moveVector = rawMoveVector * (Context.RunModifierCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed);
+            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
+        }
+
+        private void Rotate()
+        {
+            var rotatedMove = Context.PlayerMover.GetLastMove(MoveType.StateMove, true);
+            if (rotatedMove == Vector3.zero) return;
+            Context.PlayerController.Rotate(Quaternion.LookRotation(rotatedMove));
+        }
+
+        private void ReduceStamina()
+        {
+            Context.Stamina.AddValue(Context.RunStaminaReduce * Time.deltaTime);
         }
 
         #endregion
