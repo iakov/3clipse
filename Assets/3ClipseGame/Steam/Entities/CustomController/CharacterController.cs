@@ -34,6 +34,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			? Vector3.negativeInfinity
 			: _capsuleCollider.center + _transform.position;
 		public bool IsGrounded { get; private set; }
+		public bool IsStable => CurrentSlope <= slopeLimit;
 		public float Radius => _capsuleCollider == null ? -1f : _capsuleCollider.radius;
 		public float Height => _capsuleCollider == null ? -1f : _capsuleCollider.height;
 		public Vector3 Velocity { get; set; }
@@ -243,15 +244,17 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			
 			while (stepNumber <= interpolationSteps)
 			{
+				var previousRotation = _capsuleCollider.transform.rotation;
 				_capsuleCollider.transform.rotation = Quaternion.Lerp(oldRotation, rotation, (float) stepNumber/interpolationSteps);
-				DeltaRotation = Quaternion.Angle(_transform.rotation, oldRotation);
+				
+				DeltaRotation = Quaternion.Angle(_transform.rotation, previousRotation);
 				if (_capsuleCollider.transform.rotation.y - oldRotation.y < 0) DeltaRotation *= -1;
 
 				stepNumber++;
-				oldRotation = _capsuleCollider.transform.rotation;
 				yield return null;
 			}
 		}
+		
 		private IEnumerator RotateSpherical(Quaternion rotation)
 		{
 			var oldRotation = _capsuleCollider.transform.rotation;
@@ -259,8 +262,10 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 			
 			while (stepNumber <= interpolationSteps)
 			{
+				var previousRotation = _capsuleCollider.transform.rotation;
 				_capsuleCollider.transform.rotation = Quaternion.Slerp(oldRotation, rotation, (float) stepNumber/interpolationSteps);
-				DeltaRotation = Quaternion.Angle(_transform.rotation, oldRotation);
+				
+				DeltaRotation = Quaternion.Angle(_transform.rotation, previousRotation);
 				if (_transform.rotation.y - oldRotation.y < 0) DeltaRotation *= -1;
 
 				stepNumber++;

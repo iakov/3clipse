@@ -1,32 +1,37 @@
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.ScriptableObjects;
+using System;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.ResourceInventorySystem.ScriptableObjects
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.Model.Scripts
 {
     public class ResourceSlot
     {
         #region PublicFields
 
-        public bool IsEmpty { get; private set; } = true;
-        public bool IsFull { get; private set; }
+        public bool IsEmpty => CurrentAmount == 0;
+        public bool IsFull => CurrentAmount >= Resource.MaximumAmountInSlot;
         
         public Resource Resource;
         public int CurrentAmount;
 
         #endregion
 
+        #region Events
+
+        public event Action AmountChanged;
+
+        #endregion
+
         #region PublicMethods
-        
+
         public void AddAmount(int addAmount, out int oddAmount)
         {
             oddAmount = 0;
-            CurrentAmount += addAmount;
+            if (addAmount == 0 || Resource.MaximumAmountInSlot == CurrentAmount) return;
 
-            IsEmpty = CurrentAmount == 0;
-            IsFull = CurrentAmount == Resource.MaximumAmountInSlot;
-            
+            CurrentAmount += addAmount;
+            AmountChanged?.Invoke();
+
             if (CurrentAmount <= Resource.MaximumAmountInSlot) return;
 
-            IsFull = true;
             oddAmount = CurrentAmount - Resource.MaximumAmountInSlot;
             CurrentAmount = Resource.MaximumAmountInSlot;
         }
@@ -36,15 +41,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.Resour
             if (amount > CurrentAmount) return false;
             CurrentAmount -= amount;
             
-            if (CurrentAmount != 0) return true;
-            
-            IsEmpty = true;
-            Resource = null;
-
+            if (CurrentAmount == 0) Resource = null;
             return true;
         }
 
         #endregion
-        
     }
 }

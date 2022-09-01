@@ -1,5 +1,7 @@
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts.Display;
-using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts.Pool;
+using _3ClipseGame.Steam.Global.Scripts.Pool;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts

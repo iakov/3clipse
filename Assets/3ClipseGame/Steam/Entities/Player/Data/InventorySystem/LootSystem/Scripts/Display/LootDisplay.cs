@@ -1,9 +1,8 @@
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.ScriptableObjects;
-using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.ResourceInventorySystem.ScriptableObjects;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.Model.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts.Display
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scripts.Display
 {
     public class LootDisplay : MonoBehaviour
     {

@@ -1,8 +1,7 @@
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.ScriptableObjects;
-using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.ResourceInventorySystem.ScriptableObjects;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.Model.Scripts;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem
 {
     public class InventoryStorage : MonoBehaviour
     {

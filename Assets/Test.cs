@@ -1,9 +1,10 @@
 using System.Collections;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
 using UnityEngine;
 
-[RequireComponent(typeof(DeathLoot))]
+[RequireComponent(typeof(DeathLootDropper))]
 public class Test : MonoBehaviour
 {
     [SerializeField] [Min(0f)] private float dropRate;
@@ -15,7 +16,7 @@ public class Test : MonoBehaviour
         if(!collision.gameObject.GetComponentInParent<Player>() || _isDying) yield break;
 
         _isDying = true;
-        var deathLoot = GetComponent<DeathLoot>();
+        var deathLoot = GetComponent<DeathLootDropper>();
         yield return deathLoot.Drop(dropRate);
         yield return new WaitForSeconds(waitAfterLastDropTime);
         Destroy(gameObject);

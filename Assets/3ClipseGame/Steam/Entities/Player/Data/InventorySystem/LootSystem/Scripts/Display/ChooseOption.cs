@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scripts.Display;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;

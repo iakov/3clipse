@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts.Pool
+namespace _3ClipseGame.Steam.Global.Scripts.Pool
 {
     public class ObjectPool : MonoBehaviour
     {
@@ -15,7 +15,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         #region PrivateFields
 
-        private List<GameObject> _pooledObjects = new();
+        private Queue<GameObject> _pooledObjects = new();
         private List<GameObject> _unPooledObjects = new();
         private Transform _transform;
 
@@ -30,8 +30,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
             var i = 0;
             while (i < poolAmount)
             {
-                _pooledObjects.Add(Instantiate(poolObjectPrefab, _transform));
-                _pooledObjects[i].SetActive(false);
+                var newObject = Instantiate(poolObjectPrefab, _transform);
+                newObject.SetActive(false);
+                _pooledObjects.Enqueue(newObject);
                 i++;
             }
         }
@@ -42,8 +43,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         public GameObject GetPoolObject()
         {
-            var result = _pooledObjects[0];
-            _pooledObjects.Remove(result);
+            var result = _pooledObjects.Dequeue();
             _unPooledObjects.Add(result);
             return result;
         }
@@ -54,7 +54,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
             
             poolObject.SetActive(false);
             poolObject.transform.SetParent(_transform);
-            _pooledObjects.Add(poolObject);
+            _pooledObjects.Enqueue(poolObject);
         }
 
         #endregion
