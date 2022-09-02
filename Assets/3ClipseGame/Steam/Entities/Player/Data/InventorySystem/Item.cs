@@ -1,5 +1,4 @@
 using System;
-using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

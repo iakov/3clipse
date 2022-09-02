@@ -1,24 +1,24 @@
 using System.Collections;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scripts;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Prefabs
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.View.Scripts
 {
     public class AnimateLoot : MonoBehaviour
     {
         #region SerializeFields
 
-        [SerializeField] private float minMoveMagnitude = 0.05f;
-        [SerializeField] private float maxMoveMagnitude = 0.1f;
-        [SerializeField] private float aboveGroundHeight = 0.1f;
-        [SerializeField] private float stepTime = 2f;
+        [SerializeField] private float _minMoveMagnitude = 0.05f;
+        [SerializeField] private float _maxMoveMagnitude = 0.1f;
+        [SerializeField] private float _aboveGroundHeight = 0.1f;
+        [SerializeField] private float _stepTime = 2f;
 
         #endregion
 
         #region PrivateFields
 
         private Rigidbody _rigidbody;
-        private DisableOnGround _lootDisabler;
+        private InactiveLootDisabler _inactiveLootDisabler;
 
         private bool _isMovingToTarget;
         
@@ -32,21 +32,36 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Pre
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            _lootDisabler = GetComponent<DisableOnGround>();
+            _inactiveLootDisabler = GetComponent<InactiveLootDisabler>();
         }
-
-        private void OnEnable() => _lootDisabler.LootDeactivated += () => {
-            _startPosition = transform.position;
-            _startPosition.y += aboveGroundHeight;
-        };
-
+        
         private void Update()
         {
             if (!_rigidbody.isKinematic || _startPosition == Vector3.zero || _isMovingToTarget) return;
 
-            StartCoroutine(StartMoveIteration(Random.Range(minMoveMagnitude, maxMoveMagnitude), stepTime));
+            StartCoroutine(StartMoveIteration(Random.Range(_minMoveMagnitude, _maxMoveMagnitude), _stepTime));
         }
 
+        private void OnEnable()
+        {
+            _inactiveLootDisabler.LootDeactivated += SetPreAnimateVariables;
+        }
+        
+        private void OnDisable()
+        {
+            _inactiveLootDisabler.LootDeactivated -= SetPreAnimateVariables;
+        }
+
+        #endregion
+
+        #region PrivateMethods
+        
+        private void SetPreAnimateVariables()
+        {
+            _startPosition = transform.position;
+            _startPosition.y += _aboveGroundHeight;
+        }
+        
         #endregion
 
         #region Coroutines

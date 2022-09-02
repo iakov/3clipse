@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker
 {
-    public class DisableOnGround : MonoBehaviour
+    public class InactiveLootDisabler : MonoBehaviour
     {
         #region Events
 
@@ -13,7 +13,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scr
 
         #region SerializeFields
 
-        [SerializeField] private float disableTime = 0.5f;
+        [SerializeField] private float _disableTime = 0.5f;
 
         #endregion
 
@@ -31,14 +31,13 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scr
         {
             _rigidbody = GetComponent<Rigidbody>();
         }
-
-
+        
         private void Update()
         {
             if (_rigidbody.velocity.magnitude == 0f && _isEnabled) _staticTimer += Time.deltaTime;
             else _staticTimer = 0f;
 
-            if (!(_staticTimer > disableTime) || !_isEnabled) return;
+            if (_staticTimer < _disableTime || _isEnabled == false) return;
             
             _rigidbody.isKinematic = true;
             _isEnabled = false;

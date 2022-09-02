@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
 using _3ClipseGame.Steam.Global.Scripts.Pool;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Dropper
 {
     public class DeathLootDropper : MonoBehaviour
     {
         #region SerializeFields
 
-        [SerializeField] private List<DropElement> possibleDropResources;
-        [SerializeField] private ObjectPool objectPool;
-        [SerializeField] private GameObject decalsParent;
+        [SerializeField] private List<DropElement> _possibleDropResources;
+        [SerializeField] private ObjectPool _objectPool;
+        [SerializeField] private GameObject _decalsParent;
 
         #endregion
 
@@ -24,7 +24,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scr
 
         #region MonoBehaviourMethods
 
-        private void Awake() => _transform = transform;
+        private void Awake()
+        {
+            _transform = transform;   
+        }
 
         #endregion
         
@@ -33,20 +36,20 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scr
         public IEnumerator Drop(float dropRate = 0.05f)
         {
             var lootParent = new GameObject("Death Loot");
-            lootParent.transform.parent = decalsParent.transform;
+            lootParent.transform.parent = _decalsParent.transform;
             
-            foreach (var dropElement in possibleDropResources)
+            foreach (var dropElement in _possibleDropResources)
             {
                 var dropAmount = dropElement.GetFinalAmountOfDrop();
                 if (dropAmount == 0) yield return new WaitForSeconds(0);
 
-                var poolObject = objectPool.GetPoolObject();
+                var poolObject = _objectPool.GetPoolObject();
                 
                 var pickableLootComponent = poolObject.GetComponent<PickableLoot>();
                 if (!pickableLootComponent) pickableLootComponent = poolObject.AddComponent<PickableLoot>();
                 
                 pickableLootComponent.Amount = dropAmount;
-                pickableLootComponent.Resource = dropElement.dropItem;
+                pickableLootComponent.Resource = dropElement.DropItem;
 
                 var lootTransform = pickableLootComponent.transform;
                 lootTransform.parent = lootParent.transform;

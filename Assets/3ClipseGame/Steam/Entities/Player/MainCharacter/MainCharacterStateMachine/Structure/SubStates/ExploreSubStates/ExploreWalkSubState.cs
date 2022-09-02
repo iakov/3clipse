@@ -14,7 +14,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         private ExploreSubStatesFactory _factory;
         
         private static readonly int IsWalking = Animator.StringToHash("IsWalking");
-        private static readonly int DeltaRotation = Animator.StringToHash("DeltaRotation");
 
         #endregion
 
@@ -45,7 +44,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             if (!Context.PlayerController.IsGrounded && !Context.PlayerController.IsGrounded) newMainCharacterState = _factory.Fall();
             else if (Context.InputHandler.IsJumpPressed) newMainCharacterState = _factory.Jump();
             else if (Context.InputHandler.CurrentInput == Vector2.zero) newMainCharacterState = _factory.Stop();
-            else if (Context.InputHandler.IsRunPressed && Context.Stamina.StaminaValue / Context.Stamina.staminaMax > 0.3f) newMainCharacterState = _factory.Run();
+            else if (Context.InputHandler.IsRunPressed && Context.Stamina.StaminaPercentage > Context.MinRunEntryStamina) newMainCharacterState = _factory.Run();
             else if (Context.InputHandler.IsCrouchPressed) newMainCharacterState = _factory.Crouch();
             
             return newMainCharacterState != null;

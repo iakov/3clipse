@@ -9,8 +9,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
     {
         #region SerializeFields
 
-        [SerializeField] private Image imageComponent;
-        [SerializeField] private Text textComponent;
+        [SerializeField] private Image _imageComponent;
+        [SerializeField] private Text _textComponent;
 
         #endregion
 
@@ -22,8 +22,15 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
 
         #region MonoBehaviourMethods
 
-        private void Start() => UpdateView();
-        private void OnDisable() => _currentDisplayedSlot.AmountChanged -= UpdateView;
+        private void Start()
+        {
+            UpdateView();
+        }
+
+        private void OnDisable()
+        {
+            _currentDisplayedSlot.AmountChanged -= UpdateView;
+        }
 
         #endregion
 
@@ -47,8 +54,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
         {
             if (_currentDisplayedSlot.IsEmpty) return;
             
-            imageComponent.sprite = _currentDisplayedSlot.Resource.UIImage;
-            textComponent.text = "x" + _currentDisplayedSlot.CurrentAmount;
+            _imageComponent.sprite = _currentDisplayedSlot.Resource.UIImage;
+            _textComponent.text = "x" + _currentDisplayedSlot.CurrentAmount;
         }
 
         #endregion

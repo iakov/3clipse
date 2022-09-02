@@ -8,8 +8,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
     {
         #region SerializeFields
 
-        [SerializeField] private ResourceInventory inventoryStorage;
-        [SerializeField] private RectTransform slotViewPrefab;
+        [SerializeField] private ResourceInventory _inventoryStorage;
+        [SerializeField] private RectTransform _slotViewPrefab;
 
         #endregion
 
@@ -23,13 +23,13 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
 
         private void OnEnable()
         {
-            inventoryStorage.ItemAdded += OnItemAdded;
-            foreach (var slot in inventoryStorage.Slots) OnItemAdded(slot);
+            _inventoryStorage.ItemAdded += OnItemAdded;
+            foreach (var slot in _inventoryStorage.Slots) OnItemAdded(slot);
         }
 
         private void OnDisable()
         {
-            inventoryStorage.ItemAdded -= OnItemAdded;
+            _inventoryStorage.ItemAdded -= OnItemAdded;
         }
 
         #endregion
@@ -40,7 +40,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
         {
             if (_slots.ContainsKey(resource)) return;
 
-            var newSlotView = Instantiate(slotViewPrefab, GetComponent<RectTransform>()).GetComponent<ResourceSlotView>();
+            var newSlotView = Instantiate(_slotViewPrefab, GetComponent<RectTransform>()).GetComponent<ResourceSlotView>();
             newSlotView.SwitchTrackedSlot(resource);
             _slots.Add(resource, newSlotView);
         }

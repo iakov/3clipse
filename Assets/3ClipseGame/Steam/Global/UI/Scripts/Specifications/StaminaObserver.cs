@@ -31,7 +31,7 @@ namespace _3ClipseGame.Steam.Global.UI.Scripts.Specifications
         private IEnumerator ChangeSlider()
         {
             yield return null;
-            _staminaSlider.value = stamina.StaminaValue / stamina.staminaMax;
+            _staminaSlider.value = stamina.StaminaPercentage;
         }
 
         #endregion

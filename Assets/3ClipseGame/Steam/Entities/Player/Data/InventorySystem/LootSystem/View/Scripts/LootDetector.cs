@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scripts;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scripts.Display;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSystem.Scripts.Display
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.View.Scripts
 {
     [RequireComponent(typeof(SphereCollider))]
-    public class LootInfoReader : MonoBehaviour
+    public class LootDetector : MonoBehaviour
     {
         #region Events
 
@@ -22,15 +21,15 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
         
         #region SerializeFields
 
-        [SerializeField] private RectTransform lootInfoPanel;
-        [SerializeField] private GameObject displayIconPrefab;
-        [SerializeField] private InputAction pickUpItem;
+        [SerializeField] private RectTransform _lootInfoPanel;
+        [SerializeField] private GameObject _displayIconPrefab;
+        [SerializeField] private InputAction _pickUpItem;
 
         #endregion
 
         #region PrivateFields
         
-        private ChooseOption _optionChooser;
+        private OptionsScroller _optionChooser;
         private Dictionary<PickableLoot, GameObject> _currentDisplayedIcons = new();
 
         #endregion
@@ -39,8 +38,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
 
         private void Awake()
         {
-            pickUpItem.Enable();
-            _optionChooser = GetComponent<ChooseOption>();
+            _pickUpItem.Enable();
+            _optionChooser = GetComponent<OptionsScroller>();
         }
 
         private void Update()
@@ -52,8 +51,15 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
             }
         }
 
-        private void OnEnable() => pickUpItem.started += InstantiatePickUp;
-        private void OnDisable() => pickUpItem.started -= InstantiatePickUp;
+        private void OnEnable()
+        {
+            _pickUpItem.started += InstantiatePickUp;
+        }
+
+        private void OnDisable()
+        {
+            _pickUpItem.started -= InstantiatePickUp;
+        }
 
         #endregion
         
@@ -79,9 +85,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Scripts.InventorySystem.LootSy
         {
             if (!other.gameObject.TryGetComponent<PickableLoot>(out var lootComponent) || _currentDisplayedIcons.ContainsKey(lootComponent)) return;
 
-            var displayObject = Instantiate(displayIconPrefab, lootInfoPanel);
+            var displayObject = Instantiate(_displayIconPrefab, _lootInfoPanel);
 
-            var lootDisplay = displayObject.GetComponent<LootDisplay>();
+            var lootDisplay = displayObject.GetComponent<LootIcon>();
             if (lootDisplay == null) throw new Exception("Prefab doesnt have image or text component");
             
             lootDisplay.Resource = lootComponent.Resource;

@@ -14805,8 +14805,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e408520aedf6f224d989b6947ae48c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryStorage: {fileID: 11400000, guid: 7bc488d41178ef8438ee675faac92638, type: 2}
-  slotViewPrefab: {fileID: 923806972291417608, guid: 2c5f518d62a99604d85f390b93e0c32f, type: 3}
+  _inventoryStorage: {fileID: 0}
+  _slotViewPrefab: {fileID: 0}
 --- !u!1 &242579634
 GameObject:
   m_ObjectHideFlags: 0
@@ -44694,27 +44694,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d9dfdee0ca4004ad4b56c3c5b2fb5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleDropResources:
-  - dropItem: {fileID: 11400000, guid: ac2bfa9b11a9cf3499e94885cfc05626, type: 2}
-    maxDropAmount: 2
-    dropChance: 1
-  - dropItem: {fileID: 11400000, guid: ac2bfa9b11a9cf3499e94885cfc05626, type: 2}
-    maxDropAmount: 1
-    dropChance: 1
-  - dropItem: {fileID: 11400000, guid: ac2bfa9b11a9cf3499e94885cfc05626, type: 2}
-    maxDropAmount: 3
-    dropChance: 1
-  - dropItem: {fileID: 11400000, guid: 6aea19abd38006c4da1b950bd3918fdf, type: 2}
-    maxDropAmount: 3
-    dropChance: 1
-  - dropItem: {fileID: 11400000, guid: 6aea19abd38006c4da1b950bd3918fdf, type: 2}
-    maxDropAmount: 3
-    dropChance: 1
-  - dropItem: {fileID: 11400000, guid: 6aea19abd38006c4da1b950bd3918fdf, type: 2}
-    maxDropAmount: 3
-    dropChance: 1
-  objectPool: {fileID: 945464967}
-  decalsParent: {fileID: 1912207862}
+  _possibleDropResources: []
+  _objectPool: {fileID: 0}
+  _decalsParent: {fileID: 0}
 --- !u!65 &1314606017
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -58641,7 +58623,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868891756}
-  m_LocalRotation: {x: 0.4167215, y: 0.0022102236, z: -0.0010132194, w: 0.909031}
+  m_LocalRotation: {x: 0.4167215, y: 0.0022102236, z: -0.0010132195, w: 0.909031}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

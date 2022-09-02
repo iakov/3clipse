@@ -27,6 +27,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         [SerializeField] private float jumpStrength = 2f;
         [Header("Run")]
         [SerializeField] private float runStaminaReduce = -5f;
+        [SerializeField] [Range(0, 1)] private float minRunEntryStamina = 0.3f;
         [SerializeField] private AnimationCurve runModifierCurve;
         [Header("Slide")]
         [SerializeField] private AnimationCurve slideModifierCurve;
@@ -45,6 +46,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public float CrouchSpeedModifier => crouchSpeedModifier;
         public float JumpStrength => jumpStrength;
         public float RunStaminaReduce => runStaminaReduce;
+        public float MinRunEntryStamina => minRunEntryStamina;
         public float JumpStaminaReduce => jumpStaminaReduce;
         public AnimationCurve RunModifierCurve => runModifierCurve;
         public AnimationCurve SlideModifierCurve => slideModifierCurve;

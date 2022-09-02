@@ -1,16 +1,16 @@
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.Model.Scripts;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Dropper
 {
     [System.Serializable]
     public struct DropElement
     {
         #region SerializeFields
 
-        public Resource dropItem;
-        [SerializeField] private int maxDropAmount;
-        [SerializeField] [Range(0, 1)] private float dropChance;
+        public Resource DropItem;
+        [SerializeField] private int _maxDropAmount;
+        [SerializeField] [Range(0, 1)] private float _dropChance;
 
         #endregion
 
@@ -28,10 +28,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Scr
             if (_isRandomCalculated) return _finalAmount;
 
             var counter = 0;
-            while (counter < maxDropAmount)
+            while (counter < _maxDropAmount)
             {
                 var randomNumber = Random.Range(0, 100);
-                if (randomNumber < dropChance * 100) _finalAmount++;
+                if (randomNumber < _dropChance * 100) _finalAmount++;
                 counter++;
             }
 
