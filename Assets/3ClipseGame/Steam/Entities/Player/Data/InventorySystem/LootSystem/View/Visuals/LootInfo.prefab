@@ -380,9 +380,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0395a99817dd06546b2dd0256f7a7d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateOnActive: {fileID: 3109269816870755431}
-  resourceImage: {fileID: 174230740774228140}
-  resourceText: {fileID: 1447301391480186516}
+  _activateOnActive: {fileID: 3109269816870755431}
+  _resourceImage: {fileID: 174230740774228140}
+  _resourceText: {fileID: 1447301391480186516}
 --- !u!1 &9070146295310571333
 GameObject:
   m_ObjectHideFlags: 0

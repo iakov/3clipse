@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3342650699091742292}
   - component: {fileID: 5167847274796411510}
   - component: {fileID: 8791093337983354986}
+  - component: {fileID: 7799153779138203031}
   m_Layer: 2
   m_Name: Loot
   m_TagString: Untagged
@@ -129,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2724842ff9afb84993d64adf292e9b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disableTime: 0.5
+  _disableTime: 0.5
 --- !u!114 &8791093337983354986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,10 +143,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ebe40622f513e48a0adabb56803bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMoveMagnitude: 0.05
-  maxMoveMagnitude: 0.1
-  aboveGroundHeight: 0.1
-  stepTime: 2
+  _minMoveMagnitude: 0.05
+  _maxMoveMagnitude: 0.1
+  _aboveGroundHeight: 0.1
+  _stepTime: 2
+--- !u!114 &7799153779138203031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440630397707749845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf150e4635925e444a15d62644056759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Resource: {fileID: 0}
+  Amount: 0
 --- !u!1 &6954671963983264868
 GameObject:
   m_ObjectHideFlags: 0
