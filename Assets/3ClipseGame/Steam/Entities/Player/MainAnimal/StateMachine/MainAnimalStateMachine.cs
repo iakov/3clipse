@@ -1,6 +1,6 @@
 using System;
 using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using _3ClipseGame.Steam.Global.Input.PlayerInput;
@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using CharacterController = _3ClipseGame.Steam.Entities.CustomController.CharacterController;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(NavMeshAgent))]
@@ -17,57 +17,67 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine
     {
         #region SerializeFields
 
-        [SerializeField] private Transform mainCharacterTransform;
+        [Header("Global Parameters")]
+        [SerializeField] private Transform _mainCharacterTransform;
+        
         [Header("Uncontrolled State Parameters")]
-        [SerializeField] private float waitTime;
+        [Header("Idle")]
+        [SerializeField] private float _waitTime;
         
-        [SerializeField] private float followWalkDistance;
-        [SerializeField] private AnimationCurve followWalkSpeed;
+        [Header("Walk")]
+        [SerializeField] private float _followWalkDistance;
+        [SerializeField] private AnimationCurve _followWalkSpeed;
+        [SerializeField] private float _stopWalkDistance;
+        [SerializeField] private Transform[] _possibleFollowTargets;
         
-        [SerializeField] private float stopWalkDistance;
-        
-        [SerializeField] private float walkBackDistance;
-        [SerializeField] private AnimationCurve walkBackSpeed;
+        [Header("Walk Back")]
+        [SerializeField] private float _walkBackDistance;
+        [SerializeField] private AnimationCurve _walkBackSpeed;
 
-        [SerializeField] private Transform[] possibleFollowTargets;
-
-        [SerializeField] private float followRunDistance;
-        [SerializeField] private AnimationCurve followRunSpeed;
+        [Header("Run")]
+        [SerializeField] private float _followRunDistance;
+        [SerializeField] private AnimationCurve _followRunSpeed;
 
         [Header("Controlled State Parameters")] 
-        [Range(1, 10)] [SerializeField] private float speedInterpolation = 6f;
-        [Range(0, 3)] [SerializeField] private float crouchSpeedModifier = 1f;
-        [SerializeField] private float walkSpeed;
-        [SerializeField] private AnimationCurve runSpeed;
-        [SerializeField] private float jumpStrength;
+        [Header("Walk")]
+        [Range(1, 10)] [SerializeField] private float _speedInterpolation = 6f;
+        [SerializeField] private float _walkSpeed;
+        
+        [Header("Run")]
+        [SerializeField] private float _runStaminaReduce = -5f;
+        [SerializeField] private AnimationCurve _runSpeed;
+        
+        [Header("Jump")]
+        [SerializeField] private float _jumpStrength;
+        [SerializeField] private float _jumpStaminaReduce = -5f;
 
-        [SerializeField] private float runStaminaReduce = -5f;
-        [SerializeField] private float jumpStaminaReduce = -5f;
+        [Header("Crouch")]
+        [Range(0, 3)] [SerializeField] private float _crouchSpeedModifier = 1f;
 
         #endregion
 
         #region PublicGetters
 
-        public float WaitTime => waitTime;
-        public float StopWalkDistance => stopWalkDistance;
-        public float WalkBackDistance => walkBackDistance;
-        public float FollowWalkDistance => followWalkDistance;
-        public float FollowRunDistance => followRunDistance;
-        public float WalkSpeed => walkSpeed;
-        public AnimationCurve RunSpeed => runSpeed;
-        public float RunStaminaReduce => runStaminaReduce;
-        public float JumpStaminaReduce => jumpStaminaReduce;
-        public float JumpStrength => jumpStrength;
-        public float SpeedInterpolation => speedInterpolation;
-        public float CrouchSpeedModifier => crouchSpeedModifier;
+        public float WaitTime => _waitTime;
+        public float StopWalkDistance => _stopWalkDistance;
+        public float WalkBackDistance => _walkBackDistance;
+        public float FollowWalkDistance => _followWalkDistance;
+        public float FollowRunDistance => _followRunDistance;
+        public float WalkSpeed => _walkSpeed;
+        public AnimationCurve RunSpeed => _runSpeed;
+        public float RunStaminaReduce => _runStaminaReduce;
+        public float JumpStaminaReduce => _jumpStaminaReduce;
+        public float JumpStrength => _jumpStrength;
+        public float SpeedInterpolation => _speedInterpolation;
+        public float CrouchSpeedModifier => _crouchSpeedModifier;
         public bool IsSwitching { get; private set; }
-        public Transform MainCharacterTransform => mainCharacterTransform;
+        public Transform MainCharacterTransform => _mainCharacterTransform;
         public Transform AnimalTransform { get; private set; }
         public Transform CurrentTarget { get; set; }
-        public Transform[] PossibleFollowTargets => possibleFollowTargets;
-        public AnimationCurve FollowWalkSpeed => followWalkSpeed;
-        public AnimationCurve FollowRunSpeed => followRunSpeed;
-        public AnimationCurve WalkBackSpeed => walkBackSpeed;
+        public Transform[] PossibleFollowTargets => _possibleFollowTargets;
+        public AnimationCurve FollowWalkSpeed => _followWalkSpeed;
+        public AnimationCurve FollowRunSpeed => _followRunSpeed;
+        public AnimationCurve WalkBackSpeed => _walkBackSpeed;
         public CharacterController MainCharacterController { get; private set; }
         public CharacterController AnimalController { get; private set; }
         public PlayerMover AnimalMover { get; private set; }

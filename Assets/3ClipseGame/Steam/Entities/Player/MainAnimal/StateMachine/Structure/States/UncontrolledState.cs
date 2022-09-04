@@ -1,36 +1,36 @@
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States
 {
     public class UncontrolledState : AnimalState
     {
+        #region Initialization
+
         public UncontrolledState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory){}
 
-        private AnimalSubState _currentSubState;
         private UncontrolledSubStatesFactory _subStateFactory;
         private Vector3 _currentTarget;
+
+        #endregion
+
+        #region StateMethods
 
         public override void OnStateEnter()
         {
             _subStateFactory = new UncontrolledSubStatesFactory(Context);
-            _currentSubState = _subStateFactory.Idle();
-            _currentSubState.OnStateEnter();
+            CurrentSubState = _subStateFactory.Idle();
             
+            base.OnStateEnter();
+
             Context.AnimalAgent.enabled = true;
             Context.AnimalController.enabled = false;
         }
 
-        public override void OnStateUpdate()
-        {
-            if (_currentSubState.TrySwitchState(out var newState)) SwitchState((AnimalSubState) newState);
-            _currentSubState.OnStateUpdate();
-        }
-
         public override void OnStateExit()
         {
-            _currentSubState.OnStateExit();
+            base.OnStateExit();
+            
             Context.AnimalAgent.enabled = false;
         }
 
@@ -43,12 +43,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             return newAnimalState != null;
         }
 
-        private void SwitchState(AnimalSubState newAnimalSubState)
-        {
-            SwitchSubState(_currentSubState, newAnimalSubState);
-            _currentSubState.OnStateExit();
-            _currentSubState = newAnimalSubState;
-            _currentSubState.OnStateEnter();
-        }
+        #endregion
     }
 }

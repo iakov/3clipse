@@ -1,18 +1,14 @@
-using System;
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.ControlledSubStates
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.ControlledSubStates
 {
-    public class ControlledRunSubState : AnimalSubState
+    public class ControlledRunSubState : ControlledSubState
     {
         #region Initialization
 
-        public ControlledRunSubState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context,
-            factory) => _factory = (ControlledSubStatesFactory) factory;
+        public ControlledRunSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory){}
 
-        private ControlledSubStatesFactory _factory;
         private float _timeToMaximumSpeed;
         
         #endregion
@@ -24,9 +20,11 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             Context.Stamina.IsRecovering = false;
             _timeToMaximumSpeed = Context.RunSpeed.keys[Context.RunSpeed.length - 1].time;
         }
+        
         public override void OnStateUpdate()
         {
-            AddTime(Time.deltaTime);
+            StateTimer += Time.deltaTime;
+            
             var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
             var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
             var moveVector = rawMoveVector * (Context.RunSpeed.Evaluate(currentEvaluateTime) * Context.WalkSpeed);
@@ -40,17 +38,17 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             Context.Stamina.IsRecovering = true;
         }
 
-        public override bool TrySwitchState(out AnimalState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
             
-            if (Context.InputHandler.IsJumpPressed) newAnimalState = _factory.Jump();
-            else if (Context.Stamina.StaminaPercentage == 0) newAnimalState = _factory.Walk();
-            else if (!Context.InputHandler.IsRunPressed) newAnimalState = _factory.Walk();
+            if (Context.InputHandler.IsJumpPressed) newAnimalState = Factory.Jump();
+            else if (Context.Stamina.StaminaPercentage == 0) newAnimalState = Factory.Walk();
+            else if (!Context.InputHandler.IsRunPressed) newAnimalState = Factory.Walk();
             else if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down,
-                         Context.AnimalController.Radius)) newAnimalState = _factory.Fall();
-            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = _factory.Stop();
-            else if (Context.InputHandler.IsCrouchPressed) newAnimalState = _factory.Crouch();
+                         Context.AnimalController.Radius)) newAnimalState = Factory.Fall();
+            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = Factory.Stop();
+            else if (Context.InputHandler.IsCrouchPressed) newAnimalState = Factory.Crouch();
 
             return newAnimalState != null;
         }

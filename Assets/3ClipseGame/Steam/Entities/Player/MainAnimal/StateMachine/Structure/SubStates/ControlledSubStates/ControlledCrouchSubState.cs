@@ -1,18 +1,14 @@
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.ControlledSubStates
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.ControlledSubStates
 {
-    public class ControlledCrouchSubState : AnimalSubState
+    public class ControlledCrouchSubState : ControlledSubState
     {
         #region Initialization
         
-        public ControlledCrouchSubState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory) 
-            => _factory = (ControlledSubStatesFactory) factory;
-        
-        private ControlledSubStatesFactory _factory;
-        
+        public ControlledCrouchSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory){}
+
         #endregion
 
         #region SubStateMethods
@@ -21,6 +17,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
         public override void OnStateUpdate()
         {
+            StateTimer += Time.deltaTime;
+            
             var rawInput = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
             var moveVector = rawInput * Context.CrouchSpeedModifier;
             Context.AnimalMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateWithCamera);
@@ -28,13 +26,13 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
         public override void OnStateExit(){}
 
-        public override bool TrySwitchState(out AnimalState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
             
             if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down,
-                    Context.AnimalController.Radius)) newAnimalState = _factory.Fall();
-            else if (!Context.InputHandler.IsCrouchPressed) newAnimalState = _factory.Idle();
+                    Context.AnimalController.Radius)) newAnimalState = Factory.Fall();
+            else if (!Context.InputHandler.IsCrouchPressed) newAnimalState = Factory.Idle();
 
             return newAnimalState != null;
         }

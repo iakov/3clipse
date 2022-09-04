@@ -1,44 +1,57 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.Scripts
 {
-    public enum OffMeshLinkMoveMethod
-    {
-        Teleport,
-        NormalSpeed,
-        Parabola,
-        Curve
-    }
 
     [RequireComponent(typeof(NavMeshAgent))]
     public class LinkMover : MonoBehaviour
     {
-        public OffMeshLinkMoveMethod mMethod = OffMeshLinkMoveMethod.Parabola;
-        public AnimationCurve mCurve = new();
+        #region PrivateFields
+
+        [SerializeField] private OffMeshLinkMoveMethod _method = OffMeshLinkMoveMethod.Parabola;
+        [SerializeField] private AnimationCurve _curve = new();
+
+        #endregion
+
+        #region MonoBehaviourMethods
 
         private IEnumerator Start()
         {
             var agent = GetComponent<NavMeshAgent>();
             agent.autoTraverseOffMeshLink = false;
+            
             while (gameObject.activeSelf)
             {
-                if (agent.isOnOffMeshLink)
+                if (!agent.isOnOffMeshLink) yield return null;
+                switch (_method)
                 {
-                    if (mMethod == OffMeshLinkMoveMethod.NormalSpeed)
-                        yield return StartCoroutine(NormalSpeed(agent));
-                    else if (mMethod == OffMeshLinkMoveMethod.Parabola)
-                        yield return StartCoroutine(Parabola(agent, 2.0f, 0.5f));
-                    else if (mMethod == OffMeshLinkMoveMethod.Curve)
-                        yield return StartCoroutine(Curve(agent, 0.5f));
-                    agent.CompleteOffMeshLink();
+                    case OffMeshLinkMoveMethod.NormalSpeed:
+                        yield return StartCoroutine(StaticSpeedMove(agent));
+                        break;
+                    case OffMeshLinkMoveMethod.Parabola:
+                        yield return StartCoroutine(ParabolaMove(agent, 2.0f, 0.5f));
+                        break;
+                    case OffMeshLinkMoveMethod.Curve:
+                        yield return StartCoroutine(CustomCurveMove(agent, 0.5f));
+                        break;
+                    case OffMeshLinkMoveMethod.Teleport:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-                yield return null;
+
+                agent.CompleteOffMeshLink();
             }
         }
 
-        private IEnumerator NormalSpeed(NavMeshAgent agent)
+        #endregion
+
+        #region MoveMethods
+
+        private IEnumerator StaticSpeedMove(NavMeshAgent agent)
         {
             var data = agent.currentOffMeshLinkData;
             var endPos = data.endPos + Vector3.up * agent.baseOffset;
@@ -50,7 +63,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal
             }
         }
 
-        private IEnumerator Parabola(NavMeshAgent agent, float height, float duration)
+        private IEnumerator ParabolaMove(NavMeshAgent agent, float height, float duration)
         {
             var data = agent.currentOffMeshLinkData;
             var startPos = agent.transform.position;
@@ -66,7 +79,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal
             }
         }
 
-        private IEnumerator Curve(NavMeshAgent agent, float duration)
+        private IEnumerator CustomCurveMove(NavMeshAgent agent, float duration)
         {
             var data = agent.currentOffMeshLinkData;
             var startPos = agent.transform.position;
@@ -75,12 +88,26 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal
             
             while (normalizedTime < 1.0f)
             {
-                var yOffset = mCurve.Evaluate(normalizedTime);
+                var yOffset = _curve.Evaluate(normalizedTime);
                 agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
                 normalizedTime += Time.deltaTime / duration;
                 transform.LookAt(endPos);
                 yield return null;
             }
         }
+
+        #endregion
+
+        #region PrivateStructs
+
+        private enum OffMeshLinkMoveMethod
+        {
+            Teleport,
+            NormalSpeed,
+            Parabola,
+            Curve
+        }
+
+        #endregion
     }
 }

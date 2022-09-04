@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Animations.Scripts
 {
     public class RandomizeTaunt : StateMachineBehaviour
     {
         #region Initialization
 
-        [SerializeField] private float minTimeToTaunt = 10f;
-        [SerializeField] private float maxTimeToTaunt = 20f;
+        [SerializeField] private float _minTimeToTaunt = 10f;
+        [SerializeField] private float _maxTimeToTaunt = 20f;
 
         private static readonly int IsTaunted = Animator.StringToHash("IsTaunted");
         
@@ -21,7 +21,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Scripts
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _randomTimeToTaunt = Random.Range(minTimeToTaunt, maxTimeToTaunt);
+            _randomTimeToTaunt = Random.Range(_minTimeToTaunt, _maxTimeToTaunt);
         }
         
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

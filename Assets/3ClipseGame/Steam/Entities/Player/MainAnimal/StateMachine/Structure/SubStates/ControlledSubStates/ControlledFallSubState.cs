@@ -1,16 +1,13 @@
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
+using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.ControlledSubStates
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.ControlledSubStates
 {
-    public class ControlledFallSubState : AnimalSubState
+    public class ControlledFallSubState : ControlledSubState
     {
         #region Initialization
 
-        public ControlledFallSubState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory) 
-            => _factory = (ControlledSubStatesFactory) factory;
+        public ControlledFallSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory) {}
 
-        private ControlledSubStatesFactory _factory;
-        
         #endregion
 
         #region SubStateMethods
@@ -20,18 +17,21 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             Context.Stamina.IsRecovering = false;
         }
 
-        public override void OnStateUpdate(){}
+        public override void OnStateUpdate()
+        {
+            StateTimer += Time.deltaTime;
+        }
 
         public override void OnStateExit()
         {
             Context.Stamina.IsRecovering = true;
         }
 
-        public override bool TrySwitchState(out AnimalState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
 
-            if (Context.AnimalController.IsGrounded) newAnimalState = _factory.Idle();
+            if (Context.AnimalController.IsGrounded) newAnimalState = Factory.Idle();
 
             return newAnimalState != null;
         }

@@ -1,19 +1,15 @@
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
-using CharacterController = _3ClipseGame.Steam.Entities.CustomController.CharacterController;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.UncontrolledStates
 {
-    public class UncontrolledEntertainSubState : AnimalSubState
+    public class UncontrolledEntertainSubState : UncontrolledSubState
     {
         #region Initialize
 
-        public UncontrolledEntertainSubState(MainAnimalStateMachine context, AnimalSubStateFactory factory) : base(context, factory) 
-            => _factory = (UncontrolledSubStatesFactory) factory;
+        public UncontrolledEntertainSubState(MainAnimalStateMachine context, UncontrolledSubStatesFactory factory) : base(context, factory){}
 
-        private UncontrolledSubStatesFactory _factory;
-            
         #endregion
 
         #region SubStateMethods
@@ -24,14 +20,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
         }
         
         public override void OnStateUpdate(){}
+        
         public override void OnStateExit(){}
 
-        public override bool TrySwitchState(out AnimalState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
 
-            if (Context.MainCharacterTransform.gameObject.GetComponent<CharacterController>().Velocity != Vector3.zero)
-                newAnimalState = _factory.Idle();
+            if (Context.MainCharacterController.Velocity != Vector3.zero) newAnimalState = Factory.Idle();
 
             return newAnimalState != null;
         }

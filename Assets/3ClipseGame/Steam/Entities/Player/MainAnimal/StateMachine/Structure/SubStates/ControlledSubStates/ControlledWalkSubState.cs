@@ -1,25 +1,24 @@
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.ControlledSubStates
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.ControlledSubStates
 {
-    public class ControlledWalkSubState : AnimalSubState
+    public class ControlledWalkSubState : ControlledSubState
     {
         #region Initialization
 
-        public ControlledWalkSubState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory)
-            => _factory = (ControlledSubStatesFactory)factory;
-        
-        private ControlledSubStatesFactory _factory;
-        
+        public ControlledWalkSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory){}
+
         #endregion
 
         #region SubStateMethods
 
-        public override void OnStateEnter() { }
+        public override void OnStateEnter(){}
+        
         public override void OnStateUpdate()
         {
+            StateTimer += Time.deltaTime;
+            
             var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
             var moveVector = rawMoveVector * Context.WalkSpeed;
             Context.AnimalMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
@@ -27,16 +26,16 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
 
         public override void OnStateExit(){}
 
-        public override bool TrySwitchState(out AnimalState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
 
-            if (Context.InputHandler.IsJumpPressed) newAnimalState = _factory.Jump();
-            else if (Context.InputHandler.IsRunPressed) newAnimalState = _factory.Run();
+            if (Context.InputHandler.IsJumpPressed) newAnimalState = Factory.Jump();
+            else if (Context.InputHandler.IsRunPressed) newAnimalState = Factory.Run();
             else if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down, 0.1f))
-                newAnimalState = _factory.Fall();
-            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = _factory.Stop();
-            else if (Context.InputHandler.IsCrouchPressed) newAnimalState = _factory.Crouch();
+                newAnimalState = Factory.Fall();
+            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = Factory.Stop();
+            else if (Context.InputHandler.IsCrouchPressed) newAnimalState = Factory.Crouch();
             
             return newAnimalState != null;
         }

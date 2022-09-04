@@ -1,10 +1,11 @@
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States
 {
     public class AnimalStateFactory
     {
         #region Initialization
 
         public AnimalStateFactory(MainAnimalStateMachine context) => Context = context;
+        
         protected readonly MainAnimalStateMachine Context;
 
         #endregion

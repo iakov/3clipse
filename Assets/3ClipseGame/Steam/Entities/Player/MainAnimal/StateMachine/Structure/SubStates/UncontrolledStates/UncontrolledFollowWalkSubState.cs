@@ -1,18 +1,24 @@
-using System;
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.UncontrolledStates
 {
-    public class UncontrolledFollowWalkSubState : AnimalSubState
+    public class UncontrolledFollowWalkSubState : UncontrolledSubState
     {
-        public UncontrolledFollowWalkSubState(MainAnimalStateMachine context, AnimalSubStateFactory factory) : base(context, factory)
-            => _factory = (UncontrolledSubStatesFactory) factory;
+        #region Initialization
+
+        public UncontrolledFollowWalkSubState(MainAnimalStateMachine context, UncontrolledSubStatesFactory factory) : base(context, factory){}
 
         private float _distanceBetweenPlayerAndAnimal;
-        private UncontrolledSubStatesFactory _factory;
 
-        public override void OnStateEnter(){}
+        #endregion
+
+        #region SubStateMethods
+
+        public override void OnStateEnter()
+        {
+            
+        }
 
         public override void OnStateUpdate()
         {
@@ -22,16 +28,22 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.S
             _distanceBetweenPlayerAndAnimal = Vector3.Distance(position, Context.MainCharacterTransform.position);
             Context.AnimalAgent.speed = Context.FollowWalkSpeed.Evaluate(_distanceBetweenPlayerAndAnimal);
         }
-        public override void OnStateExit(){}
+
+        public override void OnStateExit()
+        {
+            
+        }
         
-        public override bool TrySwitchState(out AnimalState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
 
-            if (_distanceBetweenPlayerAndAnimal > Context.FollowRunDistance) newAnimalState = _factory.Run();
-            else if (_distanceBetweenPlayerAndAnimal < Context.StopWalkDistance && !Context.AnimalAgent.isOnOffMeshLink) newAnimalState = _factory.Idle();
+            if (_distanceBetweenPlayerAndAnimal > Context.FollowRunDistance) newAnimalState = Factory.Run();
+            else if (_distanceBetweenPlayerAndAnimal < Context.StopWalkDistance && !Context.AnimalAgent.isOnOffMeshLink) newAnimalState = Factory.Idle();
 
             return newAnimalState != null;
         }
+
+        #endregion
     }
 }
