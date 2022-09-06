@@ -1,3 +1,4 @@
+using System;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.Model.Scripts;
 using UnityEngine;
 
@@ -5,11 +6,29 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Mod
 {
     public class PickableLoot : MonoBehaviour
     {
-        #region PublicFields
+        public Resource Resource
+        {
+            get => _resource;
+            set
+            {
+                ResourceChanged?.Invoke();
+                _resource = value;
+            }
+        }
+        public int Amount
+        {
+            get => _amount;
+            set
+            {
+                AmountChanged?.Invoke();
+                _amount = value;
+            }
+        }
 
-        public Resource Resource;
-        public int Amount;
+        private int _amount;
+        private Resource _resource;
 
-        #endregion
+        public event Action AmountChanged;
+        public event Action ResourceChanged;
     }
 }

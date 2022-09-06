@@ -1,4 +1,4 @@
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.Model.Scripts;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,38 +6,43 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
 {
     public class LootIcon : MonoBehaviour
     {
-        #region PublicFields
+        [SerializeField] private RectTransform _highlight;
+        [SerializeField] private Image _imageComponent;
+        [SerializeField] private Text _textComponent;
 
-        public Resource Resource { get; set; }
-        public int Amount { get; set; }
-
-        #endregion
-
-        #region SerializeFields
-
-        [SerializeField] private GameObject _activateOnActive;
-        [SerializeField] private Image _resourceImage;
-        [SerializeField] private Text _resourceText;
-
-        #endregion
-
-        #region MonoBehaviourMethods
-
-        private void Update()
-        {
-            _resourceImage.sprite = Resource.UIImage;
-            _resourceText.text = "x" + Amount;
-        }
-
-        #endregion
-
-        #region PublicMethods
-
+        private PickableLoot _displayableLoot;
+        
         public void SetActive(bool isActive)
         {
-            _activateOnActive.SetActive(isActive);
+            _highlight.gameObject.SetActive(isActive);
         }
 
-        #endregion
+        public void SwitchTrack(PickableLoot newLoot)
+        {
+            UnbindCurrentTrack();
+            _displayableLoot = newLoot;
+            UpdateView();
+            BindCurrentTrack();
+        }
+
+        private void UnbindCurrentTrack()
+        {
+            if(_displayableLoot == null) return;
+            
+            _displayableLoot.AmountChanged -= UpdateView;
+            _displayableLoot.ResourceChanged -= UpdateView;
+        }
+
+        private void BindCurrentTrack()
+        {
+            _displayableLoot.AmountChanged += UpdateView;
+            _displayableLoot.ResourceChanged += UpdateView;
+        }
+
+        private void UpdateView()
+        {
+            _imageComponent.sprite = _displayableLoot.Resource.UIImage;
+            _textComponent.text = "x" + _displayableLoot.Amount.ToString();
+        }
     }
 }
