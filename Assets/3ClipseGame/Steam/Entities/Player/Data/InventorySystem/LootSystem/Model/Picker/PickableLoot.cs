@@ -25,8 +25,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Mod
             }
         }
 
-        private int _amount;
-        private Resource _resource;
+        [SerializeField] private Resource _resource;
+        [SerializeField] private int _amount;
 
         public event Action AmountChanged;
         public event Action ResourceChanged;

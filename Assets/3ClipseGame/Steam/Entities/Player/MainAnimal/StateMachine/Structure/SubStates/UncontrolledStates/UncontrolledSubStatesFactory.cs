@@ -1,11 +1,10 @@
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates;
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.UncontrolledStates;
+using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.UncontrolledStates
 {
     public class UncontrolledSubStatesFactory : AnimalSubStateFactory
     {
-        public UncontrolledSubStatesFactory(StateMachine.MainAnimalStateMachine context) : base(context){}
+        public UncontrolledSubStatesFactory(MainAnimalStateMachine context) : base(context){}
 
         public AnimalSubState Idle() => new UncontrolledIdleSubState(Context, this);
         public AnimalSubState Walk() => new UncontrolledFollowWalkSubState(Context, this);

@@ -1,4 +1,4 @@
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates.UncontrolledStates;
+using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.UncontrolledStates;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States

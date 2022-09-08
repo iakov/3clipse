@@ -8,31 +8,17 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Mod
 {
     public class DeathLootDropper : MonoBehaviour
     {
-        #region SerializeFields
-
         [SerializeField] private List<DropElement> _possibleDropResources;
         [SerializeField] private ObjectPool _objectPool;
         [SerializeField] private GameObject _decalsParent;
 
-        #endregion
-
-        #region PrivateFields
-
         private Transform _transform;
-
-        #endregion
-
-        #region MonoBehaviourMethods
 
         private void Awake()
         {
             _transform = transform;   
         }
-
-        #endregion
         
-        #region PublicMethods
-
         public IEnumerator Drop(float dropRate = 0.05f)
         {
             var lootParent = new GameObject("Death Loot");
@@ -60,7 +46,5 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Mod
                 yield return new WaitForSeconds(dropRate);
             }
         }
-
-        #endregion
     }
 }

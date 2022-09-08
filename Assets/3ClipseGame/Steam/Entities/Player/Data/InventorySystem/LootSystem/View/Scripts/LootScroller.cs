@@ -1,3 +1,4 @@
+using System;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,37 +11,30 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
         public PickableLoot CurrentSelectedLoot { get; private set; }
 
         [Header("Selection")]
-        [SerializeField] private InputAction _slideAction;
-        [SerializeField] private LootDisplay _lootDisplay;
+        [SerializeField] private InputAction _scrollAction;
         [Header("Slide view")]
         [SerializeField] private Scrollbar _scrollbar;
-        [SerializeField] private VerticalLayoutGroup _verticalLayout;
-        [SerializeField] private ScrollRect _scrollRect;
+        [SerializeField] private RectTransform _lootIcon;
         
-        private int _currentID;
-        private float _lastScrollValue;
+        private LootDisplay _lootDisplay;
+        private VerticalLayoutGroup _verticalLayout;
+        private ScrollRect _scrollRect;
         
-        private  float _viewportHeight => _scrollbar.GetComponent<RectTransform>().rect.height;
-        private float _oneIconHeight => CurrentSelectedLoot.GetComponent<RectTransform>().rect.height;
-        private  float _allIconsHeight => _oneIconHeight * _lootDisplay.DisplayedLootAndItsIcons.Count;
-        private float _allSpacesHeight => _verticalLayout.spacing * (_lootDisplay.DisplayedLootAndItsIcons.Count - 1);
-        private float _fullContentHeight => _allIconsHeight + _allSpacesHeight;
-        private float _upperBound => (_fullContentHeight - _viewportHeight) * (1-_scrollbar.value);
-
         private void Awake()
         {
-            _slideAction.Enable();
+            _scrollAction.Enable();
+            
+            _lootDisplay = GetComponent<LootDisplay>();
+            _verticalLayout = GetComponent<VerticalLayoutGroup>();
+            _scrollRect = GetComponentInParent<ScrollRect>();
         }
-
-        #region Enable
-
+        
         private void OnEnable()
         {
             EnableLootDisplayEvents();
             EnableScrollEvents();
-
         }
-        
+
         private void EnableLootDisplayEvents()
         {
             _lootDisplay.LootDisplayListIncreased += OnLootDisplayListIncreased;
@@ -49,15 +43,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
 
         private void EnableScrollEvents()
         {
-            _slideAction.started += OnScroll;
-            _slideAction.performed += OnScroll;
-            _slideAction.canceled += OnScroll;
+            _scrollAction.started += OnScroll;
         }
-
-        #endregion
-
-        #region Disable
-
+        
         private void OnDisable()
         {
             DisableLootDisplayEvents();
@@ -72,43 +60,58 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
         
         private void DisableScrollEvents()
         {
-            _slideAction.started -= OnScroll;
-            _slideAction.performed -= OnScroll;
-            _slideAction.canceled -= OnScroll;
+            _scrollAction.started -= OnScroll;
         }
 
-        #endregion
-        
-        private void OnLootDisplayListIncreased(){}
-        
-        private void OnLootDisplayListDecreased(){}
-        
-        
+        private void OnLootDisplayListIncreased(PickableLoot newLoot)
+        {
+            CurrentSelectedLoot = newLoot;
+        }
 
+        private void OnLootDisplayListDecreased(PickableLoot retiredLoot)
+        {
+            //When decreasING set highlight to another object
+        }
+        
         private void OnScroll(InputAction.CallbackContext context)
         {
-            SetNewSelectedSlot();
-            SetScroll();
+            var newSelected = GetSelectedAfterScroll(context.ReadValue<float>());
+            SwitchCurrentSelectedLoot(newSelected);
+            CorrectScroll();
+        }
+        
+        private PickableLoot GetSelectedAfterScroll(float value)
+        {
+            var nextLootObject = value > 0
+                ? _lootDisplay.GetPreviousLootObject(CurrentSelectedLoot)
+                : _lootDisplay.GetNextLootObject(CurrentSelectedLoot);
+
+            return nextLootObject;
         }
 
-        private void SetNewSelectedSlot()
+        private void SwitchCurrentSelectedLoot(PickableLoot newLoot)
         {
-            
+            if(newLoot == null) return;
+            SwitchHighlight(newLoot);
+            CurrentSelectedLoot = newLoot;
         }
 
-        private void SetScroll()
+        private void SwitchHighlight(PickableLoot newLoot)
         {
-            var scrollHeight = _oneIconHeight / _fullContentHeight / (1 - _scrollbar.size);
-
-            var currentTargetPosition = (_currentID + 0.5f) * _oneIconHeight + _currentID * _verticalLayout.spacing;
-            var upper = _upperBound;
-            var delta = currentTargetPosition - upper;
-
-            if (delta > _viewportHeight && _scrollbar.value > 0) _scrollRect.verticalNormalizedPosition -= scrollHeight;
-            if (delta < _oneIconHeight / 2 && _scrollbar.value < 1) _scrollRect.verticalNormalizedPosition += scrollHeight;
-
-            if (_scrollbar.value < 0) _scrollbar.value = 0;
-            if (_scrollbar.value > 1) _scrollbar.value = 1;
+            SwitchCurrentHighlight(CurrentSelectedLoot,false);
+            SwitchCurrentHighlight(newLoot,true);
+        }
+        
+        private void SwitchCurrentHighlight(PickableLoot loot, bool isActive)
+        {
+            if (loot == null) return;
+            var currentLootIcon = _lootDisplay.GetIconByObject(loot);
+            if (currentLootIcon != null) currentLootIcon.SetActive(isActive);
+        }
+        
+        private void CorrectScroll()
+        {
+            //Set scroll
         }
     }
 }

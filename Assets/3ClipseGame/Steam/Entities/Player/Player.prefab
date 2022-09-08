@@ -42,8 +42,6 @@ GameObject:
   - component: {fileID: 675888429}
   - component: {fileID: 675888431}
   - component: {fileID: 675888430}
-  - component: {fileID: 675888432}
-  - component: {fileID: 675888433}
   m_Layer: 0
   m_Name: Looter
   m_TagString: Untagged
@@ -91,71 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45406da11fc77646a95e60715dca4ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lootInfoPanel: {fileID: 0}
-  _displayIconPrefab: {fileID: 8781243178474143404, guid: 4824e6d92af8b00419d2baca089c79ce, type: 3}
-  _pickUpItem:
-    m_Name: Pick Up Item
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ba9d5f2e-98c1-48b5-b758-2d5e9261eb8c
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 0d57d0bb-c222-48ae-b8af-7c4e3e5999a6
-      m_Path: <Keyboard>/e
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Pick Up Item
-      m_Flags: 0
-    m_Flags: 0
---- !u!114 &675888432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 675888428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 578b5a43a40d4c4438373acd7edebc5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slideAction:
-    m_Name: Slide
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ba92571b-a8d3-47f1-8f3f-c0268c25675d
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 957c4d86-754d-4db6-862e-58af78b35ac9
-      m_Path: 
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Slide
-      m_Flags: 0
-    m_Flags: 0
-  _lootDetector: {fileID: 675888430}
-  _scrollbar: {fileID: 0}
-  _verticalLayout: {fileID: 0}
-  _scrollRect: {fileID: 0}
---- !u!114 &675888433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 675888428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2778974099e28c444a6106e6cd9f7d2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pool: {fileID: 0}
 --- !u!1 &725718784
 GameObject:
   m_ObjectHideFlags: 0
