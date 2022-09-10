@@ -7,13 +7,13 @@ namespace _3ClipseGame.Steam.Global.Scripts.Extensions
         public static LinkedListNode<T> GetNextListElement<T>(this LinkedList<T> list, T currentValue)
         {
             var currentElement = list.GetElementByValue(currentValue);
-            return currentElement.Next;
+            return currentElement?.Next;
         }
         
         public static LinkedListNode<T> GetPreviousListElement<T>(this LinkedList<T> list, T currentValue)
         {
             var currentElement = list.GetElementByValue(currentValue);
-            return currentElement.Previous;
+            return currentElement?.Previous;
         }
 
         public static LinkedListNode<T> GetElementByValue<T>(this LinkedList<T> list, T currentValue)

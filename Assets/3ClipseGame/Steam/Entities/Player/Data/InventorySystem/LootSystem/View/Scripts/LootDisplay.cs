@@ -11,8 +11,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
 {
     public class LootDisplay : MonoBehaviour
     {
+        public event Action<PickableLoot> LootDisplayListDecreasing;
+        public event Action<PickableLoot> LootDisplayListIncreasing; 
         public event Action<PickableLoot> LootDisplayListDecreased;
-        public event Action<PickableLoot> LootDisplayListIncreased; 
+        public event Action<PickableLoot> LootDisplayListIncreased;
 
         [SerializeField] private LootDetector _lootDetector;
         [SerializeField] private LootIcon _lootIconPrefab;
@@ -34,27 +36,25 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
         
         public LootIcon GetIconByObject(PickableLoot loot)
         {
-            if (loot == null) throw new NullReferenceException();
             var node = GetNodeByLootObject(loot);
-            return node.Value.LootIcon;
+            return node?.Value.LootIcon;
         }
 
         public PickableLoot GetNextLootObject(PickableLoot currentLoot)
         {
-            if (currentLoot == null) throw new NullReferenceException();
             var nextElement = GetNextElement(currentLoot);
             return nextElement?.Value.LootObject;
         }
 
         public PickableLoot GetPreviousLootObject(PickableLoot currentLoot)
         {
-            if (currentLoot == null) throw new NullReferenceException();
             var previousElement = GetPreviousElement(currentLoot);
             return previousElement?.Value.LootObject;
         }
 
         private void AddNewIcon(PickableLoot newLoot)
         {
+            LootDisplayListIncreasing?.Invoke(newLoot);
             var newIcon = InstantiateNewIcon();
             newIcon.SwitchTrack(newLoot);
             _displayedLoot.AddLast(new LootInfo(newLoot, newIcon));
@@ -63,6 +63,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
         
         private void RemoveIcon(PickableLoot retiredLoot)
         {
+            LootDisplayListDecreasing?.Invoke(retiredLoot);
             var element = GetNodeByLootObject(retiredLoot);
             Destroy(element.Value.LootIcon.gameObject);
             _displayedLoot.Remove(element);
@@ -71,13 +72,13 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
 
         private LinkedListNode<LootInfo> GetNextElement(PickableLoot currentLoot)
         {
-            var currentLootInfo = _displayedLoot.First(element => element.LootObject == currentLoot);
+            var currentLootInfo = GetLootInfo(currentLoot);
             return _displayedLoot.GetNextListElement(currentLootInfo);
         }
 
         private LinkedListNode<LootInfo> GetPreviousElement(PickableLoot currentLoot)
         {
-            var currentLootInfo = _displayedLoot.First(element => element.LootObject == currentLoot);
+            var currentLootInfo = GetLootInfo(currentLoot);
             return _displayedLoot.GetPreviousListElement(currentLootInfo);
         }
 
@@ -96,7 +97,14 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
 
         private LootInfo GetLootInfo(PickableLoot loot)
         {
-            return _displayedLoot.First(element => element.LootObject == loot);
+            try
+            {
+                return _displayedLoot.First(element => element.LootObject == loot);
+            }
+            catch (InvalidOperationException e)
+            {
+                return LootInfo.Empty();
+            }
         }
         
         private class LootInfo
@@ -108,6 +116,17 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
             {
                 LootObject = pickableLoot;
                 LootIcon = lootIcon;
+            }
+
+            public static LootInfo Empty()
+            {
+                return new LootInfo();
+            }
+
+            private LootInfo()
+            {
+                LootObject = null;
+                LootIcon = null;
             }
         }
     }
