@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Detector;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
-using _3ClipseGame.Steam.Global.Scripts.Extensions;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,15 +12,16 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
     public class LootDisplay : MonoBehaviour
     {
         public event Action<PickableLoot> LootDisplayListDecreasing;
-        public event Action<PickableLoot> LootDisplayListIncreasing; 
         public event Action<PickableLoot> LootDisplayListDecreased;
+
+        public event Action<PickableLoot> LootDisplayListIncreasing;
         public event Action<PickableLoot> LootDisplayListIncreased;
 
         [SerializeField] private LootDetector _lootDetector;
         [SerializeField] private LootIcon _lootIconPrefab;
         [SerializeField] private VerticalLayoutGroup _iconsParent;
-        
-        private LinkedList<LootInfo> _displayedLoot = new();
+
+        private OrderedDictionary _displayedLoot = new();
 
         private void OnEnable()
         {
@@ -33,101 +34,104 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
             _lootDetector.NewLootDetected -= AddNewIcon;
             _lootDetector.LootRetired -= RemoveIcon;
         }
-        
+
+        public LootIcon GetPreviousObject(LootIcon current)
+        {
+            var currentIndex = GetIndexWithException(current);
+            
+            var isFirst = currentIndex == 0;
+            var isException = currentIndex < 0;
+            
+            return  isFirst || isException
+                ? null 
+                : GetIconByIndex(currentIndex - 1);
+        }
+
+        public LootIcon GetNextObject(LootIcon current)
+        {
+            var currentIndex = GetIndexWithException(current);
+
+            var isLast = currentIndex == _displayedLoot.Count - 1;
+            var isException = currentIndex < 0;
+            
+            return isLast || isException
+                ? null
+                : GetIconByIndex(currentIndex + 1);
+        }
+
         public LootIcon GetIconByObject(PickableLoot loot)
         {
-            var node = GetNodeByLootObject(loot);
-            return node?.Value.LootIcon;
+            return _displayedLoot[loot] as LootIcon;
         }
 
-        public PickableLoot GetNextLootObject(PickableLoot currentLoot)
+        public LootIcon GetIconByIndex(int index)
         {
-            var nextElement = GetNextElement(currentLoot);
-            return nextElement?.Value.LootObject;
-        }
-
-        public PickableLoot GetPreviousLootObject(PickableLoot currentLoot)
-        {
-            var previousElement = GetPreviousElement(currentLoot);
-            return previousElement?.Value.LootObject;
+            return _displayedLoot[index] as LootIcon;
         }
 
         private void AddNewIcon(PickableLoot newLoot)
         {
             LootDisplayListIncreasing?.Invoke(newLoot);
-            var newIcon = InstantiateNewIcon();
-            newIcon.SwitchTrack(newLoot);
-            _displayedLoot.AddLast(new LootInfo(newLoot, newIcon));
+            InitializeIcon(newLoot);
             LootDisplayListIncreased?.Invoke(newLoot);
         }
-        
-        private void RemoveIcon(PickableLoot retiredLoot)
-        {
-            LootDisplayListDecreasing?.Invoke(retiredLoot);
-            var element = GetNodeByLootObject(retiredLoot);
-            Destroy(element.Value.LootIcon.gameObject);
-            _displayedLoot.Remove(element);
-            LootDisplayListDecreased?.Invoke(retiredLoot);
-        }
 
-        private LinkedListNode<LootInfo> GetNextElement(PickableLoot currentLoot)
+        private void InitializeIcon(PickableLoot newLoot)
         {
-            var currentLootInfo = GetLootInfo(currentLoot);
-            return _displayedLoot.GetNextListElement(currentLootInfo);
-        }
-
-        private LinkedListNode<LootInfo> GetPreviousElement(PickableLoot currentLoot)
-        {
-            var currentLootInfo = GetLootInfo(currentLoot);
-            return _displayedLoot.GetPreviousListElement(currentLootInfo);
+            var newIcon = InstantiateNewIcon();
+            newIcon.SwitchTrack(newLoot);
+            _displayedLoot.Add(newLoot, newIcon);
         }
 
         private LootIcon InstantiateNewIcon()
         {
-            var newObject = Instantiate(_lootIconPrefab, _iconsParent.transform);
-            newObject.transform.SetAsLastSibling();
-            return newObject;
+            var newObject = Instantiate(_lootIconPrefab.gameObject, _iconsParent.transform);
+            return newObject.GetComponent<LootIcon>();
         }
 
-        private LinkedListNode<LootInfo> GetNodeByLootObject(PickableLoot loot)
+        private void RemoveIcon(PickableLoot retiredLoot)
         {
-            var lootInfo = GetLootInfo(loot);
-            return _displayedLoot.GetElementByValue(lootInfo);
+            LootDisplayListDecreasing?.Invoke(retiredLoot);
+            DeleteIcon(retiredLoot);
+            LootDisplayListDecreased?.Invoke(retiredLoot);
         }
 
-        private LootInfo GetLootInfo(PickableLoot loot)
+        private void DeleteIcon(PickableLoot retiredLoot)
         {
-            try
+            var icon = GetIconByObject(retiredLoot);
+            _displayedLoot.Remove(retiredLoot);
+            Destroy(icon.gameObject);
+        }
+
+        private int GetIndexWithException(LootIcon icon)
+        {
+            var currentIndex = FindIconsIndex(icon);
+            CatchIndexException(currentIndex);
+            return currentIndex;
+        }
+
+        private int FindIconsIndex(LootIcon icon)
+        {
+            for (var i = 0; i < _displayedLoot.Count; i++)
             {
-                return _displayedLoot.First(element => element.LootObject == loot);
+                var currentEnumeratorIcon = GetIconByIndex(i);
+                if (AreEqual(icon, currentEnumeratorIcon)) return i;
             }
-            catch (InvalidOperationException e)
+
+            return -1;
+        }
+
+        private void CatchIndexException(int index)
+        {
+            if(index == -1)
             {
-                return LootInfo.Empty();
+                Debug.LogWarning("Trying to find non-existing in this context icon");
             }
         }
-        
-        private class LootInfo
+
+        private bool AreEqual(LootIcon first, LootIcon second)
         {
-            public readonly PickableLoot LootObject;
-            public readonly LootIcon LootIcon;
-
-            public LootInfo(PickableLoot pickableLoot, LootIcon lootIcon)
-            {
-                LootObject = pickableLoot;
-                LootIcon = lootIcon;
-            }
-
-            public static LootInfo Empty()
-            {
-                return new LootInfo();
-            }
-
-            private LootInfo()
-            {
-                LootObject = null;
-                LootIcon = null;
-            }
+            return first == second;
         }
     }
 }

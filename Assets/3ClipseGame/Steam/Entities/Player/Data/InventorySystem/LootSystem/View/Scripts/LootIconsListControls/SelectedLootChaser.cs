@@ -1,10 +1,12 @@
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.View.Scripts.LootIconsListControls
 {
-    public class LootScroller : MonoBehaviour
+    [RequireComponent(typeof(LootIconsSelector))]
+    [RequireComponent(typeof(LootDisplay))]
+    
+    public class SelectedLootChaser : MonoBehaviour
     {
         [Header("Slide view")]
         [SerializeField] private Scrollbar _scrollbar;
@@ -34,9 +36,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
             _lootIconsSelector.SelectedLootChanged -= OnSelectedLootChanged;
         }
 
-        private void OnSelectedLootChanged(PickableLoot previousLoot)
+        private void OnSelectedLootChanged(LootIcon previousIcon, LootIcon _)
         {
-            //Edit scroll value
+            
         }
     }
 }
