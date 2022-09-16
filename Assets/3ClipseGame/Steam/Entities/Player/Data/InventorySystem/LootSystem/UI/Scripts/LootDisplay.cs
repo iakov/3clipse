@@ -1,39 +1,16 @@
-using System;
 using System.Collections.Specialized;
-using System.Linq;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Detector;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.View.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.Scripts
 {
+    [RequireComponent(typeof(LootIconsSelector))]
+    
     public class LootDisplay : MonoBehaviour
     {
-        public event Action<PickableLoot> LootDisplayListDecreasing;
-        public event Action<PickableLoot> LootDisplayListDecreased;
-
-        public event Action<PickableLoot> LootDisplayListIncreasing;
-        public event Action<PickableLoot> LootDisplayListIncreased;
-
-        [SerializeField] private LootDetector _lootDetector;
-        [SerializeField] private LootIcon _lootIconPrefab;
-        [SerializeField] private VerticalLayoutGroup _iconsParent;
-
-        private OrderedDictionary _displayedLoot = new();
-
-        private void OnEnable()
-        {
-            _lootDetector.NewLootDetected += AddNewIcon;
-            _lootDetector.LootRetired += RemoveIcon;
-        }
-
-        private void OnDisable()
-        {
-            _lootDetector.NewLootDetected -= AddNewIcon;
-            _lootDetector.LootRetired -= RemoveIcon;
-        }
+        #region Public
 
         public LootIcon GetPreviousObject(LootIcon current)
         {
@@ -69,18 +46,59 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
             return _displayedLoot[index] as LootIcon;
         }
 
-        private void AddNewIcon(PickableLoot newLoot)
+        #endregion
+
+        #region Serialization
+
+        [SerializeField] private LootDetector _lootDetector;
+        [SerializeField] private LootIcon _lootIconPrefab;
+        [SerializeField] private VerticalLayoutGroup _iconsParent;
+        
+        #endregion
+
+        #region Initialization
+
+        private OrderedDictionary _displayedLoot;
+        private LootIconsSelector _lootIconsSelector;
+
+        private void Awake()
         {
-            LootDisplayListIncreasing?.Invoke(newLoot);
-            InitializeIcon(newLoot);
-            LootDisplayListIncreased?.Invoke(newLoot);
+            _displayedLoot = new OrderedDictionary();
+            _lootIconsSelector = GetComponent<LootIconsSelector>();
         }
 
-        private void InitializeIcon(PickableLoot newLoot)
+        #endregion
+
+        #region EventsSubscription
+
+        private void OnEnable()
+        {
+            _lootDetector.NewLootDetected += AddNewIcon;
+            _lootDetector.LootRetired += RemoveIcon;
+        }
+
+        private void OnDisable()
+        {
+            _lootDetector.NewLootDetected -= AddNewIcon;
+            _lootDetector.LootRetired -= RemoveIcon;
+        }
+
+        #endregion
+
+        #region NewLootDetectedHandler
+
+        private void AddNewIcon(PickableLoot newLoot)
+        {
+            var newIcon = InitializeIcon(newLoot);
+            _lootIconsSelector.SelectIconIfFirst(newIcon);
+        }
+
+        private LootIcon InitializeIcon(PickableLoot newLoot)
         {
             var newIcon = InstantiateNewIcon();
             newIcon.SwitchTrack(newLoot);
             _displayedLoot.Add(newLoot, newIcon);
+            return newIcon;
         }
 
         private LootIcon InstantiateNewIcon()
@@ -89,11 +107,15 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
             return newObject.GetComponent<LootIcon>();
         }
 
+        #endregion
+
+        #region LootRetiredHandler
+
         private void RemoveIcon(PickableLoot retiredLoot)
         {
-            LootDisplayListDecreasing?.Invoke(retiredLoot);
+            var retiringIcon = GetIconByObject(retiredLoot);
+            _lootIconsSelector.ChangeSelectedIconIfDeleting(retiringIcon);
             DeleteIcon(retiredLoot);
-            LootDisplayListDecreased?.Invoke(retiredLoot);
         }
 
         private void DeleteIcon(PickableLoot retiredLoot)
@@ -102,6 +124,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
             _displayedLoot.Remove(retiredLoot);
             Destroy(icon.gameObject);
         }
+
+        #endregion
 
         private int GetIndexWithException(LootIcon icon)
         {

@@ -1,19 +1,28 @@
-using System;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.View.Scripts.LootIconsListControls
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.Scripts
 {
     [RequireComponent(typeof(LootScrollHandler))]
     [RequireComponent(typeof(LootDisplay))]
+    [RequireComponent(typeof(SelectedLootChaser))]
     
     public class LootIconsSelector : MonoBehaviour
     {
-        public event Action<LootIcon, LootIcon> SelectedLootChanged;
+        #region Public
+
+        public LootIcon GetCurrentSelectedLoot()
+        {
+            return _currentSelectedLoot;
+        }
+
+        #endregion
+
+        #region Initialiation
 
         private LootDisplay _lootDisplay;
         private LootScrollHandler _lootScrollHandler;
-        private LootScrollHandler _scrollHandler;
+        private LootHighlighter _lootHighlighter;
+        private SelectedLootChaser _selectedLootChaser;
 
         private LootIcon _currentSelectedLoot;
         
@@ -21,55 +30,61 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
         {
             _lootDisplay = GetComponent<LootDisplay>();
             _lootScrollHandler = GetComponent<LootScrollHandler>();
+            _selectedLootChaser = GetComponent<SelectedLootChaser>();
+            _lootHighlighter = new LootHighlighter(this);
         }
+
+        #endregion
+
+        #region EventsSubscription
 
         private void OnEnable()
         {
-            _lootDisplay.LootDisplayListDecreasing += OnLootDisplayListDecreasing;
-            _lootDisplay.LootDisplayListIncreased += OnLootDisplayListIncreased;
             _lootScrollHandler.Scrolled += SwitchCurrentSelectedLoot;
         }
 
         private void OnDisable()
         {
-            _lootDisplay.LootDisplayListDecreasing -= OnLootDisplayListDecreasing;
-            _lootDisplay.LootDisplayListIncreased -= OnLootDisplayListIncreased;
             _lootScrollHandler.Scrolled -= SwitchCurrentSelectedLoot;
         }
 
-        public LootIcon GetCurrentSelectedLoot()
-        {
-            return _currentSelectedLoot;
-        }
+        #endregion
 
-        private void OnLootDisplayListIncreased(PickableLoot newLoot)
+        #region LootListIncreasedHandler
+
+        public void SelectIconIfFirst(LootIcon icon)
         {
             if (_currentSelectedLoot != null) return;
             
-            var icon = _lootDisplay.GetIconByObject(newLoot);
             SwitchCurrentSelectedLoot(icon);
         }
 
-        private void OnLootDisplayListDecreasing(PickableLoot retiredLoot)
+        #endregion
+
+        #region LootListDecreasedHandler
+
+        public void ChangeSelectedIconIfDeleting(LootIcon retiringIcon)
         {
-            var retiredLootIcon = _lootDisplay.GetIconByObject(retiredLoot);
-            if (_currentSelectedLoot != retiredLootIcon) return;
+            if (_currentSelectedLoot != retiringIcon) return;
             
             var newSelected = GetClosestToCurrentIcon();
             SwitchCurrentSelectedLoot(newSelected);
         }
-
+        
         private LootIcon GetClosestToCurrentIcon()
         {
             return _lootDisplay.GetPreviousObject(_currentSelectedLoot)
                    ?? _lootDisplay.GetNextObject(_currentSelectedLoot);
         }
 
+        #endregion
+        
         private void SwitchCurrentSelectedLoot(LootIcon newLoot)
         {
             var previousLoot = _currentSelectedLoot;
             _currentSelectedLoot = newLoot;
-            SelectedLootChanged?.Invoke(previousLoot, _currentSelectedLoot);
+            _lootHighlighter.SwitchHighlightedIcon(previousLoot, newLoot);
+            _selectedLootChaser.EditScroll(newLoot);
         }
     }
 }

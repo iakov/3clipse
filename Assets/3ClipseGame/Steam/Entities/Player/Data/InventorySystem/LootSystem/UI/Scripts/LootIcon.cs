@@ -2,16 +2,20 @@ using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.P
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.View.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.Scripts
 {
     public class LootIcon : MonoBehaviour
     {
+        #region Serialization
+
         [SerializeField] private RectTransform _highlight;
         [SerializeField] private Image _imageComponent;
         [SerializeField] private Text _textComponent;
 
-        private PickableLoot _displayableLoot;
-        
+        #endregion
+
+        #region Public
+
         public void SetActive(bool isActive)
         {
             _highlight.gameObject.SetActive(isActive);
@@ -24,6 +28,14 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
             UpdateView();
             BindCurrentTrack();
         }
+
+        #endregion
+
+        #region Initialization
+
+        private PickableLoot _displayableLoot;
+
+        #endregion
 
         private void UnbindCurrentTrack()
         {
@@ -42,7 +54,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
         private void UpdateView()
         {
             _imageComponent.sprite = _displayableLoot.Resource.UIImage;
-            _textComponent.text = "x" + _displayableLoot.Amount.ToString();
+            _textComponent.text = "x" + _displayableLoot.Amount;
         }
     }
 }

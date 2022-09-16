@@ -1,13 +1,18 @@
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Detector;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.View.Scripts.LootIconsListControls;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.View.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.Scripts
 {
     public class LootPicker : MonoBehaviour
     {
+        #region Serialization
+
         [SerializeField] private InputAction _pickUpItem;
+
+        #endregion
+
+        #region Initialization
 
         private LootDetector _lootDetector;
         private LootIconsSelector _lootChooser;
@@ -19,7 +24,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
             
             _pickUpItem.Enable();
         }
-        
+
+        #endregion
+
         private void OnEnable()
         {
             _pickUpItem.started += InstantiatePickUp;

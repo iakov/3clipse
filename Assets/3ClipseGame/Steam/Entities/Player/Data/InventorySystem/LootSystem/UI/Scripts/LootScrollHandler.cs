@@ -2,16 +2,26 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.View.Scripts.LootIconsListControls
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.Scripts
 {
     [RequireComponent(typeof(LootIconsSelector))]
     [RequireComponent(typeof(LootDisplay))]
 
     public class LootScrollHandler : MonoBehaviour
     {
+        #region Public
+
         public event Action<LootIcon> Scrolled;
 
+        #endregion
+
+        #region Serialization
+
         [SerializeField] private InputAction _scrollAction;
+
+        #endregion
+        
+        #region Initialization
 
         private LootDisplay _lootDisplay;
         private LootIconsSelector _lootIconsSelector;
@@ -23,6 +33,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
 
             _scrollAction.Enable();
         }
+        
+        #endregion
+
+        #region EventsSubscription
 
         private void OnEnable()
         {
@@ -44,9 +58,20 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Vie
             _scrollAction.started -= OnScroll;
         }
 
+        #endregion
+
+        #region ScrollHandler
+        
         private void OnScroll(InputAction.CallbackContext context)
         {
             var newSelected = GetNewSelected(context);
+            InvokeEventIfNewSelectedIsDifferent(newSelected);
+        }
+
+        #endregion
+        
+        private void InvokeEventIfNewSelectedIsDifferent(LootIcon newSelected)
+        {
             if (newSelected != _lootIconsSelector.GetCurrentSelectedLoot())
             {
                 Scrolled?.Invoke(newSelected);
