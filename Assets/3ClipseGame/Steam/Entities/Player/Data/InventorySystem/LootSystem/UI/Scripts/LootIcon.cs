@@ -1,4 +1,4 @@
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.LootComponent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +14,19 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         #endregion
 
+        #region Initialization
+
+        private PickableLoot _displayableLoot;
+
+        #endregion
+        
         #region Public
 
+        public PickableLoot GetCurrentLoot()
+        {
+            return _displayableLoot;
+        }
+        
         public void SetActive(bool isActive)
         {
             _highlight.gameObject.SetActive(isActive);
@@ -31,30 +42,22 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         #endregion
 
-        #region Initialization
-
-        private PickableLoot _displayableLoot;
-
-        #endregion
-
         private void UnbindCurrentTrack()
         {
             if(_displayableLoot == null) return;
             
-            _displayableLoot.AmountChanged -= UpdateView;
-            _displayableLoot.ResourceChanged -= UpdateView;
+            _displayableLoot.TrackedElementUpdated -= UpdateView;
         }
 
         private void BindCurrentTrack()
         {
-            _displayableLoot.AmountChanged += UpdateView;
-            _displayableLoot.ResourceChanged += UpdateView;
+            _displayableLoot.TrackedElementUpdated += UpdateView;
         }
 
         private void UpdateView()
         {
-            _imageComponent.sprite = _displayableLoot.Resource.UIImage;
-            _textComponent.text = "x" + _displayableLoot.Amount;
+            _imageComponent.sprite = _displayableLoot.GetResource().UIImage;
+            _textComponent.text = "x" + _displayableLoot.GetAmount();
         }
     }
 }

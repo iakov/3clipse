@@ -22,7 +22,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
         private LootDisplay _lootDisplay;
         private LootScrollHandler _lootScrollHandler;
         private LootHighlighter _lootHighlighter;
-        private SelectedLootChaser _selectedLootChaser;
+        private SelectedLootChaser _lootChaser;
 
         private LootIcon _currentSelectedLoot;
         
@@ -30,7 +30,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
         {
             _lootDisplay = GetComponent<LootDisplay>();
             _lootScrollHandler = GetComponent<LootScrollHandler>();
-            _selectedLootChaser = GetComponent<SelectedLootChaser>();
+            _lootChaser = GetComponent<SelectedLootChaser>();
             _lootHighlighter = new LootHighlighter(this);
         }
 
@@ -66,9 +66,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
         public void ChangeSelectedIconIfDeleting(LootIcon retiringIcon)
         {
             if (_currentSelectedLoot != retiringIcon) return;
-            
-            var newSelected = GetClosestToCurrentIcon();
-            SwitchCurrentSelectedLoot(newSelected);
+            SwitchIconToClosest();
         }
         
         private LootIcon GetClosestToCurrentIcon()
@@ -79,12 +77,23 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         #endregion
         
-        private void SwitchCurrentSelectedLoot(LootIcon newLoot)
+        private void SwitchCurrentSelectedLoot(LootIcon newIcon)
+        {
+            ChangeView(newIcon);
+        }
+
+        private void ChangeView(LootIcon newIcon)
         {
             var previousLoot = _currentSelectedLoot;
-            _currentSelectedLoot = newLoot;
-            _lootHighlighter.SwitchHighlightedIcon(previousLoot, newLoot);
-            _selectedLootChaser.EditScroll(newLoot);
+            _currentSelectedLoot = newIcon;
+            _lootHighlighter.SwitchHighlightedIcon(previousLoot, newIcon);
+            _lootChaser.EditScroll(newIcon);
+        }
+
+        private void SwitchIconToClosest()
+        {
+            var newSelected = GetClosestToCurrentIcon();
+            SwitchCurrentSelectedLoot(newSelected);
         }
     }
 }

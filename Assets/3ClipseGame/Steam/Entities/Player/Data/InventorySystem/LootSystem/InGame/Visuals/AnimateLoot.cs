@@ -1,83 +1,85 @@
 using System.Collections;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Picker;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.View.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Visuals
 {
     public class AnimateLoot : MonoBehaviour
     {
-        #region SerializeFields
+        #region Serialization
 
-        [SerializeField] private float _minMoveMagnitude = 0.05f;
-        [SerializeField] private float _maxMoveMagnitude = 0.1f;
-        [SerializeField] private float _aboveGroundHeight = 0.1f;
-        [SerializeField] private float _stepTime = 2f;
+        [SerializeField] private AnimationCurve _verticalMovementCurve;
 
         #endregion
 
-        #region PrivateFields
+        #region Initialization
 
         private Rigidbody _rigidbody;
-        private InactiveLootDisabler _inactiveLootDisabler;
-
-        private bool _isMovingToTarget;
+        private InactiveLootDisabler _lootDisabler;
         
+        private bool _isBusy;
         private Vector3 _startPosition;
-        private bool _isLastMoveUp;
-
-        #endregion
-
-        #region MonoBehaviourMethods
-
+        
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            _inactiveLootDisabler = GetComponent<InactiveLootDisabler>();
+            _lootDisabler = GetComponent<InactiveLootDisabler>();
         }
-        
+
+        #endregion
+
+        #region PreAnimate
+
+        private void Start()
+        {
+            _isBusy = false;
+            _startPosition = _rigidbody.position;
+        }
+
+        #endregion
+
+        #region Animate
+
         private void Update()
         {
-            if (!_rigidbody.isKinematic || _startPosition == Vector3.zero || _isMovingToTarget) return;
-
-            StartCoroutine(StartMoveIteration(Random.Range(_minMoveMagnitude, _maxMoveMagnitude), _stepTime));
+            if (_isBusy || _lootDisabler != null) return;
+            StartMovement();
         }
 
-        private void OnEnable()
+        private void StartMovement()
         {
-            _inactiveLootDisabler.LootDeactivated += SetPreAnimateVariables;
-        }
-        
-        private void OnDisable()
-        {
-            _inactiveLootDisabler.LootDeactivated -= SetPreAnimateVariables;
+            StartCoroutine(StartMoveIteration());
         }
 
-        #endregion
-
-        #region PrivateMethods
-        
-        private void SetPreAnimateVariables()
+        private IEnumerator StartMoveIteration()
         {
-            _startPosition = transform.position;
-            _startPosition.y += _aboveGroundHeight;
+            _isBusy = true;
+            yield return DoMoveIteration();
+            _isBusy = false;
         }
-        
-        #endregion
 
-        #region Coroutines
-
-        private IEnumerator StartMoveIteration(float magnitude, float time)
+        private IEnumerator DoMoveIteration()
         {
-            _isMovingToTarget = true;
+            var time = 0f;
+            var maxTime = GetCurveDuration(_verticalMovementCurve);
 
-            if (_isLastMoveUp) LeanTween.moveY(gameObject, _startPosition.y - magnitude, time);
-            else LeanTween.moveY(gameObject, _startPosition.y + magnitude, time);
+            while (time < maxTime)
+            {
+                MoveToNewPosition(time);
+                time += Time.deltaTime;
+                yield return null;
+            }
+        }
 
-            _isLastMoveUp = !_isLastMoveUp;
-            
-            yield return new WaitForSeconds(time);
-            
-            _isMovingToTarget = false;
+        private float GetCurveDuration(AnimationCurve curve)
+        {
+            var lastKeyIndex = curve.length - 1;
+            return curve[lastKeyIndex].time;
+        }
+
+        private void MoveToNewPosition(float timeFromStart)
+        {
+            var newPosition = _startPosition + Vector3.up * _verticalMovementCurve.Evaluate(timeFromStart);
+            _rigidbody.MovePosition(newPosition);
         }
 
         #endregion

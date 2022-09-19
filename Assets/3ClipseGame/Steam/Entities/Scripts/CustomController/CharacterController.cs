@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.CustomController
+namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class CharacterController : MonoBehaviour
@@ -10,7 +10,8 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 		#region SerializeFields
 
 		[Header("Global Parameters")] 
-		public LayerMask walkableLayers;
+		[SerializeField] private LayerMask walkableLayers;
+		[SerializeField] private LayerMask collideLayers;
 		[SerializeField] [Min(0.01f)] private float skinWidth = 0.01f;
 
 		[Header("Move Parameters")] 
@@ -152,7 +153,7 @@ namespace _3ClipseGame.Steam.Entities.CustomController
 				var bottom = origin - Vector3.up * (capsuleOffset - verticalOffset);
 				var top = origin + Vector3.up * capsuleOffset;
 
-				if (Physics.CapsuleCast(top, bottom, Radius, direction, out var hitInfo, distance + Radius, walkableLayers, QueryTriggerInteraction.Ignore))
+				if (Physics.CapsuleCast(top, bottom, Radius, direction, out var hitInfo, distance + Radius, collideLayers, QueryTriggerInteraction.Ignore))
 				{
 					var slideAngle = Vector3.Angle(Vector3.up, hitInfo.normal);
 					var safeDistance = hitInfo.distance - Radius - skinWidth;

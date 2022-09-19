@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using CharacterController = _3ClipseGame.Steam.Entities.CustomController.CharacterController;
+using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController.CharacterController;
 
 namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
 {

@@ -7,7 +7,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
         #region PublicFields
 
         public bool IsEmpty => CurrentAmount == 0;
-        public bool IsFull => CurrentAmount >= Resource.MaximumAmountInSlot;
+        public bool IsFull => CurrentAmount >= Resource.GetMaximumAmountInSlot();
         
         public Resource Resource;
         public int CurrentAmount;
@@ -25,15 +25,15 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
         public void AddAmount(int addAmount, out int oddAmount)
         {
             oddAmount = 0;
-            if (addAmount == 0 || Resource.MaximumAmountInSlot == CurrentAmount) return;
+            if (addAmount == 0 || Resource.GetMaximumAmountInSlot() == CurrentAmount) return;
 
             CurrentAmount += addAmount;
             AmountChanged?.Invoke();
 
-            if (CurrentAmount <= Resource.MaximumAmountInSlot) return;
+            if (CurrentAmount <= Resource.GetMaximumAmountInSlot()) return;
 
-            oddAmount = CurrentAmount - Resource.MaximumAmountInSlot;
-            CurrentAmount = Resource.MaximumAmountInSlot;
+            oddAmount = CurrentAmount - Resource.GetMaximumAmountInSlot();
+            CurrentAmount = Resource.GetMaximumAmountInSlot();
         }
 
         public bool TryTakeAmount(int amount)

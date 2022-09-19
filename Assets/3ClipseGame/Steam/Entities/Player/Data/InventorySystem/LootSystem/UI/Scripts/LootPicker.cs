@@ -1,4 +1,5 @@
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Detector;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.LootComponent;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.Model.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,38 +9,47 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
     {
         #region Serialization
 
-        [SerializeField] private InputAction _pickUpItem;
-
+        [SerializeField] private InputAction _pickUpAction;
+        [SerializeField] private ResourceInventory _resourceInventory;
+        [SerializeField] private LootIconsSelector _lootSelector;
+        
         #endregion
 
         #region Initialization
 
-        private LootDetector _lootDetector;
-        private LootIconsSelector _lootChooser;
-
         private void Awake()
         {
-            _lootDetector = GetComponent<LootDetector>();
-            _lootChooser = GetComponent<LootIconsSelector>();
-            
-            _pickUpItem.Enable();
+            _pickUpAction.Enable();
         }
 
         #endregion
 
         private void OnEnable()
         {
-            _pickUpItem.started += InstantiatePickUp;
+            _pickUpAction.started += InstantiatePickUp;
         }
 
         private void OnDisable()
         {
-            _pickUpItem.started -= InstantiatePickUp;
+            _pickUpAction.started -= InstantiatePickUp;
         }
         
         private void InstantiatePickUp(InputAction.CallbackContext context)
         {
-            
+            var slot = _lootSelector.GetCurrentSelectedLoot();
+            var loot = slot.GetCurrentLoot();
+            AddItemToStorage(loot);
+            DeleteLoot(loot);
+        }
+
+        private void AddItemToStorage(PickableLoot loot)
+        {
+            _resourceInventory.AddItem(loot.GetResource(), loot.GetAmount());
+        }
+
+        private void DeleteLoot(PickableLoot loot)
+        {
+            loot.Disappear();
         }
     }
 }

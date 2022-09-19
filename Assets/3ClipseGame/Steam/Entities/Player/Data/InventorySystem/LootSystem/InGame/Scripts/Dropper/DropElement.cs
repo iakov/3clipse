@@ -1,44 +1,57 @@
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.Model.Scripts;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.Model.Dropper
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.Dropper
 {
     [System.Serializable]
-    public struct DropElement
+    public class DropElement
     {
-        #region SerializeFields
+        #region Serialization
 
-        public Resource DropItem;
+        [SerializeField] private Resource _resource;
         [SerializeField] private int _maxDropAmount;
         [SerializeField] [Range(0, 1)] private float _dropChance;
 
         #endregion
 
-        #region PrivateFields
+        #region Initialization
 
         private int _finalAmount;
         private bool _isRandomCalculated;
 
         #endregion
 
-        #region PublicMethods
+        #region Public
 
         public int GetFinalAmountOfDrop()
         {
             if (_isRandomCalculated) return _finalAmount;
-
-            var counter = 0;
-            while (counter < _maxDropAmount)
-            {
-                var randomNumber = Random.Range(0, 100);
-                if (randomNumber < _dropChance * 100) _finalAmount++;
-                counter++;
-            }
-
+            
+            _finalAmount = CalculateFinalAmount();
             _isRandomCalculated = true;
             return _finalAmount;
         }
 
+        public Resource GetResource()
+        {
+            return _resource;
+        }
+
         #endregion
+
+        private int CalculateFinalAmount()
+        {
+            var finalQuantity = 0;
+            
+            for (var i = 0; i < _maxDropAmount; i++)
+                if (RandomPercentage() < _dropChance) finalQuantity++;
+
+            return finalQuantity;
+        }
+
+        private float RandomPercentage()
+        {
+            return Random.Range(0f, 1f);
+        }
     }
 }

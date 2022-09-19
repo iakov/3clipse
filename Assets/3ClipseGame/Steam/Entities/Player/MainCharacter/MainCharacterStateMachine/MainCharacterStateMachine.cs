@@ -6,7 +6,7 @@ using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using _3ClipseGame.Steam.Global.Input.PlayerInput;
 using UnityEngine;
 using UnityEngine.Events;
-using CharacterController = _3ClipseGame.Steam.Entities.CustomController.CharacterController;
+using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController.CharacterController;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine
 {
@@ -50,7 +50,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public float JumpStaminaReduce => jumpStaminaReduce;
         public AnimationCurve RunModifierCurve => runModifierCurve;
         public AnimationCurve SlideModifierCurve => slideModifierCurve;
-        public LayerMask WalkableLayerMask => PlayerController.walkableLayers;
 
         public PlayerMover PlayerMover { get; private set; }
         public MainCharacter MainCharacter { get; private set; }
