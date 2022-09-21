@@ -4,16 +4,12 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InG
 {
     public class DePooledPickableLoot : PickableLoot
     {
-        #region Public
-
         public override event Action<PickableLoot> Disappeared;
 
         public override void Disappear()
         {
-            Destroy(gameObject);
             Disappeared?.Invoke(this);
+            Destroy(gameObject);
         }
-
-        #endregion
     }
 }

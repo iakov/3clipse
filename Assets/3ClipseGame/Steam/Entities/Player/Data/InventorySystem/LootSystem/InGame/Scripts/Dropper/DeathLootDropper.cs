@@ -8,12 +8,12 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InG
 {
     [RequireComponent(typeof(Entity))]
     
-    public class DeathLootDropper : MonoBehaviour
+    public class DeathLootDropper : LootDropper
     {
         #region Serialization
 
         [SerializeField] private List<DropElement> _possibleDropResources;
-        [SerializeField] private Pool pool;
+        [SerializeField] private Pool _pool;
         [SerializeField] private GameObject _decalsParent;
 
         #endregion
@@ -21,54 +21,41 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InG
         #region Initialization
 
         private Transform _transform;
+        private ILootCreator _lootCreator;
 
         private void Awake()
         {
             _transform = transform;
+            _lootCreator = new LootInitializer(_decalsParent, _pool);
         }
 
         #endregion
-
-        #region Drop
-
-        private void OnDisable()
+        
+        private void OnDestroy()
         {
-            Drop();
+            DropAll();
         }
 
-        private void Drop()
+        private void DropAll()
         {
-            var lootParent = InstantiateLootParent();
-
             foreach (var dropElement in _possibleDropResources)
             {
-                DropOneElement(dropElement, lootParent);
+                DropOneElement(dropElement);
             }
         }
-
-        private GameObject InstantiateLootParent()
+        
+        private void DropOneElement(DropElement element)
         {
-            var lootParent = new GameObject("Death Loot");
-            lootParent.transform.parent = _decalsParent.transform;
+            var pickableLootObject = _lootCreator.CreateLootObjectInPosition(_transform);
+            var pickableLootComponent = GetPickableLootFromObject(pickableLootObject);
             
-            return lootParent;
+            SetPickableLootTrack(pickableLootComponent, element);
+            DropLoot(pickableLootComponent);
         }
-
-        private void DropOneElement(DropElement element, GameObject lootParent)
+        
+        private void SetPickableLootTrack(PickableLoot loot, DropElement element)
         {
-            var pickableLoot = InstantiateObjectWithPickableLootComponent(lootParent);
-            
-            SetPickableLootTrack(pickableLoot, element);
-            DropLoot(pickableLoot);
-        }
-
-        private PickableLoot InstantiateObjectWithPickableLootComponent(GameObject lootParent)
-        {
-            var poolObject = pool.GetPoolObject();
-            poolObject.transform.parent = lootParent.transform;
-            poolObject.transform.position = _transform.position;
-            
-            return GetPickableLootFromObject(poolObject);
+            loot.SetDropElement(element);
         }
 
         private PickableLoot GetPickableLootFromObject(GameObject objectToGetFrom)
@@ -76,16 +63,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InG
             return objectToGetFrom.GetComponent<PickableLoot>();
         }
 
-        private void SetPickableLootTrack(PickableLoot loot, DropElement element)
-        {
-            loot.SetDropElement(element);
-        }
-
         private void DropLoot(PickableLoot loot)
         {
             loot.GetResource().Instantiate(loot.gameObject);
         }
-
-        #endregion
     }
 }

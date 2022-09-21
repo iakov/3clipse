@@ -31,7 +31,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
             _lootDisplay = GetComponent<LootDisplay>();
             _lootScrollHandler = GetComponent<LootScrollHandler>();
             _lootChaser = GetComponent<SelectedLootChaser>();
-            _lootHighlighter = new LootHighlighter(this);
+            _lootHighlighter = new LootHighlighter();
         }
 
         #endregion

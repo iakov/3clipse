@@ -73,13 +73,13 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         private void OnEnable()
         {
-            _lootDetector.NewLootDetected += AddNewIcon;
+            _lootDetector.LootDetected += AddIcon;
             _lootDetector.LootRetired += RemoveIcon;
         }
 
         private void OnDisable()
         {
-            _lootDetector.NewLootDetected -= AddNewIcon;
+            _lootDetector.LootDetected -= AddIcon;
             _lootDetector.LootRetired -= RemoveIcon;
         }
 
@@ -87,7 +87,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         #region NewLootDetectedHandler
 
-        private void AddNewIcon(PickableLoot newLoot)
+        private void AddIcon(PickableLoot newLoot)
         {
             var newIcon = InitializeIcon(newLoot);
             _lootIconsSelector.SelectIconIfFirst(newIcon);

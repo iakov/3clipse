@@ -36,12 +36,19 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
         
         private void InstantiatePickUp(InputAction.CallbackContext context)
         {
-            var slot = _lootSelector.GetCurrentSelectedLoot();
-            var loot = slot.GetCurrentLoot();
+            var icon = _lootSelector.GetCurrentSelectedLoot();
+            if (icon == null) return;
+            
+            PickUp(icon);
+        }
+
+        private void PickUp(LootIcon icon)
+        {
+            var loot = icon.GetCurrentLoot();
             AddItemToStorage(loot);
             DeleteLoot(loot);
         }
-
+        
         private void AddItemToStorage(PickableLoot loot)
         {
             _resourceInventory.AddItem(loot.GetResource(), loot.GetAmount());
