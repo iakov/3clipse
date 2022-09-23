@@ -4,22 +4,31 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
     {
         public AnimalControlState(MainCharacterStateMachine context, MainCharacterStateFactory factory) : base(context, factory){}
 
+        private bool _isSwitching;
+
         public override void OnStateEnter()
         {
             Context.InputHandler.SwitchToAnimalControls();
+
+            Context.InputHandler.ModeSwitchPressed += OnModeSwitch;
         }
 
         public override void OnStateUpdate(){}
 
-        public override void OnStateExit(){}
+        public override void OnStateExit()
+        {
+            Context.InputHandler.ModeSwitchPressed -= OnModeSwitch;
+        }
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
         {
             newMainCharacterState = null;
 
-            if (Context.InputHandler.IsSwitchPressed) newMainCharacterState = Factory.ExploreState();
+            if (_isSwitching) newMainCharacterState = Factory.ExploreState();
 
             return newMainCharacterState != null;
         }
+        
+        private void OnModeSwitch() => _isSwitching = true;
     }
 }

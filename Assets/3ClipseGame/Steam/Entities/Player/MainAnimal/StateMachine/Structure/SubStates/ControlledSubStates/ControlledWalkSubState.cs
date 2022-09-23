@@ -9,37 +9,47 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
 
         public ControlledWalkSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory){}
 
+        private bool _isJumped;
+
         #endregion
 
         #region SubStateMethods
 
-        public override void OnStateEnter(){}
+        public override void OnStateEnter()
+        {
+            Context.InputHandler.JumpPressed += OnJumpPressed;
+        }
         
         public override void OnStateUpdate()
         {
             StateTimer += Time.deltaTime;
             
-            var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
+            var rawMoveVector = new Vector3(Context.InputHandler.GetCurrentInput().x, 0f, Context.InputHandler.GetCurrentInput().y);
             var moveVector = rawMoveVector * Context.WalkSpeed;
             Context.AnimalMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
         }
 
-        public override void OnStateExit(){}
+        public override void OnStateExit()
+        {
+            Context.InputHandler.JumpPressed -= OnJumpPressed;
+        }
 
         public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
 
-            if (Context.InputHandler.IsJumpPressed) newAnimalState = Factory.Jump();
-            else if (Context.InputHandler.IsRunPressed) newAnimalState = Factory.Run();
+            if (_isJumped) newAnimalState = Factory.Jump();
+            else if (Context.InputHandler.GetIsRunPressed()) newAnimalState = Factory.Run();
             else if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down, 0.1f))
                 newAnimalState = Factory.Fall();
-            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = Factory.Stop();
-            else if (Context.InputHandler.IsCrouchPressed) newAnimalState = Factory.Crouch();
+            else if (Context.InputHandler.GetCurrentInput() == Vector2.zero) newAnimalState = Factory.Stop();
+            else if (Context.InputHandler.GetIsCrouchPressed()) newAnimalState = Factory.Crouch();
             
             return newAnimalState != null;
         }
         
         #endregion
+
+        private void OnJumpPressed() => _isJumped = true;
     }
 }

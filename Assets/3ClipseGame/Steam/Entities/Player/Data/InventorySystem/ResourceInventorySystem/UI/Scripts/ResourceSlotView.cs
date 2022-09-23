@@ -1,0 +1,63 @@
+using System;
+using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.InGame.Scripts;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.UI.Scripts
+{
+    public class ResourceSlotView : MonoBehaviour
+    {
+        #region SerializeFields
+
+        [SerializeField] private Image _imageComponent;
+        [SerializeField] private Text _textComponent;
+
+        #endregion
+
+        #region PrivateFields
+
+        private ResourceSlot _currentDisplayedSlot;
+
+        #endregion
+
+        #region MonoBehaviourMethods
+
+        private void Start()
+        {
+            UpdateView();
+        }
+
+        private void OnDisable()
+        {
+            _currentDisplayedSlot.AmountChanged -= UpdateView;
+        }
+
+        #endregion
+
+        #region PublicMethods
+
+        public void SwitchTrackedSlot(ResourceSlot slot)
+        {
+            if (_currentDisplayedSlot != null) _currentDisplayedSlot.AmountChanged -= UpdateView;
+            
+            _currentDisplayedSlot = slot ?? throw new ArgumentException("New tracked slot is null");
+            _currentDisplayedSlot.AmountChanged += UpdateView;
+            
+            UpdateView();
+        }
+
+        #endregion
+
+        #region PrivateMethods
+
+        private void UpdateView()
+        {
+            if (_currentDisplayedSlot.GetIsEmpty()) return;
+            
+            _imageComponent.sprite = _currentDisplayedSlot.GetItem().UIImage;
+            _textComponent.text = "x" + _currentDisplayedSlot.GetAmount();
+        }
+
+        #endregion
+    }
+}

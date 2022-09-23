@@ -1,0 +1,19 @@
+{
+    "name": "data.inventorysystem.lootsystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:76b4302c0dfa87c41aa92057e8403039",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:cf71ec2433dc5944eabd4949e7db58e4",
+        "GUID:2828a8154b258df489b4756ef547ba94"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

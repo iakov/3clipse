@@ -10,6 +10,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         public ControlledRunSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory){}
 
         private float _timeToMaximumSpeed;
+        private bool _isJumped;
         
         #endregion
 
@@ -19,13 +20,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         {
             Context.Stamina.IsRecovering = false;
             _timeToMaximumSpeed = Context.RunSpeed.keys[Context.RunSpeed.length - 1].time;
+            Context.InputHandler.JumpPressed += OnJumpPressed;
         }
         
         public override void OnStateUpdate()
         {
             StateTimer += Time.deltaTime;
             
-            var rawMoveVector = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
+            var rawMoveVector = new Vector3(Context.InputHandler.GetCurrentInput().x, 0f, Context.InputHandler.GetCurrentInput().y);
             var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
             var moveVector = rawMoveVector * (Context.RunSpeed.Evaluate(currentEvaluateTime) * Context.WalkSpeed);
             Context.AnimalMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
@@ -36,23 +38,26 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         public override void OnStateExit()
         {
             Context.Stamina.IsRecovering = true;
+            Context.InputHandler.JumpPressed -= OnJumpPressed;
         }
 
         public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
             
-            if (Context.InputHandler.IsJumpPressed) newAnimalState = Factory.Jump();
+            if (_isJumped) newAnimalState = Factory.Jump();
             else if (Context.Stamina.StaminaPercentage == 0) newAnimalState = Factory.Walk();
-            else if (!Context.InputHandler.IsRunPressed) newAnimalState = Factory.Walk();
+            else if (!Context.InputHandler.GetIsRunPressed()) newAnimalState = Factory.Walk();
             else if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down,
                          Context.AnimalController.Radius)) newAnimalState = Factory.Fall();
-            else if (Context.InputHandler.CurrentInput == Vector2.zero) newAnimalState = Factory.Stop();
-            else if (Context.InputHandler.IsCrouchPressed) newAnimalState = Factory.Crouch();
+            else if (Context.InputHandler.GetCurrentInput() == Vector2.zero) newAnimalState = Factory.Stop();
+            else if (Context.InputHandler.GetIsCrouchPressed()) newAnimalState = Factory.Crouch();
 
             return newAnimalState != null;
         }
         
         #endregion
+
+        private void OnJumpPressed() => _isJumped = true;
     }
 }

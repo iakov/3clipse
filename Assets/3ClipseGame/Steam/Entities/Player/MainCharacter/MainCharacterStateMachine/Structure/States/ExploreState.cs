@@ -4,6 +4,7 @@ using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using _3ClipseGame.Steam.Global.Scripts.GameScripts;
 using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States
 {
@@ -15,6 +16,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         
         private ExploreSubStatesFactory _subStateFactory;
         private MainCharacterSubState _currentMainCharacterSubState;
+        private bool _isSwitching;
 
         #endregion
 
@@ -28,6 +30,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             _currentMainCharacterSubState = _subStateFactory.Idle();
             _currentMainCharacterSubState.OnStateEnter();
             Context.InputHandler.SwitchToExploreControls();
+
+            Context.InputHandler.ModeSwitchPressed += OnModeSwitch;
         }
 
         public override void OnStateUpdate()
@@ -41,13 +45,15 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public override void OnStateExit()
         {
             Context.PlayerMover.ChangeMove(MoveType.StateMove, Vector3.zero, RotationType.NoRotation);
+            
+            Context.InputHandler.ModeSwitchPressed -= OnModeSwitch;
         }
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
         {
             newMainCharacterState = null;
 
-            if (Context.InputHandler.IsSwitchPressed) newMainCharacterState = Factory.AnimalControlState();
+            if (_isSwitching) newMainCharacterState = Factory.AnimalControlState();
             
             return newMainCharacterState != null;
         }
@@ -63,6 +69,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             _currentMainCharacterSubState = nextMainCharacterSubState;
             _currentMainCharacterSubState.OnStateEnter();
         }
+
+        private void OnModeSwitch() => _isSwitching = true;
 
         #endregion
     }

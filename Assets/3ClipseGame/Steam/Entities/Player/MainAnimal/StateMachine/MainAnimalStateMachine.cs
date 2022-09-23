@@ -1,9 +1,9 @@
 using System;
+using _3ClipseGame.Steam.Core.Input.PlayerInput;
 using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
-using _3ClipseGame.Steam.Global.Input.PlayerInput;
 using UnityEngine;
 using UnityEngine.AI;
 using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController.CharacterController;

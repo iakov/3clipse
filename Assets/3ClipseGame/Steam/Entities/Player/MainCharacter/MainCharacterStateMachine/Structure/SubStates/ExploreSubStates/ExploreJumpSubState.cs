@@ -31,7 +31,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateExit()
         {
-            Context.InputHandler.IsJumpPressed = false;
             Context.Stamina.IsRecovering = true;
         }
 

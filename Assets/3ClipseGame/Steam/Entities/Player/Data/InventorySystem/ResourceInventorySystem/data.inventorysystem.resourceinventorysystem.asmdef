@@ -1,0 +1,16 @@
+{
+    "name": "data.inventorysystem.resourceinventorysystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:76b4302c0dfa87c41aa92057e8403039"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

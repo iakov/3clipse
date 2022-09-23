@@ -26,7 +26,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             base.OnStateUpdate();
             
-            var rawInput = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
+            var rawInput = new Vector3(Context.InputHandler.GetCurrentInput().x, 0f, Context.InputHandler.GetCurrentInput().y);
             var moveVector =  Context.WalkSpeed * Context.CrouchSpeedModifier * rawInput;
             Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateWithCamera);
         }
@@ -42,7 +42,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
             if (!Context.PlayerController.IsGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
                     Context.PlayerController.Radius)) newMainCharacterState = _factory.Fall();
-            else if (!Context.InputHandler.IsCrouchPressed) newMainCharacterState = _factory.Idle();
+            else if (!Context.InputHandler.GetIsCrouchPressed()) newMainCharacterState = _factory.Idle();
             
             return newMainCharacterState != null;
         }

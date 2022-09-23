@@ -10,6 +10,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         public ControlledJumpSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory){}
 
         private Vector3 _lastMoveVector;
+        private bool _isJumped;
 
         #endregion
 
@@ -33,7 +34,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
 
         public override void OnStateExit()
         {
-            Context.InputHandler.IsJumpPressed = false;
             Context.Stamina.IsRecovering = true;
         }
 

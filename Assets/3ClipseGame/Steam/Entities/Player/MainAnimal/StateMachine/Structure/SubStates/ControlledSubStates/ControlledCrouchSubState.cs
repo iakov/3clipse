@@ -19,7 +19,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         {
             StateTimer += Time.deltaTime;
             
-            var rawInput = new Vector3(Context.InputHandler.CurrentInput.x, 0f, Context.InputHandler.CurrentInput.y);
+            var rawInput = new Vector3(Context.InputHandler.GetCurrentInput().x, 0f, Context.InputHandler.GetCurrentInput().y);
             var moveVector = rawInput * Context.CrouchSpeedModifier;
             Context.AnimalMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateWithCamera);
         }
@@ -32,7 +32,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
             
             if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down,
                     Context.AnimalController.Radius)) newAnimalState = Factory.Fall();
-            else if (!Context.InputHandler.IsCrouchPressed) newAnimalState = Factory.Idle();
+            else if (!Context.InputHandler.GetIsCrouchPressed()) newAnimalState = Factory.Idle();
 
             return newAnimalState != null;
         }

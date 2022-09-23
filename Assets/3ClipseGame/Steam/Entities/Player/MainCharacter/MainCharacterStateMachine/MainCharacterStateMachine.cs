@@ -1,9 +1,9 @@
 using System;
+using _3ClipseGame.Steam.Core.Input.PlayerInput;
 using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
-using _3ClipseGame.Steam.Global.Input.PlayerInput;
 using UnityEngine;
 using UnityEngine.Events;
 using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController.CharacterController;
@@ -58,7 +58,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public Transform Transform { get; private set; }
         public Stamina Stamina { get; private set; }
         public Animator CharacterAnimator { get; private set; }
-        
+
         public event UnityAction<MainCharacterState, MainCharacterState> SwitchingState
         {
             add => switchingState.AddListener(value);
@@ -104,8 +104,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         }
 
         private void OnEnable() => _currentMainCharacterState.SwitchingSubState += SwitchSubState;
-        private void OnDisable() => _currentMainCharacterState.SwitchingSubState -= SwitchSubState;
         
+        private void OnDisable() => _currentMainCharacterState.SwitchingSubState -= SwitchSubState;
 
         #endregion
 
@@ -124,7 +124,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         private void SwitchState(MainCharacterState nextMainCharacterState)
         {
-            InputHandler.IsSwitchPressed = false;
             switchingState?.Invoke(_currentMainCharacterState, nextMainCharacterState);
             
             _currentMainCharacterState.OnStateExit();

@@ -10,6 +10,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         public ControlledStopSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory){}
 
         private Vector3 _lastMoveVector;
+        private bool _isJumped;
 
         #endregion
 
@@ -18,6 +19,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         public override void OnStateEnter()
         {
             _lastMoveVector = Context.AnimalMover.GetLastMove(MoveType.StateMove, true);
+            Context.InputHandler.JumpPressed += OnJumpPressed;
         }
 
         public override void OnStateUpdate()
@@ -29,21 +31,26 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
             Context.AnimalMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, RotationType.NoRotation);
         }
 
-        public override void OnStateExit(){}
+        public override void OnStateExit()
+        {
+            Context.InputHandler.JumpPressed -= OnJumpPressed;
+        }
 
         public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
 
-            if (Context.InputHandler.IsJumpPressed) newAnimalState = Factory.Jump();
+            if (_isJumped) newAnimalState = Factory.Jump();
             else if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down,
                          Context.AnimalController.Radius)) newAnimalState = Factory.Fall();
             else if (Context.AnimalMover.GetLastMove(MoveType.StateMove, false) == Vector3.zero) newAnimalState = Factory.Idle();
-            else if (Context.InputHandler.CurrentInput != Vector2.zero) newAnimalState = Factory.Walk();
+            else if (Context.InputHandler.GetCurrentInput() != Vector2.zero) newAnimalState = Factory.Walk();
 
             return newAnimalState != null;
         }
         
         #endregion
+
+        private void OnJumpPressed() => _isJumped = true;
     }
 }
