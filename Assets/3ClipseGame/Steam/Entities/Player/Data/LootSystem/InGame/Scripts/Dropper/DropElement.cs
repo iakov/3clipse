@@ -8,9 +8,15 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Drop
     {
         #region Serialization
 
+        public DropElement(int maxDropAmount, float dropChance)
+        {
+            _maxDropAmount = maxDropAmount;
+            _dropChance = dropChance;
+        }
+
         [SerializeField] private Resource _resource;
-        [SerializeField] private int _maxDropAmount;
-        [SerializeField] [Range(0, 1)] private float _dropChance;
+        [SerializeField] private int _maxDropAmount = 5;
+        [SerializeField] [Range(0, 1)] private float _dropChance = 0.5f;
 
         #endregion
 

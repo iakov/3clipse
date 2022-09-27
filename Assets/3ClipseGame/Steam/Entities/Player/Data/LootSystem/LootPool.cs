@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.LootComponent;
+using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent;
+using _3ClipseGame.Steam.Global.Scripts.Pool;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Global.Scripts.Pool
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem
 {
     public class LootPool : Pool
     {
         #region SerializeFields
 
-        [SerializeField] private int poolAmount;
+        [SerializeField] private int poolAmount = 10;
         [SerializeField] private GameObject poolObjectPrefab;
 
         #endregion
@@ -29,6 +30,8 @@ namespace _3ClipseGame.Steam.Global.Scripts.Pool
 
         private void Start()
         {
+            if (poolObjectPrefab == null) 
+                poolObjectPrefab = new GameObject();
             InstantiateLootObjects();
         }
 

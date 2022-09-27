@@ -1,11 +1,11 @@
 using _3ClipseGame.Steam.Global.Scripts.Pool;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.Dropper
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Dropper
 {
-    public class LootInitializer : ILootCreator
+    public class PooledLootCreator : ILootCreator
     {
-        public LootInitializer(GameObject decalsParent, Pool pool)
+        public PooledLootCreator(GameObject decalsParent, Pool pool)
         {
             _pool = pool;
             _decalsParent = decalsParent;

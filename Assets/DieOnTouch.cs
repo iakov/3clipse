@@ -1,5 +1,5 @@
 using System.Collections;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.Dropper;
+using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Dropper;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
 using _3ClipseGame.Steam.Entities.Scripts;
 using UnityEngine;

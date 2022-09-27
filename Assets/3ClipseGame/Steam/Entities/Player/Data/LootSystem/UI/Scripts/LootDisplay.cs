@@ -1,6 +1,5 @@
 using System.Collections.Specialized;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.Detector;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.LootComponent;
+using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Detector;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent;
 using UnityEngine;
 using UnityEngine.UI;

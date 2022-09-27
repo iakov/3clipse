@@ -1,6 +1,7 @@
 using System;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.InGame.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Dropper;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent
@@ -30,6 +31,8 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Loot
 
         public void SetDropElement(DropElement element)
         {
+            if(element == null) return;
+            
             _trackedDropElement = element;
             TrackedElementUpdated?.Invoke();
         }

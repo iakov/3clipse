@@ -1,9 +1,8 @@
 using System;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.LootComponent;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.Detector
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Detector
 {
     [RequireComponent(typeof(SphereCollider))]
     
@@ -23,6 +22,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InG
         private void Awake()
         {
             _detectedLootHolder = DetectedLootHolder.Empty();
+            GetComponent<SphereCollider>().isTrigger = true;
         }
 
         private void OnEnable()
@@ -52,6 +52,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InG
         private void OnTriggerEnter(Collider other)
         {
             if(!IsPickableLoot(other, out var loot)) return;
+            
             _detectedLootHolder.TryAddLoot(loot);
         }
 

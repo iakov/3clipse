@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.LootComponent;
-using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Dropper;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent;
 using _3ClipseGame.Steam.Global.Scripts.Pool;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Scripts.Dropper
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Dropper
 {
     public class DeathLootDropper : LootDropper
     {
@@ -25,7 +23,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InG
         private void Awake()
         {
             _transform = transform;
-            _lootCreator = new LootInitializer(_decalsParent, _pool);
+            _lootCreator = new PooledLootCreator(_decalsParent, _pool);
         }
 
         #endregion
