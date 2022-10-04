@@ -6,6 +6,24 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Drop
     [System.Serializable]
     public class DropElement
     {
+        #region Public
+
+        public int GetFinalAmountOfDrop()
+        {
+            if (_isRandomCalculated) return _finalAmount;
+            
+            _finalAmount = CalculateFinalAmount();
+            _isRandomCalculated = true;
+            return _finalAmount;
+        }
+
+        public Resource GetResource()
+        {
+            return _resource;
+        }
+
+        #endregion
+        
         #region Serialization
 
         public DropElement(int maxDropAmount, float dropChance)
@@ -24,24 +42,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Drop
 
         private int _finalAmount;
         private bool _isRandomCalculated;
-
-        #endregion
-
-        #region Public
-
-        public int GetFinalAmountOfDrop()
-        {
-            if (_isRandomCalculated) return _finalAmount;
-            
-            _finalAmount = CalculateFinalAmount();
-            _isRandomCalculated = true;
-            return _finalAmount;
-        }
-
-        public Resource GetResource()
-        {
-            return _resource;
-        }
 
         #endregion
 

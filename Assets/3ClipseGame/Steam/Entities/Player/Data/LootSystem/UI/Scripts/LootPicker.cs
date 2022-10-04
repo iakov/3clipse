@@ -1,8 +1,7 @@
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.Scripts;
+using _3ClipseGame.Steam.Core.GameStates.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.InGame.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 {
@@ -10,32 +9,22 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
     {
         #region Serialization
 
-        [SerializeField] private InputAction _pickUpAction;
         [SerializeField] private ResourceInventory _resourceInventory;
         [SerializeField] private LootIconsSelector _lootSelector;
         
         #endregion
 
-        #region Initialization
-
-        private void Awake()
-        {
-            _pickUpAction.Enable();
-        }
-
-        #endregion
-
         private void OnEnable()
         {
-            _pickUpAction.started += InstantiatePickUp;
+            Game.Instance.HUDInputHandler.LootInteracted += InstantiatePickUp;
         }
 
         private void OnDisable()
         {
-            _pickUpAction.started -= InstantiatePickUp;
+            Game.Instance.HUDInputHandler.LootInteracted -= InstantiatePickUp;
         }
         
-        private void InstantiatePickUp(InputAction.CallbackContext context)
+        private void InstantiatePickUp()
         {
             var icon = _lootSelector.GetCurrentSelectedLoot();
             if (icon == null) return;
@@ -43,7 +32,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
             PickUp(icon);
         }
 
-        private void PickUp(LootIcon icon)
+        private void PickUp(LootIcon.LootIcon icon)
         {
             var loot = icon.GetCurrentLoot();
             AddItemToStorage(loot);

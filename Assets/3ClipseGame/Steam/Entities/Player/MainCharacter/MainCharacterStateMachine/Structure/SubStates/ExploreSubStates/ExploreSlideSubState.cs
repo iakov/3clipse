@@ -17,7 +17,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         private float _timeToLowerSpeed;
         
         private float _currentEvaluateTime;
-        private bool _isJumped;
 
         #endregion
         
@@ -31,8 +30,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             _timeToLowerSpeed = Context.SlideModifierCurve.keys[Context.SlideModifierCurve.length - 1].time;
 
             Context.Stamina.IsRecovering = false;
-
-            Context.InputHandler.JumpPressed += OnJumpPressed;
         }
 
         public override void OnStateUpdate()
@@ -47,8 +44,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public override void OnStateExit()
         {
             Context.Stamina.IsRecovering = true;
-            
-            Context.InputHandler.JumpPressed -= OnJumpPressed;
         }
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
@@ -56,13 +51,11 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             newMainCharacterState = null;
             
             if (Math.Abs(_currentEvaluateTime - _timeToLowerSpeed) == 0) newMainCharacterState = _factory.Crouch();
-            else if (_isJumped) newMainCharacterState = _factory.Jump();
+            else if (Context.InputProcessor.GetIsJumpPressedRecently()) newMainCharacterState = _factory.Jump();
             
             return newMainCharacterState != null;
         }
 
         #endregion
-
-        private void OnJumpPressed() => _isJumped = true;
     }
 }

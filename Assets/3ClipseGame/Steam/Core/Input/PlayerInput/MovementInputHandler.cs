@@ -11,16 +11,9 @@ namespace _3ClipseGame.Steam.Core.Input.PlayerInput
 
         public event Action ModeSwitchPressed;
         public event Action JumpPressed;
-        public event Action LootInteractionPressed;
-        private Vector2 _currentInput;
-        private Vector2 _lastInput;
-        private bool _isRunPressed;
-        private bool _isCrouchPressed;
-
-        public Vector2 GetCurrentInput() => _currentInput;
-        public Vector2 GetLastInput() => _lastInput;
-        public bool GetIsRunPressed() => _isRunPressed;
-        public bool GetIsCrouchPressed() => _isCrouchPressed;
+        public event Action<Vector2> InputChanged;
+        public event Action<bool> CrouchChanged;
+        public event Action<bool> SprintChanged;
 
         public void SwitchToAnimalControls()
         {
@@ -52,10 +45,6 @@ namespace _3ClipseGame.Steam.Core.Input.PlayerInput
         public override void Disable() => OnDisable();
 
         public override void Enable() => OnEnable();
-        
-        // [NonSerialized] public bool IsCrouchPressed;
-        // [NonSerialized] public bool IsJumpPressed;
-        // [NonSerialized] public bool IsLootInteractionPressed;
 
         private MovementInput _movementInput;
         private InputActionMap _lastActionMap;
@@ -90,8 +79,6 @@ namespace _3ClipseGame.Steam.Core.Input.PlayerInput
             _movementInput.ExploreStateActionMap.Jump.canceled += OnJumpChanged;
 
             _movementInput.ExploreStateActionMap.SwitchToAnimal.started += OnSwitch;
-
-            _movementInput.ExploreStateActionMap.LootInteraction.started += OnLootInteraction;
             
             //Set Animal Handlers
             _movementInput.AnimalStateActionMap.Walk.started += OnWalkChanged;
@@ -112,33 +99,27 @@ namespace _3ClipseGame.Steam.Core.Input.PlayerInput
 
         private void OnDisable()
         {
-            _currentInput = Vector2.zero;
-            _isRunPressed = false;
-            _isCrouchPressed = false;
             _movementInput.Disable();
         }
 
         #endregion
 
         #region EventHandlers
+
+        private void OnWalkChanged(InputAction.CallbackContext context) 
+            => InputChanged?.Invoke(context.ReadValue<Vector2>());
         
-        private void OnWalkChanged(InputAction.CallbackContext context) => AddInputLog(context.ReadValue<Vector2>());
-        private void OnJumpChanged(InputAction.CallbackContext context) => JumpPressed?.Invoke();
-        private void OnRunChanged(InputAction.CallbackContext context) => _isRunPressed = context.ReadValueAsButton();
-        private void OnCrouchChanged(InputAction.CallbackContext context) => _isCrouchPressed = context.ReadValueAsButton();
-        private void OnSwitch(InputAction.CallbackContext context) => ModeSwitchPressed?.Invoke();
-        private void OnLootInteraction(InputAction.CallbackContext context) => LootInteractionPressed?.Invoke();
+        private void OnJumpChanged(InputAction.CallbackContext context) 
+            => JumpPressed?.Invoke();
+
+        private void OnRunChanged(InputAction.CallbackContext context)
+            => SprintChanged?.Invoke(context.ReadValueAsButton());
         
-
-        #endregion
-
-        #region PrivateMethods
-
-        private void AddInputLog(Vector2 newInput)
-        {
-            _lastInput = _currentInput;
-            _currentInput = newInput;
-        }
+        private void OnCrouchChanged(InputAction.CallbackContext context) 
+            => CrouchChanged?.Invoke(context.ReadValueAsButton());
+        
+        private void OnSwitch(InputAction.CallbackContext context)
+            => ModeSwitchPressed?.Invoke();
 
         #endregion
     }

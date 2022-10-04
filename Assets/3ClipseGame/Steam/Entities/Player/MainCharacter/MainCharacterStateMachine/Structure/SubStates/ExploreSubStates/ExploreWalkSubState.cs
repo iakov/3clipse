@@ -12,7 +12,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             _factory = (ExploreSubStatesFactory) factory;
 
         private ExploreSubStatesFactory _factory;
-        private bool _isJumped;
         
         private static readonly int IsWalking = Animator.StringToHash("IsWalking");
 
@@ -23,7 +22,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public override void OnStateEnter()
         {
             Context.CharacterAnimator.SetBool(IsWalking, true);
-            Context.InputHandler.JumpPressed += OnJumpPressed;
         }
 
         public override void OnStateUpdate()
@@ -37,7 +35,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public override void OnStateExit()
         {
             Context.CharacterAnimator.SetBool(IsWalking, false);
-            Context.InputHandler.JumpPressed -= OnJumpPressed;
         }
 
         public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
@@ -45,10 +42,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             newMainCharacterState = null;
 
             if (!Context.PlayerController.IsGrounded && !Context.PlayerController.IsGrounded) newMainCharacterState = _factory.Fall();
-            else if (_isJumped) newMainCharacterState = _factory.Jump();
-            else if (Context.InputHandler.GetCurrentInput() == Vector2.zero) newMainCharacterState = _factory.Stop();
-            else if (Context.InputHandler.GetIsRunPressed() && Context.Stamina.StaminaPercentage > Context.MinRunEntryStamina) newMainCharacterState = _factory.Run();
-            else if (Context.InputHandler.GetIsCrouchPressed()) newMainCharacterState = _factory.Crouch();
+            else if (Context.InputProcessor.GetIsJumpPressedRecently()) newMainCharacterState = _factory.Jump();
+            else if (Context.InputProcessor.GetCurrentInput() == Vector2.zero) newMainCharacterState = _factory.Stop();
+            else if (Context.InputProcessor.GetIsRunPressed() && Context.Stamina.StaminaPercentage > Context.MinRunEntryStamina) newMainCharacterState = _factory.Run();
+            else if (Context.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = _factory.Crouch();
             
             return newMainCharacterState != null;
         }
@@ -57,7 +54,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         
         private void Move()
         {
-            var rawMoveVector = new Vector3(Context.InputHandler.GetCurrentInput().x, 0f, Context.InputHandler.GetCurrentInput().y);
+            var rawMoveVector = new Vector3(Context.InputProcessor.GetCurrentInput().x, 0f, Context.InputProcessor.GetCurrentInput().y);
             var moveVector = rawMoveVector * Context.WalkSpeed;
             Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
         }
@@ -69,7 +66,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             
             Context.PlayerController.Rotate(Quaternion.LookRotation(rotatedMove));
         }
-
-        private void OnJumpPressed() => _isJumped = true;
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Global.Scripts.Pool
+namespace _3ClipseGame.Steam.Core.Scripts.Pool
 {
     public class PoolElement : MonoBehaviour
     {

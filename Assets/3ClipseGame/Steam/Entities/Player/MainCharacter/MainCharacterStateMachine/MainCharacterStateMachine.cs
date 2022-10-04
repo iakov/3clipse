@@ -54,6 +54,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public PlayerMover PlayerMover { get; private set; }
         public MainCharacter MainCharacter { get; private set; }
         public CharacterController PlayerController { get; private set; }
+        public MovementInputProcessor InputProcessor { get; private set; }
         public MovementInputHandler InputHandler { get; private set; }
         public Transform Transform { get; private set; }
         public Stamina Stamina { get; private set; }
@@ -84,13 +85,15 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         private void Awake()
         {
-            PlayerController = GetComponent<CharacterController>();
             InputHandler = GetComponentInParent<MovementInputHandler>();
+            PlayerController = GetComponent<CharacterController>();
             PlayerMover = GetComponent<PlayerMover>();
-            Transform = PlayerController.transform;
             MainCharacter = GetComponent<MainCharacter>();
             Stamina = GetComponent<Stamina>();
             CharacterAnimator = GetComponentInChildren<Animator>();
+            
+            InputProcessor = new MovementInputProcessor(InputHandler);
+            Transform = PlayerController.transform;
             
             _mainCharacterStateFactory = new MainCharacterStateFactory(this);
             _currentMainCharacterState = _mainCharacterStateFactory.ExploreState();

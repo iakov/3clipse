@@ -71,15 +71,6 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""LootInteraction"",
-                    ""type"": ""Button"",
-                    ""id"": ""a2b5509a-dc5f-456c-b97e-6eba1d175fed"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -179,17 +170,6 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SwitchToAnimal"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00dc88a0-8797-4cae-8146-ff28e0583e39"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LootInteraction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -385,7 +365,6 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
         m_ExploreStateActionMap_Crouch = m_ExploreStateActionMap.FindAction("Crouch", throwIfNotFound: true);
         m_ExploreStateActionMap_Jump = m_ExploreStateActionMap.FindAction("Jump", throwIfNotFound: true);
         m_ExploreStateActionMap_SwitchToAnimal = m_ExploreStateActionMap.FindAction("SwitchToAnimal", throwIfNotFound: true);
-        m_ExploreStateActionMap_LootInteraction = m_ExploreStateActionMap.FindAction("LootInteraction", throwIfNotFound: true);
         // AnimalStateActionMap
         m_AnimalStateActionMap = asset.FindActionMap("AnimalStateActionMap", throwIfNotFound: true);
         m_AnimalStateActionMap_Walk = m_AnimalStateActionMap.FindAction("Walk", throwIfNotFound: true);
@@ -460,7 +439,6 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_ExploreStateActionMap_Crouch;
     private readonly InputAction m_ExploreStateActionMap_Jump;
     private readonly InputAction m_ExploreStateActionMap_SwitchToAnimal;
-    private readonly InputAction m_ExploreStateActionMap_LootInteraction;
     public struct ExploreStateActionMapActions
     {
         private @MovementInput m_Wrapper;
@@ -470,7 +448,6 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_ExploreStateActionMap_Crouch;
         public InputAction @Jump => m_Wrapper.m_ExploreStateActionMap_Jump;
         public InputAction @SwitchToAnimal => m_Wrapper.m_ExploreStateActionMap_SwitchToAnimal;
-        public InputAction @LootInteraction => m_Wrapper.m_ExploreStateActionMap_LootInteraction;
         public InputActionMap Get() { return m_Wrapper.m_ExploreStateActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -495,9 +472,6 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                 @SwitchToAnimal.started -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnSwitchToAnimal;
                 @SwitchToAnimal.performed -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnSwitchToAnimal;
                 @SwitchToAnimal.canceled -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnSwitchToAnimal;
-                @LootInteraction.started -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnLootInteraction;
-                @LootInteraction.performed -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnLootInteraction;
-                @LootInteraction.canceled -= m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface.OnLootInteraction;
             }
             m_Wrapper.m_ExploreStateActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -517,9 +491,6 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
                 @SwitchToAnimal.started += instance.OnSwitchToAnimal;
                 @SwitchToAnimal.performed += instance.OnSwitchToAnimal;
                 @SwitchToAnimal.canceled += instance.OnSwitchToAnimal;
-                @LootInteraction.started += instance.OnLootInteraction;
-                @LootInteraction.performed += instance.OnLootInteraction;
-                @LootInteraction.canceled += instance.OnLootInteraction;
             }
         }
     }
@@ -629,7 +600,6 @@ public partial class @MovementInput : IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchToAnimal(InputAction.CallbackContext context);
-        void OnLootInteraction(InputAction.CallbackContext context);
     }
     public interface IAnimalStateActionMapActions
     {

@@ -1,4 +1,5 @@
 using System.Collections;
+using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Visuals.Scripts;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Visuals.Scripts

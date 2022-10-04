@@ -1,8 +1,8 @@
+using _3ClipseGame.Steam.Core.GameStates.Scripts;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 {
-    [RequireComponent(typeof(LootScrollHandler))]
     [RequireComponent(typeof(LootDisplay))]
     [RequireComponent(typeof(SelectedLootChaser))]
     
@@ -10,26 +10,24 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
     {
         #region Public
 
-        public LootIcon GetCurrentSelectedLoot()
+        public LootIcon.LootIcon GetCurrentSelectedLoot()
         {
             return _currentSelectedLoot;
         }
 
         #endregion
-
+        
         #region Initialiation
 
         private LootDisplay _lootDisplay;
-        private LootScrollHandler _lootScrollHandler;
         private LootHighlighter _lootHighlighter;
         private SelectedLootChaser _lootChaser;
 
-        private LootIcon _currentSelectedLoot;
+        private LootIcon.LootIcon _currentSelectedLoot;
         
         private void Awake()
         {
             _lootDisplay = GetComponent<LootDisplay>();
-            _lootScrollHandler = GetComponent<LootScrollHandler>();
             _lootChaser = GetComponent<SelectedLootChaser>();
             _lootHighlighter = new LootHighlighter();
         }
@@ -40,22 +38,22 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         private void OnEnable()
         {
-            _lootScrollHandler.Scrolled += SwitchCurrentSelectedLoot;
+            Game.Instance.HUDInputHandler.LootScrolled += OnLootScrolled;
         }
 
         private void OnDisable()
         {
-            _lootScrollHandler.Scrolled -= SwitchCurrentSelectedLoot;
+            Game.Instance.HUDInputHandler.LootScrolled -= OnLootScrolled;
         }
 
         #endregion
 
         #region LootListIncreasedHandler
 
-        public void SelectIconIfFirst(LootIcon icon)
+        public void SelectIconIfFirst(LootIcon.LootIcon icon)
         {
             if (_currentSelectedLoot != null) return;
-            
+
             SwitchCurrentSelectedLoot(icon);
         }
 
@@ -63,30 +61,42 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         #region LootListDecreasedHandler
 
-        public void ChangeSelectedIconIfDeleting(LootIcon retiringIcon)
+        public void ChangeSelectedIconIfDeleting(LootIcon.LootIcon retiringIcon)
         {
-            if (_currentSelectedLoot != retiringIcon) return;
-            SwitchIconToClosest();
+            if (_currentSelectedLoot == retiringIcon) 
+                SwitchIconToClosest();
         }
         
-        private LootIcon GetClosestToCurrentIcon()
+        private LootIcon.LootIcon GetClosestToCurrentIcon()
         {
-            return _lootDisplay.GetPreviousObject(_currentSelectedLoot)
-                   ?? _lootDisplay.GetNextObject(_currentSelectedLoot);
+            var closestIcon = _lootDisplay.GetPreviousObject(_currentSelectedLoot);
+            if (closestIcon == _currentSelectedLoot)
+                closestIcon = _lootDisplay.GetNextObject(_currentSelectedLoot);
+
+            return closestIcon;
         }
 
         #endregion
+
+        private void OnLootScrolled(float scrollValue)
+        {
+            var newIcon = scrollValue < 0f 
+                ? _lootDisplay.GetNextObject(_currentSelectedLoot) 
+                : _lootDisplay.GetPreviousObject(_currentSelectedLoot);
+            
+            SwitchCurrentSelectedLoot(newIcon);
+        }
         
-        private void SwitchCurrentSelectedLoot(LootIcon newIcon)
+        private void SwitchCurrentSelectedLoot(LootIcon.LootIcon newIcon)
         {
             ChangeView(newIcon);
         }
 
-        private void ChangeView(LootIcon newIcon)
+        private void ChangeView(LootIcon.LootIcon newIcon)
         {
             var previousLoot = _currentSelectedLoot;
             _currentSelectedLoot = newIcon;
-            _lootHighlighter.SwitchHighlightedIcon(previousLoot, newIcon);
+            _lootHighlighter.SwitchHighlightedIcon(previousLoot, _currentSelectedLoot);
             _lootChaser.EditScroll(newIcon);
         }
 

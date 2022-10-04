@@ -1,14 +1,14 @@
 using System.Collections;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Detector;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent;
-using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using Assert = UnityEngine.Assertions.Assert;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.PlayMode
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.PlayMode.in_game
 {
-    public class detected_loot_holder_playmode
+    public class loot_detector
     {
         #region SetUp
 
@@ -18,29 +18,27 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.PlayMode
         private bool _isRetireEventTriggered;
         private bool _isDetectedEventTriggered;
 
-        [SetUp]
-        public void Init()
+        [UnitySetUp]
+        public IEnumerator Init()
         {
+            SceneManager.LoadScene("loot_detector_test_scene");
+            yield return new WaitForSeconds(0.1f);
+            
             _isDetectedEventTriggered = false;
             _isRetireEventTriggered = false;
-        
+            
             InitializeLoot();
             InitializeDetector();
         }
 
         private void InitializeLoot()
         {
-            _loot = new GameObject("Loot");
-            _loot.AddComponent<SphereCollider>().radius = 0.05f;
-            _loot.AddComponent<Rigidbody>();
-            _loot.AddComponent<DePooledPickableLoot>();
-            _loot.transform.position = new Vector3(0f, 2f, 0f);
+            _loot = Object.FindObjectOfType<PickableLoot>().gameObject;
         }
 
         private void InitializeDetector()
         {
-            _lootDetector = new GameObject("Loot Detector").AddComponent<LootDetector>();
-            _lootDetector.GetComponent<SphereCollider>().radius = 1f;
+            _lootDetector = Object.FindObjectOfType<LootDetector>();
 
             _lootDetector.LootRetired += OnLootRetired;
             _lootDetector.LootDetected += OnLootDetected;
@@ -87,17 +85,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.PlayMode
             yield return null;
         
             Assert.IsTrue(_isRetireEventTriggered);
-        }
-
-        #endregion
-
-        #region TearDown
-
-        [TearDown]
-        public void Clear()
-        {
-            Object.Destroy(_lootDetector.gameObject);
-            if(_loot != null) Object.Destroy(_loot);
         }
 
         #endregion

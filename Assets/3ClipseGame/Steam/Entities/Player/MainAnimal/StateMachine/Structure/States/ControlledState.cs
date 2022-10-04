@@ -1,3 +1,4 @@
+using _3ClipseGame.Steam.Core.GameStates.Scripts;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.ControlledSubStates;
 using _3ClipseGame.Steam.Global.Scripts.GameScripts;
 using _3ClipseGame.Steam.Global.StateDrivenCamera;
@@ -13,7 +14,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         private ControlledSubStatesFactory _subStateFactory;
 
         #endregion
-
+        
         #region StateMethods
 
         public override void OnStateEnter()
@@ -23,7 +24,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
             base.OnStateEnter();
            
             Game.Instance.StateDrivenCamera.SwitchCamera(CameraAnimatorController.CameraType.Animal);
-            Context.InputHandler.SwitchToAnimalControls();
             Context.AnimalAgent.enabled = false;
             Context.AnimalController.enabled = true;
         }

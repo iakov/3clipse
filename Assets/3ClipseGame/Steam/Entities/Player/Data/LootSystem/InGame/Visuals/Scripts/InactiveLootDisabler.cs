@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Visuals.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Visuals.Scripts
 {
     [RequireComponent(typeof(AnimateLoot))]
     
@@ -9,6 +9,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InG
         #region Serialization
 
         [SerializeField] private float _disableTime = 0.5f;
+        [SerializeField] private string _disabledLayerName = "Decals";
 
         #endregion
 
@@ -57,6 +58,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InG
 
         private void DeactivateRigidbody()
         {
+            gameObject.layer = LayerMask.NameToLayer(_disabledLayerName);
             _rigidbody.isKinematic = true;
             AddAnimateLoot();
             Destroy(this);

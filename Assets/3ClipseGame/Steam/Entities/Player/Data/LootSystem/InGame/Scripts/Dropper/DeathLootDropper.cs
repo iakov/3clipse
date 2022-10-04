@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using _3ClipseGame.Steam.Core.Scripts.Pool;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent;
-using _3ClipseGame.Steam.Global.Scripts.Pool;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Dropper
@@ -43,7 +43,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Drop
         
         private void DropOneElement(DropElement element)
         {
-            var pickableLootObject = _lootCreator.CreateLootObjectInPosition(_transform);
+            var pickableLootObject = _lootCreator?.CreateLootObjectInPosition(_transform);
             var pickableLootComponent = GetPickableLootFromObject(pickableLootObject);
             
             SetPickableLootTrack(pickableLootComponent, element);

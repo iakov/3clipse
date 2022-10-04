@@ -1,4 +1,4 @@
-using _3ClipseGame.Steam.Global.Scripts.Pool;
+using _3ClipseGame.Steam.Core.Scripts.Pool;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Dropper

@@ -3,7 +3,7 @@ using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComp
 using NUnit.Framework;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.EditMode
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.PlayMode.in_game
 {
     public class pickable_loot
     {

@@ -1,3 +1,4 @@
+using System;
 using _3ClipseGame.Steam.Global.Input.Scripts;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,6 +26,9 @@ namespace _3ClipseGame.Steam.Core.Input.HUDInput
             remove => switchModeToMenu.RemoveListener(value);
         }
 
+        public event Action LootInteracted;
+        public event Action<float> LootScrolled;
+
         #endregion
 
         #region Initialization
@@ -46,6 +50,10 @@ namespace _3ClipseGame.Steam.Core.Input.HUDInput
 
             _hudInputActions.HUDActions.ShowElementalWheel.started += OnToggleElementalWheel;
             _hudInputActions.HUDActions.ShowElementalWheel.canceled += OnToggleElementalWheel;
+
+            _hudInputActions.HUDActions.LootInteraction.started += OnLootInteracted;
+
+            _hudInputActions.HUDActions.LootScroll.started += OnLootScrolled;
         }
 
         private void OnDisable()
@@ -66,13 +74,17 @@ namespace _3ClipseGame.Steam.Core.Input.HUDInput
 
         #region PrivateMethods
         
-        private void OnToggleElementalWheel(InputAction.CallbackContext context) =>
-            elementalWheel.SetActive(context.ReadValueAsButton());
+        private void OnToggleElementalWheel(InputAction.CallbackContext context) 
+            => elementalWheel.SetActive(context.ReadValueAsButton());
 
         private void SwitchModeToMain(InputAction.CallbackContext context)
-        {
-            switchModeToMenu?.Invoke();
-        }
+            => switchModeToMenu?.Invoke();
+
+        private void OnLootInteracted(InputAction.CallbackContext context)
+            => LootInteracted?.Invoke();
+
+        private void OnLootScrolled(InputAction.CallbackContext context)
+            => LootScrolled?.Invoke(context.ReadValue<float>());
 
         #endregion
     }

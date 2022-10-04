@@ -1,32 +1,37 @@
+using _3ClipseGame.Steam.Core.Input.HUDInput;
 using _3ClipseGame.Steam.Core.Scripts.GameScripts.GameStates;
 using _3ClipseGame.Steam.Global.Scripts.GameScripts.GameStates;
 using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using UnityEngine;
 using PlayMode = _3ClipseGame.Steam.Global.Scripts.GameScripts.GameStates.PlayMode;
 
-namespace _3ClipseGame.Steam.Global.Scripts.GameScripts
+namespace _3ClipseGame.Steam.Core.GameStates.Scripts
 {
     public class Game : MonoBehaviour
     {
         #region Singleton
 
-        public static Game Instance { get; private set; }
+        public static Game Instance;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         #endregion
 
-        #region Initialization
+        #region Public
 
         public MenuMode MenuMode { get; private set; }
         public PlayMode PlayMode { get; private set; }
         public CinematicMode CinematicMode { get; set; }
         
+        public HUDInputHandler HUDInputHandler;
         public CameraAnimatorController StateDrivenCamera;
 
         #endregion
-
+        
         #region MonoBehaviourMethods
-
-        private void Awake() => Instance = this;
 
         private void Start()
         {

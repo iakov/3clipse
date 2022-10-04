@@ -4,7 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.PlayMode
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.PlayMode.in_game
 {
     public class depooled_pickable_loot
     {

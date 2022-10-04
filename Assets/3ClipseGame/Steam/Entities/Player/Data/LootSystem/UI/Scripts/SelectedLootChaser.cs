@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 {
     [RequireComponent(typeof(LootIconsSelector))]
     [RequireComponent(typeof(LootIconsSelector))]
@@ -21,11 +21,9 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
         [SerializeField] private RectTransform _lootIcon;
         
         private VerticalLayoutGroup _verticalLayout;
-        private LootIconsSelector _lootIconsSelector;
         
         private void Awake()
         {
-            _lootIconsSelector = GetComponent<LootIconsSelector>();
             _verticalLayout = GetComponent<VerticalLayoutGroup>();
         }
 
@@ -33,7 +31,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         #region Public
 
-        public void EditScroll(LootIcon currentIcon)
+        public void EditScroll(LootIcon.LootIcon currentIcon)
         {
             StartCoroutine(TryScrollWithDelay(currentIcon));
         }
@@ -42,7 +40,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         #region ScrollDown
         
-        private IEnumerator TryScrollWithDelay(LootIcon currentIcon)
+        private IEnumerator TryScrollWithDelay(LootIcon.LootIcon currentIcon)
         {
             yield return null;
             
@@ -50,7 +48,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
             ScrollUpIfNeeded(currentIcon);
         }
         
-        private void ScrollDownIfNeeded(LootIcon currentIcon)
+        private void ScrollDownIfNeeded(LootIcon.LootIcon currentIcon)
         {
             try
             {
@@ -62,7 +60,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
             }
         }
 
-        private void TryScrollDown(LootIcon currentIcon)
+        private void TryScrollDown(LootIcon.LootIcon currentIcon)
         {
             var currentIconLowerBound = GetIconLowerBound(currentIcon);
             var viewportLowerBound = GetViewportLowerBound();
@@ -70,7 +68,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
             ScrollDownIfRequired(currentIconLowerBound, viewportLowerBound);
         }
         
-        private float GetIconLowerBound(LootIcon icon)
+        private float GetIconLowerBound(LootIcon.LootIcon icon)
         {
             var iconCenter = GetVerticalIconCenter(icon);
             var iconHeight = GetIconHeight();
@@ -116,19 +114,19 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         #region ScrollUp
 
-        private void ScrollUpIfNeeded(LootIcon currentIcon)
+        private void ScrollUpIfNeeded(LootIcon.LootIcon currentIcon)
         {
             try
             {
                 TryScrollUp(currentIcon);
             }
-            catch (Exception e)
+            catch (Exception _)
             {
                 // ignored
             }
         }
 
-        private void TryScrollUp(LootIcon currentIcon)
+        private void TryScrollUp(LootIcon.LootIcon currentIcon)
         {
             var currentIconUpperBound = GetIconUpperBound(currentIcon);
             var viewportUpperBound = GetViewportUpperBound();
@@ -136,7 +134,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
             ScrollUpIfRequired(currentIconUpperBound, viewportUpperBound);
         }
 
-        private float GetIconUpperBound(LootIcon icon)
+        private float GetIconUpperBound(LootIcon.LootIcon icon)
         {
             var iconCenter = GetVerticalIconCenter(icon);
             var iconHeight = GetIconHeight();
@@ -165,7 +163,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         #endregion
         
-        private float GetVerticalIconCenter(LootIcon icon)
+        private float GetVerticalIconCenter(LootIcon.LootIcon icon)
         {
             var rectTransform = icon.GetComponent<RectTransform>();
             return Mathf.Abs(rectTransform.anchoredPosition.y);

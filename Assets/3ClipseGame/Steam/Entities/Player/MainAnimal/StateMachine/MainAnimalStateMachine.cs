@@ -2,6 +2,7 @@ using System;
 using _3ClipseGame.Steam.Core.Input.PlayerInput;
 using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.MainCharacter;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
@@ -82,7 +83,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine
         public CharacterController AnimalController { get; private set; }
         public PlayerMover AnimalMover { get; private set; }
         public NavMeshAgent AnimalAgent { get; private set; }
-        public MovementInputHandler InputHandler { get; private set; }
+        public MovementInputProcessor InputHandler { get; private set; }
         public Stamina Stamina { get; private set; }
 
         #endregion
@@ -98,13 +99,13 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine
 
         private void Awake()
         {
+            InputHandler = new MovementInputProcessor(GetComponentInParent<MovementInputHandler>());
             AnimalMover = GetComponent<PlayerMover>();
             AnimalTransform = GetComponent<Transform>();
             AnimalAgent = GetComponent<NavMeshAgent>();
             AnimalController = GetComponent<CharacterController>();
-            MainCharacterController = MainCharacterTransform.GetComponent<CharacterController>();
-            InputHandler = GetComponentInParent<MovementInputHandler>();
             Stamina = GetComponent<Stamina>();
+            MainCharacterController = MainCharacterTransform.GetComponent<CharacterController>();
         }
 
         private void Start()

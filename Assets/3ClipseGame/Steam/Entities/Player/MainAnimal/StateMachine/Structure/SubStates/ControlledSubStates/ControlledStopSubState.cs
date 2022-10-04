@@ -10,7 +10,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         public ControlledStopSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory){}
 
         private Vector3 _lastMoveVector;
-        private bool _isJumped;
 
         #endregion
 
@@ -19,7 +18,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         public override void OnStateEnter()
         {
             _lastMoveVector = Context.AnimalMover.GetLastMove(MoveType.StateMove, true);
-            Context.InputHandler.JumpPressed += OnJumpPressed;
         }
 
         public override void OnStateUpdate()
@@ -33,14 +31,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
 
         public override void OnStateExit()
         {
-            Context.InputHandler.JumpPressed -= OnJumpPressed;
+            
         }
 
         public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
 
-            if (_isJumped) newAnimalState = Factory.Jump();
+            if (Context.InputHandler.GetIsJumpPressedRecently()) newAnimalState = Factory.Jump();
             else if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down,
                          Context.AnimalController.Radius)) newAnimalState = Factory.Fall();
             else if (Context.AnimalMover.GetLastMove(MoveType.StateMove, false) == Vector3.zero) newAnimalState = Factory.Idle();
@@ -50,7 +48,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         }
         
         #endregion
-
-        private void OnJumpPressed() => _isJumped = true;
     }
 }

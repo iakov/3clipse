@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using _3ClipseGame.Steam.Core.Scripts.Pool;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent;
-using _3ClipseGame.Steam.Global.Scripts.Pool;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem

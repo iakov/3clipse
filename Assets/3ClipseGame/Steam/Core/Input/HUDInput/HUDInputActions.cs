@@ -44,6 +44,24 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LootInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""a82118f9-206b-4c05-8137-36acf43d42b3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LootScroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""b3797aec-0c3c-4b0f-acb2-fd5e466af57f"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -68,6 +86,28 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""ShowElementalWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2ff6aa3-2ca9-4407-99fc-458cd722dffe"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LootInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""65b08f2f-1736-4290-85f1-841bd8879ea1"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LootScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -78,6 +118,8 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
         m_HUDActions = asset.FindActionMap("HUDActions", throwIfNotFound: true);
         m_HUDActions_ToggleMainMenu = m_HUDActions.FindAction("ToggleMainMenu", throwIfNotFound: true);
         m_HUDActions_ShowElementalWheel = m_HUDActions.FindAction("ShowElementalWheel", throwIfNotFound: true);
+        m_HUDActions_LootInteraction = m_HUDActions.FindAction("LootInteraction", throwIfNotFound: true);
+        m_HUDActions_LootScroll = m_HUDActions.FindAction("LootScroll", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -139,12 +181,16 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
     private IHUDActionsActions m_HUDActionsActionsCallbackInterface;
     private readonly InputAction m_HUDActions_ToggleMainMenu;
     private readonly InputAction m_HUDActions_ShowElementalWheel;
+    private readonly InputAction m_HUDActions_LootInteraction;
+    private readonly InputAction m_HUDActions_LootScroll;
     public struct HUDActionsActions
     {
         private @HUDInputActions m_Wrapper;
         public HUDActionsActions(@HUDInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @ToggleMainMenu => m_Wrapper.m_HUDActions_ToggleMainMenu;
         public InputAction @ShowElementalWheel => m_Wrapper.m_HUDActions_ShowElementalWheel;
+        public InputAction @LootInteraction => m_Wrapper.m_HUDActions_LootInteraction;
+        public InputAction @LootScroll => m_Wrapper.m_HUDActions_LootScroll;
         public InputActionMap Get() { return m_Wrapper.m_HUDActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -160,6 +206,12 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
                 @ShowElementalWheel.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnShowElementalWheel;
                 @ShowElementalWheel.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnShowElementalWheel;
                 @ShowElementalWheel.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnShowElementalWheel;
+                @LootInteraction.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootInteraction;
+                @LootInteraction.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootInteraction;
+                @LootInteraction.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootInteraction;
+                @LootScroll.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScroll;
+                @LootScroll.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScroll;
+                @LootScroll.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScroll;
             }
             m_Wrapper.m_HUDActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -170,6 +222,12 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
                 @ShowElementalWheel.started += instance.OnShowElementalWheel;
                 @ShowElementalWheel.performed += instance.OnShowElementalWheel;
                 @ShowElementalWheel.canceled += instance.OnShowElementalWheel;
+                @LootInteraction.started += instance.OnLootInteraction;
+                @LootInteraction.performed += instance.OnLootInteraction;
+                @LootInteraction.canceled += instance.OnLootInteraction;
+                @LootScroll.started += instance.OnLootScroll;
+                @LootScroll.performed += instance.OnLootScroll;
+                @LootScroll.canceled += instance.OnLootScroll;
             }
         }
     }
@@ -178,5 +236,7 @@ public partial class @HUDInputActions : IInputActionCollection2, IDisposable
     {
         void OnToggleMainMenu(InputAction.CallbackContext context);
         void OnShowElementalWheel(InputAction.CallbackContext context);
+        void OnLootInteraction(InputAction.CallbackContext context);
+        void OnLootScroll(InputAction.CallbackContext context);
     }
 }

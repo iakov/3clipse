@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.InGame.Visuals
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Visuals
 {
     [RequireComponent(typeof(AnimateLoot))]
     

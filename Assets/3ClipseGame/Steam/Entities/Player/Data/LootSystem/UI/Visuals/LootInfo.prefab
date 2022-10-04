@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 159441405396896283}
   - component: {fileID: 1952294278245637149}
   - component: {fileID: 6252374385389901489}
-  - component: {fileID: 3845341032776485130}
+  - component: {fileID: 6556200923985297976}
   m_Layer: 0
   m_Name: LootInfo
   m_TagString: Untagged
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3845341032776485130
+--- !u!114 &6556200923985297976
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8781243178474143404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0395a99817dd06546b2dd0256f7a7d08, type: 3}
+  m_Script: {fileID: 11500000, guid: 744ec39201104f00973f721a2d2a9500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _highlight: {fileID: 1146011826579540699}

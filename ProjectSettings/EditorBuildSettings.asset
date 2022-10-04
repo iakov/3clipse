@@ -4,5 +4,23 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/3ClipseGame/Steam/Scenes/FornDam/FornDamaScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/3ClipseGame/Steam/Entities/Player/Data/LootSystem/Tests/PlayMode/in-game/loot_detector_test_scene.unity
+    guid: 1b6deaf042f3e3443a985af450d1105c
+  - enabled: 1
+    path: Assets/3ClipseGame/Steam/Entities/Player/Data/LootSystem/Tests/PlayMode/in-game/pooled_loot_creator_test_scene.unity
+    guid: 7b04150106b81b043ad4c3d860bb4411
+  - enabled: 1
+    path: Assets/3ClipseGame/Steam/Entities/Player/Data/LootSystem/Tests/PlayMode/ui/loot_display_test_scene.unity
+    guid: 164906194f8383a43891ffab6b3d24c2
+  - enabled: 1
+    path: Assets/3ClipseGame/Steam/Entities/Player/Data/LootSystem/Tests/PlayMode/ui/resource_loot_icon_test_scene.unity
+    guid: 49347f77394950e439c685ce36bcd30d
+  - enabled: 1
+    path: Assets/3ClipseGame/Steam/Entities/Player/Data/LootSystem/Tests/PlayMode/ui/loot_icons_selector_test_scene.unity
+    guid: 063b38b6b2e4fcf4da857b2585074e6a
   m_configObjects: {}

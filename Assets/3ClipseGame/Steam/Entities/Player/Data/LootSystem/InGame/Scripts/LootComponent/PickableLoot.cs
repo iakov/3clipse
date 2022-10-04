@@ -1,7 +1,6 @@
 using System;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.InGame.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Dropper;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent
@@ -11,17 +10,17 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Loot
         #region Abstract
 
         public abstract event Action<PickableLoot> Disappeared;
-        
         public abstract void Disappear();
 
         #endregion
         
-        public event Action TrackedElementUpdated;
         [SerializeField] private DropElement _trackedDropElement;
+        
+        public event Action TrackedElementUpdated;
         
         public Resource GetResource()
         {
-            return _trackedDropElement.GetResource();
+            return _trackedDropElement?.GetResource();
         }
 
         public int GetAmount()

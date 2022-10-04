@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Specialized;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.Detector;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.Scripts
+namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 {
     [RequireComponent(typeof(LootIconsSelector))]
     
@@ -12,7 +13,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
     {
         #region Public
 
-        public LootIcon GetPreviousObject(LootIcon current)
+        public LootIcon.LootIcon GetPreviousObject(LootIcon.LootIcon current)
         {
             var currentIndex = GetIndexWithException(current);
             
@@ -20,11 +21,11 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
             var isException = currentIndex < 0;
             
             return  isFirst || isException
-                ? null 
+                ? GetIconByIndex(currentIndex) 
                 : GetIconByIndex(currentIndex - 1);
         }
 
-        public LootIcon GetNextObject(LootIcon current)
+        public LootIcon.LootIcon GetNextObject(LootIcon.LootIcon current)
         {
             var currentIndex = GetIndexWithException(current);
 
@@ -32,18 +33,29 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
             var isException = currentIndex < 0;
             
             return isLast || isException
-                ? null
+                ? GetIconByIndex(currentIndex)
                 : GetIconByIndex(currentIndex + 1);
         }
 
-        public LootIcon GetIconByObject(PickableLoot loot)
+        public LootIcon.LootIcon GetIconByObject(PickableLoot loot)
         {
-            return _displayedLoot[loot] as LootIcon;
+            try
+            {
+                return _displayedLoot[loot] as LootIcon.LootIcon;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+                return null;
+            }
         }
 
-        public LootIcon GetIconByIndex(int index)
+        public LootIcon.LootIcon GetIconByIndex(int index)
         {
-            return _displayedLoot[index] as LootIcon;
+            if (index >= _displayedLoot.Count) return _displayedLoot[_displayedLoot.Count - 1] as LootIcon.LootIcon;
+            if (_displayedLoot.Count == 0) return null;
+            if (index < 0 && _displayedLoot.Count > 0) return _displayedLoot[0] as LootIcon.LootIcon;
+            return _displayedLoot[index] as LootIcon.LootIcon;
         }
 
         #endregion
@@ -51,7 +63,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
         #region Serialization
 
         [SerializeField] private LootDetector _lootDetector;
-        [SerializeField] private LootIcon _lootIconPrefab;
+        [SerializeField] private GameObject _lootIconPrefab;
         [SerializeField] private VerticalLayoutGroup _iconsParent;
         
         #endregion
@@ -93,7 +105,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
             _lootIconsSelector.SelectIconIfFirst(newIcon);
         }
 
-        private LootIcon InitializeIcon(PickableLoot newLoot)
+        private LootIcon.LootIcon InitializeIcon(PickableLoot newLoot)
         {
             var newIcon = InstantiateNewIcon();
             newIcon.SwitchTrack(newLoot);
@@ -101,10 +113,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
             return newIcon;
         }
 
-        private LootIcon InstantiateNewIcon()
+        private LootIcon.LootIcon InstantiateNewIcon()
         {
-            var newObject = Instantiate(_lootIconPrefab.gameObject, _iconsParent.transform);
-            return newObject.GetComponent<LootIcon>();
+            var newObject = Instantiate(_lootIconPrefab, _iconsParent.transform);
+            return newObject.GetComponent<LootIcon.LootIcon>();
         }
 
         #endregion
@@ -127,14 +139,13 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
 
         #endregion
 
-        private int GetIndexWithException(LootIcon icon)
+        private int GetIndexWithException(LootIcon.LootIcon icon)
         {
             var currentIndex = FindIconsIndex(icon);
-            CatchIndexException(currentIndex);
             return currentIndex;
         }
 
-        private int FindIconsIndex(LootIcon icon)
+        private int FindIconsIndex(LootIcon.LootIcon icon)
         {
             for (var i = 0; i < _displayedLoot.Count; i++)
             {
@@ -145,15 +156,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.LootSystem.UI.
             return -1;
         }
 
-        private void CatchIndexException(int index)
-        {
-            if(index == -1)
-            {
-                Debug.LogWarning("Trying to find non-existing in this context icon");
-            }
-        }
-
-        private bool AreEqual(LootIcon first, LootIcon second)
+        private bool AreEqual(LootIcon.LootIcon first, LootIcon.LootIcon second)
         {
             return first == second;
         }

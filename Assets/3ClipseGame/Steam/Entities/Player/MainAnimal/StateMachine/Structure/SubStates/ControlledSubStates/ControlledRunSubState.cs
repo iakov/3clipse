@@ -10,7 +10,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         public ControlledRunSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory){}
 
         private float _timeToMaximumSpeed;
-        private bool _isJumped;
         
         #endregion
 
@@ -20,7 +19,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         {
             Context.Stamina.IsRecovering = false;
             _timeToMaximumSpeed = Context.RunSpeed.keys[Context.RunSpeed.length - 1].time;
-            Context.InputHandler.JumpPressed += OnJumpPressed;
         }
         
         public override void OnStateUpdate()
@@ -38,14 +36,13 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         public override void OnStateExit()
         {
             Context.Stamina.IsRecovering = true;
-            Context.InputHandler.JumpPressed -= OnJumpPressed;
         }
 
         public override bool TrySwitchState(out AnimalSubState newAnimalState)
         {
             newAnimalState = null;
             
-            if (_isJumped) newAnimalState = Factory.Jump();
+            if (Context.InputHandler.GetIsJumpPressedRecently()) newAnimalState = Factory.Jump();
             else if (Context.Stamina.StaminaPercentage == 0) newAnimalState = Factory.Walk();
             else if (!Context.InputHandler.GetIsRunPressed()) newAnimalState = Factory.Walk();
             else if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down,
@@ -57,7 +54,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         }
         
         #endregion
-
-        private void OnJumpPressed() => _isJumped = true;
     }
 }
