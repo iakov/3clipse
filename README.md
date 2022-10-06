@@ -1,6 +1,6 @@
 # **<div align = center> Project 3clipse</div>**
 
-### <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you are interested in this project as a hardcore gamer, click the banner below to get to the website. <br/> It will give you a closer look to the game concepts, mechanics and development process.
+### <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you are interested in this project as a hardcore gamer, click the banner below to get to the website. It will give you a closer look to the game concepts, mechanics and development process.
   </p>
 
 <a href="https://notimplementederror.com" target="_blank">
