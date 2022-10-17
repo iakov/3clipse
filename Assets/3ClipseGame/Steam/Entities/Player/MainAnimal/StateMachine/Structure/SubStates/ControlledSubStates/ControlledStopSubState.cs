@@ -38,7 +38,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         {
             newAnimalState = null;
 
-            if (Context.InputHandler.GetIsJumpPressedRecently()) newAnimalState = Factory.Jump();
+            if (Context.InputHandler.GetIsJumpPressed()) newAnimalState = Factory.Jump();
             else if (!Context.AnimalController.IsGrounded && !Physics.Raycast(Context.AnimalTransform.position, Vector3.down,
                          Context.AnimalController.Radius)) newAnimalState = Factory.Fall();
             else if (Context.AnimalMover.GetLastMove(MoveType.StateMove, false) == Vector3.zero) newAnimalState = Factory.Idle();

@@ -1,4 +1,4 @@
-using _3ClipseGame.Steam.Core.GameStates.Scripts;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.HUDInput;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInventorySystem.InGame.Scripts;
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.InGame.Scripts.LootComponent;
 using UnityEngine;
@@ -9,6 +9,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
     {
         #region Serialization
 
+        [SerializeField] private HUDInputHandler _inputHandler;
         [SerializeField] private ResourceInventory _resourceInventory;
         [SerializeField] private LootIconsSelector _lootSelector;
         
@@ -16,12 +17,12 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 
         private void OnEnable()
         {
-            Game.Instance.HUDInputHandler.LootInteracted += InstantiatePickUp;
+            _inputHandler.LootInteracted += InstantiatePickUp;
         }
 
         private void OnDisable()
         {
-            Game.Instance.HUDInputHandler.LootInteracted -= InstantiatePickUp;
+            _inputHandler.LootInteracted -= InstantiatePickUp;
         }
         
         private void InstantiatePickUp()

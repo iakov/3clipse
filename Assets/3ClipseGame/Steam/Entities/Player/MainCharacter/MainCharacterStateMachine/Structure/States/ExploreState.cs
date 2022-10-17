@@ -1,8 +1,6 @@
-using _3ClipseGame.Steam.Core.GameStates.Scripts;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
-using _3ClipseGame.Steam.Global.StateDrivenCamera;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States
@@ -22,12 +20,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateEnter()
         {
-            Game.Instance.StateDrivenCamera.SwitchCamera(CameraAnimatorController.CameraType.MainCharacter);
-            
             _subStateFactory = new ExploreSubStatesFactory(Context);
             _currentMainCharacterSubState = _subStateFactory.Idle();
             _currentMainCharacterSubState.OnStateEnter();
-            Context.InputHandler.SwitchToExploreControls();
         }
 
         public override void OnStateUpdate()
@@ -47,7 +42,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
 
-            if (Context.InputProcessor.GetIsSwitchPressedRecently()) newMainCharacterState = Factory.AnimalControlState();
+            if (Context.InputProcessor.GetIsSwitched()) newMainCharacterState = Factory.AnimalControlState();
             
             return newMainCharacterState != null;
         }

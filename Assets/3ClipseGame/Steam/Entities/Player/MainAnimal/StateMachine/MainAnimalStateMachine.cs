@@ -1,5 +1,5 @@
 using System;
-using _3ClipseGame.Steam.Core.Input.PlayerInput;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput;
 using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter;
@@ -99,7 +99,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine
 
         private void Awake()
         {
-            InputHandler = new MovementInputProcessor(GetComponentInParent<MovementInputHandler>());
             AnimalMover = GetComponent<PlayerMover>();
             AnimalTransform = GetComponent<Transform>();
             AnimalAgent = GetComponent<NavMeshAgent>();

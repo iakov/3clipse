@@ -1,5 +1,5 @@
 using System;
-using _3ClipseGame.Steam.Core.Input.PlayerInput;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput;
 using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
@@ -15,6 +15,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
     {
         #region SerializeFields
 
+        [Header("Global")] 
+        [SerializeField] private MovementInputProcessor _movementInputProcessor;
         [Header("Explore Parameters")] 
         [Space]
         [Header("Walk")]
@@ -50,12 +52,11 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public float JumpStaminaReduce => jumpStaminaReduce;
         public AnimationCurve RunModifierCurve => runModifierCurve;
         public AnimationCurve SlideModifierCurve => slideModifierCurve;
+        public MovementInputProcessor InputProcessor => _movementInputProcessor;
 
         public PlayerMover PlayerMover { get; private set; }
         public MainCharacter MainCharacter { get; private set; }
         public CharacterController PlayerController { get; private set; }
-        public MovementInputProcessor InputProcessor { get; private set; }
-        public MovementInputHandler InputHandler { get; private set; }
         public Transform Transform { get; private set; }
         public Stamina Stamina { get; private set; }
         public Animator CharacterAnimator { get; private set; }
@@ -85,14 +86,12 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         private void Awake()
         {
-            InputHandler = GetComponentInParent<MovementInputHandler>();
             PlayerController = GetComponent<CharacterController>();
             PlayerMover = GetComponent<PlayerMover>();
             MainCharacter = GetComponent<MainCharacter>();
             Stamina = GetComponent<Stamina>();
             CharacterAnimator = GetComponentInChildren<Animator>();
             
-            InputProcessor = new MovementInputProcessor(InputHandler);
             Transform = PlayerController.transform;
             
             _mainCharacterStateFactory = new MainCharacterStateFactory(this);

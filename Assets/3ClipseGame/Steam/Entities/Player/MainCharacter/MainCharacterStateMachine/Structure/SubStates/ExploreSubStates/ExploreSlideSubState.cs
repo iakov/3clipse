@@ -51,7 +51,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             newMainCharacterState = null;
             
             if (Math.Abs(_currentEvaluateTime - _timeToLowerSpeed) == 0) newMainCharacterState = _factory.Crouch();
-            else if (Context.InputProcessor.GetIsJumpPressedRecently()) newMainCharacterState = _factory.Jump();
+            else if (Context.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = _factory.Jump();
             
             return newMainCharacterState != null;
         }

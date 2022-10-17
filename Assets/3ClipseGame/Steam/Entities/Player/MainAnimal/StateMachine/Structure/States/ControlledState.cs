@@ -1,7 +1,5 @@
-using _3ClipseGame.Steam.Core.GameStates.Scripts;
+using _3ClipseGame.Steam.Core.GameSource;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.ControlledSubStates;
-using _3ClipseGame.Steam.Global.Scripts.GameScripts;
-using _3ClipseGame.Steam.Global.StateDrivenCamera;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States
 {
@@ -23,7 +21,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
             CurrentSubState = _subStateFactory.Idle();
             base.OnStateEnter();
            
-            Game.Instance.StateDrivenCamera.SwitchCamera(CameraAnimatorController.CameraType.Animal);
             Context.AnimalAgent.enabled = false;
             Context.AnimalController.enabled = true;
         }

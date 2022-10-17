@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace _3ClipseGame.Steam.Global.Scripts.Extensions
+namespace _3ClipseGame.Steam.Core.Scripts.Extensions
 {
     public static class LinkedListExtensions
     {

@@ -51,13 +51,13 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
             
-            if (Context.InputProcessor.GetIsJumpPressedRecently()) newMainCharacterState = _factory.Jump();
+            if (Context.InputProcessor.GetIsJumpPressed()) newMainCharacterState = _factory.Jump();
             else if (Context.Stamina.StaminaPercentage == 0) newMainCharacterState = _factory.Walk();
             else if (!Context.PlayerController.IsGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
                     Context.PlayerController.Radius)) newMainCharacterState = _factory.Fall();
             else if (Context.InputProcessor.GetCurrentInput() == Vector2.zero) newMainCharacterState = _factory.Stop();
             else if (Context.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = _factory.Slide();
-            else if (!Context.InputProcessor.GetIsRunPressed()) newMainCharacterState = _factory.Walk();
+            else if (!Context.InputProcessor.GetIsSprintPressed()) newMainCharacterState = _factory.Walk();
 
             return newMainCharacterState != null;
         }

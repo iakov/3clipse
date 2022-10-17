@@ -6,7 +6,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateEnter()
         {
-            Context.InputHandler.SwitchToAnimalControls();
+            
         }
 
         public override void OnStateUpdate()
@@ -23,7 +23,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
 
-            if (Context.InputProcessor.GetIsSwitchPressedRecently()) newMainCharacterState = Factory.ExploreState();
+            if (Context.InputProcessor.GetIsSwitched()) newMainCharacterState = Factory.ExploreState();
 
             return newMainCharacterState != null;
         }

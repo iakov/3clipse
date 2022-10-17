@@ -32,7 +32,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         {
             newAnimalState = null;
 
-            if (Context.InputHandler.GetIsJumpPressedRecently()) newAnimalState = Factory.Jump();
+            if (Context.InputHandler.GetIsJumpPressed()) newAnimalState = Factory.Jump();
             else if (Context.InputHandler.GetCurrentInput() != Vector2.zero) newAnimalState = Factory.Walk();
             else if (!Context.AnimalController.IsGrounded) newAnimalState = Factory.Fall();
             else if (Context.InputHandler.GetIsCrouchPressed()) newAnimalState = Factory.Crouch();

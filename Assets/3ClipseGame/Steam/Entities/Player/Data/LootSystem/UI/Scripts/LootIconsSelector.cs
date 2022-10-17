@@ -1,4 +1,5 @@
-using _3ClipseGame.Steam.Core.GameStates.Scripts;
+using _3ClipseGame.Steam.Core.GameSource;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.HUDInput;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
@@ -8,17 +9,12 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
     
     public class LootIconsSelector : MonoBehaviour
     {
-        #region Public
-
+        [SerializeField] private HUDInputProcessor _hudHandler;
         public LootIcon.LootIcon GetCurrentSelectedLoot()
         {
             return _currentSelectedLoot;
         }
-
-        #endregion
         
-        #region Initialiation
-
         private LootDisplay _lootDisplay;
         private LootHighlighter _lootHighlighter;
         private SelectedLootChaser _lootChaser;
@@ -31,22 +27,16 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
             _lootChaser = GetComponent<SelectedLootChaser>();
             _lootHighlighter = new LootHighlighter();
         }
-
-        #endregion
-
-        #region EventsSubscription
-
+        
         private void OnEnable()
         {
-            Game.Instance.HUDInputHandler.LootScrolled += OnLootScrolled;
+            _hudHandler.LootScrolled += OnLootScrolled;
         }
 
         private void OnDisable()
         {
-            Game.Instance.HUDInputHandler.LootScrolled -= OnLootScrolled;
+            _hudHandler.LootScrolled -= OnLootScrolled;
         }
-
-        #endregion
 
         #region LootListIncreasedHandler
 
