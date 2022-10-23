@@ -1,20 +1,14 @@
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.ControlledSubStates
 {
     public class ControlledJumpSubState : ControlledSubState
     {
-        #region Initialization
-
         public ControlledJumpSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory){}
 
         private Vector3 _lastMoveVector;
         private bool _isJumped;
-
-        #endregion
-
-        #region SubStateMethods
 
         public override void OnStateEnter()
         {
@@ -27,17 +21,12 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
             Context.Stamina.AddValue(Context.JumpStaminaReduce);
         }
 
-        public override void OnStateUpdate()
-        {
-            StateTimer += Time.deltaTime;
-        }
-
         public override void OnStateExit()
         {
             Context.Stamina.IsRecovering = true;
         }
 
-        public override bool TrySwitchState(out AnimalSubState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState<ControlledSubStatesFactory> newAnimalState)
         {
             newAnimalState = null;
 
@@ -47,7 +36,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
             
             return newAnimalState != null;
         }
-        
-        #endregion
     }
 }

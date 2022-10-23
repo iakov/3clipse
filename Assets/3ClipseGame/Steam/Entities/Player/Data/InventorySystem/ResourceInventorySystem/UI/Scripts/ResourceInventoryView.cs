@@ -6,20 +6,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
 {
     public class ResourceInventoryView : MonoBehaviour
     {
-        #region SerializeFields
-
         [SerializeField] private ResourceInventory _inventoryStorage;
         [SerializeField] private RectTransform _slotViewPrefab;
 
-        #endregion
-
-        #region PrivateFields
-
         private Dictionary<ResourceSlot, ResourceSlotView> _slots = new();
-
-        #endregion
-
-        #region MonoBehaviourMethods
 
         private void OnEnable()
         {
@@ -32,10 +22,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
             _inventoryStorage.SlotChanged -= OnSlotChanged;
         }
 
-        #endregion
-
-        #region PrivateMethods
-
         private void OnSlotChanged(ResourceSlot resource)
         {
             if (_slots.ContainsKey(resource)) return;
@@ -44,7 +30,5 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
             newSlotView.SwitchTrackedSlot(resource);
             _slots.Add(resource, newSlotView);
         }
-
-        #endregion
     }
 }

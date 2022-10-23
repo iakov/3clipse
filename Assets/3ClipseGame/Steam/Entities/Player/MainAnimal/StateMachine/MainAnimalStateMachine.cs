@@ -1,10 +1,14 @@
 using System;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput;
 using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
+using _3ClipseGame.Steam.Entities.Player.Data.Specifications.InGame;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter;
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
+using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure;
+using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore;
+using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Unconsciouned;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 using UnityEngine.AI;
 using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController.CharacterController;
@@ -14,12 +18,13 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(PlayerMover))]
-    public class MainAnimalStateMachine : MonoBehaviour
+    public class MainAnimalStateMachine : Player.Scripts.StateMachine
     {
         #region SerializeFields
 
         [Header("Global Parameters")]
         [SerializeField] private Transform _mainCharacterTransform;
+        [SerializeField] private MovementInputProcessor _inputProcessor;
         
         [Header("Uncontrolled State Parameters")]
         [Header("Idle")]
@@ -76,6 +81,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine
         public Transform AnimalTransform { get; private set; }
         public Transform CurrentTarget { get; set; }
         public Transform[] PossibleFollowTargets => _possibleFollowTargets;
+        public MovementInputProcessor InputProcessor => _inputProcessor;
         public AnimationCurve FollowWalkSpeed => _followWalkSpeed;
         public AnimationCurve FollowRunSpeed => _followRunSpeed;
         public AnimationCurve WalkBackSpeed => _walkBackSpeed;
@@ -83,7 +89,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine
         public CharacterController AnimalController { get; private set; }
         public PlayerMover AnimalMover { get; private set; }
         public NavMeshAgent AnimalAgent { get; private set; }
-        public MovementInputProcessor InputHandler { get; private set; }
         public Stamina Stamina { get; private set; }
 
         #endregion
@@ -120,7 +125,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine
 
         #region PublicMethods
 
-        public void UpdateWork()
+        public override void UpdateWork()
         {
             if(_currentMainAnimalState.TrySwitchState(out var newState)) SwitchState(newState);
             _currentMainAnimalState.OnStateUpdate();

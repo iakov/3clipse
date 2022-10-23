@@ -1,15 +1,11 @@
-namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates
+using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates;
+
+namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore
 {
     public class ExploreSubStatesFactory : MainCharacterSubStateFactory
     {
-        #region Initialization
-
         public ExploreSubStatesFactory(MainCharacterStateMachine context) : base(context){}
-
-        #endregion
-
-        #region Methods
-
+        
         public MainCharacterSubState Walk() => new ExploreWalkSubState(Context, this);
         public MainCharacterSubState Idle() => new ExploreIdleSubState(Context, this);
         public MainCharacterSubState Run() => new ExploreRunSubState(Context, this);
@@ -18,7 +14,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public MainCharacterSubState Fall() => new ExploreFallSubState(Context, this);
         public MainCharacterSubState Jump() => new ExploreJumpSubState(Context, this);
         public MainCharacterSubState Slide() => new ExploreSlideSubState(Context, this);
-
-        #endregion
     }
 }

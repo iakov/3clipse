@@ -17,7 +17,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Camera
 
         private GameCamera FindCameraWithType(CameraType type)
         {
-            return _gameCameras.Find(camera => camera.GetCameraType() == type);
+            return _gameCameras.Find(gameCamera => gameCamera.GetCameraType() == type);
         }
 
         public CameraType[] GetActive()

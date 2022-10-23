@@ -1,8 +1,9 @@
-namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States
+namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Unconsciouned
 {
     public class AnimalControlState : MainCharacterState
     {
         public AnimalControlState(MainCharacterStateMachine context, MainCharacterStateFactory factory) : base(context, factory){}
+        private int _framesFromSwitch;
 
         public override void OnStateEnter()
         {
@@ -11,7 +12,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateUpdate()
         {
-            
+            base.OnStateUpdate();
+            _framesFromSwitch++;
         }
 
         public override void OnStateExit()
@@ -23,7 +25,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
 
-            if (Context.InputProcessor.GetIsSwitched()) newMainCharacterState = Factory.ExploreState();
+            if (Context.InputProcessor.GetIsSwitched() && _framesFromSwitch >= 2) newMainCharacterState = Factory.ExploreState();
 
             return newMainCharacterState != null;
         }

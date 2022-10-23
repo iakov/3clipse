@@ -1,20 +1,17 @@
 using System;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput;
-using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Entities.Player.Data.Specifications.InGame;
+using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure;
+using _3ClipseGame.Steam.Entities.Player.Scripts;
+using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
-using UnityEngine.Events;
 using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController.CharacterController;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine
 {
     [RequireComponent(typeof(CharacterController))]
-    public class MainCharacterStateMachine : MonoBehaviour
+    public class MainCharacterStateMachine : StateMachine
     {
-        #region SerializeFields
-
         [Header("Global")] 
         [SerializeField] private MovementInputProcessor _movementInputProcessor;
         [Header("Explore Parameters")] 
@@ -33,16 +30,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         [SerializeField] private AnimationCurve runModifierCurve;
         [Header("Slide")]
         [SerializeField] private AnimationCurve slideModifierCurve;
-        [Space]
-        [Space]
-        [Header("Events")]
-        [SerializeField] private UnityEvent<MainCharacterState, MainCharacterState> switchingState;
-        [SerializeField] private UnityEvent<MainCharacterSubState, MainCharacterSubState> switchingSubState;
 
-        #endregion
-        
-        #region PublicGetters
-        
         public float WalkSpeed => walkSpeed;
         public float SpeedInterpolation => speedInterpolation;
         public float CrouchSpeedModifier => crouchSpeedModifier;
@@ -61,28 +49,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public Stamina Stamina { get; private set; }
         public Animator CharacterAnimator { get; private set; }
 
-        public event UnityAction<MainCharacterState, MainCharacterState> SwitchingState
-        {
-            add => switchingState.AddListener(value);
-            remove => switchingState.RemoveListener(value);
-        }
-
-        public event UnityAction<MainCharacterSubState, MainCharacterSubState> SwitchingSubState
-        {
-            add => switchingSubState.AddListener(value);
-            remove => switchingSubState.RemoveListener(value);
-        }
-
-        #endregion
-
-        #region PrivateFields
-
         private MainCharacterState _currentMainCharacterState;
         private MainCharacterStateFactory _mainCharacterStateFactory;
 
-        #endregion
-
-        #region MonoBehaviourMethods
 
         private void Awake()
         {
@@ -105,42 +74,26 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             _currentMainCharacterState.OnStateEnter();
         }
 
-        private void OnEnable() => _currentMainCharacterState.SwitchingSubState += SwitchSubState;
-        
-        private void OnDisable() => _currentMainCharacterState.SwitchingSubState -= SwitchSubState;
-
-        #endregion
-
-        #region PublicMethods
-
-        public void UpdateWork()
+        public override void UpdateWork()
         {
-            if (_currentMainCharacterState == null) return;
-            if (_currentMainCharacterState.TrySwitchState(out var nextState)) SwitchState(nextState);
-            _currentMainCharacterState.OnStateUpdate();
+            if (_currentMainCharacterState != null)
+            {
+                if (_currentMainCharacterState.TrySwitchState(out var nextState)) SwitchState(nextState);
+                _currentMainCharacterState.OnStateUpdate();
+            }
         }
-
-        #endregion
-
-        #region PrivateMethods
 
         private void SwitchState(MainCharacterState nextMainCharacterState)
         {
-            switchingState?.Invoke(_currentMainCharacterState, nextMainCharacterState);
-            
             _currentMainCharacterState.OnStateExit();
             _currentMainCharacterState = nextMainCharacterState;
             _currentMainCharacterState.OnStateEnter();
         }
-
-        private void SwitchSubState(MainCharacterSubState current, MainCharacterSubState next) => switchingSubState?.Invoke(current, next);
 
         private void CheckForExceptions()
         {
             if (RunModifierCurve.length <= 1) throw new ArgumentException("RunModifierCurve wrong function");
             if (SlideModifierCurve.length <= 1) throw new ArgumentException("SlideModifierCurve wrong function");
         }
-
-        #endregion
     }
 }

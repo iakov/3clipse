@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController.CharacterController;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
+namespace _3ClipseGame.Steam.Entities.Scripts.CharacterMover
 {
     public class PlayerMover : MonoBehaviour
     {

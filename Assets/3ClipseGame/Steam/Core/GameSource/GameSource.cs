@@ -3,6 +3,8 @@ using _3ClipseGame.Steam.Core.GameSource.Parts.Input;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Player;
 using _3ClipseGame.Steam.Core.GameSource.Parts.States;
 using UnityEngine;
+using CameraType = _3ClipseGame.Steam.Core.GameSource.Parts.Camera.CameraType;
+using InputType = _3ClipseGame.Steam.Core.GameSource.Parts.Input.InputType;
 
 namespace _3ClipseGame.Steam.Core.GameSource
 {
@@ -27,9 +29,9 @@ namespace _3ClipseGame.Steam.Core.GameSource
         [SerializeField] private CameraManager _cameraManager;
         [SerializeField] private GameStatesManager _statesManager;
 
-        public InputManager GetInputManager() => _inputManager;
-        public CameraManager GetCameraManager() => _cameraManager;
-        public GameStatesManager GetStatesManager() => _statesManager;
+        public IMultiManager<InputType> GetInputManager() => _inputManager;
+        public ISoloManager<CameraType> GetCameraManager() => _cameraManager;
+        public ISoloManager<GameStateType> GetStatesManager() => _statesManager;
         public Player GetPlayer() => _player;
     }
 }

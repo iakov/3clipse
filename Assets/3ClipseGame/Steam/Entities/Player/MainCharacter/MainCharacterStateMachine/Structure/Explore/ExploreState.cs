@@ -1,22 +1,15 @@
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates;
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States
+namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore
 {
     public class ExploreMainCharacterState : MainCharacterState
     {
-        #region Initialization
-
         public ExploreMainCharacterState(MainCharacterStateMachine context, MainCharacterStateFactory factory) : base(context, factory){}
         
         private ExploreSubStatesFactory _subStateFactory;
         private MainCharacterSubState _currentMainCharacterSubState;
-
-        #endregion
-
-        #region StateMethods
+        private int _framesFromSwitch;
 
         public override void OnStateEnter()
         {
@@ -28,6 +21,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
+
+            _framesFromSwitch++;
             
             if (_currentMainCharacterSubState.TrySwitchState(out var nextSubState)) SwitchSubState((MainCharacterSubState)nextSubState);
             _currentMainCharacterSubState.OnStateUpdate();
@@ -42,24 +37,16 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         {
             newMainCharacterState = null;
 
-            if (Context.InputProcessor.GetIsSwitched()) newMainCharacterState = Factory.AnimalControlState();
+            if (Context.InputProcessor.GetIsSwitched() && _framesFromSwitch >= 2) newMainCharacterState = Factory.AnimalControlState();
             
             return newMainCharacterState != null;
         }
 
-        #endregion
-
-        #region PrivateMethods
-
         private void SwitchSubState(MainCharacterSubState nextMainCharacterSubState)
         {
-            base.SwitchSubState(_currentMainCharacterSubState, nextMainCharacterSubState);
-            
             _currentMainCharacterSubState.OnStateExit();
             _currentMainCharacterSubState = nextMainCharacterSubState;
             _currentMainCharacterSubState.OnStateEnter();
         }
-
-        #endregion
     }
 }

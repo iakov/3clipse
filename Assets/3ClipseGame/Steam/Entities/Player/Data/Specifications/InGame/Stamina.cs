@@ -1,27 +1,16 @@
 using System;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.Specifications
+namespace _3ClipseGame.Steam.Entities.Player.Data.Specifications.InGame
 {
     public class Stamina : MonoBehaviour
     {
-        #region SerializeFields
-
         [SerializeField] private float _maximumStaminaAmount = 100f;
         [SerializeField] private float _staminaRecovery = 7f;
 
-        #endregion
-        
-        #region PublicFields
-
-        public Action StaminaChanged;
+        public event Action StaminaChanged;
         public float StaminaPercentage { get; private set; }
         public bool IsRecovering { get; set; } = true;
-
-
-        #endregion
-
-        #region MonoBehaviourMethods
 
         private void Awake()
         {
@@ -32,19 +21,18 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Specifications
         {
             if (IsRecovering) AddValue(_staminaRecovery * Time.deltaTime);
         }
-        
-
-        #endregion
-        
-        #region PublicMethods
 
         public void AddValue(float staminaChange)
         {
             if (Math.Abs(StaminaPercentage - 1f) < Mathf.Epsilon && staminaChange > Mathf.Epsilon) return;
             if (StaminaPercentage == 0f && staminaChange < 0f) return;
+            EditValue(staminaChange);
+        }
 
+        private void EditValue(float value)
+        {
             var currentStamina = StaminaPercentage * _maximumStaminaAmount;
-            currentStamina += staminaChange;
+            currentStamina += value;
 
             StaminaPercentage = currentStamina / _maximumStaminaAmount;
             StaminaChanged?.Invoke();
@@ -52,7 +40,5 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.Specifications
             if (StaminaPercentage > 1f) StaminaPercentage = 1f;
             else if (StaminaPercentage < 0f) StaminaPercentage = 0f;
         }
-
-        #endregion
     }
 }

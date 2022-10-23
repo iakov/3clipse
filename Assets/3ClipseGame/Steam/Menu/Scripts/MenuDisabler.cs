@@ -12,7 +12,7 @@ namespace _3ClipseGame.Steam.Menu.Scripts
         private void Update()
         {
             if (_menuInputProcessor.GetIsExitPressed())
-                GameSource.Instance.GetStatesManager().Enable(GameStateTypes.PlayMode);
+                GameSource.Instance.GetStatesManager().Enable(GameStateType.PlayMode);
         }
     }
 }

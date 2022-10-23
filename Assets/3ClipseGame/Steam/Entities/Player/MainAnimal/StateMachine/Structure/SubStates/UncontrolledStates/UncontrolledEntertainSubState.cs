@@ -1,28 +1,20 @@
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.UncontrolledStates
 {
     public class UncontrolledEntertainSubState : UncontrolledSubState
     {
-        #region Initialize
-
         public UncontrolledEntertainSubState(MainAnimalStateMachine context, UncontrolledSubStatesFactory factory) : base(context, factory){}
-
-        #endregion
-
-        #region SubStateMethods
 
         public override void OnStateEnter()
         {
             Context.AnimalMover.ChangeMove(MoveType.StateMove, Vector3.zero, RotationType.RotateOnBeginning);
         }
-        
-        public override void OnStateUpdate(){}
-        
+
         public override void OnStateExit(){}
 
-        public override bool TrySwitchState(out AnimalSubState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState<UncontrolledSubStatesFactory> newAnimalState)
         {
             newAnimalState = null;
 
@@ -30,7 +22,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
 
             return newAnimalState != null;
         }
-
-        #endregion
     }
 }

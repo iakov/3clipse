@@ -2,8 +2,7 @@ using System;
 using _3ClipseGame.Steam.Core.GameSource;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Player;
-using _3ClipseGame.Steam.Entities.Player.Scripts;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter

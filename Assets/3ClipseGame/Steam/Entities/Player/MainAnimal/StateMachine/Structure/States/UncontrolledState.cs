@@ -1,36 +1,38 @@
+using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.UncontrolledStates;
-using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States
 {
     public class UncontrolledState : AnimalState
     {
-        #region Initialization
-
         public UncontrolledState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory){}
 
         private UncontrolledSubStatesFactory _subStateFactory;
-        private Vector3 _currentTarget;
-
-        #endregion
-
-        #region StateMethods
+        private AnimalSubState<UncontrolledSubStatesFactory> _currentSubState;
+        
+        private int _framesFromSwitch;
 
         public override void OnStateEnter()
         {
             _subStateFactory = new UncontrolledSubStatesFactory(Context);
-            CurrentSubState = _subStateFactory.Idle();
-            
-            base.OnStateEnter();
+            _currentSubState = _subStateFactory.Idle();
 
             Context.AnimalAgent.enabled = true;
             Context.AnimalController.enabled = false;
         }
 
+        public override void OnStateUpdate()
+        {
+            base.OnStateUpdate();
+
+            if (_currentSubState.TrySwitchState(out var newSubState)) SwitchSubState(newSubState);
+            _currentSubState.OnStateUpdate();
+            
+            _framesFromSwitch++;
+        }
+
         public override void OnStateExit()
         {
-            base.OnStateExit();
-            
             Context.AnimalAgent.enabled = false;
         }
 
@@ -38,11 +40,16 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         {
             newAnimalState = null;
 
-            if (Context.IsSwitching) newAnimalState = Factory.ControlledState();
+            if (Context.InputProcessor.GetIsSwitched() && _framesFromSwitch >= 2) newAnimalState = Factory.ControlledState();
 
             return newAnimalState != null;
         }
 
-        #endregion
+        private void SwitchSubState(AnimalSubState<UncontrolledSubStatesFactory> newSubState)
+        {
+            _currentSubState.OnStateExit();
+            newSubState.OnStateEnter();
+            _currentSubState = newSubState;
+        }
     }
 }

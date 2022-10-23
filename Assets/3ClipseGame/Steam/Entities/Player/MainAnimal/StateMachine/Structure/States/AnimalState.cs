@@ -1,59 +1,13 @@
-using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates;
-using UnityEngine;
+using _3ClipseGame.Steam.Entities.Player.Scripts;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States
 {
-    public abstract class AnimalState : IStateMachine
+    public abstract class AnimalState : State<AnimalState, AnimalStateFactory, MainAnimalStateMachine>
     {
-        #region Initialization
+        protected AnimalState(MainAnimalStateMachine context, AnimalStateFactory factory) : base(context, factory){}
 
-        protected float StateTimer { get; private set; }
+        public abstract override void OnStateEnter();
 
-        protected readonly MainAnimalStateMachine Context;
-        protected readonly AnimalStateFactory Factory;
-        protected AnimalSubState CurrentSubState;
-
-        protected AnimalState(MainAnimalStateMachine context, AnimalStateFactory factory)
-        {
-            Context = context;
-            Factory = factory;
-        }
-
-        #endregion
-
-        #region AbstractMethods
-
-        public virtual void OnStateEnter()
-        {
-            CurrentSubState.OnStateEnter();
-        }
-
-        public virtual void OnStateUpdate()
-        {
-            StateTimer += Time.deltaTime;
-            
-            if (CurrentSubState.TrySwitchState(out var newState)) SwitchSubState(newState);
-            CurrentSubState.OnStateUpdate();
-        }
-
-        public virtual void OnStateExit()
-        {
-            CurrentSubState.OnStateExit();
-        }
-        
-        public abstract bool TrySwitchState(out AnimalState newAnimalState);
-
-        #endregion
-
-        #region ProtectedMethods
-
-        protected void SwitchSubState(AnimalSubState newAnimalSubState)
-        {
-            CurrentSubState.OnStateExit();
-            CurrentSubState = newAnimalSubState;
-            CurrentSubState.OnStateEnter();
-        }
-
-        #endregion
+        public abstract override void OnStateExit();
     }
 }

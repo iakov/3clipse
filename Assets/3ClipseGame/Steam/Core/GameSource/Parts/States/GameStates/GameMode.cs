@@ -13,9 +13,9 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.States.GameStates
         [SerializeField] protected float TimeScale;
         
         [SerializeField] private CinemachineStateDrivenCamera _stateDrivenCamera;
-        [SerializeField] private GameStateTypes _modeType;
+        [SerializeField] private GameStateType modeType;
 
-        public GameStateTypes GetModeType() => _modeType;
+        public GameStateType GetModeType() => modeType;
         
         public abstract void StartEnter();
         public abstract void Exit();

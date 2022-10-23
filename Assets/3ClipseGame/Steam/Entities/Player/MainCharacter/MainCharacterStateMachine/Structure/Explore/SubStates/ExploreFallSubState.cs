@@ -1,6 +1,4 @@
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
-
-namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates
+namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates
 {
     public class ExploreFallSubState : MainCharacterSubState
     {
@@ -24,7 +22,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             Context.Stamina.IsRecovering = true;
         }
 
-        public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
+        public override bool TrySwitchState(out MainCharacterSubState newMainCharacterState)
         {
             newMainCharacterState = null;
             

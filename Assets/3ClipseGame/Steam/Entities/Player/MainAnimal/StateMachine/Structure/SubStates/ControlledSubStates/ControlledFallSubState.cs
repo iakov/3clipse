@@ -1,25 +1,12 @@
-using UnityEngine;
-
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.ControlledSubStates
 {
     public class ControlledFallSubState : ControlledSubState
     {
-        #region Initialization
-
         public ControlledFallSubState(MainAnimalStateMachine context, ControlledSubStatesFactory factory) : base(context, factory) {}
-
-        #endregion
-
-        #region SubStateMethods
 
         public override void OnStateEnter()
         {
             Context.Stamina.IsRecovering = false;
-        }
-
-        public override void OnStateUpdate()
-        {
-            StateTimer += Time.deltaTime;
         }
 
         public override void OnStateExit()
@@ -27,7 +14,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
             Context.Stamina.IsRecovering = true;
         }
 
-        public override bool TrySwitchState(out AnimalSubState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState<ControlledSubStatesFactory> newAnimalState)
         {
             newAnimalState = null;
 
@@ -35,7 +22,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
 
             return newAnimalState != null;
         }
-        
-        #endregion
     }
 }

@@ -1,14 +1,11 @@
 using System;
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates
+namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates
 {
     public class ExploreSlideSubState : MainCharacterSubState
     {
-        #region Initialization
-
         public ExploreSlideSubState(MainCharacterStateMachine context, MainCharacterSubStateFactory factory) : base(context, factory) =>
             _factory = (ExploreSubStatesFactory) factory;
         
@@ -18,10 +15,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
         
         private float _currentEvaluateTime;
 
-        #endregion
-        
-        #region SubStateMethods
-        
         public override void OnStateEnter()
         {
             _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove, true);
@@ -46,7 +39,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             Context.Stamina.IsRecovering = true;
         }
 
-        public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
+        public override bool TrySwitchState(out MainCharacterSubState newMainCharacterState)
         {
             newMainCharacterState = null;
             
@@ -55,7 +48,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             
             return newMainCharacterState != null;
         }
-
-        #endregion
     }
 }

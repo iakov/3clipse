@@ -1,19 +1,13 @@
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates.UncontrolledStates
 {
     public class UncontrolledIdleSubState : UncontrolledSubState
     {
-        #region Initialize
-
         public UncontrolledIdleSubState(MainAnimalStateMachine context, UncontrolledSubStatesFactory factory) : base(context, factory) {}
 
         private float _distanceBetweenPlayerAndAnimal;
-            
-        #endregion
-
-        #region SubStateMethods
 
         public override void OnStateEnter()
         {
@@ -25,15 +19,20 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
 
         public override void OnStateUpdate()
         {
-            StateTimer += Time.deltaTime;
+            base.OnStateUpdate();
             
             _distanceBetweenPlayerAndAnimal = Vector3.Distance(Context.AnimalTransform.position, Context.MainCharacterTransform.position);
             Context.AnimalTransform.LookAt(Context.MainCharacterTransform);
         }
 
-        public override void OnStateExit() => Context.CurrentTarget = Context.PossibleFollowTargets[Random.Range(0, Context.PossibleFollowTargets.Length)];
+        public override void OnStateExit()
+        {
+            var randomIndex = Random.Range(0, Context.PossibleFollowTargets.Length);
+            var randomTarget = Context.PossibleFollowTargets[randomIndex];
+            Context.CurrentTarget = randomTarget;
+        }
 
-        public override bool TrySwitchState(out AnimalSubState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState<UncontrolledSubStatesFactory> newAnimalState)
         {
             newAnimalState = null;
 
@@ -44,7 +43,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
 
             return newAnimalState != null;
         }
-        
-        #endregion
     }
 }

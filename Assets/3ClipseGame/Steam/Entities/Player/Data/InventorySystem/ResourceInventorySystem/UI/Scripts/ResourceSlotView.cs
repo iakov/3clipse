@@ -7,20 +7,10 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
 {
     public class ResourceSlotView : MonoBehaviour
     {
-        #region SerializeFields
-
         [SerializeField] private Image _imageComponent;
         [SerializeField] private Text _textComponent;
 
-        #endregion
-
-        #region PrivateFields
-
         private ResourceSlot _currentDisplayedSlot;
-
-        #endregion
-
-        #region MonoBehaviourMethods
 
         private void Start()
         {
@@ -31,11 +21,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
         {
             _currentDisplayedSlot.AmountChanged -= UpdateView;
         }
-
-        #endregion
-
-        #region PublicMethods
-
+        
         public void SwitchTrackedSlot(ResourceSlot slot)
         {
             if (_currentDisplayedSlot != null) _currentDisplayedSlot.AmountChanged -= UpdateView;
@@ -46,10 +32,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
             UpdateView();
         }
 
-        #endregion
-
-        #region PrivateMethods
-
         private void UpdateView()
         {
             if (_currentDisplayedSlot.GetIsEmpty()) return;
@@ -57,7 +39,5 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
             _imageComponent.sprite = _currentDisplayedSlot.GetItem().UIImage;
             _textComponent.text = "x" + _currentDisplayedSlot.GetAmount();
         }
-
-        #endregion
     }
 }

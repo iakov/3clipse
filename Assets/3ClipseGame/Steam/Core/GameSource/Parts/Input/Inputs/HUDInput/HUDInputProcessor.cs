@@ -53,7 +53,8 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.HUDInput
 
         private void OnToggleMainMenuPressed()
             => StartCoroutine(ToggleWithDelay());
-
+        
+            
         private IEnumerator ToggleWithDelay()
         {
             _isToggleMenu = true;

@@ -8,11 +8,11 @@ namespace _3ClipseGame.Steam.Menu.Scripts
     public class MenuEnabler : MonoBehaviour
     {
         [SerializeField] private HUDInputProcessor _hudInputProcessor;
-        
+
         private void Update()
         {
             if (_hudInputProcessor.GetIsToggleMenu())
-                GameSource.Instance.GetStatesManager().Enable(GameStateTypes.Menu);
+                GameSource.Instance.GetStatesManager().Enable(GameStateType.Menu);
         }
     }
 }

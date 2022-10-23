@@ -1,23 +1,16 @@
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates
+namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates
 {
     public class ExploreWalkSubState : MainCharacterSubState
     {
-        #region Initialization
-
         public ExploreWalkSubState(MainCharacterStateMachine context, MainCharacterSubStateFactory factory) : base(context, factory) =>
             _factory = (ExploreSubStatesFactory) factory;
 
         private ExploreSubStatesFactory _factory;
         
         private static readonly int IsWalking = Animator.StringToHash("IsWalking");
-
-        #endregion
-
-        #region SubStateMethods
 
         public override void OnStateEnter()
         {
@@ -37,7 +30,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             Context.CharacterAnimator.SetBool(IsWalking, false);
         }
 
-        public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
+        public override bool TrySwitchState(out MainCharacterSubState newMainCharacterState)
         {
             newMainCharacterState = null;
 
@@ -49,8 +42,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             
             return newMainCharacterState != null;
         }
-
-        #endregion
         
         private void Move()
         {

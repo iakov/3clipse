@@ -4,15 +4,12 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
 {
     public class UncontrolledFollowRunSubState : UncontrolledSubState
     {
-        #region Initialization
+        public UncontrolledFollowRunSubState(MainAnimalStateMachine context, UncontrolledSubStatesFactory factory) : base(context, factory)
+            => Factory = factory;
 
-        public UncontrolledFollowRunSubState(MainAnimalStateMachine context, UncontrolledSubStatesFactory factory) : base(context, factory){}
+        protected UncontrolledSubStatesFactory Factory;
         
         private float _distanceBetweenPlayerAndAnimal;
-
-        #endregion
-
-        #region SubStateMethods
 
         public override void OnStateEnter()
         {
@@ -21,7 +18,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
         
         public override void OnStateUpdate()
         {
-            StateTimer += Time.deltaTime;
+            base.OnStateUpdate();
             
             if (Context.AnimalAgent.isOnNavMesh) Context.AnimalAgent.SetDestination(Context.CurrentTarget.position);
             
@@ -34,7 +31,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
             
         }
 
-        public override bool TrySwitchState(out AnimalSubState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState<UncontrolledSubStatesFactory> newAnimalState)
         {
             newAnimalState = null;
 
@@ -42,7 +39,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
                 
             return newAnimalState != null;
         }
-
-        #endregion
     }
 }

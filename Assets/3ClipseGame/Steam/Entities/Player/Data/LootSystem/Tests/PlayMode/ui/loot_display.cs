@@ -22,8 +22,11 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.PlayMode.ui
             SceneManager.LoadScene("loot_display_test_scene");
             yield return null;
             InitializeLootCreator();
+            Debug.Log("1");
             _lootDisplay = Object.FindObjectOfType<LootDisplay>();
+            Debug.Log("2");
             InitializeLoot();
+            Debug.Log("3");
         }
         
         private void InitializeLootCreator()
@@ -46,7 +49,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.PlayMode.ui
             _spawnLootPosition.transform.position = new Vector3(5, 2, -4);
         }
 
-        [UnityTest]
+        [UnityTest] 
         public IEnumerator test_get_icon_by_detected_loot()
         {
             yield return new WaitForSeconds(1f);

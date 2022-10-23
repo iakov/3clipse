@@ -4,17 +4,18 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Core.GameSource.Parts.States
 {
-    public class GameStatesManager : MonoBehaviour, ISoloManager<GameStateTypes>
+    public class GameStatesManager : MonoBehaviour, ISoloManager<GameStateType>
     {
         [SerializeField] private List<GameMode> _gameModes;
         [SerializeField] private GameMode _currentGameMode;
 
         private void Start()
         {
-            _currentGameMode.StartEnter();
+            if(_currentGameMode != null)
+                _currentGameMode.StartEnter();
         }
         
-        public void Enable(GameStateTypes enableObjectType)
+        public void Enable(GameStateType enableObjectType)
         {
             var newMode = _gameModes.Find(mode => mode.GetModeType() == enableObjectType);
             if (newMode != null)
@@ -25,9 +26,9 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.States
             }
         }
 
-        public GameStateTypes[] GetActive()
+        public GameStateType[] GetActive()
         {
-            return new GameStateTypes[]{_currentGameMode.GetModeType()};
+            return new GameStateType[]{_currentGameMode.GetModeType()};
         }
     }
 }

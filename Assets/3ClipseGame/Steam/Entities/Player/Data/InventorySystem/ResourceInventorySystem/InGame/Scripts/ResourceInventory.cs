@@ -9,20 +9,13 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
     [CreateAssetMenu(fileName = "New Resource Inventory", menuName = "Inventory/Resources/Resource Inventory")]
     public class ResourceInventory : ItemInventory<Resource, ResourceSlot>
     {
-        #region Initialization
+        public override event Action<ResourceSlot> SlotChanged;
+        private List<ResourceSlot> _slots;
         
         private void OnEnable()
         {
             _slots ??= new List<ResourceSlot>();
         }
-        
-        private List<ResourceSlot> _slots;
-
-        #endregion
-
-        #region Public
-
-        public override event Action<ResourceSlot> SlotChanged;
         
         public override IEnumerable<ResourceSlot> GetSlots()
         {
@@ -50,8 +43,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
 
             return amountLeft == 0;
         }
-
-        #endregion
 
         private bool TryFindResourceSlot(Resource resource, out ResourceSlot slotPresenter)
         {

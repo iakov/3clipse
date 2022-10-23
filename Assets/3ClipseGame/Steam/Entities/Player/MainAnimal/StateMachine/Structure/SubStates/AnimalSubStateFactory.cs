@@ -1,6 +1,6 @@
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.Structure.SubStates
+namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.SubStates
 {
     public class AnimalSubStateFactory : AnimalStateFactory
     {

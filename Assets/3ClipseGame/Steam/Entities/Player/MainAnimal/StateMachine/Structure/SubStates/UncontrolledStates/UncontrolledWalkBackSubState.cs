@@ -4,16 +4,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
 {
     public class UncontrolledWalkBackSubState : UncontrolledSubState
     {
-        #region Initialization
-
         public UncontrolledWalkBackSubState(MainAnimalStateMachine context, UncontrolledSubStatesFactory factory) : base(context, factory){}
 
         private float _distanceBetweenPlayerAndAnimal;
         private int _layerBeforeEnter;
-
-        #endregion
-
-        #region SubStateMethods
 
         public override void OnStateEnter()
         {
@@ -51,7 +45,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
             Context.gameObject.layer = _layerBeforeEnter;
         }
 
-        public override bool TrySwitchState(out AnimalSubState newAnimalState)
+        public override bool TrySwitchState(out AnimalSubState<UncontrolledSubStatesFactory> newAnimalState)
         {
             newAnimalState = null;
 
@@ -59,7 +53,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.S
 
             return newAnimalState != null;
         }
-
-        #endregion
     }
 }

@@ -1,18 +1,31 @@
+using System;
+using _3ClipseGame.Steam.Core.GameSource;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Player;
 using UnityEngine;
 using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController.CharacterController;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.Scripts
 {
     [RequireComponent(typeof(CharacterController))]
-    public class MainAnimal : MonoBehaviour
+    public class MainAnimal : PlayerEntity
     {
-        #region PrivateFields
+        [SerializeField] private MovementInputHandler _movementInputHandler;
+        
+        public override event Action SwitchingToNewEntity;
+        
+        public override void LoseControl()
+        {
+            GameSource.Instance.GetInputManager().Disable(RelatedInput);
+        }
 
+        public override void TakeControl()
+        {
+            GameSource.Instance.GetInputManager().Enable(RelatedInput);
+            GameSource.Instance.GetCameraManager().Enable(RelatedCamera);
+        }
+        
         private StateMachine.MainAnimalStateMachine _mainAnimalStateMachine;
-
-        #endregion
-
-        #region MonoBehaviourMethods
 
         private void Awake()
         {
@@ -23,7 +36,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.Scripts
         {
             _mainAnimalStateMachine.UpdateWork();
         }
+        
+        private void OnEnable() 
+            => _movementInputHandler.SwitchToAnotherEntityPressed += OnSwitchPressed;
 
-        #endregion
+        private void OnDisable()
+            => _movementInputHandler.SwitchToAnotherEntityPressed -= OnSwitchPressed;
+        
+        private void OnSwitchPressed()
+            => SwitchingToNewEntity?.Invoke();
     }
 }

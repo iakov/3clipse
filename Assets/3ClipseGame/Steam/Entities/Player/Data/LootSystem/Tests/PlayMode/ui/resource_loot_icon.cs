@@ -23,7 +23,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.Tests.PlayMode.ui
         [UnityTest]
         public IEnumerator test_is_active()
         {
-            Assert.IsTrue(_icon.IsHighlighted());
+            Assert.IsFalse(_icon.IsHighlighted());
             yield break;
         }
 

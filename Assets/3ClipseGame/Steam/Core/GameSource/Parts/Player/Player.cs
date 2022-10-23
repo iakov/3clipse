@@ -11,6 +11,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Player
         public PlayerEntity GetCurrentPlayerEntity() => _currentPlayerEntity;
 
         private void OnEnable() => _currentPlayerEntity.SwitchingToNewEntity += ChangeEntity;
+        private void OnDisable() => _currentPlayerEntity.SwitchingToNewEntity += ChangeEntity;
 
         private void ChangeEntity()
         {

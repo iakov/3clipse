@@ -1,8 +1,7 @@
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.States;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
+using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.SubStates.ExploreSubStates
+namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates
 {
     public class ExploreCrouchSubState : MainCharacterSubState
     {
@@ -36,7 +35,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             
         }
 
-        public override bool TrySwitchState(out MainCharacterState newMainCharacterState)
+        public override bool TrySwitchState(out MainCharacterSubState newMainCharacterState)
         {
             newMainCharacterState = null;
 

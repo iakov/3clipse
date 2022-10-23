@@ -5,8 +5,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
 {
     public class ResourceSlot : ItemSlot<Resource>
     {
-        #region Public
-        
         public ResourceSlot(Resource resource)
         {
             _resource = resource;
@@ -22,10 +20,6 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
 
         private Resource _resource;
         private int _currentAmount;
-
-        #endregion
-
-        #region PublicMethods
 
         public void AddAmount(int addAmount, out int oddAmount)
         {
@@ -49,7 +43,5 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.ResourceInvent
             if (_currentAmount == 0) _resource = null;
             return true;
         }
-
-        #endregion
     }
 }

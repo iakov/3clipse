@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 232110800}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Target2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 725718785}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Target1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 1284409744}
   - component: {fileID: 1284409760}
   - component: {fileID: 1284409761}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: MainCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,38 +316,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  switchingState:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7878028965152469044}
-        m_TargetAssemblyTypeName: _3ClipseGame.Steam.Entities.Player.MainAnimal.MainAnimalStateMachine.MainAnimalStateMachine,
-          Assembly-CSharp
-        m_MethodName: SetSwitch
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: _3ClipseGame.Steam.Global.UI.Scripts.Specifications.ObserverSwapper,
-          Assembly-CSharp
-        m_MethodName: SwapSpecifications
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  switchingSubState:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1284409745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,7 +379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1601244572}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Targets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,7 +414,7 @@ GameObject:
   - component: {fileID: 3142239295752390316}
   - component: {fileID: 1835079394603702975}
   - component: {fileID: 7627634235390253661}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +497,7 @@ GameObject:
   - component: {fileID: 2304174678663544131}
   - component: {fileID: 3210410021717009118}
   - component: {fileID: 8100780373462659391}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -610,7 +578,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8481640859183733408}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: VisualBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,15 +619,16 @@ GameObject:
   - component: {fileID: 4294306228287790865}
   - component: {fileID: 1014769325}
   - component: {fileID: 1014769326}
-  - component: {fileID: 1014769333}
   - component: {fileID: 1014769343}
-  m_Layer: 6
+  - component: {fileID: 1014769349}
+  - component: {fileID: 1014769350}
+  m_Layer: 3
   m_Name: Animal
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7878028965152469053
 Transform:
   m_ObjectHideFlags: 0
@@ -668,7 +637,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7878028965152469052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.923, y: 0.8, z: -0.84}
+  m_LocalPosition: {x: -1.332, y: 0.8, z: -1.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -688,6 +657,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9eef7313b4faeb4ca4fc40b08d1ca7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RelatedInput: 2
+  RelatedCamera: 0
+  _entityType: 0
+  _movementInputHandler: {fileID: 0}
 --- !u!54 &7878028965152469043
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -729,42 +702,117 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCharacterTransform: {fileID: 1284409743}
-  _waitTime: 0
-  _followWalkDistance: 0
+  _inputProcessor: {fileID: 0}
+  _waitTime: 2
+  _followWalkDistance: 2
   _followWalkSpeed:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.0000086
+      inSlope: -1.0000086
+      outSlope: -1.0000086
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.0000086
+      outSlope: -1.0000086
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _stopWalkDistance: 0
-  _possibleFollowTargets: []
-  _walkBackDistance: 0
+  _stopWalkDistance: 2
+  _possibleFollowTargets:
+  - {fileID: 725718785}
+  - {fileID: 232110800}
+  _walkBackDistance: 1
   _walkBackSpeed:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 13
+      inSlope: -8
+      outSlope: -8
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 5
+      inSlope: -8
+      outSlope: -8
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _followRunDistance: 0
+  _followRunDistance: 5
   _followRunSpeed:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 2
+      inSlope: 8
+      outSlope: 8
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 10
+      inSlope: 8
+      outSlope: 8
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   _speedInterpolation: 6
-  _walkSpeed: 0
+  _walkSpeed: 3
   _runStaminaReduce: -5
   _runSpeed:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 3
+      inSlope: 3
+      outSlope: 3
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 6
+      inSlope: 3
+      outSlope: 3
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _jumpStrength: 0
+  _jumpStrength: 10
   _jumpStaminaReduce: -5
-  _crouchSpeedModifier: 1
+  _crouchSpeedModifier: 0.5
 --- !u!114 &4374001487689133800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,36 +877,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkableLayers:
     serializedVersion: 2
-    m_Bits: 35
+    m_Bits: 129
   collideLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 27
   skinWidth: 0.01
   stepOffset: 0.3
   groundDetectionDistance: 0.1
   minMoveDistance: 0.001
   rotationInterpolationType: 0
-  interpolationSteps: 5
+  interpolationSteps: 20
   slopeLimit: 75
---- !u!114 &1014769333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7878028965152469052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4248d6915904559409904428832a44f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _method: 2
-  _curve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &1014769343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,6 +902,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maximumStaminaAmount: 100
   _staminaRecovery: 7
+--- !u!114 &1014769349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7878028965152469052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ae0819a69b4254e8ab3176612612fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+--- !u!114 &1014769350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7878028965152469052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ebff02cff64bf4da47839e47f4017e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7878028966021634426
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,7 +973,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b7c986461e25242897202a7f056dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allPossiblePlayerEntities: []
+  _allPossiblePlayerEntities:
+  - {fileID: 7878028965152469055}
+  - {fileID: 1284409744}
   _currentPlayerEntity: {fileID: 1284409744}
 --- !u!1001 &1423206193597339968
 PrefabInstance:

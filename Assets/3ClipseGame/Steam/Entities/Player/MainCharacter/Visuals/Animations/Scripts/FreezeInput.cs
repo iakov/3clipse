@@ -7,9 +7,9 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Animations.Sc
     public class FreezeInput : StateMachineBehaviour
     {
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-            => GameSource.Instance.GetStatesManager().Enable(GameStateTypes.Cinematic);
+            => GameSource.Instance.GetStatesManager().Enable(GameStateType.Cinematic);
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-            => GameSource.Instance.GetStatesManager().Enable(GameStateTypes.PlayMode);
+            => GameSource.Instance.GetStatesManager().Enable(GameStateType.PlayMode);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using _3ClipseGame.Steam.Entities.Player.Data.Specifications;
+using _3ClipseGame.Steam.Entities.Player.Data.Specifications.InGame;
 using UnityEngine;
 using UnityEngine.UI;
 
