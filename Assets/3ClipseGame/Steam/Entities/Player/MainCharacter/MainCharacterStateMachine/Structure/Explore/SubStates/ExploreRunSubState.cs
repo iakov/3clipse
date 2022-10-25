@@ -3,12 +3,10 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates
 {
-    public class ExploreRunSubState : MainCharacterSubState
+    public class ExploreRunSubState : MainCharacterExploreSubState
     {
-        public ExploreRunSubState(MainCharacterStateMachine context, MainCharacterSubStateFactory factory) : base(context, factory) =>
-            _factory = (ExploreSubStatesFactory) factory;
+        public ExploreRunSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory) {}
 
-        private ExploreSubStatesFactory _factory;
         private float _timeToMaximumSpeed;
         
         private static readonly int IsRunning = Animator.StringToHash("IsRunning");
@@ -16,11 +14,11 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateEnter()
         {
-            Context.CharacterAnimator.SetBool(IsRunning, true);
-            Context.CharacterAnimator.SetBool(IsWalking, true);
+            ExploreDto.CharacterAnimator.SetBool(IsRunning, true);
+            ExploreDto.CharacterAnimator.SetBool(IsWalking, true);
             
-            _timeToMaximumSpeed = Context.RunModifierCurve.keys[Context.RunModifierCurve.length - 1].time;
-            Context.Stamina.IsRecovering = false;
+            _timeToMaximumSpeed = ExploreDto.RunModifierCurve.keys[ExploreDto.RunModifierCurve.length - 1].time;
+            ExploreDto.Stamina.IsRecovering = false;
         }
 
         public override void OnStateUpdate()
@@ -34,45 +32,45 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateExit()
         {
-            Context.CharacterAnimator.SetBool(IsRunning, false);
-            Context.CharacterAnimator.SetBool(IsWalking, false);
+            ExploreDto.CharacterAnimator.SetBool(IsRunning, false);
+            ExploreDto.CharacterAnimator.SetBool(IsWalking, false);
             
-            Context.Stamina.IsRecovering = true;
+            ExploreDto.Stamina.IsRecovering = true;
         }
 
-        public override bool TrySwitchState(out MainCharacterSubState newMainCharacterState)
+        public override bool TrySwitchState(out MainCharacterExploreSubState newMainCharacterState)
         {
             newMainCharacterState = null;
             
-            if (Context.InputProcessor.GetIsJumpPressed()) newMainCharacterState = _factory.Jump();
-            else if (Context.Stamina.StaminaPercentage == 0) newMainCharacterState = _factory.Walk();
-            else if (!Context.PlayerController.IsGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
-                    Context.PlayerController.Radius)) newMainCharacterState = _factory.Fall();
-            else if (Context.InputProcessor.GetCurrentInput() == Vector2.zero) newMainCharacterState = _factory.Stop();
-            else if (Context.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = _factory.Slide();
-            else if (!Context.InputProcessor.GetIsSprintPressed()) newMainCharacterState = _factory.Walk();
+            if (ExploreDto.InputProcessor.GetIsJumpPressed()) newMainCharacterState = Factory.Jump();
+            else if (ExploreDto.Stamina.StaminaPercentage == 0) newMainCharacterState = Factory.Walk();
+            else if (!ExploreDto.PlayerController.IsGrounded && !Physics.Raycast(ExploreDto.Transform.position, Vector3.down,
+                    ExploreDto.PlayerController.Radius)) newMainCharacterState = Factory.Fall();
+            else if (ExploreDto.InputProcessor.GetCurrentInput() == Vector2.zero) newMainCharacterState = Factory.Stop();
+            else if (ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Slide();
+            else if (!ExploreDto.InputProcessor.GetIsSprintPressed()) newMainCharacterState = Factory.Walk();
 
             return newMainCharacterState != null;
         }
 
         private void Move()
         {
-            var rawMoveVector = new Vector3(Context.InputProcessor.GetCurrentInput().x, 0f, Context.InputProcessor.GetCurrentInput().y);
+            var rawMoveVector = new Vector3(ExploreDto.InputProcessor.GetCurrentInput().x, 0f, ExploreDto.InputProcessor.GetCurrentInput().y);
             var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
-            var moveVector = rawMoveVector * (Context.RunModifierCurve.Evaluate(currentEvaluateTime) * Context.WalkSpeed);
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
+            var moveVector = rawMoveVector * (ExploreDto.RunModifierCurve.Evaluate(currentEvaluateTime) * ExploreDto.WalkSpeed);
+            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
         }
 
         private void Rotate()
         {
-            var rotatedMove = Context.PlayerMover.GetLastMove(MoveType.StateMove, true);
+            var rotatedMove = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
             if (rotatedMove == Vector3.zero) return;
-            Context.PlayerController.Rotate(Quaternion.LookRotation(rotatedMove));
+            ExploreDto.PlayerController.Rotate(Quaternion.LookRotation(rotatedMove));
         }
 
         private void ReduceStamina()
         {
-            Context.Stamina.AddValue(Context.RunStaminaReduce * Time.deltaTime);
+            ExploreDto.Stamina.AddValue(ExploreDto.RunStaminaReduce * Time.deltaTime);
         }
     }
 }

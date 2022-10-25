@@ -3,17 +3,15 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates
 {
-    public class ExploreIdleSubState : MainCharacterSubState
+    public class ExploreIdleSubState : MainCharacterExploreSubState
     {
-        public ExploreIdleSubState(MainCharacterStateMachine context, MainCharacterSubStateFactory factory) : base(context, factory) =>
-            _factory = (ExploreSubStatesFactory) factory;
+        public ExploreIdleSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory) {}
 
-        private ExploreSubStatesFactory _factory;
         private Vector3 _lastMoveVector;
 
         public override void OnStateEnter()
         {
-            _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove, true);
+            _lastMoveVector = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
             _lastMoveVector.y = 0f;
         }
 
@@ -22,22 +20,22 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             base.OnStateUpdate();
 
             var t = StateTimer <= 1 ? StateTimer : 1f;
-            var interpolatedMoveVector = Vector3.Lerp(_lastMoveVector, Vector3.zero, t * Context.SpeedInterpolation);
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, RotationType.NoRotation);
+            var interpolatedMoveVector = Vector3.Lerp(_lastMoveVector, Vector3.zero, t * ExploreDto.SpeedInterpolation);
+            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, RotationType.NoRotation);
         }
 
         public override void OnStateExit()
         {
         }
 
-        public override bool TrySwitchState(out MainCharacterSubState newMainCharacterState)
+        public override bool TrySwitchState(out MainCharacterExploreSubState newMainCharacterState)
         {
             newMainCharacterState = null;
 
-            if (Context.InputProcessor.GetIsJumpPressed()) newMainCharacterState = _factory.Jump();
-            else if (!Context.PlayerController.IsGrounded) newMainCharacterState = _factory.Fall();
-            else if (Context.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = _factory.Crouch();
-            else if (Context.InputProcessor.GetCurrentInput() != Vector2.zero) newMainCharacterState = _factory.Walk();
+            if (ExploreDto.InputProcessor.GetIsJumpPressed()) newMainCharacterState = Factory.Jump();
+            else if (!ExploreDto.PlayerController.IsGrounded) newMainCharacterState = Factory.Fall();
+            else if (ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Crouch();
+            else if (ExploreDto.InputProcessor.GetCurrentInput() != Vector2.zero) newMainCharacterState = Factory.Walk();
 
             return newMainCharacterState != null;
         }

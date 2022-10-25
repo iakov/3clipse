@@ -3,49 +3,36 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates
 {
-    public class ExploreCrouchSubState : MainCharacterSubState
+    public class ExploreCrouchSubState : MainCharacterExploreSubState
     {
-        #region Initialization
-
-        public ExploreCrouchSubState(MainCharacterStateMachine context, MainCharacterSubStateFactory factory) : base(context, factory) =>
-            _factory = (ExploreSubStatesFactory) factory;
-        
-        private ExploreSubStatesFactory _factory;
-
-        #endregion
-
-        #region SubStateMethods
+        public ExploreCrouchSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory) {}
 
         public override void OnStateEnter()
         {
-            
         }
 
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
             
-            var rawInput = new Vector3(Context.InputProcessor.GetCurrentInput().x, 0f, Context.InputProcessor.GetCurrentInput().y);
-            var moveVector =  Context.WalkSpeed * Context.CrouchSpeedModifier * rawInput;
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateWithCamera);
+            var rawInput = new Vector3(ExploreDto.InputProcessor.GetCurrentInput().x, 0f, ExploreDto.InputProcessor.GetCurrentInput().y);
+            var moveVector =  ExploreDto.WalkSpeed * ExploreDto.CrouchSpeedModifier * rawInput;
+            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateWithCamera);
         }
 
         public override void OnStateExit()
         {
-            
         }
 
-        public override bool TrySwitchState(out MainCharacterSubState newMainCharacterState)
+        public override bool TrySwitchState(out MainCharacterExploreSubState newMainCharacterState)
         {
             newMainCharacterState = null;
 
-            if (!Context.PlayerController.IsGrounded && !Physics.Raycast(Context.Transform.position, Vector3.down,
-                    Context.PlayerController.Radius)) newMainCharacterState = _factory.Fall();
-            else if (!Context.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = _factory.Idle();
+            if (!ExploreDto.PlayerController.IsGrounded && !Physics.Raycast(ExploreDto.Transform.position, Vector3.down,
+                    ExploreDto.PlayerController.Radius)) newMainCharacterState = Factory.Fall();
+            else if (!ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Idle();
             
             return newMainCharacterState != null;
         }
-
-        #endregion
     }
 }

@@ -4,25 +4,22 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates
 {
-    public class ExploreSlideSubState : MainCharacterSubState
+    public class ExploreSlideSubState : MainCharacterExploreSubState
     {
-        public ExploreSlideSubState(MainCharacterStateMachine context, MainCharacterSubStateFactory factory) : base(context, factory) =>
-            _factory = (ExploreSubStatesFactory) factory;
+        public ExploreSlideSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory) {}
         
-        private ExploreSubStatesFactory _factory;
         private Vector3 _lastMoveVector;
         private float _timeToLowerSpeed;
-        
         private float _currentEvaluateTime;
 
         public override void OnStateEnter()
         {
-            _lastMoveVector = Context.PlayerMover.GetLastMove(MoveType.StateMove, true);
+            _lastMoveVector = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
             _lastMoveVector.y = 0f;
 
-            _timeToLowerSpeed = Context.SlideModifierCurve.keys[Context.SlideModifierCurve.length - 1].time;
+            _timeToLowerSpeed = ExploreDto.SlideModifierCurve.keys[ExploreDto.SlideModifierCurve.length - 1].time;
 
-            Context.Stamina.IsRecovering = false;
+            ExploreDto.Stamina.IsRecovering = false;
         }
 
         public override void OnStateUpdate()
@@ -30,21 +27,21 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
             base.OnStateUpdate();
 
             _currentEvaluateTime = StateTimer <= _timeToLowerSpeed ? StateTimer : _timeToLowerSpeed;
-            var slideMoveVector = _lastMoveVector * Context.SlideModifierCurve.Evaluate(_currentEvaluateTime);
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, slideMoveVector, RotationType.NoRotation);
+            var slideMoveVector = _lastMoveVector * ExploreDto.SlideModifierCurve.Evaluate(_currentEvaluateTime);
+            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, slideMoveVector, RotationType.NoRotation);
         }
 
         public override void OnStateExit()
         {
-            Context.Stamina.IsRecovering = true;
+            ExploreDto.Stamina.IsRecovering = true;
         }
 
-        public override bool TrySwitchState(out MainCharacterSubState newMainCharacterState)
+        public override bool TrySwitchState(out MainCharacterExploreSubState newMainCharacterState)
         {
             newMainCharacterState = null;
             
-            if (Math.Abs(_currentEvaluateTime - _timeToLowerSpeed) == 0) newMainCharacterState = _factory.Crouch();
-            else if (Context.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = _factory.Jump();
+            if (Math.Abs(_currentEvaluateTime - _timeToLowerSpeed) == 0) newMainCharacterState = Factory.Crouch();
+            else if (ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Jump();
             
             return newMainCharacterState != null;
         }

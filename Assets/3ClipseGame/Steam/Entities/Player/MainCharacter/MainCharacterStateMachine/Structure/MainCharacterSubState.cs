@@ -2,14 +2,9 @@ using _3ClipseGame.Steam.Entities.Player.Scripts;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure
 {
-    public abstract class MainCharacterSubState : State<MainCharacterSubState, MainCharacterSubStateFactory, MainCharacterStateMachine>
+    public abstract class MainCharacterSubState<TFactory, TReturn> : SubState<TFactory, TReturn>
+        where TFactory : SubStateFactory
     {
-        protected MainCharacterSubState(MainCharacterStateMachine context, MainCharacterSubStateFactory factory) : base(context, factory){}
-        
-        public abstract override void OnStateEnter();
-        
-        public abstract override void OnStateExit();
-
-        public abstract override bool TrySwitchState(out MainCharacterSubState newState);
+        protected MainCharacterSubState(TFactory factory) : base(factory){}
     }
 }

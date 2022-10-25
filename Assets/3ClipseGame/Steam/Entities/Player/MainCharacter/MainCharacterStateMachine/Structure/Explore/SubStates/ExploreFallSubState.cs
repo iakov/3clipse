@@ -1,36 +1,26 @@
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates
 {
-    public class ExploreFallSubState : MainCharacterSubState
+    public class ExploreFallSubState : MainCharacterExploreSubState
     {
-        #region Initialization
-        public ExploreFallSubState(MainCharacterStateMachine context, MainCharacterSubStateFactory factory) : base(context, factory) =>
-            _factory = (ExploreSubStatesFactory) factory;
-        
-        private ExploreSubStatesFactory _factory;
-        
-        #endregion
-
-        #region SubStateMethods
+        public ExploreFallSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory) {}
 
         public override void OnStateEnter()
         {
-            Context.Stamina.IsRecovering = false;
+            ExploreDto.Stamina.IsRecovering = false;
         }
 
         public override void OnStateExit()
         {
-            Context.Stamina.IsRecovering = true;
+            ExploreDto.Stamina.IsRecovering = true;
         }
 
-        public override bool TrySwitchState(out MainCharacterSubState newMainCharacterState)
+        public override bool TrySwitchState(out MainCharacterExploreSubState newMainCharacterState)
         {
             newMainCharacterState = null;
             
-            if (Context.PlayerController.IsGrounded) newMainCharacterState = _factory.Idle();
+            if (ExploreDto.PlayerController.IsGrounded) newMainCharacterState = Factory.Idle();
 
             return newMainCharacterState != null;
         }
-
-        #endregion
     }
 }

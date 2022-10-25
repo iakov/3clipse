@@ -3,18 +3,15 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore.SubStates
 {
-    public class ExploreWalkSubState : MainCharacterSubState
+    public class ExploreWalkSubState : MainCharacterExploreSubState
     {
-        public ExploreWalkSubState(MainCharacterStateMachine context, MainCharacterSubStateFactory factory) : base(context, factory) =>
-            _factory = (ExploreSubStatesFactory) factory;
+        public ExploreWalkSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory){}
 
-        private ExploreSubStatesFactory _factory;
-        
         private static readonly int IsWalking = Animator.StringToHash("IsWalking");
 
         public override void OnStateEnter()
         {
-            Context.CharacterAnimator.SetBool(IsWalking, true);
+            ExploreDto.CharacterAnimator.SetBool(IsWalking, true);
         }
 
         public override void OnStateUpdate()
@@ -27,35 +24,35 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMac
 
         public override void OnStateExit()
         {
-            Context.CharacterAnimator.SetBool(IsWalking, false);
+            ExploreDto.CharacterAnimator.SetBool(IsWalking, false);
         }
 
-        public override bool TrySwitchState(out MainCharacterSubState newMainCharacterState)
+        public override bool TrySwitchState(out MainCharacterExploreSubState newMainCharacterState)
         {
             newMainCharacterState = null;
 
-            if (!Context.PlayerController.IsGrounded && !Context.PlayerController.IsGrounded) newMainCharacterState = _factory.Fall();
-            else if (Context.InputProcessor.GetIsJumpPressed()) newMainCharacterState = _factory.Jump();
-            else if (Context.InputProcessor.GetCurrentInput() == Vector2.zero) newMainCharacterState = _factory.Stop();
-            else if (Context.InputProcessor.GetIsSprintPressed() && Context.Stamina.StaminaPercentage > Context.MinRunEntryStamina) newMainCharacterState = _factory.Run();
-            else if (Context.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = _factory.Crouch();
+            if (!ExploreDto.PlayerController.IsGrounded && !ExploreDto.PlayerController.IsGrounded) newMainCharacterState = Factory.Fall();
+            else if (ExploreDto.InputProcessor.GetIsJumpPressed()) newMainCharacterState = Factory.Jump();
+            else if (ExploreDto.InputProcessor.GetCurrentInput() == Vector2.zero) newMainCharacterState = Factory.Stop();
+            else if (ExploreDto.InputProcessor.GetIsSprintPressed() && ExploreDto.Stamina.StaminaPercentage > ExploreDto.MinRunEntryStamina) newMainCharacterState = Factory.Run();
+            else if (ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Crouch();
             
             return newMainCharacterState != null;
         }
         
         private void Move()
         {
-            var rawMoveVector = new Vector3(Context.InputProcessor.GetCurrentInput().x, 0f, Context.InputProcessor.GetCurrentInput().y);
-            var moveVector = rawMoveVector * Context.WalkSpeed;
-            Context.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
+            var rawMoveVector = new Vector3(ExploreDto.InputProcessor.GetCurrentInput().x, 0f, ExploreDto.InputProcessor.GetCurrentInput().y);
+            var moveVector = rawMoveVector * ExploreDto.WalkSpeed;
+            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
         }
 
         private void Rotate()
         {
-            var rotatedMove = Context.PlayerMover.GetLastMove(MoveType.StateMove, true);
+            var rotatedMove = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
             if (rotatedMove == Vector3.zero) return;
             
-            Context.PlayerController.Rotate(Quaternion.LookRotation(rotatedMove));
+            ExploreDto.PlayerController.Rotate(Quaternion.LookRotation(rotatedMove));
         }
     }
 }

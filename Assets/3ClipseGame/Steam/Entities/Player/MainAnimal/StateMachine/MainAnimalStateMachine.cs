@@ -5,8 +5,8 @@ using _3ClipseGame.Steam.Entities.Player.Data.Specifications.InGame;
 using _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine.Structure.States;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure;
+using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.ControlAnimal;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Explore;
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.MainCharacterStateMachine.Structure.Unconsciouned;
 using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
@@ -133,8 +133,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainAnimal.StateMachine
 
         public void SetSwitch(MainCharacterState oldState, MainCharacterState newState)
         {
-            if(newState.GetType() == typeof(ExploreMainCharacterState) && oldState.GetType() == typeof(AnimalControlState)) IsSwitching = true;
-            else if(newState.GetType() == typeof(AnimalControlState) && oldState.GetType() == typeof(ExploreMainCharacterState)) IsSwitching = true;
+            if(newState.GetType() == typeof(ExploreMainCharacterState) && oldState.GetType() == typeof(MainCharacterControlAnimalState)) IsSwitching = true;
+            else if(newState.GetType() == typeof(MainCharacterControlAnimalState) && oldState.GetType() == typeof(ExploreMainCharacterState)) IsSwitching = true;
         }
 
         #endregion
