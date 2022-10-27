@@ -154,6 +154,8 @@ GameObject:
   - component: {fileID: 1284409744}
   - component: {fileID: 1284409760}
   - component: {fileID: 1284409761}
+  - component: {fileID: 1284409769}
+  - component: {fileID: 1284409770}
   m_Layer: 3
   m_Name: MainCharacter
   m_TagString: Untagged
@@ -260,62 +262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f62f1eed3c925142b271bceafa6d0ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementInputProcessor: {fileID: 0}
-  walkSpeed: 3
-  speedInterpolation: 6
-  crouchSpeedModifier: 0.5
-  jumpStaminaReduce: -7
-  jumpStrength: 10
-  runStaminaReduce: -7
-  minRunEntryStamina: 0.3
-  runModifierCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 3
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  slideModifierCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -1
-      outSlope: -1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1
-      outSlope: -1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &1284409745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +316,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fc79c0217c14bd89e97b3a0ee618d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1284409769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284409742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d5383dcf6db45bfaa9ad5cd2b0e8684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputProcessor: {fileID: 0}
+--- !u!114 &1284409770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284409742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64fed9d1c27e04a47a9f3a9566a052e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementInputProcessor: {fileID: 0}
+  _walkSpeed: 3
+  _speedInterpolation: 6
+  _crouchSpeedModifier: 0.5
+  _jumpStaminaReduce: -5
+  _jumpStrength: 2
+  _runStaminaReduce: -5
+  _minRunEntryStamina: 0.3
+  _runModifierCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _slideModifierCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1601244571
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +613,8 @@ GameObject:
   - component: {fileID: 1014769343}
   - component: {fileID: 1014769349}
   - component: {fileID: 1014769350}
+  - component: {fileID: 1014769359}
+  - component: {fileID: 1014769360}
   m_Layer: 3
   m_Name: Animal
   m_TagString: Player
@@ -701,118 +694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8e86b2d53c1534b935d42aec242b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCharacterTransform: {fileID: 1284409743}
-  _inputProcessor: {fileID: 0}
-  _waitTime: 2
-  _followWalkDistance: 2
-  _followWalkSpeed:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1.0000086
-      inSlope: -1.0000086
-      outSlope: -1.0000086
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1.0000086
-      outSlope: -1.0000086
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _stopWalkDistance: 2
-  _possibleFollowTargets:
-  - {fileID: 725718785}
-  - {fileID: 232110800}
-  _walkBackDistance: 1
-  _walkBackSpeed:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 13
-      inSlope: -8
-      outSlope: -8
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 5
-      inSlope: -8
-      outSlope: -8
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _followRunDistance: 5
-  _followRunSpeed:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 2
-      inSlope: 8
-      outSlope: 8
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 10
-      inSlope: 8
-      outSlope: 8
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _speedInterpolation: 6
-  _walkSpeed: 3
-  _runStaminaReduce: -5
-  _runSpeed:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 3
-      inSlope: 3
-      outSlope: 3
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 6
-      inSlope: 3
-      outSlope: 3
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _jumpStrength: 10
-  _jumpStaminaReduce: -5
-  _crouchSpeedModifier: 0.5
 --- !u!114 &4374001487689133800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -927,6 +808,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ebff02cff64bf4da47839e47f4017e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1014769359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7878028965152469052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ce237c3679445c8e66f03532bff3a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementInputProcessor: {fileID: 0}
+  _speedInterpolation: 6
+  _walkSpeed: 0
+  _runStaminaReduce: -5
+  _runSpeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _jumpStrength: 0
+  _jumpStaminaReduce: -5
+  _crouchSpeedModifier: 1
+--- !u!114 &1014769360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7878028965152469052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84c91c5610f74fdbbde04d309cd9b524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementInputProcessor: {fileID: 0}
+  _mainCharacterTransform: {fileID: 1284409743}
+  _waitTimeBeforeEntertain: 0
+  _startFollowWalkDistance: 0
+  _stopFollowWalkDistance: 0
+  _followWalkSpeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _possibleFollowTargets:
+  - {fileID: 725718785}
+  - {fileID: 232110800}
+  _startWalkBackDistance: 0
+  _endWalkBackDistance: 0
+  _walkBackSpeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _minFollowRunDistance: 0
+  _followRunSpeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7878028966021634426
 GameObject:
   m_ObjectHideFlags: 0

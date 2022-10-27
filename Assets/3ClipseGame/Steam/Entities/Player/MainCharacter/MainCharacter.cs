@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter
 {
-    [RequireComponent(typeof(MainCharacterStateMachine.MainCharacterStateMachine))]
+    [RequireComponent(typeof(StateMachine.MainCharacterStateMachine))]
     [RequireComponent(typeof(PlayerMover))]
     public class MainCharacter : PlayerEntity
     {
         public override event Action SwitchingToNewEntity;
         
-        private MainCharacterStateMachine.MainCharacterStateMachine _mainCharacterStateMachine;
+        private StateMachine.MainCharacterStateMachine _mainCharacterStateMachine;
         [SerializeField] private MovementInputHandler _movementInputHandler;
         
         public override void LoseControl()
@@ -29,7 +29,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter
 
         private void Awake()
         {
-            _mainCharacterStateMachine = GetComponent<MainCharacterStateMachine.MainCharacterStateMachine>();
+            _mainCharacterStateMachine = GetComponent<StateMachine.MainCharacterStateMachine>();
         }
         
         private void Update()
