@@ -9,7 +9,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
             _exploreDto = exploreDto;
         }
 
-        private ExploreDto _exploreDto;
+        private readonly ExploreDto _exploreDto;
 
         public MainCharacterExploreSubState Idle() => new ExploreIdleSubState(_exploreDto, this);
         public MainCharacterExploreSubState Walk() => new ExploreWalkSubState(_exploreDto, this);

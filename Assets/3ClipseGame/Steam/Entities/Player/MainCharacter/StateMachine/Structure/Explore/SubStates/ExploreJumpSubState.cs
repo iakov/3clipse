@@ -7,32 +7,55 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
     {
         public ExploreJumpSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory) {}
 
-        private Vector3 _lastMoveVector;
-
         public override void OnStateEnter()
         {
-            _lastMoveVector = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
-            _lastMoveVector.y = 0f;
-            var jumpMoveVector = _lastMoveVector + Vector3.up * ExploreDto.JumpStrength;
-            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, jumpMoveVector, RotationType.NoRotation);
+            ExploreDto.SaveLastMove(true);
+            SetJumpMove();
             
-            ExploreDto.Stamina.IsRecovering = false;
+            ExploreDto.SwitchStaminaRecovery(false);
+            WasteJumpStamina();
+        }
+
+        private void SetJumpMove()
+        {
+            var jumpMoveVector = ExploreDto.LastMove + Vector3.up * ExploreDto.JumpStrength;
+            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, jumpMoveVector, RotationType.NoRotation);
+        }
+
+        private void WasteJumpStamina()
+        {
             ExploreDto.Stamina.AddValue(ExploreDto.JumpStaminaReduce);
         }
 
         public override void OnStateExit()
         {
-            ExploreDto.Stamina.IsRecovering = true;
+            ExploreDto.SwitchStaminaRecovery(true);
         }
 
         protected override bool TrySwitch(out MainCharacterExploreSubState newMainCharacterState)
         {
             newMainCharacterState = null;
 
-            if (ExploreDto.PlayerController.IsGrounded && StateTimer > 0.1f) newMainCharacterState = Factory.Idle();
-            else if(ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, false).y + ExploreDto.PlayerMover.GetLastMove(MoveType.GravityMove, false).y < 0) newMainCharacterState = Factory.Fall();
+            if (IsStill()) newMainCharacterState = Factory.Idle();
+            else if(IsFalling()) newMainCharacterState = Factory.Fall();
 
             return newMainCharacterState != null;
+        }
+
+        private bool IsStill()
+        {
+            var isGrounded = ExploreDto.PlayerController.IsGrounded;
+            var isAbleToSwitch = StateTimer > 0.1f;
+            return isGrounded && isAbleToSwitch;
+        }
+
+        private bool IsFalling()
+        {
+            var jumpMoveHeight = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, false).y;
+            var gravityMoveHeight = ExploreDto.PlayerMover.GetLastMove(MoveType.GravityMove, false).y;
+            var finalMoveHeight = jumpMoveHeight + gravityMoveHeight;
+
+            return finalMoveHeight < 0f;
         }
     }
 }

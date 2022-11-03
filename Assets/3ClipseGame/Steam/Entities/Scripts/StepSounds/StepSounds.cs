@@ -2,27 +2,17 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace _3ClipseGame.Steam.Entities.Scripts
+namespace _3ClipseGame.Steam.Entities.Scripts.StepSounds
 {
     public class StepSounds : MonoBehaviour
     {
-        #region SerializeFields
-
         [SerializeField] private StepSoundsStorage soundsStorage;
         [SerializeField] private float rayDistance;
         [SerializeField] private LayerMask soundsDetectLayer;
 
-        #endregion
-
-        #region PrivateMethods
-
         private Transform _transform;
         private AudioSource _audioSource;
         private CapsuleCollider _capsuleCollider;
-
-        #endregion
-
-        #region MonoBehaviourMethods
 
         private void Start()
         {
@@ -30,10 +20,6 @@ namespace _3ClipseGame.Steam.Entities.Scripts
             _audioSource = GetComponent<AudioSource>();
             _capsuleCollider = GetComponentInParent<CapsuleCollider>();
         }
-
-        #endregion
-
-        #region PublicMethods
 
         public void PlaySound(float volume)
         {
@@ -51,7 +37,5 @@ namespace _3ClipseGame.Steam.Entities.Scripts
             _audioSource.volume = volume;
             _audioSource.Play();
         }
-
-        #endregion
     }
 }

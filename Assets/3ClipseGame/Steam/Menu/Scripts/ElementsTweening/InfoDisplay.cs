@@ -1,20 +1,13 @@
 using System;
-using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem;
 using _3ClipseGame.Steam.Entities.Player.Data.InventorySystem.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.Core.UI.Scripts.ElementsTweening
+namespace _3ClipseGame.Steam.Menu.Scripts.ElementsTweening
 {
     public class InfoDisplay : MonoBehaviour
     {
-        #region PublicFields
-
-        public event Action<Item> ItemChanged; 
-
-        #endregion
-
-        #region SerializeFields
+        public event Action<Item> ItemChanged;
 
         [Header("Display info")]
         [SerializeField] private Image image;
@@ -25,16 +18,8 @@ namespace _3ClipseGame.Steam.Core.UI.Scripts.ElementsTweening
         [Header("Animate parameters")] 
         [SerializeField] private float animationTime;
 
-        #endregion
-
-        #region PrivateFields
-
         private bool _isPanelShowed;
         private Item _currentItem;
-
-        #endregion
-
-        #region MonoBehaviourMethods
 
         private void OnDisable()
         {
@@ -43,10 +28,6 @@ namespace _3ClipseGame.Steam.Core.UI.Scripts.ElementsTweening
             _currentItem = null;
             ItemChanged?.Invoke(null);
         }
-
-        #endregion
-
-        #region PublicMethods
 
         public void NewItemClicked(Item item)
         {
@@ -63,7 +44,5 @@ namespace _3ClipseGame.Steam.Core.UI.Scripts.ElementsTweening
             descriptionText.text = item.Description;
             ItemChanged?.Invoke(item);
         }
-
-        #endregion
     }
 }

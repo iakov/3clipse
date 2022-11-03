@@ -4,8 +4,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Animations.Sc
 {
     public class RandomizeTaunt : StateMachineBehaviour
     {
-        #region Initialization
-
         [SerializeField] private float _minTimeToTaunt = 10f;
         [SerializeField] private float _maxTimeToTaunt = 20f;
 
@@ -14,11 +12,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Animations.Sc
         private float _randomTimeToTaunt;
         private float _time;
         private bool _isSwitching;
-
-        #endregion
-
-        #region StateMachineMethods
-
+        
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _randomTimeToTaunt = Random.Range(_minTimeToTaunt, _maxTimeToTaunt);
@@ -40,7 +34,5 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.Visuals.Animations.Sc
             _time = 0f;
             _isSwitching = false;
         }
-
-        #endregion
     }
 }

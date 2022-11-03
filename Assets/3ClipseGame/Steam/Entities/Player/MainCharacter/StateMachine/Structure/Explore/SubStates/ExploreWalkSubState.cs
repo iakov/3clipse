@@ -18,8 +18,23 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         {
             base.OnStateUpdate();
             
-            Move();
-            Rotate();
+            UpdateMove();
+            UpdateRotation();
+        }
+        
+        private void UpdateMove()
+        {
+            var rawMoveVector = new Vector3(ExploreDto.InputProcessor.GetCurrentInput().x, 0f, ExploreDto.InputProcessor.GetCurrentInput().y);
+            var moveVector = rawMoveVector * ExploreDto.WalkSpeed;
+            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
+        }
+
+        private void UpdateRotation()
+        {
+            var rotatedMove = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
+            if (rotatedMove == Vector3.zero) return;
+            
+            ExploreDto.PlayerController.Rotate(Quaternion.LookRotation(rotatedMove));
         }
 
         public override void OnStateExit()
@@ -38,21 +53,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
             else if (ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Crouch();
             
             return newMainCharacterState != null;
-        }
-        
-        private void Move()
-        {
-            var rawMoveVector = new Vector3(ExploreDto.InputProcessor.GetCurrentInput().x, 0f, ExploreDto.InputProcessor.GetCurrentInput().y);
-            var moveVector = rawMoveVector * ExploreDto.WalkSpeed;
-            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
-        }
-
-        private void Rotate()
-        {
-            var rotatedMove = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
-            if (rotatedMove == Vector3.zero) return;
-            
-            ExploreDto.PlayerController.Rotate(Quaternion.LookRotation(rotatedMove));
         }
     }
 }

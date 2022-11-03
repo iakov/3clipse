@@ -1,7 +1,6 @@
-using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
+namespace _3ClipseGame.Steam.Entities.Scripts.CharacterMover
 {
     public class CamBeginRotateMove : Move
     {
@@ -12,7 +11,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
             _rotatedVector =  RawVector.x * MainCameraTransform.right + RawVector.z * cameraForward.normalized;
         }
         
-        private Vector3 _rotatedVector;
+        private readonly Vector3 _rotatedVector;
 
         public override Vector3 GetRotatedVector() => _rotatedVector;
     }

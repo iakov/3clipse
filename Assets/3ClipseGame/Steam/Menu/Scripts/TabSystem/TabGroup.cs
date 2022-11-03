@@ -1,13 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Global.UI.Scripts.TabSystem
+namespace _3ClipseGame.Steam.Menu.Scripts.TabSystem
 {
     public class TabGroup : MonoBehaviour
     {
-        #region PrivateInitialization
 
         [SerializeField] private TabButton defaultTab;
         
@@ -15,10 +13,6 @@ namespace _3ClipseGame.Steam.Global.UI.Scripts.TabSystem
         
         private TabButton _currentActiveButton;
         private TabButton _currentScopedButton;
-        
-        #endregion
-
-        #region PublicMethods
 
         private void Awake()
         {
@@ -51,24 +45,29 @@ namespace _3ClipseGame.Steam.Global.UI.Scripts.TabSystem
             ResetTabs();
         }
 
-        #endregion
-
-        #region PrivateMethods
-
         private void ResetTabs()
         {
-            if (_tabButtons == null) _tabButtons = new List<TabButton>();
-            
+            _tabButtons ??= new List<TabButton>();
+            DisableAllTabs();
+            SetTabActive();
+            SetTabScoped();
+        }
+
+        private void DisableAllTabs()
+        {
             foreach (var tabButton in _tabButtons.Where(tabButton => tabButton != _currentActiveButton && tabButton != _currentScopedButton)) 
                 tabButton.SetTabActive(false);
-            
-            
-            _currentActiveButton.SetTabActive(true);
+        }
 
+        private void SetTabActive()
+        {
+            _currentActiveButton.SetTabActive(true);
+        }
+
+        private void SetTabScoped()
+        {
             if (_currentScopedButton == null || _currentActiveButton == _currentScopedButton) return;
             _currentScopedButton.SetTabScoped();
         }
-
-        #endregion
     }
 }

@@ -7,61 +7,38 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
     {
         public ExploreRunSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory) {}
 
-        private float _timeToMaximumSpeed;
-        
         private static readonly int IsRunning = Animator.StringToHash("IsRunning");
         private static readonly int IsWalking = Animator.StringToHash("IsWalking");
 
         public override void OnStateEnter()
         {
+            UpdateAnimator();
+            ExploreDto.SwitchStaminaRecovery(false);
+        }
+
+        private void UpdateAnimator()
+        {
             ExploreDto.CharacterAnimator.SetBool(IsRunning, true);
             ExploreDto.CharacterAnimator.SetBool(IsWalking, true);
-            
-            _timeToMaximumSpeed = ExploreDto.RunModifierCurve.keys[ExploreDto.RunModifierCurve.length - 1].time;
-            ExploreDto.Stamina.IsRecovering = false;
         }
 
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
             
-            Move();
-            Rotate();
+            ChangeMove();
+            ChangeRotation();
             ReduceStamina();
         }
-
-        public override void OnStateExit()
-        {
-            ExploreDto.CharacterAnimator.SetBool(IsRunning, false);
-            ExploreDto.CharacterAnimator.SetBool(IsWalking, false);
-            
-            ExploreDto.Stamina.IsRecovering = true;
-        }
-
-        protected override bool TrySwitch(out MainCharacterExploreSubState newMainCharacterState)
-        {
-            newMainCharacterState = null;
-            
-            if (ExploreDto.InputProcessor.GetIsJumpPressed()) newMainCharacterState = Factory.Jump();
-            else if (ExploreDto.Stamina.StaminaPercentage == 0) newMainCharacterState = Factory.Walk();
-            else if (!ExploreDto.PlayerController.IsGrounded && !Physics.Raycast(ExploreDto.Transform.position, Vector3.down,
-                    ExploreDto.PlayerController.Radius)) newMainCharacterState = Factory.Fall();
-            else if (ExploreDto.InputProcessor.GetCurrentInput() == Vector2.zero) newMainCharacterState = Factory.Stop();
-            else if (ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Slide();
-            else if (!ExploreDto.InputProcessor.GetIsSprintPressed()) newMainCharacterState = Factory.Walk();
-
-            return newMainCharacterState != null;
-        }
-
-        private void Move()
+        
+        private void ChangeMove()
         {
             var rawMoveVector = new Vector3(ExploreDto.InputProcessor.GetCurrentInput().x, 0f, ExploreDto.InputProcessor.GetCurrentInput().y);
-            var currentEvaluateTime = StateTimer <= _timeToMaximumSpeed ? StateTimer : _timeToMaximumSpeed;
-            var moveVector = rawMoveVector * (ExploreDto.RunModifierCurve.Evaluate(currentEvaluateTime) * ExploreDto.WalkSpeed);
+            var moveVector = rawMoveVector * (ExploreDto.RunModifierCurve.Evaluate(StateTimer) * ExploreDto.WalkSpeed);
             ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
         }
 
-        private void Rotate()
+        private void ChangeRotation()
         {
             var rotatedMove = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
             if (rotatedMove == Vector3.zero) return;
@@ -71,6 +48,59 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         private void ReduceStamina()
         {
             ExploreDto.Stamina.AddValue(ExploreDto.RunStaminaReduce * Time.deltaTime);
+        }
+
+        public override void OnStateExit()
+        {
+            ExploreDto.CharacterAnimator.SetBool(IsRunning, false);
+            ExploreDto.CharacterAnimator.SetBool(IsWalking, false);
+            
+            ExploreDto.SwitchStaminaRecovery(true);
+        }
+
+        protected override bool TrySwitch(out MainCharacterExploreSubState newMainCharacterState)
+        {
+            newMainCharacterState = null;
+            
+            if (IsJumping()) newMainCharacterState = Factory.Jump();
+            else if (IsOutOfStamina()) newMainCharacterState = Factory.Walk();
+            else if (IsFalling()) newMainCharacterState = Factory.Fall();
+            else if (IsStill()) newMainCharacterState = Factory.Stop();
+            else if (IsCrouching()) newMainCharacterState = Factory.Slide();
+            else if (!IsSprinting()) newMainCharacterState = Factory.Walk();
+
+            return newMainCharacterState != null;
+        }
+
+        private bool IsJumping()
+        {
+            return ExploreDto.InputProcessor.GetIsJumpPressed();
+        }
+
+        private bool IsOutOfStamina()
+        {
+            return ExploreDto.Stamina.StaminaPercentage == 0;
+        }
+
+        private bool IsFalling()
+        {
+            return !ExploreDto.PlayerController.IsGrounded;
+        }
+
+        private bool IsStill()
+        {
+            var currentInput = ExploreDto.InputProcessor.GetCurrentInput();
+           return currentInput == Vector2.zero;
+        }
+
+        private bool IsCrouching()
+        {
+            return ExploreDto.InputProcessor.GetIsCrouchPressed();
+        }
+
+        private bool IsSprinting()
+        {
+            return ExploreDto.InputProcessor.GetIsSprintPressed();
         }
     }
 }

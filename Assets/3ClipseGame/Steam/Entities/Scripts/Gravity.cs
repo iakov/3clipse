@@ -1,4 +1,3 @@
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController.CharacterController;

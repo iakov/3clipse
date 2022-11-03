@@ -15,9 +15,21 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         {
             base.OnStateUpdate();
             
-            var rawInput = new Vector3(ExploreDto.InputProcessor.GetCurrentInput().x, 0f, ExploreDto.InputProcessor.GetCurrentInput().y);
-            var moveVector =  ExploreDto.WalkSpeed * ExploreDto.CrouchSpeedModifier * rawInput;
+            UpdateMove();
+        }
+
+        private void UpdateMove()
+        {
+            var rawInput = GetCurrentInput();
+            var speedModifier = ExploreDto.WalkSpeed * ExploreDto.CrouchSpeedModifier;
+            var moveVector = rawInput * speedModifier;
             ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateWithCamera);
+        }
+
+        private Vector3 GetCurrentInput()
+        {
+            var currentInput = ExploreDto.InputProcessor.GetCurrentInput();
+            return new Vector3(currentInput.x, 0f, currentInput.y);
         }
 
         public override void OnStateExit()
@@ -28,11 +40,22 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         {
             newMainCharacterState = null;
 
-            if (!ExploreDto.PlayerController.IsGrounded && !Physics.Raycast(ExploreDto.Transform.position, Vector3.down,
-                    ExploreDto.PlayerController.Radius)) newMainCharacterState = Factory.Fall();
-            else if (!ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Idle();
+            if (IsFalling()) newMainCharacterState = Factory.Fall();
+            else if (!IsCrouching()) newMainCharacterState = Factory.Idle();
             
             return newMainCharacterState != null;
+        }
+
+        private bool IsFalling()
+        {
+            var controller = ExploreDto.PlayerController;
+            return !controller.IsGrounded;
+        }
+
+        private bool IsCrouching()
+        { 
+            var inputProcessor = ExploreDto.InputProcessor;
+            return inputProcessor.GetIsCrouchPressed();
         }
     }
 }

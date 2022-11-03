@@ -1,7 +1,6 @@
-using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts
+namespace _3ClipseGame.Steam.Entities.Scripts.CharacterMover
 {
     public class NoCamRotationMove : Move
     {

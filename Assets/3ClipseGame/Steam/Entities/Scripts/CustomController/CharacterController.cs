@@ -34,7 +34,6 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 			? Vector3.negativeInfinity
 			: _capsuleCollider.center + _transform.position;
 		public bool IsGrounded { get; private set; }
-		public bool IsStable => CurrentSlope <= slopeLimit;
 		public float Radius => _capsuleCollider == null ? -1f : _capsuleCollider.radius;
 		public float Height => _capsuleCollider == null ? -1f : _capsuleCollider.height;
 		public Vector3 Velocity { get; set; }

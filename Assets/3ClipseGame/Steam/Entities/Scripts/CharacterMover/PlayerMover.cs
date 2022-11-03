@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using _3ClipseGame.Steam.Entities.Player.Scripts.PlayerMoverScripts;
 using UnityEngine;
 using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController.CharacterController;
 
@@ -8,16 +7,10 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CharacterMover
 {
     public class PlayerMover : MonoBehaviour
     {
-        #region Initialization
-
         private CharacterController _characterController;
         private Transform _cameraTransform;
         private readonly List<Move> _movesList = new();
         public static bool IsFreezed = false;
-
-        #endregion
-
-        #region MonoBehaviourMethods
 
         private void Awake()
         {
@@ -32,8 +25,6 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CharacterMover
             
             UpdateMove();
         }
-
-        #endregion
 
         #region PublicMethods
 

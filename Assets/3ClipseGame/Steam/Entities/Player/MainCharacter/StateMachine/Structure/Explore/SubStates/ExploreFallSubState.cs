@@ -6,12 +6,17 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
 
         public override void OnStateEnter()
         {
-            ExploreDto.Stamina.IsRecovering = false;
+            ExploreDto.SwitchStaminaRecovery(false);
+        }
+
+        public override void OnStateUpdate()
+        {
+            base.OnStateUpdate();
         }
 
         public override void OnStateExit()
         {
-            ExploreDto.Stamina.IsRecovering = true;
+            ExploreDto.SwitchStaminaRecovery(true);
         }
 
         protected override bool TrySwitch(out MainCharacterExploreSubState newMainCharacterState)

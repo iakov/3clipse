@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Core.UI.Scripts.ElementsTweening
+namespace _3ClipseGame.Steam.Menu.Scripts.ElementsTweening
 {
     public class ScaleAnimations : MonoBehaviour
     {

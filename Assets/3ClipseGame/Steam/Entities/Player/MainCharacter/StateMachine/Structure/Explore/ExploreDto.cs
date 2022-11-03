@@ -1,4 +1,4 @@
-using System;
+using System.Runtime.Serialization;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput;
 using _3ClipseGame.Steam.Entities.Player.Data.Specifications.InGame;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
@@ -42,9 +42,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
 
         public PlayerMover PlayerMover { get; private set; }
         public CharacterController PlayerController { get; private set; }
-        public Transform Transform { get; private set; }
         public Stamina Stamina { get; private set; }
         public Animator CharacterAnimator { get; private set; }
+        
+        public Vector3 LastMove { get; private set; }
 
         private void Awake()
         {
@@ -52,8 +53,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
             PlayerMover = GetComponent<PlayerMover>();
             Stamina = GetComponent<Stamina>();
             CharacterAnimator = GetComponentInChildren<Animator>();
-            
-            Transform = PlayerController.transform;
         }
 
         private void Start()
@@ -63,8 +62,22 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         
         private void CheckForExceptions()
         {
-            if (RunModifierCurve.length <= 1) throw new ArgumentException("RunModifierCurve wrong function");
-            if (SlideModifierCurve.length <= 1) throw new ArgumentException("SlideModifierCurve wrong function");
+            if(_movementInputProcessor == null) throw new SerializationException("MovementInputProcessor cannot be null");
+            if (RunModifierCurve.length < 2) throw new SerializationException("RunModifierCurve wrong function");
+            if (SlideModifierCurve.length < 2) throw new SerializationException("SlideModifierCurve wrong function");
+        }
+
+        public void SaveLastMove(bool isRotated)
+        {
+            var playerMover = PlayerMover;
+            var lastMove = playerMover.GetLastMove(MoveType.StateMove, isRotated);
+            lastMove.y = 0f;
+            LastMove = lastMove;
+        }
+
+        public void SwitchStaminaRecovery(bool isRecovering)
+        {
+            Stamina.IsRecovering = isRecovering;
         }
     }
 }

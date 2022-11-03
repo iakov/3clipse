@@ -7,20 +7,22 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
     {
         public ExploreIdleSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory) {}
 
-        private Vector3 _lastMoveVector;
-
         public override void OnStateEnter()
         {
-            _lastMoveVector = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
-            _lastMoveVector.y = 0f;
+            ExploreDto.SaveLastMove(true);
         }
 
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
 
+            UpdateInterpolationMove();
+        }
+
+        private void UpdateInterpolationMove()
+        {
             var t = StateTimer <= 1 ? StateTimer : 1f;
-            var interpolatedMoveVector = Vector3.Lerp(_lastMoveVector, Vector3.zero, t * ExploreDto.SpeedInterpolation);
+            var interpolatedMoveVector = Vector3.Lerp(ExploreDto.LastMove, Vector3.zero, t * ExploreDto.SpeedInterpolation);
             ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, RotationType.NoRotation);
         }
 
@@ -32,12 +34,36 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         {
             newMainCharacterState = null;
 
-            if (ExploreDto.InputProcessor.GetIsJumpPressed()) newMainCharacterState = Factory.Jump();
-            else if (!ExploreDto.PlayerController.IsGrounded) newMainCharacterState = Factory.Fall();
-            else if (ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Crouch();
-            else if (ExploreDto.InputProcessor.GetCurrentInput() != Vector2.zero) newMainCharacterState = Factory.Walk();
+            if (IsJumping()) newMainCharacterState = Factory.Jump();
+            else if (IsFalling()) newMainCharacterState = Factory.Fall();
+            else if (IsCrouching()) newMainCharacterState = Factory.Crouch();
+            else if (IsStill()) newMainCharacterState = Factory.Walk();
 
             return newMainCharacterState != null;
+        }
+
+        private bool IsJumping()
+        {
+            var inputProcessor = ExploreDto.InputProcessor;
+            return inputProcessor.GetIsJumpPressed();
+        }
+
+        private bool IsFalling()
+        {
+            var playerController = ExploreDto.PlayerController;
+            return !playerController.IsGrounded;
+        }
+
+        private bool IsCrouching()
+        {
+            var inputProcessor = ExploreDto.InputProcessor;
+            return inputProcessor.GetIsCrouchPressed();
+        }
+
+        private bool IsStill()
+        {
+            var currentInput = ExploreDto.InputProcessor.GetCurrentInput();
+            return currentInput == Vector2.zero;
         }
     }
 }

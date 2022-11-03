@@ -1,49 +1,63 @@
-using System;
 using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
-using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structure.Explore.SubStates
 {
     public class ExploreSlideSubState : MainCharacterExploreSubState
     {
         public ExploreSlideSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory) {}
-        
-        private Vector3 _lastMoveVector;
-        private float _timeToLowerSpeed;
-        private float _currentEvaluateTime;
 
         public override void OnStateEnter()
         {
-            _lastMoveVector = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
-            _lastMoveVector.y = 0f;
-
-            _timeToLowerSpeed = ExploreDto.SlideModifierCurve.keys[ExploreDto.SlideModifierCurve.length - 1].time;
-
-            ExploreDto.Stamina.IsRecovering = false;
+            ExploreDto.SaveLastMove(true);
+            SwitchStamina(false);
         }
 
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
+            ChangeMove();
+        }
 
-            _currentEvaluateTime = StateTimer <= _timeToLowerSpeed ? StateTimer : _timeToLowerSpeed;
-            var slideMoveVector = _lastMoveVector * ExploreDto.SlideModifierCurve.Evaluate(_currentEvaluateTime);
+        private void ChangeMove()
+        {
+            var speedModifier = ExploreDto.SlideModifierCurve.Evaluate(StateTimer);
+            var slideMoveVector = ExploreDto.LastMove * speedModifier;
             ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, slideMoveVector, RotationType.NoRotation);
         }
 
         public override void OnStateExit()
         {
-            ExploreDto.Stamina.IsRecovering = true;
+            SwitchStamina(true);
+        }
+
+        private void SwitchStamina(bool isRecovering)
+        {
+            var stamina = ExploreDto.Stamina;
+            stamina.IsRecovering = isRecovering;
         }
 
         protected override bool TrySwitch(out MainCharacterExploreSubState newMainCharacterState)
         {
             newMainCharacterState = null;
             
-            if (Math.Abs(_currentEvaluateTime - _timeToLowerSpeed) == 0) newMainCharacterState = Factory.Crouch();
-            else if (ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Jump();
+            if (IsStopped()) newMainCharacterState = Factory.Crouch();
+            else if (IsCrouched()) newMainCharacterState = Factory.Jump();
             
             return newMainCharacterState != null;
+        }
+
+        private bool IsStopped()
+        {
+            var currentTime = StateTimer;
+            var slideCurve = ExploreDto.SlideModifierCurve;
+            var maxSlideTime = slideCurve.keys[slideCurve.length - 1].time;
+
+            return currentTime >= maxSlideTime;
+        }
+
+        private bool IsCrouched()
+        {
+            return ExploreDto.InputProcessor.GetIsCrouchPressed();
         }
     }
 }

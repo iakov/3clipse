@@ -7,6 +7,8 @@ using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine
 {
     [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(ExploreDto))]
+    [RequireComponent(typeof(ControlAnimalDto))]
     public class MainCharacterStateMachine : Scripts.StateMachine
     {
         private MainCharacterState _currentMainCharacterState;

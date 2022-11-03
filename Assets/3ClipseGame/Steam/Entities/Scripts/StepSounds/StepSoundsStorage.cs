@@ -2,19 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Scripts
+namespace _3ClipseGame.Steam.Entities.Scripts.StepSounds
 {
     [CreateAssetMenu(fileName = "New Step Sounds Storage", menuName = "Entities/Sounds/Step Sounds Storage")]
     public class StepSoundsStorage : ScriptableObject
     {
-        #region SerializeFields
-
         [SerializeField] private StepSound[] materialsStepSounds;
         [SerializeField] private List<AudioClip> defaultStepSound;
-
-        #endregion
-
-        #region PublicMethods
 
         public List<AudioClip> TryGetStepSounds(Material material)
         {
@@ -26,19 +20,12 @@ namespace _3ClipseGame.Steam.Entities.Scripts
 
             return defaultStepSound;
         }
-
-        #endregion
     }
-
-    #region Structs
-
+    
     [System.Serializable]
     public struct StepSound
     {
         public Material[] materials;
         public AudioClip[] stepClips;
     }
-
-    #endregion
-        
 }

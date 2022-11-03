@@ -3,8 +3,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
     public abstract class MainCharacterExploreSubState : MainCharacterSubState<ExploreSubStateFactory, MainCharacterExploreSubState>
     {
         protected MainCharacterExploreSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(factory)
-            => ExploreDto = exploreDto;
+        {
+            ExploreDto = exploreDto;
+        }
 
-        protected ExploreDto ExploreDto;
+        protected readonly ExploreDto ExploreDto;
     }
 }

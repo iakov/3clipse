@@ -26,9 +26,14 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         {
             newMainCharacterState = null;
 
-            if (_dto.InputProcessor.GetIsSwitched()) newMainCharacterState = Factory.Explore();
+            if (IsSwitching()) newMainCharacterState = Factory.Explore();
 
             return newMainCharacterState != null;
+        }
+
+        private bool IsSwitching()
+        {
+            return _dto.InputProcessor.GetIsSwitched();
         }
     }
 }
