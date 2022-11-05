@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Scenes.TestScene
+namespace _3ClipseGame.Steam.Scenes.TestScene.UITestScene.Scripts
 {
     public class Levitate : MonoBehaviour
     {
@@ -12,7 +12,7 @@ namespace _3ClipseGame.Steam.Scenes.TestScene
 
         private float _curveTime;
         private float _time;
-        
+
         private Vector3 _startPosition;
         private Quaternion _startQuaternion;
 
@@ -20,16 +20,25 @@ namespace _3ClipseGame.Steam.Scenes.TestScene
         {
             _transform = transform;
         }
-        
+
         private void Start()
         {
             if (_yPositionCurve.length < 2)
                 throw new SerializationException("AnimationCurve cannot contain less than 2 keys");
 
+            SetParameters();
+            Randomise();
+        }
+
+        private void SetParameters()
+        {
             _curveTime = _yPositionCurve.keys[_yPositionCurve.length - 1].time;
             _startPosition = _transform.position;
-            _time = Random.Range(0f, _curveTime);
+        }
 
+        private void Randomise()
+        {
+            _time = Random.Range(0f, _curveTime);
             var random = Random.Range(0f, 360f);
             var rotationVector = new Vector3(0f, _rotationSpeedPerSecond, 0f) * random;
             _transform.Rotate(rotationVector);

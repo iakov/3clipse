@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace _3ClipseGame.Steam.Core.GameSource.Parts.States.GameStates
 {
     public class CinematicMode : GameMode
@@ -10,7 +8,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.States.GameStates
             UIManager.SwitchHUD(false);
             
             GameSource.Instance.GetInputManager().DisableAll();
-            PointerManager.SwitchPointerMode(CursorLockMode.Locked);
+            PointerManager.SwitchPointerMode(CursorMode);
         }
         
         protected override void EndEnter()

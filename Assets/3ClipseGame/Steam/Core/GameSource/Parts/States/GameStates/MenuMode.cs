@@ -1,5 +1,4 @@
 using _3ClipseGame.Steam.Core.GameSource.Parts.Input;
-using UnityEngine;
 using CameraType = _3ClipseGame.Steam.Core.GameSource.Parts.Camera.CameraType;
 
 namespace _3ClipseGame.Steam.Core.GameSource.Parts.States.GameStates
@@ -9,7 +8,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.States.GameStates
         public override void StartEnter()
         {
             GameSource.Instance.GetCameraManager().Enable(CameraType.Menu);
-            PointerManager.SwitchPointerMode(CursorLockMode.Confined);
+            PointerManager.SwitchPointerMode(CursorMode);
             StartCoroutine(TrackBlendCompletion());
         }
         

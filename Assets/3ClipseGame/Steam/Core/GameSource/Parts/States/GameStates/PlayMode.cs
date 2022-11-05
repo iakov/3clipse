@@ -8,7 +8,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.States.GameStates
         public override void StartEnter()
         {
             GameSource.Instance.GetPlayer().GetCurrentPlayerEntity().TakeControl();
-            PointerManager.SwitchPointerMode(CursorLockMode.Locked);
+            PointerManager.SwitchPointerMode(CursorMode);
             StartCoroutine(TrackBlendCompletion());
         }
         

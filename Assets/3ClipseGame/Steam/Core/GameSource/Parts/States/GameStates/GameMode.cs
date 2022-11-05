@@ -11,6 +11,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.States.GameStates
         [SerializeField] protected UIManager UIManager;
         [SerializeField] protected PointerManager PointerManager;
         [SerializeField] protected float TimeScale;
+        [SerializeField] protected CursorLockMode CursorMode;
         
         [SerializeField] private CinemachineStateDrivenCamera _stateDrivenCamera;
         [SerializeField] private GameStateType modeType;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Scenes.TestScene
+namespace _3ClipseGame.Steam.Scenes.TestScene.UITestScene.Scripts
 {
     public class MoveAround : MonoBehaviour
     {
