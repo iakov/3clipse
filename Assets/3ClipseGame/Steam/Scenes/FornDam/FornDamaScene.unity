@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17834,6 +17834,7 @@ MonoBehaviour:
   UIManager: {fileID: 411249160}
   PointerManager: {fileID: 1720552411}
   TimeScale: 1
+  CursorMode: 0
   _stateDrivenCamera: {fileID: 7687367823415089245}
   modeType: 0
 --- !u!1 &433244660
@@ -60099,6 +60100,7 @@ MonoBehaviour:
   UIManager: {fileID: 411249160}
   PointerManager: {fileID: 1720552411}
   TimeScale: 0.5
+  CursorMode: 0
   _stateDrivenCamera: {fileID: 7687367823415089245}
   modeType: 1
 --- !u!1 &1941482743
@@ -61717,6 +61719,7 @@ MonoBehaviour:
   UIManager: {fileID: 411249160}
   PointerManager: {fileID: 1720552411}
   TimeScale: 1
+  CursorMode: 0
   _stateDrivenCamera: {fileID: 7687367823415089245}
   modeType: 2
 --- !u!1 &2010425632
@@ -64289,10 +64292,7 @@ MonoBehaviour:
   m_AnimatedTarget: {fileID: 7687367823415089246}
   m_LayerIndex: 0
   m_ShowDebugText: 0
-  m_ChildCameras:
-  - {fileID: 7687367823153229464}
-  - {fileID: 109543257}
-  - {fileID: 467972289}
+  m_ChildCameras: []
   m_Instructions:
   - m_FullHash: 0
     m_VirtualCamera: {fileID: 7687367823153229464}
