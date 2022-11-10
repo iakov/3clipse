@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts;
-using _3ClipseGame.Steam.Mechanics.Save.UI.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.Core.Save.UI.Scripts
+namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts
 {
     public class SaveManagerPresenter : MonoBehaviour
     {

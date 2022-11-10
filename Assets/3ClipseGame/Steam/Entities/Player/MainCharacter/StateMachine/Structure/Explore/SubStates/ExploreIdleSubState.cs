@@ -37,7 +37,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
             if (IsJumping()) newMainCharacterState = Factory.Jump();
             else if (IsFalling()) newMainCharacterState = Factory.Fall();
             else if (IsCrouching()) newMainCharacterState = Factory.Crouch();
-            else if (IsStill()) newMainCharacterState = Factory.Walk();
+            else if (!IsStill()) newMainCharacterState = Factory.Walk();
 
             return newMainCharacterState != null;
         }

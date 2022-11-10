@@ -24,7 +24,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts.SaveParts
 
         public override void Load(Player newObject)
         {
-            if (newObject != null && SerializeObject != null)
+            if (newObject != null)
             {
                 var saveObjectTransform = newObject.transform;
                 saveObjectTransform.position = _position;
