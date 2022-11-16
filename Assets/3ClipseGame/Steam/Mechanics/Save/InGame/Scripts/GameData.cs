@@ -1,4 +1,5 @@
 using System;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Player;
 using _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts.SaveParts;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
@@ -14,7 +15,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
             }
         }
 
-        private readonly PlayerSaveData _playerSaveData;
+        private readonly SaveData<Player> _playerSaveData;
         
         public void Apply(SerializationDependencies data)
         {

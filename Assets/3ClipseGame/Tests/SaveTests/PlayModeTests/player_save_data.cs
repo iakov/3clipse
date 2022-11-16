@@ -23,7 +23,7 @@ public class player_save_data
     [UnityTest]
     public IEnumerator test_save_and_load_with_player_null()
     {
-        var playerSaveData = new PlayerSaveData(null);
+        SaveData<Player> playerSaveData = new PlayerSaveData(null);
         var randomPosition = Random.onUnitSphere;
         var randomRotation = Random.rotation;
 
@@ -52,7 +52,7 @@ public class player_save_data
         var randomPosition = Random.onUnitSphere;
         var randomRotation = Random.rotation;
 
-        var playerSaveData = new PlayerSaveData(_player);
+        SaveData<Player> playerSaveData = new PlayerSaveData(_player);
         playerSaveData.Save();
         ApplyData(randomRotation, randomPosition);
         yield return null;
@@ -65,7 +65,7 @@ public class player_save_data
     [UnityTest]
     public IEnumerator test_load_null()
     {
-        var playerSaveData = new PlayerSaveData(_player);
+        SaveData<Player> playerSaveData = new PlayerSaveData(_player);
         var randomPosition = Random.onUnitSphere;
         var randomRotation = Random.rotation;
 

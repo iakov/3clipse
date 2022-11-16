@@ -1,15 +1,19 @@
 using System;
 using System.IO;
+using UnityEngine;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
 {
     public static class SaveSerializer
     {
-        public static void Serialize(string path, GameSave save)
+        public static string SavePath = string.Concat(Application.persistentDataPath, "/saves/");
+        
+        public static void Serialize(GameSave save)
         {
             try
             {
-                var fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
+                var saveName = SavePath + save.Id;
+                var fileStream = new FileStream(saveName, FileMode.Create, FileAccess.Write);
                 var binaryFormatter = BinaryFormatterSearcher.GetBinaryFormatter();
                 binaryFormatter.Serialize(fileStream, save);
                 fileStream.Close();
@@ -32,7 +36,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
             }
             catch (Exception e)
             {
-                return new GameSave(e.Message, null);
+                return new GameSave(null);
             }
         }
     }

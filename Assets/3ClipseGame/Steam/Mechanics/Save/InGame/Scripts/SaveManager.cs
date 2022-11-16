@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
 {
@@ -10,73 +10,63 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
     {
         [SerializeField] private SerializationDependencies _serializationDependencies;
 
-        public IEnumerable GameSaves => _allGameSaves;
-        
-        private List<GameSave> _allGameSaves;
-        private string _saveDirectory;
+        public IEnumerable<GameSave> GameSaves => _allGameSaves;
+
+        private static List<GameSave> _allGameSaves;
+        private static GameSave _currentSave;
         
         private void Awake()
         {
-            _saveDirectory = Application.persistentDataPath + "/saves";
-            if (!Directory.Exists(_saveDirectory)) Directory.CreateDirectory(_saveDirectory);
+            DontDestroyOnLoad(gameObject);
+            
+            _serializationDependencies = GetComponent<SerializationDependencies>();
             _allGameSaves = FindAllSaves();
         }
 
         private List<GameSave> FindAllSaves()
         {
-            var directories = Directory.GetFiles(_saveDirectory);
-
+            var directories = Directory.GetFiles(SaveSerializer.SavePath);
             return directories.Select(SaveSerializer.Deserialize).ToList();
         }
 
-        public bool TryCreateNewSave(string saveName, out GameSave newSave)
+        public void LoadSave(GameSave save)
         {
-            newSave = null;
-            var path = GetPathWithName(saveName);
-            if (IsFileExists(path)) return false;
-            
-            newSave = CreateSave(saveName);
-            SaveSerializer.Serialize(path, newSave);
-            return true;
+            _currentSave = save;
+            SceneManager.LoadScene(save.LocationName);
+            SceneManager.sceneLoaded += ApplySaveData;
         }
 
-        private GameSave CreateSave(string saveName)
+        private void ApplySaveData(Scene loadedScene, LoadSceneMode mode)
         {
-            var save = new GameSave(saveName, _serializationDependencies);
-            save.UpdateData();
-            return save;
+            SceneManager.sceneLoaded -= ApplySaveData;
+            _serializationDependencies.FindDependencies(FinalizeLoad);
         }
 
-        public bool TryLoadSave(string saveName)
+        private void FinalizeLoad()
         {
-            var path = GetPathWithName(saveName);
-            if (!IsFileExists(path)) return false;
-            LoadSave(path);
-            return true;
-        }
-
-        private void LoadSave(string path)
-        {
-            var newLoaded = SaveSerializer.Deserialize(path);
-            newLoaded.ApplyData(_serializationDependencies);
+            _currentSave.ApplyData(_serializationDependencies);
         }
 
         public void DeleteSave(GameSave save)
         {
+            File.Delete(SaveSerializer.SavePath + save.Id);
             _allGameSaves.Remove(save);
-            var path = GetPathWithName(save.Name);
-            File.Delete(path);
+            if (_currentSave == save) _currentSave = null;
         }
-        
-        private string GetPathWithName(string saveName)
+
+        public GameSave CreateNewSave()
         {
-            var path = string.Concat(_saveDirectory, "/", saveName, ".save");
-            return path;
+            _currentSave = null;
+            CreateSave();
+            return _currentSave;
         }
-        
-        private bool IsFileExists(string path)
+
+        private void CreateSave()
         {
-            return File.Exists(path);
+            var gameSave = new GameSave(_serializationDependencies);
+            _allGameSaves.Add(gameSave);
+            SaveSerializer.Serialize(gameSave);
+            _currentSave = gameSave;
         }
     }
 }

@@ -1,0 +1,409 @@
+fileFormatVersion: 2
+guid: 941aa8aa3d4454496af5d1b3dfda5620
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 586
+        width: 441
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e711be52877294485befe65c54287a28
+      internalID: 407689298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 530
+        width: 441
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 741c1fedb95764f44bd18b0c448db07e
+      internalID: 453158368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 457
+        width: 441
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f37068046b4d44e47a18a057b798c172
+      internalID: -1471734443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 404
+        width: 441
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f9bfc19fd74343bbb275b06734c8a6f
+      internalID: -387914993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 370
+        width: 441
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f89e7da11c0d4574bb9f5b337e5d6eb
+      internalID: 1176776690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 324
+        width: 441
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22b976655411c48ccbd457093b536341
+      internalID: 2010102960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 278
+        width: 441
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f929e2e5874f445edb743d902a662c7f
+      internalID: 2002482696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 232
+        width: 441
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16394e49dd80b4932b464d09329d9332
+      internalID: 1961184889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 186
+        width: 441
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a43e611ef93c40fe886b710044e9aa2
+      internalID: -1170605306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 130
+        width: 441
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6005d82d88254ffba881f81e47a0df7
+      internalID: -1648275049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 82
+        width: 441
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21319a7cf8b22462fb34b62b9e2cc2f7
+      internalID: -2119316881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 441
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad0d9a09f3af047b8ac6c62d5f6ea811
+      internalID: 647828888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_5668563-stock-illustration-set-of-decorative-elements_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2
+        width: 441
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6296c12d92f4d49a0bc1cce440bda5df
+      internalID: -1590603349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 29628571f88814109a7c4f268ba187b2
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_12: -1590603349
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_2: -1471734443
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_9: -1648275049
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_5: 2010102960
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_4: 1176776690
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_6: 2002482696
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_0: 407689298
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_8: -1170605306
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_10: -2119316881
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_11: 647828888
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_7: 1961184889
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_3: -387914993
+      depositphotos_5668563-stock-illustration-set-of-decorative-elements_1: 453158368
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

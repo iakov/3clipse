@@ -1,20 +1,27 @@
 using System;
+using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
 {
     [Serializable]
     public class GameSave
     {
-        public readonly string Name;
-        public readonly string Date;
+        public string LocationName { get; private set; }
+        public string Date { get; private set; }
+        public readonly int Id;
+        
         private readonly byte[] _image;
         private readonly GameData _gameData;
+        
+        public Sprite Image => CreateScreenshotSprite(_image);
 
-        public GameSave(string name, SerializationDependencies data)
+        public GameSave(SerializationDependencies data)
         {
-            Name = name;
+            LocationName = SceneManager.GetActiveScene().name;
             Date = DateFormatter.GetDateForSave();
+            Id = Directory.GetFiles(SaveSerializer.SavePath).Length + 1;
 
             _image = TakeScreenshot();
             _gameData = new GameData(data);
@@ -33,10 +40,10 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
 
         public void UpdateData()
         {
+            LocationName = SceneManager.GetActiveScene().name;
+            Date = DateFormatter.GetDateForSave();
             _gameData.UpdateData();
         }
-
-        public Sprite Image => CreateScreenshotSprite(_image);
 
         private Sprite CreateScreenshotSprite(byte[] data)
         {
