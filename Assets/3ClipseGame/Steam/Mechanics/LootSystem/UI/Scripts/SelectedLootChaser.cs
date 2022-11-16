@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 

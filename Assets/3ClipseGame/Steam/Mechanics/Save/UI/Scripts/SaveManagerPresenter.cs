@@ -128,19 +128,19 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts
         {
             var clickedPresenter = _savePresenters.Find(displayedPresenter => displayedPresenter == presenter);
             Destroy(clickedPresenter);
-            var newSave = _saveManager.CreateNewSave();
-            _saveManager.LoadSave(newSave);
+            //var newSave = _saveManager.CreateNewSave();
+            //_saveManager.LoadSave(newSave);
         }
 
         private void LoadSave(SavePresenter presenter)
         {
             var gameSave = presenter.TrackedSave;
-            _saveManager.LoadSave(gameSave);
+            //_saveManager.LoadSave(gameSave);
         }
 
         private void ClearSave(BusySavePresenter presenter)
         {
-            _saveManager.DeleteSave(presenter.TrackedSave);
+            //_saveManager.DeleteSave(presenter.TrackedSave);
             Destroy(presenter.gameObject);
             CreateEmptyPresenter();
         }

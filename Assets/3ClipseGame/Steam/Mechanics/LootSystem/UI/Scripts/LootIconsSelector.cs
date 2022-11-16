@@ -1,8 +1,8 @@
-using _3ClipseGame.Steam.Core.GameSource;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.HUDInput;
+using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
+namespace _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts
 {
     [RequireComponent(typeof(LootDisplay))]
     [RequireComponent(typeof(SelectedLootChaser))]
@@ -10,7 +10,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
     public class LootIconsSelector : MonoBehaviour
     {
         [SerializeField] private HUDInputProcessor _hudHandler;
-        public LootIcon.LootIcon GetCurrentSelectedLoot()
+        public Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon GetCurrentSelectedLoot()
         {
             return _currentSelectedLoot;
         }
@@ -19,7 +19,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
         private LootHighlighter _lootHighlighter;
         private SelectedLootChaser _lootChaser;
 
-        private LootIcon.LootIcon _currentSelectedLoot;
+        private Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon _currentSelectedLoot;
         
         private void Awake()
         {
@@ -40,7 +40,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 
         #region LootListIncreasedHandler
 
-        public void SelectIconIfFirst(LootIcon.LootIcon icon)
+        public void SelectIconIfFirst(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon icon)
         {
             if (_currentSelectedLoot != null) return;
 
@@ -51,13 +51,13 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 
         #region LootListDecreasedHandler
 
-        public void ChangeSelectedIconIfDeleting(LootIcon.LootIcon retiringIcon)
+        public void ChangeSelectedIconIfDeleting(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon retiringIcon)
         {
             if (_currentSelectedLoot == retiringIcon) 
                 SwitchIconToClosest();
         }
         
-        private LootIcon.LootIcon GetClosestToCurrentIcon()
+        private Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon GetClosestToCurrentIcon()
         {
             var closestIcon = _lootDisplay.GetPreviousObject(_currentSelectedLoot);
             if (closestIcon == _currentSelectedLoot)
@@ -77,12 +77,12 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
             SwitchCurrentSelectedLoot(newIcon);
         }
         
-        private void SwitchCurrentSelectedLoot(LootIcon.LootIcon newIcon)
+        private void SwitchCurrentSelectedLoot(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon newIcon)
         {
             ChangeView(newIcon);
         }
 
-        private void ChangeView(LootIcon.LootIcon newIcon)
+        private void ChangeView(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon newIcon)
         {
             var previousLoot = _currentSelectedLoot;
             _currentSelectedLoot = newIcon;

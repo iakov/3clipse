@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
 {
@@ -17,8 +16,6 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
         
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-            
             _serializationDependencies = GetComponent<SerializationDependencies>();
             _allGameSaves = FindAllSaves();
         }
@@ -27,46 +24,6 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Scripts
         {
             var directories = Directory.GetFiles(SaveSerializer.SavePath);
             return directories.Select(SaveSerializer.Deserialize).ToList();
-        }
-
-        public void LoadSave(GameSave save)
-        {
-            _currentSave = save;
-            SceneManager.LoadScene(save.LocationName);
-            SceneManager.sceneLoaded += ApplySaveData;
-        }
-
-        private void ApplySaveData(Scene loadedScene, LoadSceneMode mode)
-        {
-            SceneManager.sceneLoaded -= ApplySaveData;
-            _serializationDependencies.FindDependencies(FinalizeLoad);
-        }
-
-        private void FinalizeLoad()
-        {
-            _currentSave.ApplyData(_serializationDependencies);
-        }
-
-        public void DeleteSave(GameSave save)
-        {
-            File.Delete(SaveSerializer.SavePath + save.Id);
-            _allGameSaves.Remove(save);
-            if (_currentSave == save) _currentSave = null;
-        }
-
-        public GameSave CreateNewSave()
-        {
-            _currentSave = null;
-            CreateSave();
-            return _currentSave;
-        }
-
-        private void CreateSave()
-        {
-            var gameSave = new GameSave(_serializationDependencies);
-            _allGameSaves.Add(gameSave);
-            SaveSerializer.Serialize(gameSave);
-            _currentSave = gameSave;
         }
     }
 }

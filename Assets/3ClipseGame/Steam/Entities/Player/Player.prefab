@@ -729,7 +729,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7878028965152469052}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.3
   m_Speed: 2
@@ -822,7 +822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementInputProcessor: {fileID: 0}
   _speedInterpolation: 6
-  _walkSpeed: 0
+  _walkSpeed: 2
   _runStaminaReduce: -5
   _runSpeedCurve:
     serializedVersion: 2

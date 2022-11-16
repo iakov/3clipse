@@ -1,3 +1,16 @@
 {
-	"name": "entities.scripts"
+    "name": "entities.scripts",
+    "rootNamespace": "",
+    "references": [
+        "GUID:73fd1208a69749841ac46042ad8f24d5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

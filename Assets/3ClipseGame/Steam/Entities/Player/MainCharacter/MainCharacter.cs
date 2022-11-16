@@ -2,6 +2,7 @@ using System;
 using _3ClipseGame.Steam.Core.GameSource;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Player;
+using _3ClipseGame.Steam.Entities.Player.Data.Specifications.InGame;
 using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter
         private void Awake()
         {
             _mainCharacterStateMachine = GetComponent<StateMachine.MainCharacterStateMachine>();
+            Stamina = GetComponent<Stamina>();
         }
         
         private void Update()

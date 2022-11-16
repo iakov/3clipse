@@ -4,6 +4,7 @@ using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts;
 using _3ClipseGame.Steam.Mechanics.LootSystem;
 using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.Dropper;
 using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
+using _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;

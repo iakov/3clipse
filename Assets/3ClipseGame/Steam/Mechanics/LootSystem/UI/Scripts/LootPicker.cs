@@ -3,17 +3,13 @@ using _3ClipseGame.Steam.Mechanics.InventorySystem.ResourceInventorySystem.InGam
 using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
+namespace _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts
 {
     public class LootPicker : MonoBehaviour
     {
-        #region Serialization
-
         [SerializeField] private HUDInputHandler _inputHandler;
         [SerializeField] private ResourceInventory _resourceInventory;
         [SerializeField] private LootIconsSelector _lootSelector;
-        
-        #endregion
 
         private void OnEnable()
         {
@@ -33,7 +29,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
             PickUp(icon);
         }
 
-        private void PickUp(LootIcon.LootIcon icon)
+        private void PickUp(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon icon)
         {
             var loot = icon.GetCurrentLoot();
             AddItemToStorage(loot);
