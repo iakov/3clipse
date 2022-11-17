@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/3ClipseGame/Tests/SaveTests/PlayModeTests/save_serializer_test_scene.unity
     guid: f23fe680cbf1745dea07f93e8bcf6096
+  - enabled: 1
+    path: Assets/3ClipseGame/Steam/Scenes/TestScene/StartScreen/StartScreenScene.unity
+    guid: 1e28f7889c2b1694e836618cf865378f
   m_configObjects: {}
