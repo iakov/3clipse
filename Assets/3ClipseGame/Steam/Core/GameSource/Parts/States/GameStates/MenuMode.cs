@@ -9,10 +9,10 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.States.GameStates
         {
             GameSource.Instance.GetCameraManager().Enable(CameraType.Menu);
             PointerManager.SwitchPointerMode(CursorMode);
-            StartCoroutine(TrackBlendCompletion());
+            StartCoroutine(TrackBlendCompletion(EndEnter));
         }
         
-        protected override void EndEnter()
+        private void EndEnter()
         {
             UIManager.SwitchMenu(true);
             GameSource.Instance.GetInputManager().Enable(InputType.Menu);

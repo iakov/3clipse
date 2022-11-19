@@ -9,10 +9,10 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.States.GameStates
         {
             GameSource.Instance.GetPlayer().GetCurrentPlayerEntity().TakeControl();
             PointerManager.SwitchPointerMode(CursorMode);
-            StartCoroutine(TrackBlendCompletion());
+            StartCoroutine(TrackBlendCompletion(EndEnter));
         }
         
-        protected override void EndEnter()
+        private void EndEnter()
         {
             EndEnterInput();
             UIManager.SwitchHUD(true);

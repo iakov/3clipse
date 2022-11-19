@@ -9,9 +9,10 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.States.GameStates
             
             GameSource.Instance.GetInputManager().DisableAll();
             PointerManager.SwitchPointerMode(CursorMode);
+            StartCoroutine(TrackBlendCompletion(EndEnter));
         }
         
-        protected override void EndEnter()
+        private void EndEnter()
         {
             
         }
