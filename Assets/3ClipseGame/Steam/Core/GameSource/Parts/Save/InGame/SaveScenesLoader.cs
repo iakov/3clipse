@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -6,69 +7,77 @@ using UnityEngine.SceneManagement;
 
 namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame
 {
-    public static class SaveScenesLoader
+    public class SaveScenesLoader : MonoBehaviour
     {
-        private const string OriginSceneName = "OriginScene";
-        private const string DontDestroyOnLoadSceneName = "DontDestroyOnLoad";
+        [SerializeField] private string _originSceneName = "OriginScene";
+        [SerializeField] private string _dontDestroyOnLoadSceneName = "DontDestroyOnLoad";
+        [SerializeField] private string _saveManagerSceneName = "SaveManagerScene";
         
-        private static string _currentSaveSceneName;
-        private static EditorApplication.CallbackFunction _callback;
+        private string _currentSaveSceneName;
+        private EditorApplication.CallbackFunction _callback;
 
-        public static void LoadSaveScene(string saveSceneName, EditorApplication.CallbackFunction callback)
+        public void LoadSaveScene(string saveSceneName, EditorApplication.CallbackFunction callback)
         {
             var saveScene = SceneManager.GetSceneByName(saveSceneName);
-            if (saveScene.IsValid()) 
-                throw new ArgumentException($"Cannot find {saveSceneName} scene");
+            if (saveScene.IsValid()) throw new ArgumentException($"Cannot find {saveSceneName} scene");
+            
             _currentSaveSceneName = saveSceneName;
             _callback = callback;
-            
+            LoadScenes();
+        }
+
+        private void LoadScenes()
+        {
             UnloadCurrentScene();
-            LoadScene(saveSceneName);
+            LoadScene(_currentSaveSceneName);
             LoadOriginScene();
 
-            OnSceneLoaded(SceneManager.GetSceneByName(DontDestroyOnLoadSceneName), LoadSceneMode.Additive);
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            TryInvokeCallback(SceneManager.GetSceneByName(_dontDestroyOnLoadSceneName), LoadSceneMode.Additive);
+            SceneManager.sceneLoaded += TryInvokeCallback;
         }
         
-        private static void UnloadCurrentScene()
+        private void UnloadCurrentScene()
         {
-            var currentSavesNames = SceneManager.GetAllScenes().ToList();
-            currentSavesNames.Remove(SceneManager.GetSceneByName(DontDestroyOnLoadSceneName));
-            currentSavesNames.Remove(SceneManager.GetSceneByName(OriginSceneName));
-
-            var currentSaveName = currentSavesNames[0].name;
-            SceneManager.UnloadSceneAsync(currentSaveName);
+            var currentSaves = GetLoadedSaves();
+            foreach (var save in currentSaves) 
+                SceneManager.UnloadSceneAsync(save.name);
         }
 
-        private static void LoadOriginScene()
+        private List<Scene> GetLoadedSaves()
+        {
+            var currentLoadedScenes = SceneManager.GetAllScenes().ToList();
+            currentLoadedScenes.Remove(SceneManager.GetSceneByName(_dontDestroyOnLoadSceneName));
+            currentLoadedScenes.Remove(SceneManager.GetSceneByName(_originSceneName));
+            currentLoadedScenes.Remove(SceneManager.GetSceneByName(_saveManagerSceneName));
+            
+            return currentLoadedScenes;
+        }
+
+        private void LoadOriginScene()
         {
             var currentSavesNames = SceneManager.GetAllScenes().ToList();
-            var scene = SceneManager.GetSceneByName(OriginSceneName);
+            var scene = SceneManager.GetSceneByName(_originSceneName);
             
             if (currentSavesNames.Contains(scene))
-            {
-                OnSceneLoaded(scene, LoadSceneMode.Additive);
-                return;
-            }
-            SceneManager.LoadSceneAsync(OriginSceneName, LoadSceneMode.Additive);
+                TryInvokeCallback(scene, LoadSceneMode.Additive);
+            else 
+                SceneManager.LoadSceneAsync(_originSceneName, LoadSceneMode.Additive);
         }
 
-        private static void LoadScene(string sceneName)
+        private void LoadScene(string sceneName)
         {
             var currentSavesNames = SceneManager.GetAllScenes().ToList();
             var scene = SceneManager.GetSceneByName(sceneName);
             
-            if (currentSavesNames.Contains(SceneManager.GetSceneByName(sceneName)))
-            {
-                OnSceneLoaded(scene, LoadSceneMode.Additive);
-                return;
-            }
-            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            if (currentSavesNames.Contains(SceneManager.GetSceneByName(sceneName))) 
+                TryInvokeCallback(scene, LoadSceneMode.Additive);
+            else 
+                SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
 
-        private static void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
+        private void TryInvokeCallback(Scene scene, LoadSceneMode loadMode)
         {
-            var originScene = SceneManager.GetSceneByName(OriginSceneName);
+            var originScene = SceneManager.GetSceneByName(_originSceneName);
             var saveScene = SceneManager.GetSceneByName(_currentSaveSceneName);
             
             if (originScene.isLoaded && saveScene.isLoaded) _callback?.Invoke();

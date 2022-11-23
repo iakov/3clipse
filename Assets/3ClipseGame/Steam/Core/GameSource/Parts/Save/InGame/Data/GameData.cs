@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data
 {
@@ -18,7 +19,6 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data
         
         private GameData()
         {
-            _playerSaveData = PlayerSaveData.Empty();
             _saveData = new List<ISaveData>();
             InitializeAllSaveData();
         }
@@ -27,13 +27,15 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data
         {
             _playerSaveData = PlayerSaveData.Empty();
             
-            _saveData.Add(_playerSaveData);
+            UpdateLinks();
         }
 
         #endregion
 
         public void ApplyData(SerializationDependencies applyDependencies)
         {
+            if(_saveData == null) UpdateLinks();
+            
             foreach (var data in _saveData)
             {
                 data.LoadData(applyDependencies);
@@ -42,10 +44,19 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data
 
         public void UpdateData(SerializationDependencies updateDependencies)
         {
+            if(_saveData == null) UpdateLinks();
+            
             foreach (var saveData in _saveData)
             {
                 saveData.SaveData(ref updateDependencies);
             }
+        }
+
+        private void UpdateLinks()
+        {
+            _saveData = new List<ISaveData>();
+
+            _saveData.Add(_playerSaveData);
         }
     }
 }

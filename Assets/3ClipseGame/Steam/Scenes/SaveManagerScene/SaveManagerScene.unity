@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1174633571}
   - component: {fileID: 1174633570}
+  - component: {fileID: 1174633572}
   m_Layer: 0
   m_Name: SaveManager
   m_TagString: Untagged
@@ -152,24 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c00e3c64df64c37b3ea68ea222fedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _newGameImage: {fileID: 21300000, guid: 13e7e6fe43a8aa049bcd610bbc1f5ff8, type: 3}
-  _saveInputAction:
-    m_Name: Save Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ef7843c5-3e54-4d5c-af17-37f022efe3b3
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: d816fc28-9bfd-41a7-b6ae-c18e50ba48f8
-      m_Path: <Keyboard>/e
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Save Input
-      m_Flags: 0
-    m_Flags: 0
+  _newGameImage: {fileID: 21300000, guid: c345df4ddc811f14e9f8a42ecdb2d535, type: 3}
 --- !u!4 &1174633571
 Transform:
   m_ObjectHideFlags: 0
@@ -185,3 +169,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1174633572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174633568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dad67a8177fb47408b86cfb8d4a2c48d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _originSceneName: OriginScene
+  _dontDestroyOnLoadSceneName: DontDestroyOnLoad
+  _saveManagerSceneName: SaveManagerScene

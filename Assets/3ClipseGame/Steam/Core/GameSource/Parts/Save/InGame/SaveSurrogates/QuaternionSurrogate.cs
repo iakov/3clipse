@@ -1,5 +1,5 @@
-using System.Numerics;
 using System.Runtime.Serialization;
+using UnityEngine;
 
 namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.SaveSurrogates
 {
@@ -9,20 +9,20 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.SaveSurrogates
         {
             var serializedQuaternion = (Quaternion)obj;
 
-            info.AddValue("x", serializedQuaternion.X);
-            info.AddValue("y", serializedQuaternion.Y);
-            info.AddValue("z", serializedQuaternion.Z);
-            info.AddValue("w", serializedQuaternion.W);
+            info.AddValue("x", serializedQuaternion.x);
+            info.AddValue("y", serializedQuaternion.y);
+            info.AddValue("z", serializedQuaternion.z);
+            info.AddValue("w", serializedQuaternion.w);
         }
 
         public object SetObjectData(object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector)
         {
             var deserializedQuaternion = (Quaternion)obj;
 
-            deserializedQuaternion.X = (float)info.GetValue("x", typeof(float));
-            deserializedQuaternion.Y = (float)info.GetValue("y", typeof(float));
-            deserializedQuaternion.Z = (float)info.GetValue("z", typeof(float));
-            deserializedQuaternion.W = (float)info.GetValue("w", typeof(float));
+            deserializedQuaternion.x = (float)info.GetValue("x", typeof(float));
+            deserializedQuaternion.y = (float)info.GetValue("y", typeof(float));
+            deserializedQuaternion.z = (float)info.GetValue("z", typeof(float));
+            deserializedQuaternion.w = (float)info.GetValue("w", typeof(float));
 
             return deserializedQuaternion;
         }

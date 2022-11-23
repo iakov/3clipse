@@ -1,6 +1,6 @@
 using System;
 
-namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame
+namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Statics
 {
     public static class DateFormatter
     {

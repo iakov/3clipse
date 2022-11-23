@@ -31,7 +31,9 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 
         private IEnumerator DisplaySaveSlotsWithDelay()
         {
-            yield return new WaitForSeconds(1f);
+            while (SaveManager.Instance == null || SaveManager.Instance.IsSavesFound == false) 
+                yield return null;
+            
             DisplayAllSlots();
         }
 
@@ -113,7 +115,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
             presenter.Clicked -= CreateNewSave;
             Destroy(presenter.gameObject);
 
-            _saveManager.NewGame(_busySavePresenters.Count);
+            _saveManager.NewGame();
         }
     }
 }

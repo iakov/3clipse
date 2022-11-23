@@ -1,4 +1,5 @@
 using System;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Statics;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data
@@ -6,9 +7,9 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data
     [Serializable]
     public class GameSave
     {
-        public readonly int ID;
+        public readonly int ID; 
         public string SaveLocation { get; private set; }
-        public string SaveDate;
+        public string SaveDate { get; private set; }
         public Sprite Image => SpriteFromTexture();
         
         private GameData _gameData;
@@ -22,17 +23,17 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data
             return sprite;
         }
         
-        public static GameSave NewGame(int id, Texture2D defaultImage)
+        public static GameSave NewGame(int id, Sprite defaultImage)
         {
             return new GameSave(id, defaultImage);
         }
 
-        private GameSave(int id, Texture2D defaultImage)
+        private GameSave(int id, Sprite defaultImage)
         {
             ID = id;
             SaveLocation = "Introduction";
             SaveDate = DateFormatter.GetDateForSave();
-            _imageTexture = defaultImage;
+            _imageTexture = defaultImage.texture;
             _gameData = GameData.NewGame();
         }
 
@@ -46,7 +47,8 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data
 
         public void Load()
         {
-            SaveScenesLoader.LoadSaveScene(SaveLocation, OnSceneLoaded);
+            var scenesLoader = SaveManager.Instance.ScenesLoader;
+            scenesLoader.LoadSaveScene(SaveLocation, OnSceneLoaded);
         }
 
         private void OnSceneLoaded()

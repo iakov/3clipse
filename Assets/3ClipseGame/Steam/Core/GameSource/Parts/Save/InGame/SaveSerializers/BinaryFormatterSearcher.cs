@@ -2,21 +2,19 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.SaveSurrogates;
 using UnityEngine;
-using Quaternion = System.Numerics.Quaternion;
-using Vector3 = System.Numerics.Vector3;
 
-namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame
+namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.SaveSerializers
 {
-    public static class BinaryFormatterSearcher
+    public class BinaryFormatterSearcher
     {
-        public static BinaryFormatter GetBinaryFormatter()
+        public BinaryFormatter GetBinaryFormatter()
         {
             var binaryFormatter = new BinaryFormatter();
             binaryFormatter.SurrogateSelector = GetSurrogateSelector();
             return binaryFormatter;
         }
 
-        private static SurrogateSelector GetSurrogateSelector()
+        private SurrogateSelector GetSurrogateSelector()
         {
             var surrogateSelector = new SurrogateSelector();
 
