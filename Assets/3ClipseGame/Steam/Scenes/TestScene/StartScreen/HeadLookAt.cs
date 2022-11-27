@@ -22,5 +22,10 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen
             var lookAtPoint = _lookAtObject.transform.position;
             _animator.SetLookAtPosition(lookAtPoint);
         }
+
+        public void Switch(bool isActive)
+        {
+            _isAIKActive = isActive;
+        }
     }
 }
