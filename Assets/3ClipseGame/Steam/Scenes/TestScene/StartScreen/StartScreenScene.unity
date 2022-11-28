@@ -22179,34 +22179,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2191ae15bca47e898f3ac2ae2e7fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cart: {fileID: 2041783302}
-  _dollyTrack: {fileID: 1687441588}
-  _cartSpeedDistance:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   _panelVisual: {fileID: 376717455}
   _cursorScript: {fileID: 1266527259}
+  _firstScreenCamera: {fileID: 2041783304}
 --- !u!1001 &1649815437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28593,6 +28568,7 @@ GameObject:
   - component: {fileID: 2041783302}
   - component: {fileID: 2041783301}
   - component: {fileID: 2041783300}
+  - component: {fileID: 2041783304}
   m_Layer: 0
   m_Name: DollyCart1
   m_TagString: Untagged
@@ -28690,7 +28666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1687441588}
   m_UpdateMethod: 1
-  m_PositionUnits: 1
+  m_PositionUnits: 0
   m_Speed: 0
   m_Position: 0
 --- !u!4 &2041783303
@@ -28708,6 +28684,44 @@ Transform:
   m_Father: {fileID: 289503225}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -14.852, y: 177.9, z: 0}
+--- !u!114 &2041783304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041783299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6fbf4110f9b41829e2aecd95390d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _cart: {fileID: 2041783302}
+  _dollyTrack: {fileID: 1687441588}
 --- !u!1001 &2044724298
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts
         [SerializeField] private LayerMask _hitLayers;
         [SerializeField] private Sprite _cursorSprite;
 
+        private bool _isActive;
+
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Confined;
@@ -17,6 +19,8 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts
 
         private void Update()
         {
+            if (!_isActive) return;
+            
             var newPosition = GetCursorWorldPosition();
             transform.position = newPosition;
         }
@@ -30,10 +34,31 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts
             return hitInfo.point;
         }
 
-        public void Switch(bool isActive, bool isWispEnabled)
+        public void GameMode(bool isActive)
         {
-            gameObject.SetActive(isWispEnabled);
-            Cursor.visible = !isActive;
+            SwitchCursorVisibility(!isActive);
+            SwitchObjectTrack(isActive);
+            SwitchObjectVisibility(isActive);
+        }
+
+        public void UIMode(bool isActive)
+        {
+            SwitchCursorVisibility(isActive);
+        }
+
+        private void SwitchCursorVisibility(bool isActive)
+        {
+            Cursor.visible = isActive;
+        }
+
+        private void SwitchObjectVisibility(bool isActive)
+        {
+            gameObject.SetActive(isActive);
+        }
+
+        private void SwitchObjectTrack(bool isActive)
+        {
+            _isActive = isActive;
         }
     }
 }

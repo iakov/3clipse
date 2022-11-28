@@ -9,13 +9,18 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Panels
 
         private void OnEnable()
         {
-            _cursorScript.Switch(true, true);
+            Enable();
+        }
+
+        private void Enable()
+        {
+            _cursorScript.GameMode(true);
             _headLookAtScript.Switch(true);
         }
 
         private void OnDisable()
         {
-            _cursorScript.Switch(false, false);
+            _cursorScript.GameMode(false);
             _headLookAtScript.Switch(false);
         }
     }

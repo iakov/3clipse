@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Panels
@@ -17,18 +16,15 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Panels
         private void OnEnable()
         {
             _exitButton.started += OnExitPressed;
-            Debug.Log("Enabled");
         }
         
         private void OnDisable()
         {
             _exitButton.started -= OnExitPressed;
-            Debug.Log("Disabled");
         }
 
         private void OnExitPressed(InputAction.CallbackContext context)
         {
-            Debug.Log("Exit");
             _mainButtons.gameObject.SetActive(true);
             gameObject.SetActive(false);
         }
