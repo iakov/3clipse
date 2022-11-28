@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen
+namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Buttons
 {
     public class SettingsButton : MonoBehaviour, IPointerClickHandler
     {

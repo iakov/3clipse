@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen
+namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts
 {
     public class CursorScript : MonoBehaviour
     {
@@ -30,9 +30,9 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen
             return hitInfo.point;
         }
 
-        public void Switch(bool isActive)
+        public void Switch(bool isActive, bool isWispEnabled)
         {
-            gameObject.SetActive(isActive);
+            gameObject.SetActive(isWispEnabled);
             Cursor.visible = !isActive;
         }
     }

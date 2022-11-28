@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen
+namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Buttons
 {
     public class HighlightOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
@@ -12,14 +12,20 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen
         [SerializeField] private float _hoverSize;
         [SerializeField] private float _hoverTime;
 
-        public void OnPointerEnter(PointerEventData eventData)
+        private void OnDisable() => Unhighlight();
+
+        public void OnPointerEnter(PointerEventData eventData) => Highlight();
+
+        public void OnPointerExit(PointerEventData eventData) => Unhighlight();
+
+        private void Highlight()
         {
             _text.color = _newColor;
             var hoverVector = new Vector3(_hoverSize, _hoverSize, _hoverSize);
             gameObject.LeanScale(hoverVector,_hoverTime);
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        private void Unhighlight()
         {
             _text.color = _primalColor;
             gameObject.LeanScale(Vector3.one, _hoverTime);

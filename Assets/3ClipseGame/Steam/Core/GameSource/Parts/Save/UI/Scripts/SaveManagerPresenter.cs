@@ -21,12 +21,12 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 
         private SaveManager _saveManager => SaveManager.Instance;
 
-        private void Awake()
+        private void OnEnable()
         {
-            StartCoroutine(DisplaySaveSlotsWithDelay());
             _busySavePresenters = new List<BusySavePresenter>();
             _emptySavePresenters = new List<EmptySavePresenter>();
             _savePresenters = new List<SavePresenter>();
+            StartCoroutine(DisplaySaveSlotsWithDelay());
         }
 
         private IEnumerator DisplaySaveSlotsWithDelay()
