@@ -1,35 +1,34 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Panels
 {
-    public class SavesPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class SavesPanel : Panel
     {
         [SerializeField] private RectTransform _panelVisual;
         [SerializeField] private CursorScript _cursorScript;
         [SerializeField] private FirstScreenCamera _firstScreenCamera;
+        [SerializeField] private float _pointToMoveTo;
         
-        public void OnPointerEnter(PointerEventData eventData)
+        public override void Enable()
         {
-            _cursorScript.UIMode(true);
-        }
+            _cursorScript.SwitchCursorVisibility(false);
 
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            _cursorScript.GameMode(true);
-        }
-        
-        public void Enable()
-        {
-            Cursor.visible = false;
-            _firstScreenCamera.MoveToPoint(4);
             _firstScreenCamera.MoveFinished += EndEnable;
+            _firstScreenCamera.MoveToPoint(_pointToMoveTo);
         }
 
         private void EndEnable()
         {
-            _cursorScript.GameMode(true);
+            _firstScreenCamera.MoveFinished -= EndEnable;
+
+            _cursorScript.SwitchObjectTrack(true);
+            _cursorScript.SwitchObjectVisibility(true);
             _panelVisual.gameObject.SetActive(true);
+        }
+
+        public override void Disable()
+        {
+            _panelVisual.gameObject.SetActive(false);
         }
     }
 }

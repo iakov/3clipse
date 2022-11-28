@@ -9,13 +9,13 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts
     {
         [SerializeField] private AnimationCurve _cameraSpeed;
         [SerializeField] private CinemachineDollyCart _cart;
-        [SerializeField] private CinemachineSmoothPath _dollyTrack;
 
         public event Action MoveFinished; 
 
         public void MoveToPoint(float point)
         {
-            StartCoroutine(MoveToPointRoutine(point));
+            if (Math.Abs(_cart.m_Position - point) > 0.05f) StartCoroutine(MoveToPointRoutine(point));
+            else MoveFinished?.Invoke();
         }
 
         private IEnumerator MoveToPointRoutine(float position)

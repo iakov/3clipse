@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Buttons
 {
-    public class ExitButton : MonoBehaviour
+    public class QuitButton : MonoBehaviour
     {
         public void Quit()
         {

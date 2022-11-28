@@ -34,29 +34,17 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts
             return hitInfo.point;
         }
 
-        public void GameMode(bool isActive)
-        {
-            SwitchCursorVisibility(!isActive);
-            SwitchObjectTrack(isActive);
-            SwitchObjectVisibility(isActive);
-        }
-
-        public void UIMode(bool isActive)
-        {
-            SwitchCursorVisibility(isActive);
-        }
-
-        private void SwitchCursorVisibility(bool isActive)
+        public void SwitchCursorVisibility(bool isActive)
         {
             Cursor.visible = isActive;
         }
 
-        private void SwitchObjectVisibility(bool isActive)
+        public void SwitchObjectVisibility(bool isActive)
         {
             gameObject.SetActive(isActive);
         }
 
-        private void SwitchObjectTrack(bool isActive)
+        public void SwitchObjectTrack(bool isActive)
         {
             _isActive = isActive;
         }

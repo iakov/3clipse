@@ -1,17 +1,14 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Buttons
 {
-    public class SettingsButton : MonoBehaviour, IPointerClickHandler
+    public class SettingsButton : MonoBehaviour
     {
-        [SerializeField] private RectTransform _mainCanvas;
-        [SerializeField] private RectTransform _settingCanvas;
+        [SerializeField] private StartMenuUI _startMenuUI;
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void EnterSettings()
         {
-            _mainCanvas.gameObject.SetActive(false);
-            _settingCanvas.gameObject.SetActive(true);
+            _startMenuUI.Settings();
         }
     }
 }

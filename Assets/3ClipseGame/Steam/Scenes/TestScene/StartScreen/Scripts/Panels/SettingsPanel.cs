@@ -1,32 +1,33 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Panels
 {
-    public class SettingsPanel : MonoBehaviour
+    public class SettingsPanel : Panel
     {
-        [SerializeField] private RectTransform _mainButtons;
-        [SerializeField] private InputAction _exitButton;
-        
-        private void Start()
+        [SerializeField] private RectTransform _panelVisual;
+        [SerializeField] private CursorScript _cursorScript;
+        [SerializeField] private FirstScreenCamera _firstScreenCamera;
+        [SerializeField] private float _pointToMoveTo;
+
+        public override void Enable()
         {
-            _exitButton.Enable();
-        }
-        
-        private void OnEnable()
-        {
-            _exitButton.started += OnExitPressed;
-        }
-        
-        private void OnDisable()
-        {
-            _exitButton.started -= OnExitPressed;
+            _cursorScript.SwitchCursorVisibility(true);
+            _cursorScript.SwitchObjectTrack(false);
+            
+            _firstScreenCamera.MoveFinished += EndEnable;
+            _firstScreenCamera.MoveToPoint(_pointToMoveTo);
         }
 
-        private void OnExitPressed(InputAction.CallbackContext context)
+        private void EndEnable()
         {
-            _mainButtons.gameObject.SetActive(true);
-            gameObject.SetActive(false);
+            _firstScreenCamera.MoveFinished -= EndEnable;
+            
+            _panelVisual.gameObject.SetActive(true);
+        }
+
+        public override void Disable()
+        {
+            _panelVisual.gameObject.SetActive(false);
         }
     }
 }

@@ -2,25 +2,36 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Panels
 {
-    public class JourneyPanel : MonoBehaviour
+    public class JourneyPanel : Panel
     {
+        [SerializeField] private RectTransform _panelVisual;
         [SerializeField] private CursorScript _cursorScript;
         [SerializeField] private HeadLookAt _headLookAtScript;
+        [SerializeField] private FirstScreenCamera _firstScreenCamera;
+        [SerializeField] private float _pointToMoveTo;
 
-        private void OnEnable()
+        public override void Enable()
         {
-            Enable();
+            _cursorScript.SwitchCursorVisibility(false);
+            _cursorScript.SwitchObjectTrack(true);
+            _cursorScript.SwitchObjectVisibility(true);
+            
+            _firstScreenCamera.MoveFinished += EndEnable;
+            _firstScreenCamera.MoveToPoint(_pointToMoveTo);
         }
 
-        private void Enable()
+        private void EndEnable()
         {
-            _cursorScript.GameMode(true);
+            _firstScreenCamera.MoveFinished -= EndEnable;
+            
+            _panelVisual.gameObject.SetActive(true);
             _headLookAtScript.Switch(true);
         }
 
-        private void OnDisable()
+        public override void Disable()
         {
-            _cursorScript.GameMode(false);
+            _cursorScript.SwitchObjectTrack(false);
+            _panelVisual.gameObject.SetActive(false);
             _headLookAtScript.Switch(false);
         }
     }
