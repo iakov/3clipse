@@ -22,14 +22,16 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts
         {
             var time = 0f;
 
-            while (_cart.m_Position < position)
+            while (Mathf.Abs(_cart.m_Position - position) > 0.05f)
             {
                 var currentSpeed = _cameraSpeed.Evaluate(time);
                 _cart.m_Speed = currentSpeed;
                 time += Time.deltaTime;
                 yield return null;
             }
-            
+
+            _cart.m_Position = position;
+            _cart.m_Speed = 0f;
             MoveFinished?.Invoke();
         }
     }

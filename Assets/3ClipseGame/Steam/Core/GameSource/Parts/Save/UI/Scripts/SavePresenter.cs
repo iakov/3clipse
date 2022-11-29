@@ -14,12 +14,14 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
         {
             var highlightGameObject = _hoverHighlight.gameObject;
             highlightGameObject.SetActive(true);
+            Debug.Log("enter");
         }
         
         public void OnPointerExit(PointerEventData eventData)
         {
             var highlightGameObject = _hoverHighlight.gameObject;
             highlightGameObject.SetActive(false);
+            Debug.Log("exit");
         }
     }
 }

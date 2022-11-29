@@ -30,7 +30,6 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Panels
 
         public override void Disable()
         {
-            _cursorScript.SwitchObjectTrack(false);
             _panelVisual.gameObject.SetActive(false);
             _headLookAtScript.Switch(false);
         }

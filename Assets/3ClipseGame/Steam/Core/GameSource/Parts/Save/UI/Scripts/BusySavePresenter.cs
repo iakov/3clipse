@@ -3,13 +3,11 @@ using _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Image = UnityEngine.UI.Image;
 
 namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 {
     public class BusySavePresenter : SavePresenter
     {
-        [SerializeField] private Image _imageComponent;
         [SerializeField] private TMP_Text _dateText;
         [SerializeField] private TMP_Text _locationText;
         
@@ -22,7 +20,6 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
         {
             _trackedSave = newSave;
             
-            _imageComponent.sprite = newSave.Image;
             _dateText.text = newSave.SaveDate;
             _locationText.text = newSave.SaveLocation;
         }

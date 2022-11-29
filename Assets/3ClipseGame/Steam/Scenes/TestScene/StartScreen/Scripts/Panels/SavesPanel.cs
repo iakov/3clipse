@@ -4,7 +4,6 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Panels
 {
     public class SavesPanel : Panel
     {
-        [SerializeField] private RectTransform _panelVisual;
         [SerializeField] private CursorScript _cursorScript;
         [SerializeField] private FirstScreenCamera _firstScreenCamera;
         [SerializeField] private float _pointToMoveTo;
@@ -23,12 +22,10 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts.Panels
 
             _cursorScript.SwitchObjectTrack(true);
             _cursorScript.SwitchObjectVisibility(true);
-            _panelVisual.gameObject.SetActive(true);
         }
 
         public override void Disable()
         {
-            _panelVisual.gameObject.SetActive(false);
         }
     }
 }

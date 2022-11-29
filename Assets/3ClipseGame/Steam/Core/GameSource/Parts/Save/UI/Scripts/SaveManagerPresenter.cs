@@ -10,10 +10,16 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 {
     public class SaveManagerPresenter : MonoBehaviour
     {
+        [Header("Saves")]
         [SerializeField] private int _savesAmount = 4;
-        [SerializeField] private LayoutGroup _layoutGroup;
-        [SerializeField] private RectTransform _emptySaveSlot;
-        [SerializeField] private RectTransform _busySaveSlot;
+        [SerializeField] private GameObject _emptySaveSlot;
+        [SerializeField] private GameObject _busySaveSlot;
+        [SerializeField] private List<Transform> _savesSpawnPositions;
+        [SerializeField] private UnityEngine.Camera _camera;
+        
+        [Header("Image")]
+        [SerializeField] private Image _imageComponent;
+        [SerializeField] private Sprite _defaultSprite;
 
         private List<SavePresenter> _savePresenters;
         private List<BusySavePresenter> _busySavePresenters;
@@ -23,10 +29,19 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 
         private void OnEnable()
         {
+            DestroyAllPresenters();
             _busySavePresenters = new List<BusySavePresenter>();
             _emptySavePresenters = new List<EmptySavePresenter>();
             _savePresenters = new List<SavePresenter>();
             StartCoroutine(DisplaySaveSlotsWithDelay());
+        }
+
+        private void DestroyAllPresenters()
+        {
+            if(_savePresenters == null) return;
+
+            foreach (var presenter in _savePresenters)
+                Destroy(presenter.gameObject);
         }
 
         private IEnumerator DisplaySaveSlotsWithDelay()
@@ -50,15 +65,19 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
             foreach (var save in saves)
             {
                 var savePresenter = CreateBusyPresenter(save);
+                var canvas = savePresenter.GetComponentInChildren<Canvas>();
+                canvas.worldCamera = _camera;
             }
         }
 
         private BusySavePresenter CreateBusyPresenter(GameSave save)
         {
-            var newObject = Instantiate(_busySaveSlot, _layoutGroup.transform);
+            var objectIndex = _savePresenters.Count;
+            var newObject = Instantiate(_busySaveSlot, _savesSpawnPositions[objectIndex]);
             var savePresenter = newObject.GetComponent<BusySavePresenter>();
             
             savePresenter.ChangeTrackedSave(save);
+            
             savePresenter.Clicked += LoadSave;
             savePresenter.Cleared += ClearSavePresenter;
             
@@ -70,7 +89,8 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 
         private void LoadSave(GameSave save)
         {
-            _saveManager.LoadGame(save.ID);
+            _imageComponent.sprite = save.GetImage;
+            //_saveManager.LoadGame(save.ID);
         }
 
         private void ClearSavePresenter(BusySavePresenter presenter, GameSave save)
@@ -94,12 +114,15 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
             for (var i = 0; i < emptySavesAmount; i++)
             {
                 var savePresenter = CreateEmptyPresenter();
+                var canvas = savePresenter.GetComponentInChildren<Canvas>();
+                canvas.worldCamera = _camera;
             }
         }
 
         private EmptySavePresenter CreateEmptyPresenter()
         {
-            var newObject = Instantiate(_emptySaveSlot, _layoutGroup.transform);
+            var objectIndex = _savePresenters.Count;
+            var newObject = Instantiate(_emptySaveSlot, _savesSpawnPositions[objectIndex]);
             var savePresenter = newObject.GetComponent<EmptySavePresenter>();
             
             savePresenter.Clicked += CreateNewSave;
@@ -112,10 +135,11 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 
         private void CreateNewSave(EmptySavePresenter presenter)
         {
-            presenter.Clicked -= CreateNewSave;
-            Destroy(presenter.gameObject);
-
-            _saveManager.NewGame();
+            _imageComponent.sprite = _defaultSprite;
+            // presenter.Clicked -= CreateNewSave;
+            // Destroy(presenter.gameObject);
+            //
+            // _saveManager.NewGame();
         }
     }
 }

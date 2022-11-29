@@ -10,7 +10,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data
         public readonly int ID; 
         public string SaveLocation { get; private set; }
         public string SaveDate { get; private set; }
-        public Sprite Image => SpriteFromTexture();
+        public Sprite GetImage => SpriteFromTexture();
         
         private GameData _gameData;
         private Texture2D _imageTexture;
