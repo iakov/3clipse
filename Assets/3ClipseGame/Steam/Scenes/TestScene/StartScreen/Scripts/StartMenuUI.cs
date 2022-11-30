@@ -25,7 +25,6 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts
 
         public void Saves()
         {
-            Debug.Log("Saves");
             _currentPanel.Disable();
             _currentPanel = _savesPanel;
             _currentPanel.Enable();
@@ -33,7 +32,6 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts
 
         public void Journey()
         {
-            Debug.Log("Journey");
             _currentPanel.Disable();
             _currentPanel = _journeyPanel;
             _currentPanel.Enable();
@@ -41,7 +39,6 @@ namespace _3ClipseGame.Steam.Scenes.TestScene.StartScreen.Scripts
 
         public void Settings()
         {
-            Debug.Log("Settings");
             _currentPanel.Disable();
             _currentPanel = _settingsPanel;
             _currentPanel.Enable();
