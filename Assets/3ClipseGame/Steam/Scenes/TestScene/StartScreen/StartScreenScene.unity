@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.5618946, g: 0.7220881, b: 0.8180075, a: 1}
+  m_IndirectSpecularColor: {r: 0.56184906, g: 0.72206545, b: 0.81800187, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -851,7 +851,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e76dfe5b171cd994a85d21c4392a4364, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2174,7 +2174,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.9723757, b: 0, a: 1}
+        key0: {r: 1, g: 0.9725491, b: 0, a: 1}
         key1: {r: 1, g: 0.49574798, b: 0, a: 1}
         key2: {r: 1, g: 0.5486495, b: 0, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -5812,6 +5812,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Grass_Large_01 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 131018, guid: dce1a891bc9f6744f8c11b28a4bf775d, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 471934, guid: dce1a891bc9f6744f8c11b28a4bf775d, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -6679,7 +6683,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e76dfe5b171cd994a85d21c4392a4364, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8002,7 +8006,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.9723757, b: 0, a: 1}
+        key0: {r: 1, g: 0.9725491, b: 0, a: 1}
         key1: {r: 1, g: 0.49574798, b: 0, a: 1}
         key2: {r: 1, g: 0.5486495, b: 0, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -14125,7 +14129,7 @@ GameObject:
   - component: {fileID: 801796063}
   - component: {fileID: 801796066}
   - component: {fileID: 801796064}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: CursorPositionCatcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16594,6 +16598,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 108140284410512858, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
+      propertyPath: m_Range
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 108140284410512858, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
@@ -16607,7 +16615,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 108140284410512858, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
       propertyPath: m_Intensity
+      value: 1.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 108140284410512858, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
+      propertyPath: m_Shadows.m_Type
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 108140284410512858, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 1.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 108140284410512858, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 767
+      objectReference: {fileID: 0}
+    - target: {fileID: 108140284410512858, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
+      propertyPath: m_Shadows.m_NearPlane
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 108140284410512858, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: -3.4892644e-35
+      objectReference: {fileID: 0}
+    - target: {fileID: 108140284410512858, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 1.02e-43
       objectReference: {fileID: 0}
     - target: {fileID: 198212416725443120, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
@@ -17392,7 +17424,7 @@ GameObject:
   - component: {fileID: 1192157807}
   - component: {fileID: 1192157806}
   - component: {fileID: 1192157805}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ReturnRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17625,13 +17657,112 @@ MonoBehaviour:
   _activeCamera: {fileID: 2041783301}
   _hitLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 8
   _cursorSprite: {fileID: 21300000, guid: 4bb2090f977a0cc4b9baa4cce5969921, type: 3}
 --- !u!4 &1266527260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4438281458859218, guid: bc67ec9051cebba47b1cd5db37ba6ac6, type: 3}
   m_PrefabInstance: {fileID: 1095507346}
   m_PrefabAsset: {fileID: 0}
+--- !u!96 &1266527261
+TrailRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266527255}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 42b522c822a9e4b82bd2e56ede6c860d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Time: 0.4
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_MinVertexDistance: 0.1
+  m_Autodestruct: 0
+  m_Emitting: 1
 --- !u!1001 &1281078038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18110,7 +18241,7 @@ GameObject:
   - component: {fileID: 1359929743}
   - component: {fileID: 1359929746}
   - component: {fileID: 1359929745}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18163,7 +18294,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7b41d0b0ae5d8b14aa397915842e580f, type: 2}
   m_sharedMaterial: {fileID: 7445456413939120086, guid: 7b41d0b0ae5d8b14aa397915842e580f, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 7445456413939120086, guid: 7b41d0b0ae5d8b14aa397915842e580f, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -19372,7 +19504,7 @@ GameObject:
   - component: {fileID: 1553201262}
   - component: {fileID: 1553201261}
   - component: {fileID: 1553201260}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20161,7 +20293,7 @@ GameObject:
   - component: {fileID: 1635003154}
   - component: {fileID: 1635003156}
   - component: {fileID: 1635003155}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20212,7 +20344,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -20416,7 +20549,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e76dfe5b171cd994a85d21c4392a4364, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21739,7 +21872,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.9723757, b: 0, a: 1}
+        key0: {r: 1, g: 0.9725491, b: 0, a: 1}
         key1: {r: 1, g: 0.49574798, b: 0, a: 1}
         key2: {r: 1, g: 0.5486495, b: 0, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -26207,7 +26340,7 @@ GameObject:
   - component: {fileID: 1787682046}
   - component: {fileID: 1787682045}
   - component: {fileID: 1787682044}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27595,7 +27728,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 84ab2522697a7154eb1db05536098987, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27654,8 +27787,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011643897}
   serializedVersion: 8
-  lengthInSec: 5
-  simulationSpeed: 1
+  lengthInSec: 2
+  simulationSpeed: 0.1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -27729,7 +27862,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -27836,7 +27969,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.7169812, g: 0.55938554, b: 0.26717696, a: 0.101960786}
+      maxColor: {r: 1, g: 0.53390247, b: 0, a: 0.1764706}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -27898,7 +28031,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 10
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -27951,7 +28084,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 200
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -28004,7 +28137,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 10
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -28350,7 +28483,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+    m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -28361,7 +28494,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 0.46
       mode: 0
       spread: 0
       speed:
@@ -29103,7 +29236,7 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -4.12
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -29209,7 +29342,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.5
+      scalar: -4.21
       minScalar: 0
       maxCurve:
         serializedVersion: 2

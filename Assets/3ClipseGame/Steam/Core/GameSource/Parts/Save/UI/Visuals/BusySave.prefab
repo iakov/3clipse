@@ -518,6 +518,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hoverHighlight: {fileID: 8073667505598275009}
-  _imageComponent: {fileID: 2788352486668719573}
   _dateText: {fileID: 601103334187836815}
   _locationText: {fileID: 623564804665882785}

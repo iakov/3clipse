@@ -46,9 +46,11 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 
         private IEnumerator DisplaySaveSlotsWithDelay()
         {
+            Debug.Log("1");
             while (SaveManager.Instance == null || SaveManager.Instance.IsSavesFound == false) 
                 yield return null;
             
+            Debug.Log("2");
             DisplayAllSlots();
         }
 
@@ -62,8 +64,10 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 
         private void CreateBusyPresenters(List<GameSave> saves)
         {
+            Debug.Log("Busy Full");
             foreach (var save in saves)
             {
+                Debug.Log("Busy");
                 var savePresenter = CreateBusyPresenter(save);
                 var canvas = savePresenter.GetComponentInChildren<Canvas>();
                 canvas.worldCamera = _camera;

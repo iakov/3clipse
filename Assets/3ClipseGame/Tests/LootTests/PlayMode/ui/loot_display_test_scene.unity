@@ -472,6 +472,8 @@ MonoBehaviour:
   _inputManager: {fileID: 1523894779}
   _cameraManager: {fileID: 643035557}
   _statesManager: {fileID: 1372360239}
+  _serializationDependencies: {fileID: 0}
+  _startGameScene: 
 --- !u!114 &296410648
 MonoBehaviour:
   m_ObjectHideFlags: 0
