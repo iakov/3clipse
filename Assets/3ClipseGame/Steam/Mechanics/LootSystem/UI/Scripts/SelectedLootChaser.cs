@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
-using _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
+namespace _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts
 {
     [RequireComponent(typeof(LootIconsSelector))]
     [RequireComponent(typeof(LootIconsSelector))]
@@ -32,7 +31,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 
         #region Public
 
-        public void EditScroll(LootIcon.LootIcon currentIcon)
+        public void EditScroll(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon currentIcon)
         {
             StartCoroutine(TryScrollWithDelay(currentIcon));
         }
@@ -41,7 +40,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 
         #region ScrollDown
         
-        private IEnumerator TryScrollWithDelay(LootIcon.LootIcon currentIcon)
+        private IEnumerator TryScrollWithDelay(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon currentIcon)
         {
             yield return null;
             
@@ -49,7 +48,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
             ScrollUpIfNeeded(currentIcon);
         }
         
-        private void ScrollDownIfNeeded(LootIcon.LootIcon currentIcon)
+        private void ScrollDownIfNeeded(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon currentIcon)
         {
             try
             {
@@ -61,7 +60,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
             }
         }
 
-        private void TryScrollDown(LootIcon.LootIcon currentIcon)
+        private void TryScrollDown(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon currentIcon)
         {
             var currentIconLowerBound = GetIconLowerBound(currentIcon);
             var viewportLowerBound = GetViewportLowerBound();
@@ -69,7 +68,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
             ScrollDownIfRequired(currentIconLowerBound, viewportLowerBound);
         }
         
-        private float GetIconLowerBound(LootIcon.LootIcon icon)
+        private float GetIconLowerBound(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon icon)
         {
             var iconCenter = GetVerticalIconCenter(icon);
             var iconHeight = GetIconHeight();
@@ -115,7 +114,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 
         #region ScrollUp
 
-        private void ScrollUpIfNeeded(LootIcon.LootIcon currentIcon)
+        private void ScrollUpIfNeeded(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon currentIcon)
         {
             try
             {
@@ -127,7 +126,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
             }
         }
 
-        private void TryScrollUp(LootIcon.LootIcon currentIcon)
+        private void TryScrollUp(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon currentIcon)
         {
             var currentIconUpperBound = GetIconUpperBound(currentIcon);
             var viewportUpperBound = GetViewportUpperBound();
@@ -135,7 +134,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
             ScrollUpIfRequired(currentIconUpperBound, viewportUpperBound);
         }
 
-        private float GetIconUpperBound(LootIcon.LootIcon icon)
+        private float GetIconUpperBound(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon icon)
         {
             var iconCenter = GetVerticalIconCenter(icon);
             var iconHeight = GetIconHeight();
@@ -164,7 +163,7 @@ namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
 
         #endregion
         
-        private float GetVerticalIconCenter(LootIcon.LootIcon icon)
+        private float GetVerticalIconCenter(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon icon)
         {
             var rectTransform = icon.GetComponent<RectTransform>();
             return Mathf.Abs(rectTransform.anchoredPosition.y);

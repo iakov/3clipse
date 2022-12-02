@@ -1,4 +1,5 @@
 using System;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data;
 using TMPro;
 using UnityEngine;
@@ -10,12 +11,23 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
     {
         [SerializeField] private TMP_Text _dateText;
         [SerializeField] private TMP_Text _locationText;
-        
-        public event Action<GameSave> Clicked;
-        public event Action<BusySavePresenter, GameSave> Cleared;
 
+        public event Action<BusySavePresenter> Clicked;
+        public event Action<BusySavePresenter> Cleared;
+
+        public GameSave TrackedSave => _trackedSave;
         private GameSave _trackedSave;
 
+        public override void Use()
+        {
+            SaveManager.Instance.LoadGame(_trackedSave.ID);
+        }
+
+        public override void OnPointerClick(PointerEventData eventData)
+        {
+            Clicked?.Invoke(this);
+        }
+        
         public void ChangeTrackedSave(GameSave newSave)
         {
             _trackedSave = newSave;
@@ -24,14 +36,9 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
             _locationText.text = newSave.SaveLocation;
         }
 
-        public override void OnPointerClick(PointerEventData eventData)
-        {
-            Clicked?.Invoke(_trackedSave);
-        }
-
         public void OnClearClicked()
         {
-            Cleared?.Invoke(this, _trackedSave);
+            Cleared?.Invoke(this);
         }
     }
 }

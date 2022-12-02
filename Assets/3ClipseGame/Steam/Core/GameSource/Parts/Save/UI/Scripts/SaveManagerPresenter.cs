@@ -2,148 +2,114 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame;
-using _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 {
+    [RequireComponent(typeof(SavesCreator))]
     public class SaveManagerPresenter : MonoBehaviour
     {
-        [Header("Saves")]
         [SerializeField] private int _savesAmount = 4;
-        [SerializeField] private GameObject _emptySaveSlot;
-        [SerializeField] private GameObject _busySaveSlot;
-        [SerializeField] private List<Transform> _savesSpawnPositions;
-        [SerializeField] private UnityEngine.Camera _camera;
-        
-        [Header("Image")]
-        [SerializeField] private Image _imageComponent;
-        [SerializeField] private Sprite _defaultSprite;
-
-        private List<SavePresenter> _savePresenters;
-        private List<BusySavePresenter> _busySavePresenters;
-        private List<EmptySavePresenter> _emptySavePresenters;
+        [SerializeField] private UnityEngine.Camera _eventsCamera;
+        [SerializeField] private Image _savesImageComponent;
+        [SerializeField] private Sprite _newSaveSprite;
 
         private SaveManager _saveManager => SaveManager.Instance;
+        private SavesCreatorEventsWrapper _savesCreator;
+
+        private List<SavePresenter> _savePresenters;
+        private SavePresenter _selectedPresenter;
+
+        private void Awake()
+        {
+            var savesCreator = GetComponent<SavesCreator>();
+            _savesCreator = new SavesCreatorEventsWrapper(savesCreator);
+        }
 
         private void OnEnable()
         {
-            DestroyAllPresenters();
-            _busySavePresenters = new List<BusySavePresenter>();
-            _emptySavePresenters = new List<EmptySavePresenter>();
-            _savePresenters = new List<SavePresenter>();
             StartCoroutine(DisplaySaveSlotsWithDelay());
+            _savesCreator.PresenterCleared += ClearSavePresenter;
+            _savesCreator.BusyPresenterClicked += SelectBusyPresenter;
+            _savesCreator.EmptyPresenterClicked += SelectEmptyPresenter;
+        }
+
+        private void OnDisable()
+        {
+            _savesCreator.PresenterCleared -= ClearSavePresenter;
+            _savesCreator.BusyPresenterClicked -= SelectBusyPresenter;
+            _savesCreator.EmptyPresenterClicked -= SelectEmptyPresenter;
+        }
+        
+        private IEnumerator DisplaySaveSlotsWithDelay()
+        {
+            while (SaveManager.Instance == null || SaveManager.Instance.IsSavesFound == false)
+                yield return null;
+
+            DestroyAllPresenters();
+            CreateAllPresenters();
         }
 
         private void DestroyAllPresenters()
         {
-            if(_savePresenters == null) return;
+            if (_savePresenters == null) return;
 
             foreach (var presenter in _savePresenters)
                 Destroy(presenter.gameObject);
         }
 
-        private IEnumerator DisplaySaveSlotsWithDelay()
+        private void CreateAllPresenters()
         {
-            Debug.Log("1");
-            while (SaveManager.Instance == null || SaveManager.Instance.IsSavesFound == false) 
-                yield return null;
-            
-            Debug.Log("2");
-            DisplayAllSlots();
-        }
+            _savePresenters = new List<SavePresenter>();
 
-        private void DisplayAllSlots()
-        {
-            var saves = _saveManager.GameSaves.ToList();
-            
-            CreateBusyPresenters(saves);
-            CreateEmptyPresenters();
-        }
+            CreateBusyPresenters();
+            CreateEmptyPresenters(_savePresenters.Count);
 
-        private void CreateBusyPresenters(List<GameSave> saves)
-        {
-            Debug.Log("Busy Full");
-            foreach (var save in saves)
+            foreach (var savePresenter in _savePresenters)
             {
-                Debug.Log("Busy");
-                var savePresenter = CreateBusyPresenter(save);
                 var canvas = savePresenter.GetComponentInChildren<Canvas>();
-                canvas.worldCamera = _camera;
+                canvas.worldCamera = _eventsCamera;
             }
         }
 
-        private BusySavePresenter CreateBusyPresenter(GameSave save)
+        private void CreateBusyPresenters()
         {
-            var objectIndex = _savePresenters.Count;
-            var newObject = Instantiate(_busySaveSlot, _savesSpawnPositions[objectIndex]);
-            var savePresenter = newObject.GetComponent<BusySavePresenter>();
-            
-            savePresenter.ChangeTrackedSave(save);
-            
-            savePresenter.Clicked += LoadSave;
-            savePresenter.Cleared += ClearSavePresenter;
-            
-            _busySavePresenters.Add(savePresenter);
-            _savePresenters.Add(savePresenter);
-            
-            return savePresenter;
+            var gameSaves = _saveManager.GameSaves;
+            var busyPresenters = _savesCreator.CreateBusyPresenters(gameSaves.ToList());
+            _savePresenters = _savePresenters.Concat(busyPresenters).ToList();
         }
 
-        private void LoadSave(GameSave save)
+        private void CreateEmptyPresenters(int busyPresentersAmount)
         {
-            _imageComponent.sprite = save.GetImage;
-            //_saveManager.LoadGame(save.ID);
+            var emptyPresentersAmount = _savesAmount - busyPresentersAmount;
+            var emptyPresenters = _savesCreator.CreateEmptyPresenters(emptyPresentersAmount, _savesAmount);
+            _savePresenters = _savePresenters.Concat(emptyPresenters).ToList();
         }
 
-        private void ClearSavePresenter(BusySavePresenter presenter, GameSave save)
+        private void SelectEmptyPresenter(EmptySavePresenter presenter)
         {
-            presenter.Cleared -= ClearSavePresenter;
-            presenter.Clicked -= LoadSave;
-            
-            _saveManager.DeleteSave(save.ID);
-            Destroy(presenter.gameObject);
-            CreateBusyPresenter(save);
+            if( _selectedPresenter != null) _selectedPresenter.Deactivate();
+            _savesImageComponent.sprite = _newSaveSprite;
+            _selectedPresenter = presenter;
+            _selectedPresenter.Activate();
+        }
 
+        private void SelectBusyPresenter(BusySavePresenter presenter)
+        {
+            if( _selectedPresenter != null) _selectedPresenter.Deactivate();
+            _savesImageComponent.sprite = presenter.TrackedSave.GetImage;
+            _selectedPresenter = presenter;
+            _selectedPresenter.Activate();
+        }
+
+        private void ClearSavePresenter(BusySavePresenter presenter)
+        {
+            _saveManager.DeleteSave(presenter.TrackedSave.ID);
             _savePresenters.Remove(presenter);
-            _busySavePresenters.Remove(presenter);
-        }
-
-        private void CreateEmptyPresenters()
-        {
-            var emptySavesAmount = _savesAmount - _savePresenters.Count;
-            if(emptySavesAmount <= 0) return;
-
-            for (var i = 0; i < emptySavesAmount; i++)
-            {
-                var savePresenter = CreateEmptyPresenter();
-                var canvas = savePresenter.GetComponentInChildren<Canvas>();
-                canvas.worldCamera = _camera;
-            }
-        }
-
-        private EmptySavePresenter CreateEmptyPresenter()
-        {
-            var objectIndex = _savePresenters.Count;
-            var newObject = Instantiate(_emptySaveSlot, _savesSpawnPositions[objectIndex]);
-            var savePresenter = newObject.GetComponent<EmptySavePresenter>();
+            Destroy(presenter.gameObject);
+            _savesCreator.CreateEmptyPresenter(_savesAmount);
             
-            savePresenter.Clicked += CreateNewSave;
-            
-            _emptySavePresenters.Add(savePresenter);
-            _savePresenters.Add(savePresenter);
-            
-            return savePresenter;
-        }
-
-        private void CreateNewSave(EmptySavePresenter presenter)
-        {
-            _imageComponent.sprite = _defaultSprite;
-            // presenter.Clicked -= CreateNewSave;
-            // Destroy(presenter.gameObject);
-            //
-            // _saveManager.NewGame();
         }
     }
 }

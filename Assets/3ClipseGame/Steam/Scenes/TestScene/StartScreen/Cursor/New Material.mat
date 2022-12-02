@@ -45,7 +45,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: df3b9fbbc23e7467d8682ea8a0044114, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7ab584dabd31b4bd6bd2c91103f2c418, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -110,8 +110,8 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color01: {r: 16, g: 6.211765, b: 0, a: 1}
-    - _Color02: {r: 16, g: 10.792157, b: 0, a: 1}
+    - _Color01: {r: 28.518957, g: 6.9135695, b: 0, a: 1}
+    - _Color02: {r: 17.129307, g: 2.20449, b: 0, a: 1}
     - _DissolveSpeed_1: {r: -1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainTexSpeed: {r: -0.5, g: 0, b: 0, a: 0}

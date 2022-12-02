@@ -2,9 +2,9 @@ using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts.LootIcon
+namespace _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts.LootIcon
 {
-    public class ResourceLootIcon : LootIcon
+    public class ResourceLootIcon : Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon
     {
         #region Public
 

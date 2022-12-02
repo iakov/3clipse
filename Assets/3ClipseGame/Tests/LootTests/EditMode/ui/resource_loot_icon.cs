@@ -1,4 +1,5 @@
 using _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts.LootIcon;
+using _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts.LootIcon;
 using NUnit.Framework;
 using UnityEngine;
 
