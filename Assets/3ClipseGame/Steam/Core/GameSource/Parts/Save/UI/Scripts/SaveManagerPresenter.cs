@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 {
@@ -12,7 +11,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
     {
         [SerializeField] private int _savesAmount = 4;
         [SerializeField] private UnityEngine.Camera _eventsCamera;
-        [SerializeField] private Image _savesImageComponent;
+        [SerializeField] private SelectedSavePresenter _savesImageComponent;
         [SerializeField] private Sprite _newSaveSprite;
 
         private SaveManager _saveManager => SaveManager.Instance;
@@ -82,25 +81,28 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
 
         private void CreateEmptyPresenters(int busyPresentersAmount)
         {
-            var emptyPresentersAmount = _savesAmount - busyPresentersAmount;
-            var emptyPresenters = _savesCreator.CreateEmptyPresenters(emptyPresentersAmount, _savesAmount);
+            var emptyPresenters = _savesCreator.CreateEmptyPresenters(busyPresentersAmount, _savesAmount);
             _savePresenters = _savePresenters.Concat(emptyPresenters).ToList();
         }
 
         private void SelectEmptyPresenter(EmptySavePresenter presenter)
         {
-            if( _selectedPresenter != null) _selectedPresenter.Deactivate();
-            _savesImageComponent.sprite = _newSaveSprite;
+            if(_selectedPresenter == presenter) return;
+            if( _selectedPresenter != null) _selectedPresenter.Unselect();
+            
+            presenter.Select();
+            _savesImageComponent.ChangeImage(_newSaveSprite, presenter);
             _selectedPresenter = presenter;
-            _selectedPresenter.Activate();
         }
 
         private void SelectBusyPresenter(BusySavePresenter presenter)
         {
-            if( _selectedPresenter != null) _selectedPresenter.Deactivate();
-            _savesImageComponent.sprite = presenter.TrackedSave.GetImage;
+            if(_selectedPresenter == presenter) return;
+            if( _selectedPresenter != null) _selectedPresenter.Unselect();
+            
+            presenter.Select();
+            _savesImageComponent.ChangeImage(presenter.TrackedSave.GetImage, presenter);
             _selectedPresenter = presenter;
-            _selectedPresenter.Activate();
         }
 
         private void ClearSavePresenter(BusySavePresenter presenter)
@@ -109,7 +111,6 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.UI.Scripts
             _savePresenters.Remove(presenter);
             Destroy(presenter.gameObject);
             _savesCreator.CreateEmptyPresenter(_savesAmount);
-            
         }
     }
 }

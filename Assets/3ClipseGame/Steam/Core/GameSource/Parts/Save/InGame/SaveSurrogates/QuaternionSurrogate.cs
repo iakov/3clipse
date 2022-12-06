@@ -23,7 +23,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Save.InGame.SaveSurrogates
             deserializedQuaternion.y = (float)info.GetValue("y", typeof(float));
             deserializedQuaternion.z = (float)info.GetValue("z", typeof(float));
             deserializedQuaternion.w = (float)info.GetValue("w", typeof(float));
-
+            
             return deserializedQuaternion;
         }
     }
