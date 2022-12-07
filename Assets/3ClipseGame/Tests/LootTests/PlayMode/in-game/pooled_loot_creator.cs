@@ -1,5 +1,4 @@
 using System.Collections;
-using _3ClipseGame.Steam.Entities.Player.Data.LootSystem;
 using _3ClipseGame.Steam.Mechanics.LootSystem;
 using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.Dropper;
 using NUnit.Framework;
@@ -7,45 +6,48 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-public class pooled_loot_creator
+namespace _3ClipseGame.Tests.LootTests.PlayMode.in_game
 {
-    private ILootCreator _lootCreator;
-    private GameObject _decals;
-    private GameObject _lootPool;
-
-    [UnitySetUp]
-    public IEnumerator Init()
+    public class pooled_loot_creator
     {
-        SceneManager.LoadScene("pooled_loot_creator_test_scene");
-        yield return null;
+        private ILootCreator _lootCreator;
+        private GameObject _decals;
+        private GameObject _lootPool;
 
-        _decals = new GameObject("Decals");
-        _lootPool = Object.FindObjectOfType<LootPool>().gameObject;
+        [UnitySetUp]
+        public IEnumerator Init()
+        {
+            SceneManager.LoadScene("pooled_loot_creator_test_scene");
+            yield return null;
 
-        _lootCreator = new PooledLootCreator(_decals, _lootPool.GetComponent<LootPool>());
-    }
+            _decals = new GameObject("Decals");
+            _lootPool = Object.FindObjectOfType<LootPool>().gameObject;
 
-    [UnityTest]
-    public IEnumerator test_created_loot_position()
-    {
-        var lootElement = _lootCreator.CreateLootObjectInPosition(_decals.transform);
-        yield return null;
-        Assert.AreEqual(_decals.transform.position, lootElement.transform.position);
-    }
+            _lootCreator = new PooledLootCreator(_decals, _lootPool.GetComponent<LootPool>());
+        }
 
-    [UnityTest]
-    public IEnumerator test_created_loot_parent()
-    {
-        var lootElement = _lootCreator.CreateLootObjectInPosition(_decals.transform);
-        yield return null;
-        Assert.IsTrue(lootElement.transform.IsChildOf(_decals.transform));
-    }
+        [UnityTest]
+        public IEnumerator test_created_loot_position()
+        {
+            var lootElement = _lootCreator.CreateLootObjectInPosition(_decals.transform);
+            yield return null;
+            Assert.AreEqual(_decals.transform.position, lootElement.transform.position);
+        }
 
-    [UnityTest]
-    public IEnumerator test_created_loot_disabled()
-    {
-        var lootElement = _lootCreator.CreateLootObjectInPosition(_decals.transform);
-        yield return null;
-        Assert.IsFalse(lootElement.activeInHierarchy);
+        [UnityTest]
+        public IEnumerator test_created_loot_parent()
+        {
+            var lootElement = _lootCreator.CreateLootObjectInPosition(_decals.transform);
+            yield return null;
+            Assert.IsTrue(lootElement.transform.IsChildOf(_decals.transform));
+        }
+
+        [UnityTest]
+        public IEnumerator test_created_loot_disabled()
+        {
+            var lootElement = _lootCreator.CreateLootObjectInPosition(_decals.transform);
+            yield return null;
+            Assert.IsFalse(lootElement.activeInHierarchy);
+        }
     }
 }

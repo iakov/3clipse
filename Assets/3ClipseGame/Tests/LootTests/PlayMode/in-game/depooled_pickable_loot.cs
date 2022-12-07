@@ -4,37 +4,40 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class depooled_pickable_loot
+namespace _3ClipseGame.Tests.LootTests.PlayMode.in_game
 {
-    private GameObject _lootObject;
-
-    [UnityTest]
-    public IEnumerator test_disappear_loot()
+    public class depooled_pickable_loot
     {
-        _lootObject.GetComponent<PickableLoot>().Disappear();
-        yield return null;
+        private GameObject _lootObject;
 
-        Assert.IsTrue(_lootObject == null);
-    }
+        [UnityTest]
+        public IEnumerator test_disappear_loot()
+        {
+            _lootObject.GetComponent<PickableLoot>().Disappear();
+            yield return null;
 
-    [UnityTest]
-    public IEnumerator test_disappear_loot_event()
-    {
-        var isEventInvoked = false;
-        var pickableLoot = _lootObject.GetComponent<PickableLoot>();
-        pickableLoot.Disappeared += (_) => { isEventInvoked = true; };
+            Assert.IsTrue(_lootObject == null);
+        }
 
-        pickableLoot.Disappear();
-        yield return null;
+        [UnityTest]
+        public IEnumerator test_disappear_loot_event()
+        {
+            var isEventInvoked = false;
+            var pickableLoot = _lootObject.GetComponent<PickableLoot>();
+            pickableLoot.Disappeared += (_) => { isEventInvoked = true; };
 
-        Assert.IsTrue(isEventInvoked);
-    }
+            pickableLoot.Disappear();
+            yield return null;
+
+            Assert.IsTrue(isEventInvoked);
+        }
 
 
-    [SetUp]
-    public void Init()
-    {
-        _lootObject = new GameObject();
-        _lootObject.AddComponent<DePooledPickableLoot>();
+        [SetUp]
+        public void Init()
+        {
+            _lootObject = new GameObject();
+            _lootObject.AddComponent<DePooledPickableLoot>();
+        }
     }
 }

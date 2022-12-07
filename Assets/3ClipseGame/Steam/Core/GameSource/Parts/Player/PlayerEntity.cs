@@ -1,6 +1,6 @@
 using System;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Input;
-using _3ClipseGame.Steam.Entities.Player.Data.Specifications.InGame;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Player.Specifications.InGame;
 using _3ClipseGame.Steam.Entities.Scripts;
 using UnityEngine;
 using CameraType = _3ClipseGame.Steam.Core.GameSource.Parts.Camera.CameraType;

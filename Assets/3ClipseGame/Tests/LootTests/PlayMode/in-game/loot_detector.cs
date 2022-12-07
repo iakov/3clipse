@@ -6,76 +6,79 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using Assert = UnityEngine.Assertions.Assert;
 
-public class loot_detector
+namespace _3ClipseGame.Tests.LootTests.PlayMode.in_game
 {
-    private GameObject _loot;
-    private LootDetector _lootDetector;
-
-    private bool _isRetireEventTriggered;
-    private bool _isDetectedEventTriggered;
-
-    [UnitySetUp]
-    public IEnumerator Init()
+    public class loot_detector
     {
-        SceneManager.LoadScene("loot_detector_test_scene");
-        yield return new WaitForSeconds(0.1f);
+        private GameObject _loot;
+        private LootDetector _lootDetector;
 
-        _isDetectedEventTriggered = false;
-        _isRetireEventTriggered = false;
+        private bool _isRetireEventTriggered;
+        private bool _isDetectedEventTriggered;
 
-        InitializeLoot();
-        InitializeDetector();
-    }
+        [UnitySetUp]
+        public IEnumerator Init()
+        {
+            SceneManager.LoadScene("loot_detector_test_scene");
+            yield return new WaitForSeconds(0.1f);
 
-    private void InitializeLoot()
-    {
-        _loot = Object.FindObjectOfType<PickableLoot>().gameObject;
-    }
+            _isDetectedEventTriggered = false;
+            _isRetireEventTriggered = false;
 
-    private void InitializeDetector()
-    {
-        _lootDetector = Object.FindObjectOfType<LootDetector>();
+            InitializeLoot();
+            InitializeDetector();
+        }
 
-        _lootDetector.LootRetired += OnLootRetired;
-        _lootDetector.LootDetected += OnLootDetected;
-    }
+        private void InitializeLoot()
+        {
+            _loot = Object.FindObjectOfType<PickableLoot>().gameObject;
+        }
 
-    private void OnLootDetected(PickableLoot _) => _isDetectedEventTriggered = true;
-    private void OnLootRetired(PickableLoot _) => _isRetireEventTriggered = true;
+        private void InitializeDetector()
+        {
+            _lootDetector = Object.FindObjectOfType<LootDetector>();
 
-    [UnityTest]
-    public IEnumerator test_detecting_object_with_pickable_loot()
-    {
-        yield return new WaitForSeconds(0.5f);
+            _lootDetector.LootRetired += OnLootRetired;
+            _lootDetector.LootDetected += OnLootDetected;
+        }
 
-        Assert.IsTrue(_isDetectedEventTriggered);
-    }
+        private void OnLootDetected(PickableLoot _) => _isDetectedEventTriggered = true;
+        private void OnLootRetired(PickableLoot _) => _isRetireEventTriggered = true;
 
-    [UnityTest]
-    public IEnumerator test_detecting_object_with_no_pickable_loot()
-    {
-        Object.Destroy(_loot.GetComponent<PickableLoot>());
+        [UnityTest]
+        public IEnumerator test_detecting_object_with_pickable_loot()
+        {
+            yield return new WaitForSeconds(0.5f);
 
-        yield return null;
+            Assert.IsTrue(_isDetectedEventTriggered);
+        }
 
-        Assert.IsFalse(_isDetectedEventTriggered);
-    }
+        [UnityTest]
+        public IEnumerator test_detecting_object_with_no_pickable_loot()
+        {
+            Object.Destroy(_loot.GetComponent<PickableLoot>());
 
-    [UnityTest]
-    public IEnumerator test_retiring_object_with_pickable_loot()
-    {
-        yield return new WaitForSeconds(1f);
+            yield return null;
 
-        Assert.IsTrue(_isRetireEventTriggered);
-    }
+            Assert.IsFalse(_isDetectedEventTriggered);
+        }
 
-    [UnityTest]
-    public IEnumerator test_retiring_object_which_was_disappeared()
-    {
-        yield return new WaitForSeconds(0.5f);
-        _loot.GetComponent<PickableLoot>().Disappear();
-        yield return null;
+        [UnityTest]
+        public IEnumerator test_retiring_object_with_pickable_loot()
+        {
+            yield return new WaitForSeconds(1f);
 
-        Assert.IsTrue(_isRetireEventTriggered);
+            Assert.IsTrue(_isRetireEventTriggered);
+        }
+
+        [UnityTest]
+        public IEnumerator test_retiring_object_which_was_disappeared()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _loot.GetComponent<PickableLoot>().Disappear();
+            yield return null;
+
+            Assert.IsTrue(_isRetireEventTriggered);
+        }
     }
 }

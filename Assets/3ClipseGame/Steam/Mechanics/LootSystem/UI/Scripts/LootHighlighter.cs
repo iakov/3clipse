@@ -1,4 +1,4 @@
-namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
+namespace _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts
 {
     public class LootHighlighter
     {

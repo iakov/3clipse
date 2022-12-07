@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 using _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput;
-using _3ClipseGame.Steam.Entities.Player.Data.Specifications.InGame;
+using _3ClipseGame.Steam.Core.GameSource.Parts.Player.Specifications.InGame;
 using _3ClipseGame.Steam.Entities.Player.Scripts;
 using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;

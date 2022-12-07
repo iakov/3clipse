@@ -29,7 +29,7 @@ namespace _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts
             PickUp(icon);
         }
 
-        private void PickUp(Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon icon)
+        private void PickUp(LootIcon.LootIcon icon)
         {
             var loot = icon.GetCurrentLoot();
             AddItemToStorage(loot);

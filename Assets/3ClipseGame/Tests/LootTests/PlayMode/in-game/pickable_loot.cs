@@ -3,43 +3,46 @@ using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
 using NUnit.Framework;
 using UnityEngine;
 
-public class pickable_loot
+namespace _3ClipseGame.Tests.LootTests.PlayMode.in_game
 {
-    private PickableLoot _pickableLoot;
-    private DropElement _dropElement;
-
-    [SetUp]
-    public void Init()
+    public class pickable_loot
     {
-        _pickableLoot = new GameObject().AddComponent<DePooledPickableLoot>();
-        _dropElement = new DropElement(3, 0.5f);
-        _pickableLoot.SetDropElement(_dropElement);
-    }
+        private PickableLoot _pickableLoot;
+        private DropElement _dropElement;
 
-    [Test]
-    public void test_setting_element_tracked()
-    {
-        var previousAmount = _pickableLoot.GetAmount();
-        var newDropElement = new DropElement(5, 1f);
-        _pickableLoot.SetDropElement(newDropElement);
-        var newAmount = _pickableLoot.GetAmount();
+        [SetUp]
+        public void Init()
+        {
+            _pickableLoot = new GameObject().AddComponent<DePooledPickableLoot>();
+            _dropElement = new DropElement(3, 0.5f);
+            _pickableLoot.SetDropElement(_dropElement);
+        }
 
-        Assert.IsFalse(previousAmount == newAmount);
-    }
+        [Test]
+        public void test_setting_element_tracked()
+        {
+            var previousAmount = _pickableLoot.GetAmount();
+            var newDropElement = new DropElement(5, 1f);
+            _pickableLoot.SetDropElement(newDropElement);
+            var newAmount = _pickableLoot.GetAmount();
 
-    [Test]
-    public void test_setting_null_element_tracked()
-    {
-        var previousAmount = _pickableLoot.GetAmount();
-        _pickableLoot.SetDropElement(null);
-        var newAmount = _pickableLoot.GetAmount();
+            Assert.IsFalse(previousAmount == newAmount);
+        }
 
-        Assert.AreEqual(previousAmount, newAmount);
-    }
+        [Test]
+        public void test_setting_null_element_tracked()
+        {
+            var previousAmount = _pickableLoot.GetAmount();
+            _pickableLoot.SetDropElement(null);
+            var newAmount = _pickableLoot.GetAmount();
 
-    [TearDown]
-    public void Clear()
-    {
-        _pickableLoot.Disappear();
+            Assert.AreEqual(previousAmount, newAmount);
+        }
+
+        [TearDown]
+        public void Clear()
+        {
+            _pickableLoot.Disappear();
+        }
     }
 }

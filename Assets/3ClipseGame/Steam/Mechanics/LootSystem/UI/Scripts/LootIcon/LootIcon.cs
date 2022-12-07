@@ -1,7 +1,7 @@
 using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts.LootIcon
+namespace _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts.LootIcon
 {
     public abstract class LootIcon : MonoBehaviour
     {

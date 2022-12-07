@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.Specifications.InGame
+namespace _3ClipseGame.Steam.Core.GameSource.Parts.Player.Specifications.InGame
 {
     public class Stamina : MonoBehaviour
     {

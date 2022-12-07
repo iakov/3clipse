@@ -2,11 +2,10 @@ using System;
 using System.Collections.Specialized;
 using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.Detector;
 using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
-using _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.Entities.Player.Data.LootSystem.UI.Scripts
+namespace _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts
 {
     [RequireComponent(typeof(LootIconsSelector))]
     

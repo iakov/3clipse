@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts.LootIcon
 {
-    public class ResourceLootIcon : Entities.Player.Data.LootSystem.UI.Scripts.LootIcon.LootIcon
+    public class ResourceLootIcon : LootIcon
     {
         #region Public
 

@@ -3,90 +3,93 @@ using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
 using NUnit.Framework;
 using UnityEngine;
 
-public class detected_loot_holder
+namespace _3ClipseGame.Tests.LootTests.EditMode.in_game
 {
-    private DetectedLootHolder _lootHolder;
-    private PickableLoot _loot;
-
-    [SetUp]
-    public void Init()
+    public class detected_loot_holder
     {
-        InitializeHolder();
-        InitializeLoot();
-    }
+        private DetectedLootHolder _lootHolder;
+        private PickableLoot _loot;
 
-    private void InitializeHolder()
-    {
-        _lootHolder = DetectedLootHolder.Empty();
-    }
+        [SetUp]
+        public void Init()
+        {
+            InitializeHolder();
+            InitializeLoot();
+        }
 
-    private void InitializeLoot()
-    {
-        var gameObject = new GameObject();
-        _loot = gameObject.AddComponent<DePooledPickableLoot>();
-    }
+        private void InitializeHolder()
+        {
+            _lootHolder = DetectedLootHolder.Empty();
+        }
 
-    [Test]
-    public void test_add_new_loot_to_storage()
-    {
-        var isSuccessful = _lootHolder.TryAddLoot(_loot);
-        var isContains = _lootHolder.Contains(_loot);
+        private void InitializeLoot()
+        {
+            var gameObject = new GameObject();
+            _loot = gameObject.AddComponent<DePooledPickableLoot>();
+        }
 
-        Assert.IsTrue(isSuccessful);
-        Assert.IsTrue(isContains);
-    }
+        [Test]
+        public void test_add_new_loot_to_storage()
+        {
+            var isSuccessful = _lootHolder.TryAddLoot(_loot);
+            var isContains = _lootHolder.Contains(_loot);
 
-    [Test]
-    public void test_add_same_loot_twice()
-    {
-        var isSuccessful = _lootHolder.TryAddLoot(_loot) && _lootHolder.TryAddLoot(_loot);
-        var isContains = _lootHolder.Contains(_loot);
+            Assert.IsTrue(isSuccessful);
+            Assert.IsTrue(isContains);
+        }
 
-        Assert.IsFalse(isSuccessful);
-        Assert.IsTrue(isContains);
-    }
+        [Test]
+        public void test_add_same_loot_twice()
+        {
+            var isSuccessful = _lootHolder.TryAddLoot(_loot) && _lootHolder.TryAddLoot(_loot);
+            var isContains = _lootHolder.Contains(_loot);
 
-    [Test]
-    public void test_add_loot_and_track_event()
-    {
-        var isEventInvoked = false;
-        _lootHolder.LootAdded += _ => { isEventInvoked = true; };
+            Assert.IsFalse(isSuccessful);
+            Assert.IsTrue(isContains);
+        }
 
-        _lootHolder.TryAddLoot(_loot);
+        [Test]
+        public void test_add_loot_and_track_event()
+        {
+            var isEventInvoked = false;
+            _lootHolder.LootAdded += _ => { isEventInvoked = true; };
 
-        Assert.IsTrue(isEventInvoked);
-    }
+            _lootHolder.TryAddLoot(_loot);
 
-    [Test]
-    public void test_remove_existing_loot()
-    {
-        _lootHolder.TryAddLoot(_loot);
-        var isSuccessful = _lootHolder.TryRemoveLoot(_loot);
-        var isContains = _lootHolder.Contains(_loot);
+            Assert.IsTrue(isEventInvoked);
+        }
 
-        Assert.IsTrue(isSuccessful);
-        Assert.IsFalse(isContains);
-    }
+        [Test]
+        public void test_remove_existing_loot()
+        {
+            _lootHolder.TryAddLoot(_loot);
+            var isSuccessful = _lootHolder.TryRemoveLoot(_loot);
+            var isContains = _lootHolder.Contains(_loot);
 
-    [Test]
-    public void test_remove_non_existing_loot()
-    {
-        var isSuccessful = _lootHolder.TryRemoveLoot(_loot);
-        var isContains = _lootHolder.Contains(_loot);
+            Assert.IsTrue(isSuccessful);
+            Assert.IsFalse(isContains);
+        }
 
-        Assert.IsFalse(isSuccessful);
-        Assert.IsFalse(isContains);
-    }
+        [Test]
+        public void test_remove_non_existing_loot()
+        {
+            var isSuccessful = _lootHolder.TryRemoveLoot(_loot);
+            var isContains = _lootHolder.Contains(_loot);
 
-    [Test]
-    public void test_remove_loot_and_track_event()
-    {
-        var isEventInvoked = false;
-        _lootHolder.LootRemoved += _ => { isEventInvoked = true; };
+            Assert.IsFalse(isSuccessful);
+            Assert.IsFalse(isContains);
+        }
 
-        _lootHolder.TryAddLoot(_loot);
-        _lootHolder.TryRemoveLoot(_loot);
+        [Test]
+        public void test_remove_loot_and_track_event()
+        {
+            var isEventInvoked = false;
+            _lootHolder.LootRemoved += _ => { isEventInvoked = true; };
 
-        Assert.IsTrue(isEventInvoked);
+            _lootHolder.TryAddLoot(_loot);
+            _lootHolder.TryRemoveLoot(_loot);
+
+            Assert.IsTrue(isEventInvoked);
+        }
     }
 }
