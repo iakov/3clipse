@@ -49,15 +49,12 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
 
         private void Awake()
         {
+            CheckForExceptions();
+            
             PlayerController = GetComponent<CharacterController>();
             PlayerMover = GetComponent<PlayerMover>();
             Stamina = GetComponent<Stamina>();
             CharacterAnimator = GetComponentInChildren<Animator>();
-        }
-
-        private void Start()
-        {
-            CheckForExceptions();
         }
         
         private void CheckForExceptions()

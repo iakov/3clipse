@@ -8,15 +8,12 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CharacterMover
     public class PlayerMover : MonoBehaviour
     {
         private CharacterController _characterController;
-        private Transform _cameraTransform;
         private readonly List<Move> _movesList = new();
         public static bool IsFreezed = false;
 
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
-            
-            if (Camera.main != null) _cameraTransform = Camera.main.transform;
         }
 
         private void FixedUpdate()
@@ -56,14 +53,16 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CharacterMover
 
         private Move CreateMove(MoveType type, Vector3 newMove, RotationType rotationType)
         {
+            var cameraTransform = Camera.main.transform;
+            
             switch (rotationType)
             {
                 case RotationType.NoRotation:
-                    return new NoCamRotationMove(type, newMove, _cameraTransform);
+                    return new NoCamRotationMove(type, newMove, cameraTransform);
                 case RotationType.RotateOnBeginning:
-                    return new CamBeginRotateMove(type, newMove, _cameraTransform);
+                    return new CamBeginRotateMove(type, newMove, cameraTransform);
                 case RotationType.RotateWithCamera:
-                    return new RotateWithCameraMove(type, newMove, _cameraTransform);
+                    return new RotateWithCameraMove(type, newMove, cameraTransform);
                 default:
                     return null;
             }

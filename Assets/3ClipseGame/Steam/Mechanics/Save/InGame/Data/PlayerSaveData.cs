@@ -31,7 +31,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
             playerTransform.rotation = _rotation;
         }
 
-        public void SaveData(ref SerializationDependencies saveDependencies)
+        public void SaveData(SerializationDependencies saveDependencies)
         {
             var playerTransform = saveDependencies.Player.transform;
             _position = playerTransform.position;

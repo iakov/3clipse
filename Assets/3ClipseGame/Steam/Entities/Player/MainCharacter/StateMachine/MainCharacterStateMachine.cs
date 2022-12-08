@@ -1,3 +1,4 @@
+using System;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structure;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structure.ControlAnimal;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structure.Explore;

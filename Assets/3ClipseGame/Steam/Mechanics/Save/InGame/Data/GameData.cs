@@ -48,15 +48,16 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
             
             foreach (var saveData in _saveData)
             {
-                saveData.SaveData(ref updateDependencies);
+                saveData.SaveData(updateDependencies);
             }
         }
 
         private void UpdateLinks()
         {
-            _saveData = new List<ISaveData>();
-
-            _saveData.Add(_playerSaveData);
+            _saveData = new List<ISaveData>
+            {
+                _playerSaveData
+            };
         }
     }
 }

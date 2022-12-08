@@ -14,12 +14,13 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput
         public bool GetIsSprintPressed() => _isSprinted;
         public bool GetIsSwitched() => _isSwitched;
 
-        private Vector2 _currentInput;
-        private Vector2 _previousInput;
-        private bool _isJumped;
-        private bool _isCrouched;
-        private bool _isSprinted;
-        private bool _isSwitched;
+        [Header("Debug")]
+        [SerializeField] private Vector2 _currentInput;
+        [SerializeField] private Vector2 _previousInput;
+        [SerializeField] private bool _isJumped;
+        [SerializeField] private bool _isCrouched;
+        [SerializeField] private bool _isSprinted;
+        [SerializeField] private bool _isSwitched;
 
         private void Awake()
         {

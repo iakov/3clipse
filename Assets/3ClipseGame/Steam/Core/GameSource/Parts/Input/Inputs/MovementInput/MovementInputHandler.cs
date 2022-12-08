@@ -1,4 +1,4 @@
-using System;
+    using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -53,7 +53,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput
             => SwitchToAnotherEntityPressed?.Invoke();
 
         public override void Enable()
-        {
+        {   
             _movementActionMap.Enable();
         }
 
