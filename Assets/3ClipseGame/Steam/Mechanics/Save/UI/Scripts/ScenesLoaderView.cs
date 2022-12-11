@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using _3ClipseGame.Steam.Mechanics.Save.InGame;
 using _3ClipseGame.Steam.Mechanics.Save.InGame.Data;
@@ -14,7 +13,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts
         
         private bool _isPreviousFinished = true;
 
-        private void Awake()
+        private void Start()
         {
             _scenesLoader.LoadDefault();
         }

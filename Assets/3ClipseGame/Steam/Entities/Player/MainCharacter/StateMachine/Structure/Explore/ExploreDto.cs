@@ -12,6 +12,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
     {
         [Header("Global")] 
         [SerializeField] private MovementInputProcessor _movementInputProcessor;
+        [SerializeField] private PlayerMover _playerMover;
+        [SerializeField] private CharacterController _characterController;
+        [SerializeField] private Stamina _stamina;
+        [SerializeField] private Animator _animator;
         [Header("Explore Parameters")] 
         [Space]
         [Header("Walk")]
@@ -39,26 +43,25 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         public AnimationCurve RunModifierCurve => _runModifierCurve;
         public AnimationCurve SlideModifierCurve => _slideModifierCurve;
         public MovementInputProcessor InputProcessor => _movementInputProcessor;
+        public PlayerMover PlayerMover => _playerMover;
+        public CharacterController PlayerController => _characterController;
 
-        public PlayerMover PlayerMover { get; private set; }
-        public CharacterController PlayerController { get; private set; }
-        public Stamina Stamina { get; private set; }
-        public Animator CharacterAnimator { get; private set; }
+        public Stamina Stamina => _stamina;
+        public Animator CharacterAnimator => _animator;
         
         public Vector3 LastMove { get; private set; }
 
         private void Awake()
         {
             CheckForExceptions();
-            
-            PlayerController = GetComponent<CharacterController>();
-            PlayerMover = GetComponent<PlayerMover>();
-            Stamina = GetComponent<Stamina>();
-            CharacterAnimator = GetComponentInChildren<Animator>();
         }
         
         private void CheckForExceptions()
         {
+            if(_animator == null) throw new SerializationException("Animator cannot be null");
+            if(_stamina == null) throw new SerializationException("Stamina cannot be null");
+            if(_characterController == null) throw new SerializationException("CharacterController cannot be null");
+            if(_playerMover == null) throw new SerializationException("PlayerMover cannot be null");
             if(_movementInputProcessor == null) throw new SerializationException("MovementInputProcessor cannot be null");
             if (RunModifierCurve.length < 2) throw new SerializationException("RunModifierCurve wrong function");
             if (SlideModifierCurve.length < 2) throw new SerializationException("SlideModifierCurve wrong function");

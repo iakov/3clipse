@@ -23,7 +23,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
         private List<GameSave> _gameSaves;
         private SaveSerializer _saveSerializer;
 
-        private void Awake()
+        public void Initiate()
         {
             _saveSerializer = new BinarySaveSerializer();
             FindAllSaves();

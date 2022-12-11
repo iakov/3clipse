@@ -19,6 +19,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
         public void LoadDefault()
         {
             _currentlyLoadingScene = _firstScene;
+            _currentScene = _firstScene;
             _firstScene.Load(InterSceneSavesEntry.Instance);
             _firstScene.OperationFinished += OnSceneOperationFinished;
         }

@@ -21,6 +21,11 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
             Instance = this;
         }
 
+        private void Start()
+        {
+            _savesManager.Initiate();
+        }
+
         public void LoadSave(int id) => _savesManager.LoadGame(id, _saveScenesLoader);
 
         public void LoadScene(SceneObject scene) => _saveScenesLoader.Load(scene);

@@ -1,4 +1,3 @@
-using System;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structure;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structure.ControlAnimal;
 using _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structure.Explore;
@@ -8,21 +7,16 @@ using CharacterController = _3ClipseGame.Steam.Entities.Scripts.CustomController
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine
 {
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(ExploreDto))]
-    [RequireComponent(typeof(ControlAnimalDto))]
     public class MainCharacterStateMachine : Scripts.StateMachine
     {
         private MainCharacterState _currentMainCharacterState;
         private MainCharacterStateFactory _mainCharacterStateFactory;
         
-        private ExploreDto _exploreDto;
-        private ControlAnimalDto _controlAnimalDto;
+        [SerializeField] private ExploreDto _exploreDto;
+        [SerializeField] private ControlAnimalDto _controlAnimalDto;
 
         private void Awake()
         {
-            _exploreDto = GetComponent<ExploreDto>();
-            _controlAnimalDto = GetComponent<ControlAnimalDto>();
-            
             _mainCharacterStateFactory = new MainCharacterStateFactory(_exploreDto, _controlAnimalDto);
             _currentMainCharacterState = _mainCharacterStateFactory.Explore();
         }
