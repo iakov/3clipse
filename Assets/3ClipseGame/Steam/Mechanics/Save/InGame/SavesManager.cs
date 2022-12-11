@@ -4,21 +4,20 @@ using System.IO;
 using _3ClipseGame.Steam.Core.GameSource.Parts;
 using _3ClipseGame.Steam.Mechanics.Save.InGame.Data;
 using _3ClipseGame.Steam.Mechanics.Save.InGame.SaveSerializers;
+using _3ClipseGame.Steam.Mechanics.Save.UI.Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame
 {
-    public class SaveManager : MonoBehaviour
+    [CreateAssetMenu(fileName = "New Save Manager", menuName = "Save/Save Manager")]
+    public class SavesManager : ScriptableObject
     {
-        public static SaveManager Instance { get; private set; }
-        
         [Header("New Save Data")]
         [SerializeField] private Sprite _newGameImage;
         [SerializeField] private SceneObject _newGameScene;
 
         public IEnumerable<GameSave> GameSaves => _gameSaves;
-        public SaveScenesLoader ScenesLoader => GetComponent<SaveScenesLoader>();
         public bool IsSavesFound { get; private set; }
 
         private List<GameSave> _gameSaves;
@@ -27,15 +26,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
         private void Awake()
         {
             _saveSerializer = new BinarySaveSerializer();
-            
-            InitializeSingleton();
             FindAllSaves();
-        }
-
-        private void InitializeSingleton()
-        {
-            if (Instance != null && Instance != this) Destroy(gameObject);
-            else Instance = this;
         }
 
         private void FindAllSaves()
@@ -52,12 +43,12 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
             IsSavesFound = true;
         }
 
-        public void NewGame()
+        public void NewGame(ScenesLoaderView loaderView)
         {
             var id = Random.Range(1000, 9999);
             var save = GameSave.NewGame(id, _newGameImage, _newGameScene);
             _gameSaves.Add(save);
-            LoadGame(id);
+            LoadGame(id, loaderView);
         }
 
         public void SaveGame(int id, SerializationDependencies dependencies)
@@ -67,18 +58,15 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
             _saveSerializer.UpdateSave(save);
         }
 
-        private GameSave _currentSave;
-
-        public void LoadGame(int id)
+        public void LoadGame(int id, ScenesLoaderView loaderView)
         {
-            _currentSave = FindSaveByID(id);
-            _currentSave.Load(ScenesLoader);
+            var currentSave = FindSaveByID(id);
+            loaderView.Load(currentSave);
         }
 
         public void DeleteSave(int id)
         {
             var save = FindSaveByID(id);
-            if (save == null) throw new ArgumentException($"Cannot find game save with id: {id}");
             
             _saveSerializer.DestroySave(save);
             _gameSaves.Remove(save);
@@ -86,7 +74,9 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
 
         private GameSave FindSaveByID(int id)
         {
-            return _gameSaves.Find(save => save.ID == id);
+            var save =  _gameSaves.Find(save => save.ID == id);
+            if (save == null) throw new ArgumentException($"Cannot find game save with id: {id}");
+            return save;
         }
     }
 }

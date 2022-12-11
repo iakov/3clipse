@@ -13,13 +13,12 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
         public string SaveLocation { get; private set; }
         public string SaveDate { get; private set; }
         public Sprite GetImage => SpriteFromTexture();
+        public SceneObject SceneObject { get; private set; }
 
         public event Action Loaded;
         
         private GameData _gameData;
         private Texture2D _imageTexture;
-        [NonSerialized] private SceneObject _sceneObject;
-        [NonSerialized] private SaveScenesLoader _lastScenesLoader;
     
         private Sprite SpriteFromTexture()
         {
@@ -41,7 +40,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
             SaveDate = DateFormatter.GetDateForSave();
             _imageTexture = defaultImage.texture;
             _gameData = GameData.NewGame();
-            _sceneObject = defaultScene;
+            SceneObject = defaultScene;
         }   
 
         public void Save(SerializationDependencies dependencies)
@@ -51,16 +50,8 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
             _gameData.UpdateData(dependencies);
         }
 
-        public void Load(SaveScenesLoader loader)
+        public void Load()
         {
-            _lastScenesLoader = loader;
-            loader.LoadScene(_sceneObject);
-            loader.LoadFinished += FinishLoad;
-        }
-
-        private void FinishLoad()
-        {
-            _lastScenesLoader.LoadFinished -= FinishLoad;
             var gameSource = GameSource.Instance;
             if (gameSource != null)
             {

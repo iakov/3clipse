@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame
 {
-    [CreateAssetMenu(fileName = "New Scene Data", menuName = "Scenes/New Game Scene")]
+    [CreateAssetMenu(fileName = "New Scene Data", menuName = "Save/Game Scene")]
     public class SceneObject : ScriptableObject
     {
         [Header("Scenes")]

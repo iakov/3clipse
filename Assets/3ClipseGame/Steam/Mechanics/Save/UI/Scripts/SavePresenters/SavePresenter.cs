@@ -1,4 +1,5 @@
 using System;
+using _3ClipseGame.Steam.Mechanics.Save.InGame;
 using Packages.LeanTween.Presets;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,6 +11,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.SavePresenters
     {
         [SerializeField] private GameObject _hoverHighlightObject;
         [SerializeField] private GameObject _selectedHighlightObject;
+        protected InterSceneSavesEntry InterSceneSavesEntry => InterSceneSavesEntry.Instance;
 
         public event Action<SavePresenter, Sprite> Selected;
         private bool _isSelected;
@@ -24,6 +26,13 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.SavePresenters
         
         public void OnPointerExit(PointerEventData eventData) => Unhighlight();
         
+        public void Unselect()
+        {
+            var scaleComponent = GetScaleComponent(_selectedHighlightObject);
+            scaleComponent.ScaleDown();
+            _isSelected = false;
+        }
+        
         private void Select()
         {
             var scaleComponent = GetScaleComponent(_selectedHighlightObject);
@@ -35,13 +44,6 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.SavePresenters
             Selected?.Invoke(this, image);
         }
 
-        public void Unselect()
-        {
-            var scaleComponent = GetScaleComponent(_selectedHighlightObject);
-            scaleComponent.ScaleDown();
-            _isSelected = false;
-        }
-        
         private void Highlight()
         {
             if(_isSelected) return;

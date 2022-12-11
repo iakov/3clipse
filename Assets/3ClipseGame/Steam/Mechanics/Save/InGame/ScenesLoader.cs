@@ -4,25 +4,29 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame
 {
-    public class SaveScenesLoader : MonoBehaviour
+    [CreateAssetMenu(fileName = "New Save Scenes Loader", menuName = "Save/Scenes Loader")]
+    public class ScenesLoader : ScriptableObject
     {
-        [SerializeField] private SceneObject _currentScene;
+        [SerializeField] private SceneObject _firstScene;
+        private SceneObject _currentScene;
 
         public List<AsyncOperation> ScenesToLoad = new();
         public event Action LoadFinished;
         public event Action LoadStarted;
 
         private SceneObject _currentlyLoadingScene;
-        
-        private void Awake()
+
+        public void LoadDefault()
         {
-            _currentScene.Load(this);
+            _currentlyLoadingScene = _firstScene;
+            _firstScene.Load(InterSceneSavesEntry.Instance);
+            _firstScene.OperationFinished += OnSceneOperationFinished;
         }
 
         public void LoadScene(SceneObject scene)
         {
             _currentlyLoadingScene = scene;
-            ScenesToLoad = _currentlyLoadingScene.Load(this);
+            ScenesToLoad = _currentlyLoadingScene.Load(InterSceneSavesEntry.Instance);
             LoadStarted?.Invoke();
             _currentlyLoadingScene.OperationFinished += UnloadPreviousScene;
         }
@@ -30,7 +34,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
         private void UnloadPreviousScene()
         {
             _currentlyLoadingScene.OperationFinished -= UnloadPreviousScene;
-            ScenesToLoad = _currentScene.Unload(this);
+            ScenesToLoad = _currentScene.Unload(InterSceneSavesEntry.Instance);
             _currentScene.OperationFinished += OnSceneOperationFinished;
         }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Globalization;
 using _3ClipseGame.Steam.Mechanics.Save.InGame;
+using _3ClipseGame.Steam.Mechanics.Save.UI.Scripts;
 using TMPro;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ namespace _3ClipseGame.Steam.Scenes.GameScenes.GameIntroScene
                 yield return null;
             }
             
-            SaveManager.Instance.ScenesLoader.LoadScene(_newLoadScene);
+            InterSceneSavesEntry.Instance.LoadScene(_newLoadScene);
         }
     }
 }

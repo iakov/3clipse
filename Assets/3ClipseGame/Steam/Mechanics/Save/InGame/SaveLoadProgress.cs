@@ -6,8 +6,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
 {
     public class SaveLoadProgress : MonoBehaviour
     {
-        [SerializeField] private SaveScenesLoader _scenesLoader;
-        [SerializeField] private RectTransform _visualPanel;
+        [SerializeField] private ScenesLoader _scenesLoader;
         [SerializeField] private Image _loadingProgressBar;
         
         private void OnEnable()
@@ -22,7 +21,6 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
         
         private void OnLoadStarted()
         {
-            _visualPanel.gameObject.SetActive(true);
             StartCoroutine(DisplayLoadProgressRoutine());
         }
         
@@ -40,8 +38,6 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
                     yield return null;
                 }
             }
-            
-            _visualPanel.gameObject.SetActive(false);
         }
     }
 }

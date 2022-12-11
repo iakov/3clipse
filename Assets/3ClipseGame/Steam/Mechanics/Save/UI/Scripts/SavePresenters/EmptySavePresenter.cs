@@ -1,4 +1,3 @@
-using _3ClipseGame.Steam.Mechanics.Save.InGame;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.SavePresenters
@@ -7,14 +6,8 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.SavePresenters
     {
         [SerializeField] private Sprite _newSaveSprite;
         
-        public override void Use()
-        {
-            SaveManager.Instance.NewGame();
-        }
+        public override void Use() => InterSceneSavesEntry.NewGame();
 
-        protected override Sprite GetImage()
-        {
-            return _newSaveSprite;
-        }
+        protected override Sprite GetImage() => _newSaveSprite;
     }
 }
