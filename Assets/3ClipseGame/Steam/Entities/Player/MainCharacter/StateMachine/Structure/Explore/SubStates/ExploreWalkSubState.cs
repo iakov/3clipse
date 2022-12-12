@@ -7,52 +7,65 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
     {
         public ExploreWalkSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory){}
 
-        private static readonly int IsWalking = Animator.StringToHash("IsWalking");
+        private static readonly int Angle = Animator.StringToHash("Angle");
+        private static readonly int Speed = Animator.StringToHash("Speed");
 
+        #region StateMethods
+        
         public override void OnStateEnter()
         {
-            ExploreDto.CharacterAnimator.SetBool(IsWalking, true);
         }
 
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
-            
-            UpdateMove();
-            UpdateRotation();
+
+            SetAngleWithDamping();
+            SetSpeed();
         }
         
-        private void UpdateMove()
-        {
-            var rawMoveVector = new Vector3(ExploreDto.InputProcessor.GetCurrentInput().x, 0f, ExploreDto.InputProcessor.GetCurrentInput().y);
-            var moveVector = rawMoveVector * ExploreDto.WalkSpeed;
-            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, moveVector, RotationType.RotateOnBeginning);
-        }
-
-        private void UpdateRotation()
-        {
-            var rotatedMove = ExploreDto.PlayerMover.GetLastMove(MoveType.StateMove, true);
-            if (rotatedMove == Vector3.zero) return;
-            
-            ExploreDto.PlayerController.Rotate(Quaternion.LookRotation(rotatedMove));
-        }
-
         public override void OnStateExit()
         {
-            ExploreDto.CharacterAnimator.SetBool(IsWalking, false);
         }
-
+        
         protected override bool TrySwitch(out MainCharacterExploreSubState newMainCharacterState)
         {
             newMainCharacterState = null;
 
-            if (!ExploreDto.PlayerController.IsGrounded && !ExploreDto.PlayerController.IsGrounded) newMainCharacterState = Factory.Fall();
-            else if (ExploreDto.InputProcessor.GetIsJumpPressed()) newMainCharacterState = Factory.Jump();
-            else if (ExploreDto.InputProcessor.GetCurrentInput() == Vector2.zero) newMainCharacterState = Factory.Stop();
-            else if (ExploreDto.InputProcessor.GetIsSprintPressed() && ExploreDto.Stamina.StaminaPercentage > ExploreDto.MinRunEntryStamina) newMainCharacterState = Factory.Run();
-            else if (ExploreDto.InputProcessor.GetIsCrouchPressed()) newMainCharacterState = Factory.Crouch();
+            if (ExploreDto.InputProcessor.GetCurrentInput() == Vector2.zero) newMainCharacterState = Factory.Idle();
             
             return newMainCharacterState != null;
+        }
+
+        #endregion
+        
+        private void SetAngleWithDamping()
+        {
+            var angleDampTime = ExploreDto.WalkAngleDampTime;
+            var angle = GetAngle();
+            ExploreDto.CharacterAnimator.SetFloat(Angle, angle, angleDampTime, Time.deltaTime);
+        }
+
+        private float GetAngle()
+        {
+            var inputRaw = ExploreDto.InputProcessor.GetCurrentInput();
+            var inputVector = new Vector3(inputRaw.x, 0f, inputRaw.y);
+            var forwardVector = ExploreDto.PlayerCollider.transform.forward;
+            var rotatedInputVector = ExploreDto.PlayerMover.RotateWithCamera(inputVector, MoveType.StateMove, RotationType.RotateOnBeginning);
+            var angle = Vector3.SignedAngle(rotatedInputVector, forwardVector, Vector3.down);
+            return angle;
+        }
+
+        private void SetSpeed()
+        {
+            var time = StateTimer;
+            var maxTime = ExploreDto.TimeToMaxWalkSpeed;
+
+            var progress = time / maxTime;
+            progress = Mathf.Min(progress, 1f);
+            var speed = progress * ExploreDto.MaxWalkSpeed;
+            
+            ExploreDto.CharacterAnimator.SetFloat(Speed, speed);
         }
     }
 }

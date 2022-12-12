@@ -16,35 +16,22 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private Stamina _stamina;
         [SerializeField] private Animator _animator;
-        [Header("Explore Parameters")] 
-        [Space]
-        [Header("Walk")]
-        [Range(0, 10)] [SerializeField] private float _walkSpeed = 3f;
-        [Range(1, 10)] [SerializeField] private float _speedInterpolation = 6f;
-        [Header("Crouch")]
-        [Range(0, 2)] [SerializeField] private float _crouchSpeedModifier = 0.5f;
-        [Header("Jump")]
-        [SerializeField] private float _jumpStaminaReduce = -5f;
-        [SerializeField] private float _jumpStrength = 2f;
-        [Header("Run")]
-        [SerializeField] private float _runStaminaReduce = -5f;
-        [SerializeField] [Range(0, 1)] private float _minRunEntryStamina = 0.3f;
-        [SerializeField] private AnimationCurve _runModifierCurve;
-        [Header("Slide")]
-        [SerializeField] private AnimationCurve _slideModifierCurve;
+        [SerializeField] private CapsuleCollider _capsuleCollider;
 
-        public float WalkSpeed => _walkSpeed;
-        public float SpeedInterpolation => _speedInterpolation;
-        public float CrouchSpeedModifier => _crouchSpeedModifier;
-        public float JumpStrength => _jumpStrength;
-        public float RunStaminaReduce => _runStaminaReduce;
-        public float MinRunEntryStamina => _minRunEntryStamina;
-        public float JumpStaminaReduce => _jumpStaminaReduce;
-        public AnimationCurve RunModifierCurve => _runModifierCurve;
-        public AnimationCurve SlideModifierCurve => _slideModifierCurve;
+        [Header("Explore Parameters")] 
+        [Space] 
+        [Header("Walk")] 
+        [SerializeField] private float _maxWalkSpeed = 2f;
+        [SerializeField] private float _walkAngleDampTime = 0.2f;
+        [Range(0, 10)] [SerializeField] private float _timeToMaxWalkSpeed = 1f;
+
+        public float TimeToMaxWalkSpeed => _timeToMaxWalkSpeed;
+        public float MaxWalkSpeed => _maxWalkSpeed;
+        public float WalkAngleDampTime => _walkAngleDampTime;
         public MovementInputProcessor InputProcessor => _movementInputProcessor;
         public PlayerMover PlayerMover => _playerMover;
         public CharacterController PlayerController => _characterController;
+        public CapsuleCollider PlayerCollider => _capsuleCollider;
 
         public Stamina Stamina => _stamina;
         public Animator CharacterAnimator => _animator;
@@ -63,8 +50,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
             if(_characterController == null) throw new SerializationException("CharacterController cannot be null");
             if(_playerMover == null) throw new SerializationException("PlayerMover cannot be null");
             if(_movementInputProcessor == null) throw new SerializationException("MovementInputProcessor cannot be null");
-            if (RunModifierCurve.length < 2) throw new SerializationException("RunModifierCurve wrong function");
-            if (SlideModifierCurve.length < 2) throw new SerializationException("SlideModifierCurve wrong function");
         }
 
         public void SaveLastMove(bool isRotated)

@@ -47,6 +47,12 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CharacterMover
             return Vector3.zero;
         }
 
+        public Vector3 RotateWithCamera(Vector3 inputVector, MoveType moveType, RotationType rotationType)
+        {
+            var move = CreateMove(moveType, inputVector, rotationType);
+            return move.GetRotatedVector();
+        }
+
         #endregion
 
         #region PrivateMethods

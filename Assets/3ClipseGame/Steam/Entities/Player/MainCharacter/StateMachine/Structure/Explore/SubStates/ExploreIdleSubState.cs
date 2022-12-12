@@ -1,4 +1,3 @@
-using _3ClipseGame.Steam.Entities.Scripts.CharacterMover;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structure.Explore.SubStates
@@ -6,40 +5,48 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
     public class ExploreIdleSubState : MainCharacterExploreSubState
     {
         public ExploreIdleSubState(ExploreDto exploreDto, ExploreSubStateFactory factory) : base(exploreDto, factory) {}
+        
+        private static readonly int Speed = Animator.StringToHash("Speed");
+        private static readonly int Angle = Animator.StringToHash("Angle");
+
+        #region StateMethods
 
         public override void OnStateEnter()
         {
             ExploreDto.SaveLastMove(true);
+            SpeedDown();
+            SetZeroAngle();
+            ExploreDto.CharacterAnimator.SetFloat(Angle, 0f, ExploreDto.WalkAngleDampTime, Time.deltaTime);
         }
 
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
-
-            UpdateInterpolationMove();
-        }
-
-        private void UpdateInterpolationMove()
-        {
-            var t = StateTimer <= 1 ? StateTimer : 1f;
-            var interpolatedMoveVector = Vector3.Lerp(ExploreDto.LastMove, Vector3.zero, t * ExploreDto.SpeedInterpolation);
-            ExploreDto.PlayerMover.ChangeMove(MoveType.StateMove, interpolatedMoveVector, RotationType.NoRotation);
         }
 
         public override void OnStateExit()
         {
         }
-
+        
         protected override bool TrySwitch(out MainCharacterExploreSubState newMainCharacterState)
         {
             newMainCharacterState = null;
 
-            if (IsJumping()) newMainCharacterState = Factory.Jump();
-            else if (IsFalling()) newMainCharacterState = Factory.Fall();
-            else if (IsCrouching()) newMainCharacterState = Factory.Crouch();
-            else if (!IsStill()) newMainCharacterState = Factory.Walk();
+            if (!IsStill()) newMainCharacterState = Factory.Walk();
 
             return newMainCharacterState != null;
+        }
+
+        #endregion
+
+        private void SpeedDown()
+        {
+            ExploreDto.CharacterAnimator.SetFloat(Speed, 0f);
+        }
+        
+        private void SetZeroAngle()
+        {
+            ExploreDto.CharacterAnimator.SetFloat(Angle, 0f);
         }
 
         private bool IsJumping()

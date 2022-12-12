@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 {
-	[RequireComponent(typeof(Rigidbody))]
 	public class CharacterController : MonoBehaviour
 	{
 		#region SerializeFields
@@ -32,14 +31,13 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 
 		public Vector3 Center => _capsuleCollider == null
 			? Vector3.negativeInfinity
-			: _capsuleCollider.center + _transform.position;
+			: _capsuleCollider.center + _capsuleCollider.transform.position;
 		public bool IsGrounded { get; private set; }
 		public float Radius => _capsuleCollider == null ? -1f : _capsuleCollider.radius;
 		public float Height => _capsuleCollider == null ? -1f : _capsuleCollider.height;
 		public Vector3 Velocity { get; set; }
-		public float DeltaRotation { get; private set; }
-		public float DeltaRotationRaw { get; private set; }
 		public float CurrentSlope { get; private set; }
+		public float RotationAngle { get; private set; }
 
 		#endregion
 
@@ -63,7 +61,7 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 
 		private void Awake()
 		{
-			_rigidbody = GetComponent<Rigidbody>();
+			_rigidbody = GetComponentInChildren<Rigidbody>();
 			_capsuleCollider = GetComponentInChildren<CapsuleCollider>();
 			_transform = GetComponent<Transform>();
 
@@ -119,8 +117,7 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 
 		public void Rotate(Quaternion rotation)
 		{
-			var oldRotation = _capsuleCollider.transform.rotation;
-			ProceedRotation(rotation, oldRotation);
+			ProceedRotation(rotation);
 		}
 
 		#endregion
@@ -201,19 +198,17 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 
 		private void ApplyChanges(){
 			Velocity = _position - _transform.position;
+			RotationAngle = Vector3.Angle(_transform.forward, Velocity);
 		}
 
 		#endregion
 
 		#region PrivateRotateMethods
 
-		private void ProceedRotation(Quaternion newRotation, Quaternion oldRotation)
+		private void ProceedRotation(Quaternion newRotation)
 		{
 			if (newRotation == _currentRotateTarget) return;
 			_currentRotateTarget = newRotation;
-			
-			DeltaRotationRaw = Quaternion.Angle(newRotation, oldRotation);
-			if (newRotation.y - oldRotation.y < 0) DeltaRotationRaw *= -1;
 
 			switch (rotationInterpolationType)
 			{
@@ -240,12 +235,7 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 			
 			while (stepNumber <= interpolationSteps)
 			{
-				var previousRotation = _capsuleCollider.transform.rotation;
 				_capsuleCollider.transform.rotation = Quaternion.Lerp(oldRotation, rotation, (float) stepNumber/interpolationSteps);
-				
-				DeltaRotation = Quaternion.Angle(_transform.rotation, previousRotation);
-				if (_capsuleCollider.transform.rotation.y - oldRotation.y < 0) DeltaRotation *= -1;
-
 				stepNumber++;
 				yield return null;
 			}
@@ -260,9 +250,6 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 			{
 				var previousRotation = _capsuleCollider.transform.rotation;
 				_capsuleCollider.transform.rotation = Quaternion.Slerp(oldRotation, rotation, (float) stepNumber/interpolationSteps);
-				
-				DeltaRotation = Quaternion.Angle(_transform.rotation, previousRotation);
-				if (_transform.rotation.y - oldRotation.y < 0) DeltaRotation *= -1;
 
 				stepNumber++;
 				oldRotation = _capsuleCollider.transform.rotation;
@@ -273,7 +260,6 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 		private void RotateNoInterpolation(Quaternion rotation)
 		{
 			_capsuleCollider.transform.rotation = rotation;
-			DeltaRotation = DeltaRotationRaw;
 		}
 
 		#endregion

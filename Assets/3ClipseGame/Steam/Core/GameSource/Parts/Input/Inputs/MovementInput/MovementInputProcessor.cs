@@ -59,7 +59,7 @@ namespace _3ClipseGame.Steam.Core.GameSource.Parts.Input.Inputs.MovementInput
 
         private void AddLog(Vector2 input)
         {
-            _previousInput = _currentInput;
+            _previousInput = _currentInput; 
             _currentInput = input;
         }
 
