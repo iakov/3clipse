@@ -46,7 +46,8 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         
         private void SetZeroAngle()
         {
-            ExploreDto.CharacterAnimator.SetFloat(Angle, 0f);
+            var dampTime = ExploreDto.WalkAngleDampTime;
+            ExploreDto.CharacterAnimator.SetFloat(Angle, 0f, dampTime, Time.deltaTime);
         }
 
         private bool IsJumping()

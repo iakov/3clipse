@@ -51,61 +51,10 @@ MonoBehaviour:
   _stamina: {fileID: 6258368868171624464}
   _animator: {fileID: 4586583670630213910}
   _capsuleCollider: {fileID: 6258368866991025870}
-  _timeToMaxWalkSpeed: 0.11
   _maxWalkSpeed: 1
-  _crouchSpeedModifier: 0.5
-  _jumpStaminaReduce: -7
-  _jumpStrength: 8
-  _runStaminaReduce: -7
-  _minRunEntryStamina: 0.2
-  _runModifierCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _slideModifierCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  _walkAngleDampTime: 0.2
+  _timeToMaxWalkSpeed: 0.18
+  _toIdleDampTime: 0.2
 --- !u!114 &6258368867518346103
 MonoBehaviour:
   m_ObjectHideFlags: 0

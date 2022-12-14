@@ -26083,7 +26083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _panelVisual: {fileID: 1950046531}
   _cursorScript: {fileID: 611142699}
-  _headLookAtScript: {fileID: 0}
+  _headLookAtScript: {fileID: 59984971943253736}
   _firstScreenCamera: {fileID: 2041783304}
   _pointToMoveTo: 0
 --- !u!1001 &1034739070

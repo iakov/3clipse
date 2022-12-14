@@ -24,10 +24,12 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         [SerializeField] private float _maxWalkSpeed = 2f;
         [SerializeField] private float _walkAngleDampTime = 0.2f;
         [Range(0, 10)] [SerializeField] private float _timeToMaxWalkSpeed = 1f;
+        [SerializeField] private float _toIdleDampTime = 0.5f;
 
         public float TimeToMaxWalkSpeed => _timeToMaxWalkSpeed;
         public float MaxWalkSpeed => _maxWalkSpeed;
         public float WalkAngleDampTime => _walkAngleDampTime;
+        public float ToIdleDampTime => _toIdleDampTime;
         public MovementInputProcessor InputProcessor => _movementInputProcessor;
         public PlayerMover PlayerMover => _playerMover;
         public CharacterController PlayerController => _characterController;

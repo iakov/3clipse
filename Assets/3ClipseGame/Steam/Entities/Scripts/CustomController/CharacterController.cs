@@ -272,5 +272,11 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 		}
 
 		#endregion
+
+		private void OnDrawGizmosSelected()
+		{
+			Gizmos.color = Color.magenta;
+			Gizmos.DrawRay(Center, _capsuleCollider.transform.forward);
+		}
 	}
 }

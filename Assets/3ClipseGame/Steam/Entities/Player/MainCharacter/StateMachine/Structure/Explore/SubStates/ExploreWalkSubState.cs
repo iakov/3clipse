@@ -10,7 +10,7 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         private static readonly int Angle = Animator.StringToHash("Angle");
         private static readonly int Speed = Animator.StringToHash("Speed");
 
-        #region StateMethods
+        #region Work
         
         public override void OnStateEnter()
         {
@@ -28,17 +28,6 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
         {
         }
         
-        protected override bool TrySwitch(out MainCharacterExploreSubState newMainCharacterState)
-        {
-            newMainCharacterState = null;
-
-            if (ExploreDto.InputProcessor.GetCurrentInput() == Vector2.zero) newMainCharacterState = Factory.Idle();
-            
-            return newMainCharacterState != null;
-        }
-
-        #endregion
-        
         private void SetAngleWithDamping()
         {
             var angleDampTime = ExploreDto.WalkAngleDampTime;
@@ -53,6 +42,10 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
             var forwardVector = ExploreDto.PlayerCollider.transform.forward;
             var rotatedInputVector = ExploreDto.PlayerMover.RotateWithCamera(inputVector, MoveType.StateMove, RotationType.RotateOnBeginning);
             var angle = Vector3.SignedAngle(rotatedInputVector, forwardVector, Vector3.down);
+            if(angle >= 170f || angle <= -170f) Debug.Log("Full turn");
+            if((angle >= 120f && angle < 170f) || ( angle <= -120f && angle > -170f)) Debug.Log("135 turn");
+            if((angle >= 80f && angle < 120f) || ( angle <= -80f && angle > -120f)) Debug.Log("90 turn");
+
             return angle;
         }
 
@@ -67,5 +60,32 @@ namespace _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine.Structur
             
             ExploreDto.CharacterAnimator.SetFloat(Speed, speed);
         }
+
+        #endregion
+
+        #region Switch
+
+        private float _stillTime;
+
+        protected override bool TrySwitch(out MainCharacterExploreSubState newMainCharacterState)
+        {
+            newMainCharacterState = null;
+
+            if (IsStill()) newMainCharacterState = Factory.Idle();
+            
+            return newMainCharacterState != null;
+        }
+
+        private bool IsStill()
+        {
+            var isInputStill = ExploreDto.InputProcessor.GetCurrentInput() == Vector2.zero;
+            
+            if (!isInputStill) _stillTime = 0f;
+            else _stillTime += Time.deltaTime;
+            
+            return _stillTime >= ExploreDto.ToIdleDampTime;
+        }
+
+        #endregion
     }
 }

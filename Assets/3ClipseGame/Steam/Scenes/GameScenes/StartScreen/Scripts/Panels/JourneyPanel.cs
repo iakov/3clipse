@@ -8,7 +8,7 @@ namespace _3ClipseGame.Steam.Scenes.GameScenes.StartScreen.Scripts.Panels
         [SerializeField] private CursorScript _cursorScript;
         [SerializeField] private HeadLookAt _headLookAtScript;
         [SerializeField] private FirstScreenCamera _firstScreenCamera;
-        [SerializeField] private float _pointToMoveTo;
+        [SerializeField] private float _cameraPoint;
 
         public override void Enable()
         {
@@ -17,7 +17,7 @@ namespace _3ClipseGame.Steam.Scenes.GameScenes.StartScreen.Scripts.Panels
             _cursorScript.SwitchObjectVisibility(true);
             
             _firstScreenCamera.MoveFinished += EndEnable;
-            _firstScreenCamera.MoveToPoint(_pointToMoveTo);
+            _firstScreenCamera.MoveToPoint(_cameraPoint);
         }
 
         private void EndEnable()
