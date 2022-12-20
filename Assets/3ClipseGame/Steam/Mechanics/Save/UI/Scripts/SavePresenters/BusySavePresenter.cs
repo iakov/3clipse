@@ -26,7 +26,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.SavePresenters
             _trackedSave = newSave;
             
             _dateText.text = newSave.SaveDate;
-            _locationText.text = newSave.SaveLocation;
+            _locationText.text = newSave.SaveName;
         }
     }
 }

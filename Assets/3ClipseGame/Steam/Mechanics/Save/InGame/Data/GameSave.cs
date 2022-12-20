@@ -10,15 +10,19 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
     public class GameSave
     {
         public readonly int ID; 
-        public string SaveLocation { get; private set; }
+        public string SaveName { get; private set; }
         public string SaveDate { get; private set; }
         public Sprite GetImage => SpriteFromTexture();
-        public SceneObject SceneObject { get; private set; }
+        public SceneObject SceneObject => InterSceneSavesEntry.Instance.GetSceneByName(SaveName);
 
-        public event Action Loaded;
-        
         private GameData _gameData;
         private Texture2D _imageTexture;
+        private bool _isInitial;
+
+        public GameSave()
+        {
+            _isInitial = true;
+        }
     
         private Sprite SpriteFromTexture()
         {
@@ -36,30 +40,35 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
         private GameSave(int id, Sprite defaultImage, SceneObject defaultScene)
         {
             ID = id;
-            SaveLocation = defaultScene.SceneName;
+            SaveName = defaultScene.SceneName;
             SaveDate = DateFormatter.GetDateForSave();
             _imageTexture = defaultImage.texture;
             _gameData = GameData.NewGame();
-            SceneObject = defaultScene;
         }   
 
-        public void Save(SerializationDependencies dependencies)
+        public void SaveSceneData(string currentScene, SerializationDependencies dependencies)
         {
+            _isInitial = false;
+            SaveName = currentScene;
             SaveDate = DateFormatter.GetDateForSave();
             _imageTexture = ScreenCapture.CaptureScreenshotAsTexture();
             _gameData.UpdateData(dependencies);
         }
 
-        public void Load()
+        public void ApplySaveDataToScene()
         {
+            Debug.Log("IS INITIAL?");
             var gameSource = GameSource.Instance;
-            if (gameSource != null)
+            if (gameSource == null) return;
+            if (_isInitial)
             {
-                var dependencies = gameSource.GetSerializationDependencies();
-                _gameData.ApplyData(dependencies);
+                Debug.Log("Initial");
+                return;
             }
-
-            Loaded?.Invoke();
+            
+            Debug.Log("Not Initial");
+            var dependencies = gameSource.GetSerializationDependencies();
+            _gameData.ApplyData(dependencies);
         }
 
         private void OnSceneLoaded()

@@ -1,13 +1,19 @@
+using System.Collections.Generic;
+using System.Linq;
+using _3ClipseGame.Steam.Core.GameSource;
 using _3ClipseGame.Steam.Mechanics.Save.UI.Scripts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame
 {
     public class InterSceneSavesEntry : MonoBehaviour
     {
+        [SerializeField] private string _saveManagerSceneName;
         [SerializeField] private ScenesLoaderView _saveScenesLoader;
         [SerializeField] private SavesManager _savesManager;
-        
+        [SerializeField] private List<SceneObject> _sceneObjects;
+
         public static InterSceneSavesEntry Instance { get; private set; }
 
         private void Awake()
@@ -23,6 +29,9 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
 
         private void Start()
         {
+            foreach (var scene in SceneManager.GetAllScenes().Where(scene => scene.name != _saveManagerSceneName)) 
+                SceneManager.UnloadSceneAsync(scene);
+            
             _savesManager.Initiate();
         }
 
@@ -31,5 +40,17 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
         public void LoadScene(SceneObject scene) => _saveScenesLoader.Load(scene);
 
         public void NewGame() => _savesManager.NewGame(_saveScenesLoader);
+
+        public void SaveGame()
+        {
+            var gameSource = GameSource.Instance;
+            var sceneName = _saveScenesLoader.CurrentScene.SceneName;
+            if(gameSource == null) return;
+            
+            _savesManager.SaveGame(sceneName, gameSource.GetSerializationDependencies());
+        }
+
+        public SceneObject GetSceneByName(string sceneName) =>
+            _sceneObjects.Find(sceneObject => sceneObject.SceneName == sceneName);
     }
 }

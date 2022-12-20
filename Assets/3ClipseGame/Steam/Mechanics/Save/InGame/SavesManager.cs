@@ -13,13 +13,15 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
     [CreateAssetMenu(fileName = "New Save Manager", menuName = "Save/Save Manager")]
     public class SavesManager : ScriptableObject
     {
-        [Header("New Save Data")]
+        [Header("New Save Data")] 
         [SerializeField] private Sprite _newGameImage;
         [SerializeField] private SceneObject _newGameScene;
 
         public IEnumerable<GameSave> GameSaves => _gameSaves;
+        public GameSave CurrentSave => _currentSave;
         public bool IsSavesFound { get; private set; }
 
+        private GameSave _currentSave;
         private List<GameSave> _gameSaves;
         private SaveSerializer _saveSerializer;
 
@@ -33,7 +35,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
         {
             _gameSaves = new List<GameSave>();
             var files = Directory.GetFiles(_saveSerializer.SavePath);
-            
+
             foreach (var file in files)
             {
                 var gameSave = _saveSerializer.Deserialize(file);
@@ -46,35 +48,40 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
         public void NewGame(ScenesLoaderView loaderView)
         {
             var id = Random.Range(1000, 9999);
-            var save = GameSave.NewGame(id, _newGameImage, _newGameScene);
-            _gameSaves.Add(save);
+            _currentSave = GameSave.NewGame(id, _newGameImage, _newGameScene);
+            _gameSaves.Add(_currentSave);
+            _saveSerializer.Serialize(_currentSave);
             LoadGame(id, loaderView);
         }
 
-        public void SaveGame(int id, SerializationDependencies dependencies)
+        public void SaveGame(string sceneName, SerializationDependencies dependencies)
         {
-            var save = FindSaveByID(id);
-            save.Save(dependencies);
-            _saveSerializer.UpdateSave(save);
+            _currentSave.SaveSceneData(sceneName, dependencies);
+            _saveSerializer.UpdateSave(_currentSave);
         }
 
         public void LoadGame(int id, ScenesLoaderView loaderView)
         {
-            var currentSave = FindSaveByID(id);
-            loaderView.Load(currentSave);
+            _currentSave = FindSaveByID(id);
+            LoadCurrentSave(loaderView);
+        }
+
+        private void LoadCurrentSave(ScenesLoaderView loaderView)
+        {
+            loaderView.Load(_currentSave);
         }
 
         public void DeleteSave(int id)
         {
             var save = FindSaveByID(id);
-            
+
             _saveSerializer.DestroySave(save);
             _gameSaves.Remove(save);
         }
 
         private GameSave FindSaveByID(int id)
         {
-            var save =  _gameSaves.Find(save => save.ID == id);
+            var save = _gameSaves.Find(save => save.ID == id);
             if (save == null) throw new ArgumentException($"Cannot find game save with id: {id}");
             return save;
         }

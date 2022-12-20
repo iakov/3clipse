@@ -60,12 +60,12 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
 
         private IEnumerator WaitForFinish(List<AsyncOperation> operations)
         {
-            for (var i = 0; i < operations.Count; i++)
+            foreach (var operation in operations)
             {
-                while (operations[i].isDone == false) 
+                while (operation.isDone == false) 
                     yield return null;
             }
-            
+
             OperationFinished?.Invoke();
         }
 

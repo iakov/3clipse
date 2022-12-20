@@ -11,6 +11,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame
         private SceneObject _currentScene;
 
         public List<AsyncOperation> ScenesToLoad = new();
+        public SceneObject CurrentScene => _currentScene;
         public event Action LoadFinished;
         public event Action LoadStarted;
 

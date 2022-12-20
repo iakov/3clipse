@@ -27,6 +27,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
         {
             _playerSaveData = PlayerSaveData.Empty();
             
+            
             UpdateLinks();
         }
 

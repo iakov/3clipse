@@ -10,8 +10,10 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts
     {
         [SerializeField] private ScenesLoader _scenesLoader;
         [SerializeField] private FadeInScript _fadeInScript;
-        
+
+        public SceneObject CurrentScene => _scenesLoader.CurrentScene;
         private bool _isPreviousFinished = true;
+        private GameSave _loadingSave;
 
         private void Start()
         {
@@ -25,6 +27,8 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts
         public void Load(GameSave save)
         {
             StartCoroutine(LoadScreenAppearRoutine(save.SceneObject));
+            _loadingSave = save;
+            _scenesLoader.LoadFinished += ApplySaveData;
         }
 
         public void Load(SceneObject sceneObject)
@@ -42,7 +46,16 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts
             _scenesLoader.LoadScene(sceneObject);
         }
 
-        private void OnLoadFinished() => StartCoroutine(LoadScreenDisappearRoutine());
+        private void OnLoadFinished()
+        {
+            StartCoroutine(LoadScreenDisappearRoutine());
+        }
+
+        private void ApplySaveData()
+        {
+            _scenesLoader.LoadFinished -= ApplySaveData;
+            _loadingSave.ApplySaveDataToScene();
+        }
 
         private IEnumerator LoadScreenDisappearRoutine()
         {
