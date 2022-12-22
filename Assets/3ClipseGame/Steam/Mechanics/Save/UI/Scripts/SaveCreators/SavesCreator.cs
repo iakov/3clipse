@@ -5,7 +5,7 @@ using _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.Interfaces;
 using _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.SavePresenters;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts
+namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.SaveCreators
 {
     public class SavesCreator : MonoBehaviour, ISavesCreator
     {
@@ -26,7 +26,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts
                     var savePresenter = CreateBusyPresenter(saves[i], i);
                     savePresenters.Add(savePresenter);
                 }
-                catch (Exception _)
+                catch (Exception )
                 {
                     var currentTransform = _savesSpawnPositions[i];
                     DeleteAllChildren(currentTransform);

@@ -29,6 +29,7 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 
 		#region PublicFields
 
+		public Quaternion Rotation => _capsuleCollider.transform.rotation;
 		public Vector3 Center => _capsuleCollider == null
 			? Vector3.negativeInfinity
 			: _capsuleCollider.center + _capsuleCollider.transform.position;
@@ -37,7 +38,6 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 		public float Height => _capsuleCollider == null ? -1f : _capsuleCollider.height;
 		public Vector3 Velocity { get; set; }
 		public float CurrentSlope { get; private set; }
-		public float RotationAngle { get; private set; }
 
 		#endregion
 
@@ -113,6 +113,12 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 			ProceedMove(motion);
 			DePenetrate();
 			ApplyChanges();
+		}
+
+		public void Teleport(Vector3 position)
+		{
+			_position = position;
+			_rigidbody.position = position;
 		}
 
 		public void Rotate(Quaternion rotation)
@@ -198,7 +204,6 @@ namespace _3ClipseGame.Steam.Entities.Scripts.CustomController
 
 		private void ApplyChanges(){
 			Velocity = _position - _transform.position;
-			RotationAngle = Vector3.Angle(_transform.forward, Velocity);
 		}
 
 		#endregion

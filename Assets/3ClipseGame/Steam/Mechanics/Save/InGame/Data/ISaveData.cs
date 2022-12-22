@@ -1,3 +1,4 @@
+using _3ClipseGame.Steam.Core.GameSource;
 using _3ClipseGame.Steam.Core.GameSource.Parts;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data

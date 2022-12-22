@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using _3ClipseGame.Steam.Core.GameSource.Parts;
-
+using _3ClipseGame.Steam.Core.GameSource;
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
 {
     [Serializable]
@@ -11,6 +10,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
 
         private List<ISaveData> _saveData;
         private PlayerSaveData _playerSaveData;
+        private MainCharacterSaveData _mainCharacterSaveData;
 
         public static GameData NewGame()
         {
@@ -26,7 +26,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
         private void InitializeAllSaveData()
         {
             _playerSaveData = PlayerSaveData.Empty();
-            
+            _mainCharacterSaveData = MainCharacterSaveData.Empty();
             
             UpdateLinks();
         }
@@ -57,7 +57,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
         {
             _saveData = new List<ISaveData>
             {
-                _playerSaveData
+                _playerSaveData, _mainCharacterSaveData
             };
         }
     }

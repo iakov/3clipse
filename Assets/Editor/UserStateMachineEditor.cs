@@ -1,4 +1,3 @@
-using _3ClipseGame.Steam.Entities.Player.MainCharacter.StateMachine;
 using UnityEditor;
 
 namespace Editor

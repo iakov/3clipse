@@ -28,7 +28,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts
         private Sprite ConvertSpriteToPortalRatio(Sprite primalSprite)
         {
             var imageRect = GetFinalImageRect(primalSprite.rect);
-            var newSprite = Sprite.Create(primalSprite.texture, imageRect, Vector2.one / 2);
+            var newSprite = Sprite.Create(primalSprite.texture, imageRect, Vector2.one / 2f);
             return newSprite;
         }
 

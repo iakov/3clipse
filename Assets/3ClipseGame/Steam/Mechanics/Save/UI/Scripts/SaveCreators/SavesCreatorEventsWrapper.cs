@@ -5,7 +5,7 @@ using _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.Interfaces;
 using _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.SavePresenters;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts
+namespace _3ClipseGame.Steam.Mechanics.Save.UI.Scripts.SaveCreators
 {
     public class SavesCreatorEventsWrapper : ISavesCreator, ISavePresentersEventsObserver
     {

@@ -14,11 +14,7 @@ namespace _3ClipseGame.Steam.Scenes.Scripts
             while (true)
             {
                 yield return new WaitForSeconds(_saveFrequencySeconds);
-                if (GameSource.Instance != null)
-                {
-                    InterSceneSavesEntry.Instance.SaveGame();
-                    Debug.Log("Save");
-                }
+                if (GameSource.Instance != null) InterSceneSavesEntry.Instance.SaveGame();
             }
         }
     }

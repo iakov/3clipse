@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using _3ClipseGame.Steam.Core.GameSource;
 using _3ClipseGame.Steam.Core.GameSource.Parts;
 using _3ClipseGame.Steam.Mechanics.Save.InGame.Statics;
@@ -27,7 +28,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
         private Sprite SpriteFromTexture()
         {
             var fullImageRect = new Rect(0, 0, _imageTexture.width, _imageTexture.height);
-            var centerPivot = new Vector2(0.5f, 0.5f);
+            var centerPivot = new Vector2(_imageTexture.width / 2f, _imageTexture.height / 2f);
             var sprite = Sprite.Create(_imageTexture, fullImageRect, centerPivot);
             return sprite;
         }
@@ -44,7 +45,7 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
             SaveDate = DateFormatter.GetDateForSave();
             _imageTexture = defaultImage.texture;
             _gameData = GameData.NewGame();
-        }   
+        }
 
         public void SaveSceneData(string currentScene, SerializationDependencies dependencies)
         {
@@ -57,16 +58,10 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
 
         public void ApplySaveDataToScene()
         {
-            Debug.Log("IS INITIAL?");
             var gameSource = GameSource.Instance;
             if (gameSource == null) return;
-            if (_isInitial)
-            {
-                Debug.Log("Initial");
-                return;
-            }
+            if (_isInitial) return;
             
-            Debug.Log("Not Initial");
             var dependencies = gameSource.GetSerializationDependencies();
             _gameData.ApplyData(dependencies);
         }

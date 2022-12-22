@@ -17,13 +17,15 @@ namespace Packages.LeanTween.Presets
 
         public IEnumerator FadeOut()
         {
-            _canvasGroup.LeanAlpha(0f, _fadeDuration);
+            _canvasGroup.LeanAlpha(0f, _fadeDuration)
+                .setEaseInCubic();
             yield return new WaitForSeconds(_fadeDuration);
         }
 
         public IEnumerator FadeIn()
         {
-            _canvasGroup.LeanAlpha(1f, _fadeDuration);
+            _canvasGroup.LeanAlpha(1f, _fadeDuration)
+                .setEaseOutCirc();
             yield return new WaitForSeconds(_fadeDuration);
         }
     }

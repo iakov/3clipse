@@ -1,12 +1,14 @@
-using _3ClipseGame.Steam.Core.GameSource.Parts;
+using System;
+using _3ClipseGame.Steam.Core.GameSource;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
 {
+    [Serializable]
     public class MainCharacterSaveData : ISaveData
     {
-        private Vector3 _position;
-        private Quaternion _rotation;
+        private Vector3 _mainCharacterPosition;
+        private Quaternion _mainCharacterRotation;
 
         public static MainCharacterSaveData Empty()
         {
@@ -15,12 +17,16 @@ namespace _3ClipseGame.Steam.Mechanics.Save.InGame.Data
         
         public void LoadData(SerializationDependencies loadData)
         {
-            
+            var mainCharacterTransform = loadData.MainCharacter;
+            mainCharacterTransform.Teleport(_mainCharacterPosition);
+            mainCharacterTransform.Rotate(_mainCharacterRotation);
         }
 
         public void SaveData(SerializationDependencies saveData)
         {
-            throw new System.NotImplementedException();
+            var mainCharacterTransform = saveData.MainCharacter;
+            _mainCharacterPosition = mainCharacterTransform.Center;
+            _mainCharacterRotation = mainCharacterTransform.Rotation;
         }
     }
 }
