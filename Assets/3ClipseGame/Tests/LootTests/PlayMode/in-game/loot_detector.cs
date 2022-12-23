@@ -1,6 +1,6 @@
 using System.Collections;
-using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.Detector;
-using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.InGame.Scripts.Detector;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.InGame.Scripts.LootComponent;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;

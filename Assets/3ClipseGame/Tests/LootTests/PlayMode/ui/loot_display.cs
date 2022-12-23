@@ -1,8 +1,8 @@
 using System.Collections;
-using _3ClipseGame.Steam.Mechanics.LootSystem;
-using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.Dropper;
-using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
-using _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts;
+using _3ClipseGame.Steam.GameMechanics.LootSystem;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.InGame.Scripts.Dropper;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.InGame.Scripts.LootComponent;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.UI.Scripts;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;

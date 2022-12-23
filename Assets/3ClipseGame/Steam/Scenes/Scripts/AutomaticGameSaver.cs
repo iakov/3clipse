@@ -1,6 +1,6 @@
 using System.Collections;
-using _3ClipseGame.Steam.Core.GameSource;
-using _3ClipseGame.Steam.Mechanics.Save.InGame;
+using _3ClipseGame.Steam.GameCore.Origin;
+using _3ClipseGame.Steam.GameMechanics.GameSaves.InGame;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.Scenes.Scripts

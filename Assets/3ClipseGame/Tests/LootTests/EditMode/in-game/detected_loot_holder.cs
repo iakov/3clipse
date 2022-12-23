@@ -1,5 +1,5 @@
-using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.Detector;
-using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.InGame.Scripts.Detector;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.InGame.Scripts.LootComponent;
 using NUnit.Framework;
 using UnityEngine;
 

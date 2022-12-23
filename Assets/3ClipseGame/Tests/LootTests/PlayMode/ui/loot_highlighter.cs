@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Linq;
-using _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts;
-using _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts.LootIcon;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.UI.Scripts;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.UI.Scripts.LootIcon;
 using NUnit.Framework;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;

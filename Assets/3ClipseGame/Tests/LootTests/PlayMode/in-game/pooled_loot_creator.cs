@@ -1,6 +1,6 @@
 using System.Collections;
-using _3ClipseGame.Steam.Mechanics.LootSystem;
-using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.Dropper;
+using _3ClipseGame.Steam.GameMechanics.LootSystem;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.InGame.Scripts.Dropper;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
