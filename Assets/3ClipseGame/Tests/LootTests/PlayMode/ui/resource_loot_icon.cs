@@ -1,6 +1,6 @@
 using System.Collections;
-using _3ClipseGame.Steam.Mechanics.LootSystem.InGame.Scripts.LootComponent;
-using _3ClipseGame.Steam.Mechanics.LootSystem.UI.Scripts.LootIcon;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.InGame.Scripts.LootComponent;
+using _3ClipseGame.Steam.GameMechanics.LootSystem.UI.Scripts.LootIcon;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;

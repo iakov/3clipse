@@ -5,7 +5,9 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "core.scripts",
-        "Mechanics.Loot"
+        "Mechanics.Loot",
+        "loot-system",
+        "global-scripts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
