@@ -11306,18 +11306,6 @@ PrefabInstance:
       propertyPath: _activeCamera
       value: 
       objectReference: {fileID: 2041783301}
-    - target: {fileID: 2034913902089314382, guid: e1434909ecf11d84d86e57cc6549d224, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2034913902089314382, guid: e1434909ecf11d84d86e57cc6549d224, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2034913902089314382, guid: e1434909ecf11d84d86e57cc6549d224, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 2034913902867498234, guid: e1434909ecf11d84d86e57cc6549d224, type: 3}
       propertyPath: m_Name
       value: Cursor 1
@@ -11365,18 +11353,6 @@ PrefabInstance:
     - target: {fileID: 2034913902867498235, guid: e1434909ecf11d84d86e57cc6549d224, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6076604190269882708, guid: e1434909ecf11d84d86e57cc6549d224, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6076604190269882708, guid: e1434909ecf11d84d86e57cc6549d224, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6076604190269882708, guid: e1434909ecf11d84d86e57cc6549d224, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

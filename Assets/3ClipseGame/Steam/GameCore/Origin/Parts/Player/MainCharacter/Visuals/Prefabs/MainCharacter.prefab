@@ -125,7 +125,7 @@ MonoBehaviour:
     m_Bits: 3072
   collideLayers:
     serializedVersion: 2
-    m_Bits: 3096
+    m_Bits: 3097
   skinWidth: 0.01
   stepOffset: 0.3
   groundDetectionDistance: 0.1

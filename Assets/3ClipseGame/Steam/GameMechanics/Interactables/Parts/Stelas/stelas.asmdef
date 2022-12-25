@@ -1,0 +1,17 @@
+{
+    "name": "stelas",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d7ced1483da3c473293337f62202940a",
+        "GUID:d04284f8a56291c4aa378daf5cf52aab"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
