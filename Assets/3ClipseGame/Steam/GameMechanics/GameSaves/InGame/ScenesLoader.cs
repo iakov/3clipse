@@ -7,7 +7,6 @@ namespace _3ClipseGame.Steam.GameMechanics.GameSaves.InGame
     [CreateAssetMenu(fileName = "New Save Scenes Loader", menuName = "Save/Scenes Loader")]
     public class ScenesLoader : ScriptableObject
     {
-        [SerializeField] private SceneObject _firstScene;
         private SceneObject _currentScene;
 
         public List<AsyncOperation> ScenesToLoad = new();
@@ -17,12 +16,12 @@ namespace _3ClipseGame.Steam.GameMechanics.GameSaves.InGame
 
         private SceneObject _currentlyLoadingScene;
 
-        public void LoadDefault()
+        public void LoadFirst(SceneObject scene)
         {
-            _currentlyLoadingScene = _firstScene;
-            _currentScene = _firstScene;
-            _firstScene.Load(InterSceneSavesEntry.Instance);
-            _firstScene.OperationFinished += OnSceneOperationFinished;
+            _currentlyLoadingScene = scene;
+            _currentScene = scene;
+            scene.Load(InterSceneSavesEntry.Instance);
+            scene.OperationFinished += OnSceneOperationFinished;
         }
 
         public void LoadScene(SceneObject scene)

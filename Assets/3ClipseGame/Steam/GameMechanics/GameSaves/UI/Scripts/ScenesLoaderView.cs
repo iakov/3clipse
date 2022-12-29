@@ -15,11 +15,6 @@ namespace _3ClipseGame.Steam.GameMechanics.GameSaves.UI.Scripts
         private bool _isPreviousFinished = true;
         private GameSave _loadingSave;
 
-        private void Start()
-        {
-            _scenesLoader.LoadDefault();
-        }
-
         private void OnEnable() => _scenesLoader.LoadFinished += OnLoadFinished;
 
         private void OnDisable() => _scenesLoader.LoadFinished -= OnLoadFinished;
@@ -29,6 +24,11 @@ namespace _3ClipseGame.Steam.GameMechanics.GameSaves.UI.Scripts
             StartCoroutine(LoadScreenAppearRoutine(save.SceneObject));
             _loadingSave = save;
             _scenesLoader.LoadFinished += ApplySaveData;
+        }
+        
+        public void LoadStartScene(SceneObject scene)
+        {
+            _scenesLoader.LoadFirst(scene);
         }
 
         public void Load(SceneObject sceneObject)

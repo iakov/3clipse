@@ -9,21 +9,6 @@ EditorBuildSettings:
     path: Assets/3ClipseGame/Steam/Scenes/GameScenes/FornDamScene/FornDam.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/3ClipseGame/Tests/LootTests/PlayMode/in-game/loot_detector_test_scene.unity
-    guid: 1b6deaf042f3e3443a985af450d1105c
-  - enabled: 1
-    path: Assets/3ClipseGame/Tests/LootTests/PlayMode/in-game/pooled_loot_creator_test_scene.unity
-    guid: 7b04150106b81b043ad4c3d860bb4411
-  - enabled: 1
-    path: Assets/3ClipseGame/Tests/LootTests/PlayMode/ui/loot_display_test_scene.unity
-    guid: 164906194f8383a43891ffab6b3d24c2
-  - enabled: 1
-    path: Assets/3ClipseGame/Tests/LootTests/PlayMode/ui/resource_loot_icon_test_scene.unity
-    guid: 49347f77394950e439c685ce36bcd30d
-  - enabled: 1
-    path: Assets/3ClipseGame/Tests/LootTests/PlayMode/ui/loot_icons_selector_test_scene.unity
-    guid: 063b38b6b2e4fcf4da857b2585074e6a
-  - enabled: 1
     path: Assets/3ClipseGame/Tests/SaveTests/PlayModeTests/save_serializer_test_scene.unity
     guid: f23fe680cbf1745dea07f93e8bcf6096
   - enabled: 1
@@ -38,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/3ClipseGame/Steam/Scenes/AdditiveScenes/OriginScene/OriginScene.unity
     guid: 5d68e600786d23e4f9ed81f7a592b87f
+  - enabled: 1
+    path: Assets/3ClipseGame/Steam/Scenes/TemporaryScenes/DialogueScene/DialogueTest.unity
+    guid: d79c4215b83177e4b8b55c2c93a40faf
+  - enabled: 1
+    path: Assets/3ClipseGame/Steam/Scenes/TemporaryScenes/StelasScene/StelasTest.unity
+    guid: 51f32aa475829b346904306264da4f7f
   m_configObjects: {}

@@ -13,6 +13,7 @@ namespace _3ClipseGame.Steam.GameMechanics.GameSaves.InGame
         [SerializeField] private ScenesLoaderView _saveScenesLoader;
         [SerializeField] private SavesManager _savesManager;
         [SerializeField] private List<SceneObject> _sceneObjects;
+        [SerializeField] private SceneObject _firstScene;
 
         public static InterSceneSavesEntry Instance { get; private set; }
 
@@ -33,6 +34,7 @@ namespace _3ClipseGame.Steam.GameMechanics.GameSaves.InGame
                 SceneManager.UnloadSceneAsync(scene);
             
             _savesManager.Initiate();
+            _saveScenesLoader.LoadStartScene(_firstScene);
         }
 
         public void LoadSave(int id) => _savesManager.LoadGame(id, _saveScenesLoader);
