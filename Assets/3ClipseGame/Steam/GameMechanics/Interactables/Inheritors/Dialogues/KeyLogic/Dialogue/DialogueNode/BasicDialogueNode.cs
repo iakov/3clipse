@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.Dialogue.DialogueNode
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode
 {
     public class BasicDialogueNode: DialogueNode
     {

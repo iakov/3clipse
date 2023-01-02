@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.Dialogue.DialogueNode.Choice
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode.Choice
 {
     [CreateAssetMenu(fileName = "DialogueChoice", menuName = "Dialogue/DialogueChoice")]
     public class DialogueChoice: ScriptableObject

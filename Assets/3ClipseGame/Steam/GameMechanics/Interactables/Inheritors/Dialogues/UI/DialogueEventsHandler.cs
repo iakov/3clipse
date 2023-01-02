@@ -1,21 +1,30 @@
-using _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.Dialogue;
-using _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.Dialogue.DialogueNode;
-// using TMPro;
+using _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue;
+using _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode;
+using _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode.Choice;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.UI
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.UI
 {
-    public class DialogueEventsHandler
+    public class DialogueEventsHandler: MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI _choice;
         [SerializeField] private DialogueNodeChannel _dialogueNodeChannel;
 
-        // [SerializeField] private TextMeshProUGUI _speakerText;
-        // [SerializeField] private TextMeshProUGUI _dialogueText;
+        private DialogueNode _choiceNextNode;
 
-        [SerializeField] private RectTransform _choicesBoxTransform;
-        [SerializeField] private DialogueUIController _choiceControllerPrefab;
+        public DialogueChoice Choice
+        {
+            set
+            {
+                _choice.text = value.TransitionChoice.Speech.SpeechText;
+                _choiceNextNode = value.ChoiceNode;
+            }
+        }
 
-        private bool _listenToInput = false;
-        private DialogueNode _nextNode = null;
+        // private void Start() => GetComponent<Button>().onClick.AddListener(OnClick);
+        
+        // private void OnClick() => _dialogueNodeChannel
     }
 }

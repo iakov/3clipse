@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.Dialogue
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue
 {    
     [CreateAssetMenu(fileName = "DialogueNodeChannel", menuName = "Dialogue/DialogueNodeChannel")]
     public class DialogueNodeChannel: ScriptableObject

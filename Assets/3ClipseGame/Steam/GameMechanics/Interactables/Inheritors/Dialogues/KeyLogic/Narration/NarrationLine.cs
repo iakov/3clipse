@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.Narration
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Narration
 {
     [CreateAssetMenu(fileName = "NarrationLine", menuName = "Dialogue/Narration/NarrationLine")]
     public class NarrationLine : ScriptableObject

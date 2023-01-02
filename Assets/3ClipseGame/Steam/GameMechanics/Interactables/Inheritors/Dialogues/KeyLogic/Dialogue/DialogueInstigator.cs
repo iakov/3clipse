@@ -1,4 +1,4 @@
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.Dialogue
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue
 {
     public class DialogueInstigator
     {
@@ -9,7 +9,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.
             if (CurrentDialogue == null || CurrentDialogue.CurrentDialogueNode == null)
             {
                 CurrentDialogue = dialogue;
-                CurrentDialogue.Start();
+                CurrentDialogue.StartDialogue();
             }
         }
     }

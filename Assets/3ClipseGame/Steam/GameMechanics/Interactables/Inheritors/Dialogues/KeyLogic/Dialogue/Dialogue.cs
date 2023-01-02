@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.Dialogue
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue
 {
     [CreateAssetMenu(fileName = "Dialogue", menuName = "Dialogue/Dialogue")]
     public class Dialogue : ScriptableObject
@@ -8,7 +8,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.
         [SerializeField] private DialogueNode.DialogueNode _firstNode;
         public DialogueNode.DialogueNode CurrentDialogueNode { get; private set; }
 
-        public void Start()
+        public void StartDialogue()
         {
             CurrentDialogueNode = _firstNode;
         }

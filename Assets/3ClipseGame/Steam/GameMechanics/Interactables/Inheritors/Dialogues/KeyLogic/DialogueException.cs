@@ -1,4 +1,4 @@
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic
 {
     public class DialogueException: System.Exception
     {

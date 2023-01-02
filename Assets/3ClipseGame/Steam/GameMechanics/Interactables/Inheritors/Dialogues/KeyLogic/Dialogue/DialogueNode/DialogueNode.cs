@@ -1,7 +1,7 @@
-using _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.Narration;
+using _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Narration;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Parts.Dialogues.InGame.Dialogue.DialogueNode
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode
 {
     [CreateAssetMenu(fileName = "DialogueNode", menuName = "Dialogue/DialogueNode")]
     public abstract class DialogueNode: ScriptableObject

@@ -5,8 +5,11 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Stelas.KeyLo
     public class ExploredStela : Stela<ExploredStelaPresenter>
     {
         public override event Action<Interactable<ExploredStelaPresenter>> Disappeared;
-        
-        public override ExploredStelaPresenter GetPresenter(){}
+
+        public override ExploredStelaPresenter GetPresenter()
+        {
+            throw new NotImplementedException();
+        }
         public override void Activate(){}
     }
 }
