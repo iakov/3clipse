@@ -56,7 +56,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1a2df62813a69aa44af60ab3d2675f4b, type: 2}
   - {fileID: 11400000, guid: b0746648b71faf048b0357858af88a2a, type: 2}
   - {fileID: 11400000, guid: db553fd64e83c544aaf8b6c8a79cb0d9, type: 2}
-  _firstScene: {fileID: 11400000, guid: 1a2df62813a69aa44af60ab3d2675f4b, type: 2}
+  _firstScene: {fileID: 11400000, guid: db553fd64e83c544aaf8b6c8a79cb0d9, type: 2}
 --- !u!114 &1099832118
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,8 +3,12 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables
 {
-    public abstract class Interactable : MonoBehaviour
+    public abstract class Interactable<T> : MonoBehaviour where T : InteractablePresenter
     {
-        public abstract event Action<Interactable> Disappeared;
+        [SerializeField] protected T PresenterPrefab;
+        public abstract event Action<Interactable<T>> Disappeared;
+        
+        public abstract T GetPresenter();
+        public abstract void Activate();
     }
 }

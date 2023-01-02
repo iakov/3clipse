@@ -12,16 +12,9 @@ namespace _3ClipseGame.Steam.GameMechanics.InventorySystem.ResourceInventorySyst
         public override event Action<ResourceSlot> SlotChanged;
         private List<ResourceSlot> _slots;
         
-        private void OnEnable()
-        {
-            _slots ??= new List<ResourceSlot>();
-        }
-        
-        public override IEnumerable<ResourceSlot> GetSlots()
-        {
-            return _slots.AsEnumerable();
-        }
-        
+        private void OnEnable() => _slots ??= new List<ResourceSlot>();
+        public override IEnumerable<ResourceSlot> GetSlots() => _slots.AsEnumerable();
+
         public override bool TryRemoveItem(Resource item, int amount = 1)
         {
             var resourceSlot = _slots.Find(slot => slot.GetItem() == item);

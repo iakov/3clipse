@@ -179,7 +179,7 @@ namespace _3ClipseGame.Steam.GameCore.GlobalScripts.EntityScripts
 			var capsuleOffset = Height / 2 - Radius;
 			var top = _position + Vector3.up * capsuleOffset;
 			var bottom = _position + Vector3.down * capsuleOffset;
-			var overlapsNum = Physics.OverlapCapsuleNonAlloc(top, bottom, Radius, _overlaps, walkableLayers, QueryTriggerInteraction.Ignore);
+			var overlapsNum = Physics.OverlapCapsuleNonAlloc(top, bottom, Radius, _overlaps, collideLayers, QueryTriggerInteraction.Ignore);
 
 			if (overlapsNum <= 0) return;
 			
