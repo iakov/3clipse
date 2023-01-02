@@ -62,8 +62,8 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.EnemiesLoot
 
         private void AddPickableComponents(GameObject newObject)
         {
-            if(newObject.TryGetComponent<Loot>(out var loot)) Destroy(loot);
-            newObject.AddComponent<Loot>();
+            if(newObject.TryGetComponent<LootInteractable>(out var loot)) Destroy(loot);
+            newObject.AddComponent<LootInteractable>();
         }
 
         private void AddPoolElementComponents(GameObject newObject)

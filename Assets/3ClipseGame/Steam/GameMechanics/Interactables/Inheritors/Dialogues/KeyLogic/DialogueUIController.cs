@@ -1,8 +1,7 @@
-using _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue;
 using TMPro;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.UI
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic
 {
     public class DialogueUIController: MonoBehaviour
     {
@@ -12,7 +11,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.UI
         [SerializeField] private RectTransform _choicesBoxTransform;
         [SerializeField] private DialogueEventsHandler _choiceControllerPrefab;
 
-        [SerializeField] private Dialogue _dialogue;
+        [SerializeField] private Dialogue.Dialogue _dialogue;
 
         private bool _listenToInput = false;
 

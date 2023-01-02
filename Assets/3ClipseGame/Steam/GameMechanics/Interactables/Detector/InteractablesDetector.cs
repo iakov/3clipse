@@ -7,8 +7,8 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
     
     public class InteractablesDetector : MonoBehaviour
     {
-        public event Action<Interactable<InteractablePresenter>> InteractableDetected;
-        public event Action<Interactable<InteractablePresenter>> InteractableRetired;
+        public event Action<Interactable> InteractableDetected;
+        public event Action<Interactable> InteractableRetired;
 
         private DetectedInteractablesHolder _detectedInteractablesHolder;
 
@@ -30,10 +30,10 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
             _detectedInteractablesHolder.InteractableRemoved -= OnInteractablesRemoved;
         }
 
-        private void OnInteractablesAdded(Interactable<InteractablePresenter> interactable) => 
+        private void OnInteractablesAdded(Interactable interactable) => 
             InteractableDetected?.Invoke(interactable);
         
-        private void OnInteractablesRemoved(Interactable<InteractablePresenter> interactable) =>
+        private void OnInteractablesRemoved(Interactable interactable) =>
             InteractableRetired?.Invoke(interactable);
         
 
@@ -49,9 +49,11 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
             _detectedInteractablesHolder.TryRemoveDetected(interactable);
         }
 
-        private bool IsInteractable(Component other, out Interactable<InteractablePresenter> interactable)
+        private bool IsInteractable(Component other, out Interactable interactable)
         {
-            return other.TryGetComponent(out interactable);
+            var isSuccessful = other.TryGetComponent<Interactable>(out interactable);
+            Debug.Log(isSuccessful);
+            return isSuccessful;
         }
     }
 }

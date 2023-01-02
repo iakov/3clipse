@@ -19,8 +19,8 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.EnemiesLoot.
         {
             var amount = element.GetDropAmount();
             var lootObject = _deathLootCreator.GetLoot(_spawnDropPosition.position);
-            var lootComponent = lootObject.GetComponent<Loot>();
-            //TODO: Change Resource and Amount!
+            var lootComponent = lootObject.GetComponent<LootInteractable>();
+            lootComponent.ChangeData(element.DropResource, amount);
         }
     }
 }

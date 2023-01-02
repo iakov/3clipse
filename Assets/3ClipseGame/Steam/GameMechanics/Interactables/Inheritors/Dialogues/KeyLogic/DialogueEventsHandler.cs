@@ -3,9 +3,8 @@ using _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLog
 using _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode.Choice;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.UI
+namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic
 {
     public class DialogueEventsHandler: MonoBehaviour
     {
@@ -22,9 +21,5 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.UI
                 _choiceNextNode = value.ChoiceNode;
             }
         }
-
-        // private void Start() => GetComponent<Button>().onClick.AddListener(OnClick);
-        
-        // private void OnClick() => _dialogueNodeChannel
     }
 }

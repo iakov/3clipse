@@ -4,9 +4,9 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables
 {
     public abstract class InteractablePresenter : MonoBehaviour
     {
-         private Interactable<InteractablePresenter> _currentInteractable;
+         private Interactable _currentInteractable;
 
-         public void ChangeInteractable(Interactable<InteractablePresenter> interactable) =>
+         public void ChangeInteractable(Interactable interactable) =>
              _currentInteractable = interactable;
 
         public void Activate() => _currentInteractable.Activate();

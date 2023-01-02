@@ -2,14 +2,15 @@ using System;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Stelas.KeyLogic.ExploredStela
 {
-    public class ExploredStela : Stela<ExploredStelaPresenter>
+    public class ExploredStela : Stela
     {
-        public override event Action<Interactable<ExploredStelaPresenter>> Disappeared;
+        public override event Action<Interactable> Disappeared;
 
-        public override ExploredStelaPresenter GetPresenter()
+        public override InteractablePresenter GetNewPresenter()
         {
-            throw new NotImplementedException();
+            return null;
         }
+        
         public override void Activate(){}
     }
 }

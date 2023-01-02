@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 4932512284892615575}
   - component: {fileID: 3342650699091742292}
   - component: {fileID: 3174581481029994149}
-  - component: {fileID: 2357753693680388928}
   - component: {fileID: 1995148163807658419}
+  - component: {fileID: 2406380034884642804}
   m_Layer: 6
   m_Name: Loot
   m_TagString: Untagged
@@ -151,42 +151,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _disableTime: 1
   _disabledLayerName: Decals
---- !u!114 &2357753693680388928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2440630397707749845}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13de5137fe4fbe144ac89630192fc9fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _verticalMovementCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1.7832155
-      outSlope: 1.7832155
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.056872036
-    - serializedVersion: 3
-      time: 1
-      value: -0.0000017993152
-      inSlope: -1.6635773
-      outSlope: -1.6635773
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.05529225
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &1995148163807658419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +163,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d6f39f69c54cc08e501bb674a6dd2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _presenterPrefab: {fileID: 8337831421397709285, guid: 4824e6d92af8b00419d2baca089c79ce, type: 3}
+  _lootPresenter: {fileID: 8781243178474143404, guid: 4824e6d92af8b00419d2baca089c79ce, type: 3}
+--- !u!114 &2406380034884642804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440630397707749845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11350fe35242d0044a1af4b1d611e0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _verticalMovementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.8542018
+      outSlope: 3.8542018
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.24089071
+    - serializedVersion: 3
+      time: 0.14126337
+      value: 0.007449746
+      inSlope: -3.0498428
+      outSlope: 1.2242613
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.2042584
+      outWeight: 0.5675804
+    - serializedVersion: 3
+      time: 0.30743277
+      value: 0.011492312
+      inSlope: -2.5719187
+      outSlope: 8.412799
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.28642094
+      outWeight: 0.19338076
+    - serializedVersion: 3
+      time: 0.40065783
+      value: -0.000012092292
+      inSlope: -6.887525
+      outSlope: -6.887525
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.21486056
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6954671963983264868
 GameObject:
   m_ObjectHideFlags: 0

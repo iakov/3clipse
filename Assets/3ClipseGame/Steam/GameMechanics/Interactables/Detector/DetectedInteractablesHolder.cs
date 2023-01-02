@@ -7,18 +7,15 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
 {
     public class DetectedInteractablesHolder
     {
-        public event Action<Interactable<InteractablePresenter>> InteractableRemoved;
-        public event Action<Interactable<InteractablePresenter>> InteractableAdded;
+        public event Action<Interactable> InteractableRemoved;
+        public event Action<Interactable> InteractableAdded;
         
         public static DetectedInteractablesHolder Empty() => 
             new DetectedInteractablesHolder();
-        
-        private DetectedInteractablesHolder() => 
-            _detectedInteractables = new List<GameObject>();
-        
-        private readonly List<GameObject> _detectedInteractables;
 
-        public bool TryAddDetected([NotNull] Interactable<InteractablePresenter> interactable)
+        private readonly List<GameObject> _detectedInteractables = new();
+
+        public bool TryAddDetected([NotNull] Interactable interactable)
         {
             if (Contains(interactable)) return false;
             
@@ -26,7 +23,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
             return true;
         }
         
-        public bool TryRemoveDetected([NotNull] Interactable<InteractablePresenter> interactable)
+        public bool TryRemoveDetected([NotNull] Interactable interactable)
         {
             if (!Contains(interactable)) return false;
 
@@ -34,20 +31,18 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
             return true;
         }
 
-        public bool Contains([NotNull] Interactable<InteractablePresenter> lootComponent) =>
-            _detectedInteractables.Contains(lootComponent.gameObject);
+        public bool Contains([NotNull] Interactable interactable) =>
+            _detectedInteractables.Contains(interactable.gameObject);
 
-        private void AddDetected([NotNull] Interactable<InteractablePresenter> interactable)
+        private void AddDetected([NotNull] Interactable interactable)
         {
             _detectedInteractables.Add(interactable.gameObject);
-            interactable.Disappeared += RemoveDetected;
             InteractableAdded?.Invoke(interactable);
         }
 
-        private void RemoveDetected(Interactable<InteractablePresenter> interactable)
+        private void RemoveDetected(Interactable interactable)
         {
             _detectedInteractables.Remove(interactable.gameObject);
-            interactable.Disappeared -= RemoveDetected;
             InteractableRemoved?.Invoke(interactable);
         }
     }
