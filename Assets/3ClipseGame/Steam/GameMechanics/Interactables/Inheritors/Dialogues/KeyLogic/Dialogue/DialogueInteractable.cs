@@ -12,9 +12,10 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
 
         public override InteractablePresenter GetNewPresenter()
         {
-            var newPresenter = Instantiate(_dialoguePresenter);
-            newPresenter.ChangeInteractable(this);
             _dialoguePresenter.SetNpcName(_characterName);
+            // var newPresenter = Instantiate(_dialoguePresenter);
+            var newPresenter = _dialoguePresenter;
+            newPresenter.ChangeInteractable(this);
             return newPresenter;
         }
 
