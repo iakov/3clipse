@@ -1,5 +1,5 @@
 {
-    "name": "HUDInputActions",
+    "name": "HUDInputMap",
     "maps": [
         {
             "name": "HUDActions",
@@ -33,9 +33,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LootInteracted",
+                    "name": "Interact",
                     "type": "Button",
-                    "id": "d273b9b7-ab9d-4b5e-8d84-2e23cbfa0d1f",
+                    "id": "994e0683-481c-46ae-983c-cca3fd0f6f0e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -78,12 +78,12 @@
                 },
                 {
                     "name": "",
-                    "id": "c3fa039f-917c-44fc-a779-a678fa25b887",
+                    "id": "f894f43f-2322-4de1-884e-ec564933ab15",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LootInteracted",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

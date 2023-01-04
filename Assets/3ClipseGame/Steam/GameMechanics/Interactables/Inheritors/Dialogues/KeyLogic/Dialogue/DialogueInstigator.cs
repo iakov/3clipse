@@ -4,7 +4,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
     {
         public Dialogue CurrentDialogue;
         
-        private void TryStartDialogue(Dialogue dialogue)
+        public void TryStartDialogue(Dialogue dialogue)
         {
             if (CurrentDialogue == null || CurrentDialogue.CurrentDialogueNode == null)
             {

@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a1def6b7690c1b4eb93e1b4750350e0, type: 3}
-  m_Name: NPC1
+  m_Name: Player
   m_EditorClassIdentifier: 
-  _characterName: NPC1
+  _characterName: Player

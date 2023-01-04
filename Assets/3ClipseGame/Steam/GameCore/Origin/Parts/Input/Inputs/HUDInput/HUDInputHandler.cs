@@ -8,7 +8,7 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.Input.Inputs.HUDInput
         public event Action<bool> ShowWheelChanged;
         public event Action ToggleMainMenuPressed;
         public event Action<float> LootScrollPerformed;
-        public event Action LootInteracted;
+        public event Action Interacted;
         
         private HUDInputMap _hudInputActions;
 
@@ -23,7 +23,7 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.Input.Inputs.HUDInput
 
             _hudInputActions.HUDActions.LootScroll.performed += OnLootScrollPerformed;
 
-            _hudInputActions.HUDActions.LootInteracted.started += OnLootInteracted;
+            _hudInputActions.HUDActions.Interact.started += OnInteracted;
         }
         
         public override void Enable()
@@ -46,7 +46,7 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.Input.Inputs.HUDInput
         private void OnLootScrollPerformed(InputAction.CallbackContext context)
             => LootScrollPerformed?.Invoke(context.ReadValue<float>());
         
-        private void OnLootInteracted(InputAction.CallbackContext context)
-            => LootInteracted?.Invoke();
+        private void OnInteracted(InputAction.CallbackContext context)
+            => Interacted?.Invoke();
     }
 }

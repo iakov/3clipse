@@ -7,6 +7,6 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
     {
         [SerializeField] private TMP_Text _hint;
 
-        public void SetNpcName(string newNpcName) => _hint.text = "Press 'Enter' to talk with " +  newNpcName;
+        public void SetNpcName(string newNpcName) => _hint.text = "Press 'E' to talk with " +  newNpcName;
     }
 }

@@ -9,17 +9,17 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.Input.Inputs.HUDInput
         [SerializeField] private HUDInputHandler _hudInputHandler;
 
         public event Action<float> LootScrolled;
-        public bool GetIsLootInteracted() => _isLootInteracted;
+        public bool GetIsInteracted() => _isInteracted;
         public bool GetIsShowWheel() => _isShowWheel;
         public bool GetIsToggleMenu() => _isToggleMenu;
 
-        private bool _isLootInteracted;
+        private bool _isInteracted;
         private bool _isShowWheel;
         private bool _isToggleMenu;
 
         private void Awake()
         {
-            _hudInputHandler.LootInteracted += OnLootInteracted;
+            _hudInputHandler.Interacted += OnInteracted;
             _hudInputHandler.LootScrollPerformed += OnLootScrollPerformed;
             _hudInputHandler.ShowWheelChanged += OnShowWheelChanged;
             _hudInputHandler.ToggleMainMenuPressed += OnToggleMainMenuPressed;
@@ -35,14 +35,14 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.Input.Inputs.HUDInput
             _hudInputHandler.Disable();
         }
 
-        private void OnLootInteracted()
-            => StartCoroutine(LootInteractedWithDelay());
+        private void OnInteracted()
+            => StartCoroutine(InteractedWithDelay());
 
-        private IEnumerator LootInteractedWithDelay()
+        private IEnumerator InteractedWithDelay()
         {
-            _isLootInteracted = true;
+            _isInteracted = true;
             yield return null;
-            _isLootInteracted = false;
+            _isInteracted = false;
         }
 
         private void OnLootScrollPerformed(float value)
