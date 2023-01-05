@@ -48,7 +48,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         private void TryActivateCurrent()
         {
             var current = _interactablesHolder.DetectedInteractables[_detectedID];
-            current.GetComponent<InteractablePresenter>().Activate();
+            current.GetComponent<Interactable>().Activate();
         }
     }
 }

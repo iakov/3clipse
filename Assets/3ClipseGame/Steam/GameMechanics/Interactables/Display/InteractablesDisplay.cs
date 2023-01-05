@@ -28,7 +28,6 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
             var originalPresenter = interactable.GetNewPresenter();
             var presenter = Instantiate(originalPresenter, Vector3.zero, Quaternion.identity, _iconsParent);
             _displayedDictionary.Add(interactable, presenter);
-            presenter.ChangeInteractable(interactable);
         }
         
         private void RemoveInteractable(Interactable interactable)

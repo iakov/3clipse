@@ -23,7 +23,6 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.EnemiesLoot.
         public override InteractablePresenter GetNewPresenter()
         { 
             var newPresenter = Instantiate(_lootPresenter).GetComponent<LootPresenter>();
-            newPresenter.ChangeInteractable(this);
             newPresenter.SetResource(_resource);
             newPresenter.SetAmount(_amount);
             return newPresenter;

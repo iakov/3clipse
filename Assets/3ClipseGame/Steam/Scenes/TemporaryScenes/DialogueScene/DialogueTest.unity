@@ -624,7 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialoguePresenter: {fileID: 1686989541016823203, guid: 2af6b358cf22c364eacf4f065eff76d5, type: 3}
-  _narrationCharacter: {fileID: 11400000, guid: 54cf3a142312fb5478a3756088d3e204, type: 2}
+  _narrationCharacter: {fileID: 11400000, guid: 2d0fc689a6aae8f4fa8e4548fc8a238d, type: 2}
 --- !u!43 &776543174
 Mesh:
   m_ObjectHideFlags: 0
