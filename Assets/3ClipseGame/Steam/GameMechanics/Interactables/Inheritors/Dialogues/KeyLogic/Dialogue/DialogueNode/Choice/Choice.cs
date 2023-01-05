@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode.Choice
 {
-    [CreateAssetMenu(fileName = "DialogueChoice", menuName = "Dialogue/Choice")]
+    [CreateAssetMenu(fileName = "DialogueChoice", menuName = "Interactables/Dialogue/DialogueNode/Choice/Choice")]
     public class Choice : ScriptableObject
     {
-        private Speech _speech;
-        private NarrationCharacter _asker;
+        [SerializeField] private Speech _speech;
+        [SerializeField] private NarrationCharacter _asker;
         public Speech Speech => _speech;
 
         public bool IsEqual(Choice choice)

@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode
 {
-    [CreateAssetMenu(fileName = "DialogueNode", menuName = "Dialogue/DialogueNode")]
     public abstract class DialogueNode: ScriptableObject
     {
         [SerializeField] private NarrationLine _dialogueLine;

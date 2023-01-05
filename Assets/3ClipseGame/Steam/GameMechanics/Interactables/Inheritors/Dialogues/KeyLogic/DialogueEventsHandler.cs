@@ -8,7 +8,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
 {
     public class DialogueEventsHandler: MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _choice;
+        [SerializeField] private TMP_Text _choice;
         [SerializeField] private DialogueNodeChannel _dialogueNodeChannel;
 
         private DialogueNode _choiceNextNode;

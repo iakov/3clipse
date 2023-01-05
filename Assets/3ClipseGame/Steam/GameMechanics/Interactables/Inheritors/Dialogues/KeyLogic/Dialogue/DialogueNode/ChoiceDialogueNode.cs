@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode
 {
+    [CreateAssetMenu(fileName = "ChoiceDialogueNode", menuName = "Interactables/Dialogue/DialogueNode/Choice/ChoiceNode")]
     public class ChoiceDialogueNode: DialogueNode
     {
         [SerializeField] private DialogueChoice[] _nextNodes;

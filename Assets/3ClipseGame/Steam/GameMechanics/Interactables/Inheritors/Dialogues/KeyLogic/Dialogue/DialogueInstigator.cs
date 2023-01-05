@@ -11,6 +11,10 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
                 CurrentDialogue = dialogue;
                 CurrentDialogue.StartDialogue();
             }
+            else
+            {
+                throw new DialogueException("Can't start dialogue when another one is running!");
+            }
         }
     }
 }
