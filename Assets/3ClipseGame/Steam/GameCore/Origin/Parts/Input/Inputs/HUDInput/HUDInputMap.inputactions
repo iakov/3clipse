@@ -24,13 +24,22 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LootScroll",
-                    "type": "Value",
+                    "name": "LootScrollForward",
+                    "type": "Button",
                     "id": "b3797aec-0c3c-4b0f-acb2-fd5e466af57f",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LootScrollBack",
+                    "type": "Button",
+                    "id": "4e4998ce-7605-4c58-8256-f1c156888ff0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Interact",
@@ -68,22 +77,33 @@
                 {
                     "name": "",
                     "id": "65b08f2f-1736-4290-85f1-841bd8879ea1",
-                    "path": "<Mouse>/scroll/y",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LootScroll",
+                    "action": "LootScrollForward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "f894f43f-2322-4de1-884e-ec564933ab15",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0bd4ed1c-6f1c-43a7-af1c-f140491493ce",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LootScrollBack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

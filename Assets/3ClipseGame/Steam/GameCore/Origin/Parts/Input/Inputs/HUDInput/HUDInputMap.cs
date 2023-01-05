@@ -46,13 +46,22 @@ public partial class @HUDInputMap : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""LootScroll"",
-                    ""type"": ""Value"",
+                    ""name"": ""LootScrollForward"",
+                    ""type"": ""Button"",
                     ""id"": ""b3797aec-0c3c-4b0f-acb2-fd5e466af57f"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LootScrollBack"",
+                    ""type"": ""Button"",
+                    ""id"": ""4e4998ce-7605-4c58-8256-f1c156888ff0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Interact"",
@@ -90,22 +99,33 @@ public partial class @HUDInputMap : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""65b08f2f-1736-4290-85f1-841bd8879ea1"",
-                    ""path"": ""<Mouse>/scroll/y"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LootScroll"",
+                    ""action"": ""LootScrollForward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""f894f43f-2322-4de1-884e-ec564933ab15"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0bd4ed1c-6f1c-43a7-af1c-f140491493ce"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LootScrollBack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -118,7 +138,8 @@ public partial class @HUDInputMap : IInputActionCollection2, IDisposable
         m_HUDActions = asset.FindActionMap("HUDActions", throwIfNotFound: true);
         m_HUDActions_ToggleMainMenu = m_HUDActions.FindAction("ToggleMainMenu", throwIfNotFound: true);
         m_HUDActions_ShowElementalWheel = m_HUDActions.FindAction("ShowElementalWheel", throwIfNotFound: true);
-        m_HUDActions_LootScroll = m_HUDActions.FindAction("LootScroll", throwIfNotFound: true);
+        m_HUDActions_LootScrollForward = m_HUDActions.FindAction("LootScrollForward", throwIfNotFound: true);
+        m_HUDActions_LootScrollBack = m_HUDActions.FindAction("LootScrollBack", throwIfNotFound: true);
         m_HUDActions_Interact = m_HUDActions.FindAction("Interact", throwIfNotFound: true);
     }
 
@@ -181,7 +202,8 @@ public partial class @HUDInputMap : IInputActionCollection2, IDisposable
     private IHUDActionsActions m_HUDActionsActionsCallbackInterface;
     private readonly InputAction m_HUDActions_ToggleMainMenu;
     private readonly InputAction m_HUDActions_ShowElementalWheel;
-    private readonly InputAction m_HUDActions_LootScroll;
+    private readonly InputAction m_HUDActions_LootScrollForward;
+    private readonly InputAction m_HUDActions_LootScrollBack;
     private readonly InputAction m_HUDActions_Interact;
     public struct HUDActionsActions
     {
@@ -189,7 +211,8 @@ public partial class @HUDInputMap : IInputActionCollection2, IDisposable
         public HUDActionsActions(@HUDInputMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @ToggleMainMenu => m_Wrapper.m_HUDActions_ToggleMainMenu;
         public InputAction @ShowElementalWheel => m_Wrapper.m_HUDActions_ShowElementalWheel;
-        public InputAction @LootScroll => m_Wrapper.m_HUDActions_LootScroll;
+        public InputAction @LootScrollForward => m_Wrapper.m_HUDActions_LootScrollForward;
+        public InputAction @LootScrollBack => m_Wrapper.m_HUDActions_LootScrollBack;
         public InputAction @Interact => m_Wrapper.m_HUDActions_Interact;
         public InputActionMap Get() { return m_Wrapper.m_HUDActions; }
         public void Enable() { Get().Enable(); }
@@ -206,9 +229,12 @@ public partial class @HUDInputMap : IInputActionCollection2, IDisposable
                 @ShowElementalWheel.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnShowElementalWheel;
                 @ShowElementalWheel.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnShowElementalWheel;
                 @ShowElementalWheel.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnShowElementalWheel;
-                @LootScroll.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScroll;
-                @LootScroll.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScroll;
-                @LootScroll.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScroll;
+                @LootScrollForward.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScrollForward;
+                @LootScrollForward.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScrollForward;
+                @LootScrollForward.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScrollForward;
+                @LootScrollBack.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScrollBack;
+                @LootScrollBack.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScrollBack;
+                @LootScrollBack.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnLootScrollBack;
                 @Interact.started -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_HUDActionsActionsCallbackInterface.OnInteract;
@@ -222,9 +248,12 @@ public partial class @HUDInputMap : IInputActionCollection2, IDisposable
                 @ShowElementalWheel.started += instance.OnShowElementalWheel;
                 @ShowElementalWheel.performed += instance.OnShowElementalWheel;
                 @ShowElementalWheel.canceled += instance.OnShowElementalWheel;
-                @LootScroll.started += instance.OnLootScroll;
-                @LootScroll.performed += instance.OnLootScroll;
-                @LootScroll.canceled += instance.OnLootScroll;
+                @LootScrollForward.started += instance.OnLootScrollForward;
+                @LootScrollForward.performed += instance.OnLootScrollForward;
+                @LootScrollForward.canceled += instance.OnLootScrollForward;
+                @LootScrollBack.started += instance.OnLootScrollBack;
+                @LootScrollBack.performed += instance.OnLootScrollBack;
+                @LootScrollBack.canceled += instance.OnLootScrollBack;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -236,7 +265,8 @@ public partial class @HUDInputMap : IInputActionCollection2, IDisposable
     {
         void OnToggleMainMenu(InputAction.CallbackContext context);
         void OnShowElementalWheel(InputAction.CallbackContext context);
-        void OnLootScroll(InputAction.CallbackContext context);
+        void OnLootScrollForward(InputAction.CallbackContext context);
+        void OnLootScrollBack(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
     }
 }

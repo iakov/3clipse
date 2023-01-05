@@ -4,6 +4,7 @@ using UnityEngine;
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
 {
     [RequireComponent(typeof(SphereCollider))]
+    [RequireComponent(typeof(DetectedInteractablesHolder))]
     
     public class InteractablesDetector : MonoBehaviour
     {
@@ -14,7 +15,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
 
         private void Awake()
         {
-            _detectedInteractablesHolder = DetectedInteractablesHolder.Empty();
+            _detectedInteractablesHolder = GetComponent<DetectedInteractablesHolder>();
             GetComponent<SphereCollider>().isTrigger = true;
         }
 

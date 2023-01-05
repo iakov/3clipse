@@ -6,21 +6,21 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
 {
     public class InteractablesDisplay : MonoBehaviour
     {
-        [SerializeField] private InteractablesDetector _interactablesHolder;
+        [SerializeField] private DetectedInteractablesHolder _interactablesHolder;
         [SerializeField] private Transform _iconsParent;
 
         private Dictionary<Interactable, InteractablePresenter> _displayedDictionary = new();
 
         private void OnEnable()
         {
-            _interactablesHolder.InteractableDetected += DisplayNewInteractable;
-            _interactablesHolder.InteractableRetired += RemoveInteractable;
+            _interactablesHolder.InteractableAdded += DisplayNewInteractable;
+            _interactablesHolder.InteractableRemoved += RemoveInteractable;
         }
         
         private void OnDisable()
         {
-            _interactablesHolder.InteractableDetected -= DisplayNewInteractable;
-            _interactablesHolder.InteractableRetired -= RemoveInteractable;
+            _interactablesHolder.InteractableAdded -= DisplayNewInteractable;
+            _interactablesHolder.InteractableRemoved -= RemoveInteractable;
         }
 
         private void DisplayNewInteractable(Interactable interactable)

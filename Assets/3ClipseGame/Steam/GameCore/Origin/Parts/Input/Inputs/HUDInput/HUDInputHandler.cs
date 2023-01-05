@@ -7,7 +7,8 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.Input.Inputs.HUDInput
     {
         public event Action<bool> ShowWheelChanged;
         public event Action ToggleMainMenuPressed;
-        public event Action<float> LootScrollPerformed;
+        public event Action ScrollForward;
+        public event Action ScrollBack;
         public event Action Interacted;
         
         private HUDInputMap _hudInputActions;
@@ -21,7 +22,8 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.Input.Inputs.HUDInput
 
             _hudInputActions.HUDActions.ToggleMainMenu.started += OnToggleMainMenuPressed;
 
-            _hudInputActions.HUDActions.LootScroll.performed += OnLootScrollPerformed;
+            _hudInputActions.HUDActions.LootScrollForward.started += OnLootScrollForwardPerformed;
+            _hudInputActions.HUDActions.LootScrollBack.started += OnLootScrollBackPerformed;
 
             _hudInputActions.HUDActions.Interact.started += OnInteracted;
         }
@@ -43,9 +45,12 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.Input.Inputs.HUDInput
             => ToggleMainMenuPressed?.Invoke();
         
 
-        private void OnLootScrollPerformed(InputAction.CallbackContext context)
-            => LootScrollPerformed?.Invoke(context.ReadValue<float>());
+        private void OnLootScrollBackPerformed(InputAction.CallbackContext context)
+            => ScrollForward?.Invoke();
         
+        private void OnLootScrollForwardPerformed(InputAction.CallbackContext context)
+            => ScrollBack?.Invoke();
+
         private void OnInteracted(InputAction.CallbackContext context)
             => Interacted?.Invoke();
     }

@@ -5,14 +5,12 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
 {
-    public class DetectedInteractablesHolder
+    public class DetectedInteractablesHolder : MonoBehaviour
     {
         public event Action<Interactable> InteractableRemoved;
         public event Action<Interactable> InteractableAdded;
-        
-        public static DetectedInteractablesHolder Empty() => 
-            new DetectedInteractablesHolder();
 
+        public List<GameObject> DetectedInteractables => _detectedInteractables;
         private readonly List<GameObject> _detectedInteractables = new();
 
         public bool TryAddDetected([NotNull] Interactable interactable)
