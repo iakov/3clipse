@@ -6,8 +6,9 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
         {
             UIManager.SwitchMenu(false);
             UIManager.SwitchHUD(false);
+            UIManager.SwitchDialogue(true);
             
-            GameSource.Instance.GetInputManager().DisableAll();
+            // GameSource.Instance.GetInputManager().DisableAll();
             PointerManager.SwitchPointerMode(CursorMode);
             StartCoroutine(TrackBlendCompletion(EndEnter));
         }

@@ -488,7 +488,7 @@ GameObject:
   - component: {fileID: 714676449}
   - component: {fileID: 714676448}
   - component: {fileID: 714676453}
-  - component: {fileID: 714676454}
+  - component: {fileID: 714676455}
   m_Layer: 0
   m_Name: NPC1
   m_TagString: Untagged
@@ -577,7 +577,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 714676447}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.33, y: 1.28, z: 10.82}
+  m_LocalPosition: {x: -9.33, y: 1.28, z: 6.5699997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -611,7 +611,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 14
   m_CollisionDetection: 0
---- !u!114 &714676454
+--- !u!114 &714676455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -626,6 +626,7 @@ MonoBehaviour:
   _dialoguePresenter: {fileID: 1686989541016823203, guid: 2af6b358cf22c364eacf4f065eff76d5, type: 3}
   _narrationCharacter: {fileID: 11400000, guid: 2d0fc689a6aae8f4fa8e4548fc8a238d, type: 2}
   _dialogue: {fileID: 11400000, guid: b315a3581d35b874fb2ecec86363f14e, type: 2}
+  _dialogueInstigator: {fileID: 11400000, guid: 1a3a3ae068b7cf444b96968195515cf2, type: 2}
 --- !u!43 &776543174
 Mesh:
   m_ObjectHideFlags: 0
@@ -922,7 +923,7 @@ GameObject:
   - component: {fileID: 1828637804}
   - component: {fileID: 1828637803}
   - component: {fileID: 1828637808}
-  - component: {fileID: 1828637809}
+  - component: {fileID: 1828637810}
   m_Layer: 0
   m_Name: NPC2
   m_TagString: Untagged
@@ -1011,7 +1012,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828637802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.45, y: 1.28, z: 10.82}
+  m_LocalPosition: {x: 1.45, y: 1.28, z: 6.5699997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1045,7 +1046,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 14
   m_CollisionDetection: 0
---- !u!114 &1828637809
+--- !u!114 &1828637810
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1060,3 +1061,4 @@ MonoBehaviour:
   _dialoguePresenter: {fileID: 1686989541016823203, guid: 2af6b358cf22c364eacf4f065eff76d5, type: 3}
   _narrationCharacter: {fileID: 11400000, guid: 88356fc6a04c7ed478beac5cc8cc0526, type: 2}
   _dialogue: {fileID: 11400000, guid: 883613c6ec352104a9af0717e422d073, type: 2}
+  _dialogueInstigator: {fileID: 11400000, guid: 1a3a3ae068b7cf444b96968195515cf2, type: 2}

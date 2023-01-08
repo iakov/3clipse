@@ -7,6 +7,8 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
     public class ChoiceDialogueNode: DialogueNode
     {
         [SerializeField] private DialogueChoice[] _nextNodes;
+
+        public DialogueChoice[] NextNodes => _nextNodes;
         
         public override DialogueNode GetNextNode(Choice.Choice choice)
         {

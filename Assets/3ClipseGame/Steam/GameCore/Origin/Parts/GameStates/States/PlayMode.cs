@@ -38,7 +38,7 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
             var inputAccessor = GameSource.Instance.GetInputManager();
             GameSource.Instance.GetPlayer().GetCurrentPlayerEntity().LoseControl();
             inputAccessor.Disable(InputType.Movement);
-            inputAccessor.Disable(InputType.HUD);
+            // inputAccessor.Disable(InputType.HUD);
             inputAccessor.Disable(InputType.Camera);
         }
     }
