@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using _3ClipseGame.Steam.GameMechanics.Interactables.Detector;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         [SerializeField] private DetectedInteractablesHolder _interactablesHolder;
         [SerializeField] private Transform _iconsParent;
 
-        private Dictionary<Interactable, InteractablePresenter> _displayedDictionary = new();
+        public readonly OrderedInteractablesDictionary DisplayedDictionary = new();
 
         private void OnEnable()
         {
@@ -27,16 +26,19 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         {
             var originalPresenter = interactable.GetNewPresenter();
             var presenter = Instantiate(originalPresenter, Vector3.zero, Quaternion.identity, _iconsParent);
-            _displayedDictionary.Add(interactable, presenter);
+            presenter.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            presenter.ChangeInteractable(interactable);
+            if(DisplayedDictionary.Count != 0) presenter.gameObject.SetActive(false);
+            DisplayedDictionary.AddElement(interactable, presenter);
         }
         
         private void RemoveInteractable(Interactable interactable)
         {
-            if (_displayedDictionary.ContainsKey(interactable) == false) return;
-            var presenter = _displayedDictionary[interactable];
+            if (DisplayedDictionary.Contains(interactable) == false) return;
+            var presenter = DisplayedDictionary.GetValueByKey(interactable);
 
-            _displayedDictionary.Remove(interactable);
-            Destroy(presenter.gameObject);
+            DisplayedDictionary.RemoveElement(interactable);
+            Destroy(((InteractablePresenter) presenter).gameObject);
         }
     }
 }
