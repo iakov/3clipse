@@ -10,7 +10,6 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
         public event Action<Interactable> InteractableRemoved;
         public event Action<Interactable> InteractableAdded;
 
-        public List<GameObject> DetectedInteractables => _detectedInteractables;
         private readonly List<GameObject> _detectedInteractables = new();
 
         public bool TryAddDetected([NotNull] Interactable interactable)

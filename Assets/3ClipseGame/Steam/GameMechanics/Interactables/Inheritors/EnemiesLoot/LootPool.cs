@@ -8,14 +8,8 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.EnemiesLoot
 {
     public class LootPool : Pool
     {
-        #region SerializeFields
-
         [SerializeField] private int poolAmount = 10;
         [SerializeField] private GameObject poolObjectPrefab;
-
-        #endregion
-
-        #region Initialization
 
         private Queue<GameObject> _pooledObjects;
         private List<GameObject> _unPooledObjects;
@@ -62,8 +56,8 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.EnemiesLoot
 
         private void AddPickableComponents(GameObject newObject)
         {
-            if(newObject.TryGetComponent<LootInteractable>(out var loot)) Destroy(loot);
-            newObject.AddComponent<LootInteractable>();
+            if(!newObject.TryGetComponent<LootInteractable>(out var loot)) 
+                newObject.AddComponent<LootInteractable>();
         }
 
         private void AddPoolElementComponents(GameObject newObject)
@@ -72,11 +66,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.EnemiesLoot
                           ?? newObject.AddComponent<PoolElement>();
             element.SetPool(this);
         }
-
-        #endregion
-
-        #region PublicMethods
-
+        
         public override GameObject GetPoolObject()
         {
             var result = _pooledObjects.Dequeue();
@@ -92,7 +82,5 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.EnemiesLoot
             poolObject.transform.SetParent(_transform);
             _pooledObjects.Enqueue(poolObject);
         }
-
-        #endregion
     }
 }

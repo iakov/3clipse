@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
@@ -8,9 +7,6 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
     
     public class InteractablesDetector : MonoBehaviour
     {
-        public event Action<Interactable> InteractableDetected;
-        public event Action<Interactable> InteractableRetired;
-
         private DetectedInteractablesHolder _detectedInteractablesHolder;
 
         private void Awake()
@@ -18,25 +14,6 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
             _detectedInteractablesHolder = GetComponent<DetectedInteractablesHolder>();
             GetComponent<SphereCollider>().isTrigger = true;
         }
-
-        private void OnEnable()
-        {
-            _detectedInteractablesHolder.InteractableAdded += OnInteractablesAdded;
-            _detectedInteractablesHolder.InteractableRemoved += OnInteractablesRemoved;
-        }
-        
-        private void OnDisable()
-        {
-            _detectedInteractablesHolder.InteractableAdded -= OnInteractablesAdded;
-            _detectedInteractablesHolder.InteractableRemoved -= OnInteractablesRemoved;
-        }
-
-        private void OnInteractablesAdded(Interactable interactable) => 
-            InteractableDetected?.Invoke(interactable);
-        
-        private void OnInteractablesRemoved(Interactable interactable) =>
-            InteractableRetired?.Invoke(interactable);
-        
 
         private void OnTriggerEnter(Collider other)
         {
@@ -53,7 +30,6 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Detector
         private bool IsInteractable(Component other, out Interactable interactable)
         {
             var isSuccessful = other.TryGetComponent<Interactable>(out interactable);
-            Debug.Log(isSuccessful);
             return isSuccessful;
         }
     }

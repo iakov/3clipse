@@ -1,4 +1,3 @@
-using _3ClipseGame.Steam.GameMechanics.Interactables.Detector;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
@@ -6,49 +5,48 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
     public class InteractablesSelector : MonoBehaviour
     {
         [SerializeField] private InteractablesInputProcessor _inputProcessor;
-        [SerializeField] private DetectedInteractablesHolder _interactablesHolder;
+        [SerializeField] private InteractablesDisplay _interactablesDisplay;
 
-        private int _detectedID;
+        private OrderedInteractablesDictionary _dictionary => _interactablesDisplay.DisplayedDictionary;
+        private int _currentID;
 
         private void OnEnable()
         {
-            _detectedID = 0;
-            _inputProcessor.ScrolledBack += TrySelectPrevious;
-            _inputProcessor.ScrolledForward += TrySelectNext;
-            _inputProcessor.Interacted += TryActivateCurrent;
+            _inputProcessor.ScrolledBack += SelectPrevious;
+            _inputProcessor.ScrolledForward += SelectNext;
+            _inputProcessor.Interacted += ActivateCurrent;
         }
         
         private void OnDisable()
         {
-            _inputProcessor.ScrolledBack -= TrySelectPrevious;
-            _inputProcessor.ScrolledForward -= TrySelectNext;
-            _inputProcessor.Interacted -= TryActivateCurrent;
+            _inputProcessor.ScrolledBack -= SelectPrevious;
+            _inputProcessor.ScrolledForward -= SelectNext;
+            _inputProcessor.Interacted -= ActivateCurrent;
         }
 
-        private void TrySelectPrevious()
+        private void SelectPrevious()
         {
-            _interactablesHolder.DetectedInteractables[_detectedID].SetActive(false);
-            
-            _detectedID++;
-            if (_interactablesHolder.DetectedInteractables.Count == _detectedID) _detectedID--;
-
-            _interactablesHolder.DetectedInteractables[_detectedID].SetActive(true);
+            var current = _dictionary.GetValueByID(_currentID);
+            current.gameObject.SetActive(false);
+            var newElement = _dictionary.GetPreviousElement(current);
+            if (current != newElement) _currentID--;
+            newElement.gameObject.SetActive(true);
         }
 
-        private void TrySelectNext()
+        private void SelectNext()
         {
-            _interactablesHolder.DetectedInteractables[_detectedID].SetActive(false);
-            
-            _detectedID--;
-            if (_detectedID < 0) _detectedID++;
-
-            _interactablesHolder.DetectedInteractables[_detectedID].SetActive(true);
+            var current = _dictionary.GetValueByID(_currentID);
+            current.gameObject.SetActive(false);
+            var newElement = _dictionary.GetNextElement(current);
+            if (current != newElement) _currentID++;
+            newElement.gameObject.SetActive(true);
         }
 
-        private void TryActivateCurrent()
+        private void ActivateCurrent()
         {
-            var current = _interactablesHolder.DetectedInteractables[_detectedID];
-            current.GetComponent<Interactable>().Activate();
+            Debug.Log(_currentID);
+            var current = _dictionary.GetValueByID(_currentID);
+            current.Activate();
         }
     }
 }
