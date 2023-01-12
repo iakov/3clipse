@@ -12,19 +12,28 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
         [SerializeField] private TMP_Text _choice;
         [SerializeField] private DialogueNodeChannel _dialogueNodeChannel;
         
+        private Choice _transitionChoice;
         private DialogueNode _choiceNextNode;
         
-        public DialogueChoice Choice
+        public DialogueChoice DialogueChoice
         {
             set
             {
                 _choice.text = value.TransitionChoice.Speech.SpeechText;
+                _transitionChoice = value.TransitionChoice;
                 _choiceNextNode = value.ChoiceNode;
             }
         }
         
         private void Start() => GetComponent<Button>().onClick.AddListener(OnClick);
-        
-        private void OnClick() => _dialogueNodeChannel.RaiseRequestDialogueNode(_choiceNextNode);
+
+        private void OnClick()
+        {
+            _dialogueNodeChannel.RaiseGetDialogueChoice(_transitionChoice);
+            if (_choiceNextNode != null)
+                _dialogueNodeChannel.RaiseRequestDialogueNode(_choiceNextNode);
+            else
+                _dialogueNodeChannel.RaiseEndDialogue(null);
+        }
     }
 }

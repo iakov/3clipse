@@ -16,6 +16,7 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
         {
             EndEnterInput();
             UIManager.SwitchHUD(true);
+            UIManager.SwitchDialogue(false);
             GameSource.Instance.GetInputManager().Enable(InputType.Movement);
             Time.timeScale = TimeScale;
         }

@@ -626,7 +626,7 @@ MonoBehaviour:
   _dialoguePresenter: {fileID: 1686989541016823203, guid: 2af6b358cf22c364eacf4f065eff76d5, type: 3}
   _narrationCharacter: {fileID: 11400000, guid: 2d0fc689a6aae8f4fa8e4548fc8a238d, type: 2}
   _dialogue: {fileID: 11400000, guid: b315a3581d35b874fb2ecec86363f14e, type: 2}
-  _dialogueInstigator: {fileID: 11400000, guid: 1a3a3ae068b7cf444b96968195515cf2, type: 2}
+  _dialogueInstigator: {fileID: 1630073198}
 --- !u!43 &776543174
 Mesh:
   m_ObjectHideFlags: 0
@@ -910,6 +910,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -33.03, z: 0}
+--- !u!1 &1630073197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1630073199}
+  - component: {fileID: 1630073198}
+  m_Layer: 0
+  m_Name: DialoguesInstigator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1630073198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630073197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97c61316ee34b5f9934e18fb1c7ddeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueNodeChannel: {fileID: 11400000, guid: e88f7958e96057a46a97942b9026acae, type: 2}
+--- !u!4 &1630073199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630073197}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.207373, y: 5.7948017, z: 5.309939}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1828637802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,4 +1106,4 @@ MonoBehaviour:
   _dialoguePresenter: {fileID: 1686989541016823203, guid: 2af6b358cf22c364eacf4f065eff76d5, type: 3}
   _narrationCharacter: {fileID: 11400000, guid: 88356fc6a04c7ed478beac5cc8cc0526, type: 2}
   _dialogue: {fileID: 11400000, guid: 883613c6ec352104a9af0717e422d073, type: 2}
-  _dialogueInstigator: {fileID: 11400000, guid: 1a3a3ae068b7cf444b96968195515cf2, type: 2}
+  _dialogueInstigator: {fileID: 1630073198}

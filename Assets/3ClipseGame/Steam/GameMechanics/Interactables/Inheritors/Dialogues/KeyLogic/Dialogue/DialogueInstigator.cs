@@ -1,3 +1,5 @@
+using _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode;
+using _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode.Choice;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue
@@ -5,26 +7,30 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
     public class DialogueInstigator: MonoBehaviour
     {
         [SerializeField] private DialogueNodeChannel _dialogueNodeChannel;
-        private Dialogue CurrentDialogue;
+        private Dialogue _currentDialogue;
 
         private void Awake()
         {
             _dialogueNodeChannel.OnDialogueNodeRequested += TryStartDialogueNode;
-            _dialogueNodeChannel.OnDialogueNodeEnd += TryEndDialogueNode;
+            // _dialogueNodeChannel.OnDialogueNodeEnd += TryEndDialogueNode;
+            _dialogueNodeChannel.OnDialogueChoiceGot += SetChoice;
+            _dialogueNodeChannel.OnDialogueEnd += TryEndCurrentDialogue;
         }
 
         private void OnDestroy()
         {
             _dialogueNodeChannel.OnDialogueNodeRequested -= TryStartDialogueNode;
-            _dialogueNodeChannel.OnDialogueNodeEnd -= TryEndDialogueNode; 
+            // _dialogueNodeChannel.OnDialogueNodeEnd -= TryEndDialogueNode;
+            _dialogueNodeChannel.OnDialogueChoiceGot -= SetChoice;
+            _dialogueNodeChannel.OnDialogueEnd -= TryEndCurrentDialogue;
         }
 
         public void TryStartDialogue(Dialogue dialogue)
         {
-            if (CurrentDialogue == null || CurrentDialogue.CurrentDialogueNode == null)
+            if (_currentDialogue == null || _currentDialogue.CurrentDialogueNode == null)
             {
-                CurrentDialogue = dialogue;
-                var firstNode = CurrentDialogue.StartDialogue();
+                _currentDialogue = dialogue;
+                var firstNode = _currentDialogue.StartDialogue();
                 TryStartDialogueNode(firstNode);
             }
             else
@@ -33,12 +39,14 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
             }
         }
 
-        public void TryEndDialogue(Dialogue dialogue)
+        private void TryEndDialogue(Dialogue dialogue)
         {
-            if (CurrentDialogue == dialogue)
+            if (_currentDialogue == dialogue)
             {
-                CurrentDialogue.EndDialogue();
-                CurrentDialogue = null;
+                dialogue.EndDialogue();
+                _dialogueNodeChannel.RaiseEndDialogueNode(dialogue.CurrentDialogueNode);
+                TryEndDialogueNode(dialogue.CurrentDialogueNode);
+                _currentDialogue = null;
             }
             else
             {
@@ -46,16 +54,27 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
             }
         }
 
-        public void TryStartDialogueNode(DialogueNode.DialogueNode node)
+        private void TryStartDialogueNode(DialogueNode.DialogueNode node)
         {
-            CurrentDialogue.StartDialogueNode(node);
-            _dialogueNodeChannel.RaiseStartDialogueNode(CurrentDialogue.CurrentDialogueNode);
+            _dialogueNodeChannel.RaiseEndDialogueNode(_currentDialogue.CurrentDialogueNode);
+            _currentDialogue.StartDialogueNode(node);
+
+            if (_currentDialogue.CurrentDialogueNode == null)
+            {
+                TryEndDialogue(_currentDialogue);
+            }
+            else
+            {
+                if (_currentDialogue.CurrentDialogueNode.GetType() == typeof(ChoiceDialogueNode)) 
+                    _dialogueNodeChannel.RaiseDrawDialogueNode(_currentDialogue.CurrentDialogueNode);
+                _dialogueNodeChannel.RaiseStartDialogueNode(_currentDialogue.CurrentDialogueNode);
+            }
         }
         
-        public void TryEndDialogueNode(DialogueNode.DialogueNode node)
-        {
-            CurrentDialogue.EndDialogueNode(node);
-            _dialogueNodeChannel.RaiseEndDialogueNode(CurrentDialogue.CurrentDialogueNode);
-        }
+        private void TryEndDialogueNode(DialogueNode.DialogueNode node) => _currentDialogue.EndDialogueNode(node);
+
+        private void SetChoice(Choice choice) => _currentDialogue.Choice = choice;
+
+        private void TryEndCurrentDialogue(Dialogue dialogue) => TryEndDialogue(_currentDialogue);
     }
 }

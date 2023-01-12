@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: D2Node2DC2NL
   m_EditorClassIdentifier: 
   _speakerName: {fileID: 11400000, guid: 88356fc6a04c7ed478beac5cc8cc0526, type: 2}
-  _speech: {fileID: 11400000, guid: 0e61df51f2103a748a9139b952501aad, type: 2}
+  _speech: {fileID: 11400000, guid: fc521e8d5be1a0a4db45107070c4d35f, type: 2}

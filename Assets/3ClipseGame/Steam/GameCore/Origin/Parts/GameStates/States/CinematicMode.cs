@@ -1,3 +1,6 @@
+using _3ClipseGame.Steam.GameCore.Origin.Parts.Input;
+using UnityEngine;
+
 namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
 {
     public class CinematicMode : GameMode
@@ -9,7 +12,8 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
             UIManager.SwitchDialogue(true);
             
             // GameSource.Instance.GetInputManager().DisableAll();
-            PointerManager.SwitchPointerMode(CursorMode);
+            // PointerManager.SwitchPointerMode(CursorMode);
+            PointerManager.SwitchPointerMode(CursorLockMode.None);
             StartCoroutine(TrackBlendCompletion(EndEnter));
         }
         

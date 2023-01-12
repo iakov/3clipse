@@ -1,6 +1,6 @@
-using System;
 using _3ClipseGame.Steam.GameCore.Origin;
 using _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates;
+using _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue.DialogueNode.Choice;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic.Dialogue
@@ -11,10 +11,11 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
         [SerializeField] private DialogueNode.DialogueNode _firstNode;
         
         public DialogueNode.DialogueNode CurrentDialogueNode { get; private set; }
+        public Choice Choice { get; set; }
         
         private bool CanStartDialogueNode(DialogueNode.DialogueNode node)
         {
-            return CurrentDialogueNode == null || node == null || CurrentDialogueNode.GetNextNode(null) == node;
+            return CurrentDialogueNode == null || node == null || CurrentDialogueNode.GetNextNode(Choice) == node;
         }
         
         public DialogueNode.DialogueNode StartDialogue()
@@ -27,25 +28,17 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
 
         public void EndDialogue()
         {
-            EndDialogueNode(CurrentDialogueNode);
+            var stateManager = GameSource.Instance.GetStatesManager();
+            stateManager.Enable(GameStateType.PlayMode);
         }
 
         public void StartDialogueNode(DialogueNode.DialogueNode node)
         {
             if (CanStartDialogueNode(node))
             {
-                if (node == null)
-                {
-                    try
-                    {
-                        node = CurrentDialogueNode.GetNextNode(null);
-                    }
-                    catch (Exception e)
-                    {
-                        // ignored
-                    }
-                }
-                EndDialogueNode(CurrentDialogueNode);
+                if (node == null) node = CurrentDialogueNode.GetNextNode(null);
+
+                // EndDialogueNode(CurrentDialogueNode);
                 CurrentDialogueNode = node;
             }
             else
@@ -57,13 +50,9 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
         public void EndDialogueNode(DialogueNode.DialogueNode node)
         {
             if (CurrentDialogueNode == node)
-            {
                 CurrentDialogueNode = null;
-            }
             else
-            {
                 throw new DialogueException("Trying to stop a dialogue node that isn't running!");
-            }
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic
 {
-    public class DialogueUIController: MonoBehaviour
+    public class DialogueUIController : MonoBehaviour
     {
         [SerializeField] private TMP_Text _speakerName;
         [SerializeField] private TMP_Text _dialogueText;
@@ -16,26 +16,22 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
 
         [SerializeField] private DialogueNodeChannel _dialogueNodeChannel;
 
-        private bool _listenToInput = false;
-        private DialogueNode _nextNode = null;
-
         private void Awake()
         {
             _dialogueNodeChannel.OnDialogueNodeStarted += OnDialogueNodeStarted;
             _dialogueNodeChannel.OnDialogueNodeEnd += OnDialogueNodeEnd;
-            
+            _dialogueNodeChannel.OnDialogueNodeDraw += VisitedByChoiceNode;
+            _dialogueNodeChannel.OnDialogueEnd += OnDialogueEnd;
+
             _choicesBoxTransform.gameObject.SetActive(false);
         }
 
         private void OnDestroy()
         {
             _dialogueNodeChannel.OnDialogueNodeStarted -= OnDialogueNodeStarted;
-            _dialogueNodeChannel.OnDialogueNodeEnd -= OnDialogueNodeEnd; 
-        }
-
-        private void Update()
-        {
-            // if (_listenToInput)
+            _dialogueNodeChannel.OnDialogueNodeEnd -= OnDialogueNodeEnd;
+            _dialogueNodeChannel.OnDialogueNodeDraw -= VisitedByChoiceNode;
+            _dialogueNodeChannel.OnDialogueEnd -= OnDialogueEnd;
         }
 
         private void OnDialogueNodeStarted(DialogueNode node)
@@ -46,8 +42,6 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
 
         private void OnDialogueNodeEnd(DialogueNode node)
         {
-            _nextNode = null;
-            _listenToInput = false;
             _speakerName.text = "";
             _dialogueText.text = "";
 
@@ -55,26 +49,28 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
             {
                 Destroy(child.gameObject);
             }
-            
+
             _choicesBoxTransform.gameObject.SetActive(false);
         }
 
-        public void Visit()
+        private void VisitedByChoiceNode(DialogueNode node)
         {
-            // _listenToInput = true;
-            // _nextNode = node.GetNextNode(null);
-            _dialogueNodeChannel.RaiseRequestDialogueNode(null);
+            var choiceDialogueNode = (ChoiceDialogueNode)node;
+            _choicesBoxTransform.gameObject.SetActive(true);
+
+            foreach (DialogueChoice dialogueChoice in choiceDialogueNode.NextNodes)
+            {
+                DialogueChoiceController newChoice = Instantiate(_choiceControllerPrefab, _choicesBoxTransform);
+                newChoice.DialogueChoice = dialogueChoice;
+            }
         }
 
-        // public void Visit(ChoiceDialogueNode node)
-        // {
-        //     _choicesBoxTransform.gameObject.SetActive(true);
-        //
-        //     foreach (DialogueChoice choice in node.NextNodes)
-        //     {
-        //         DialogueChoiceController newChoice = Instantiate(_choiceControllerPrefab, _choicesBoxTransform);
-        //         newChoice.Choice = choice;
-        //     }
-        // }
+        private void OnDialogueEnd(Dialogue.Dialogue dialogue) => OnDialogueNodeEnd(null);
+
+        public void VisitedByBasicNode()
+        {
+            if (!_choicesBoxTransform.gameObject.activeSelf)
+                _dialogueNodeChannel.RaiseRequestDialogueNode(null);
+        }
     }
 }

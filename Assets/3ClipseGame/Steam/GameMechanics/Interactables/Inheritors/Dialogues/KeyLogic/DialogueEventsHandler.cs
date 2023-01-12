@@ -12,9 +12,6 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
         
         private void OnDisable() => _inputProcessor.Interacted -= OnInteracted;
 
-        private void OnInteracted()
-        {
-            _dialogueUIController.Visit();
-        }
+        private void OnInteracted() => _dialogueUIController.VisitedByBasicNode();
     }
 }

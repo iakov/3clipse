@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: D2Node2DC1
   m_EditorClassIdentifier: 
   _transitionChoice: {fileID: 11400000, guid: 00cf206b76948c3419e04ec8c6f945b2, type: 2}
-  _choiceNode: {fileID: 11400000, guid: 66a37fb7c47037f4abaaff8d54ce8e31, type: 2}
+  _choiceNode: {fileID: 11400000, guid: 8281d9ea3117a194c977cbad273623e1, type: 2}
