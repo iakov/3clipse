@@ -9,7 +9,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         [SerializeField] private DetectedInteractablesHolder _interactablesHolder;
         [SerializeField] private Transform _iconsParent;
 
-        public event Action<InteractablePresenter> IconRetired;
+        public event Action<InteractablePresenter> IconRetiring;
         public event Action<InteractablePresenter> IconCreated;
 
         public readonly OrderedInteractablesDictionary DisplayedDictionary = new();
@@ -30,6 +30,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         {
             var presenter = CreatePresenter(interactable);
             DisplayedDictionary.AddElement(interactable, presenter);
+            interactable.Disappeared += OnDisappear;
             IconCreated?.Invoke(presenter);
         }
 
@@ -45,14 +46,22 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         private void RemoveInteractable(Interactable interactable)
         {
             if (DisplayedDictionary.Contains(interactable) == false) return;
+            
+            interactable.Disappeared -= OnDisappear;
             var presenter = DisplayedDictionary.GetValueByKey(interactable);
             DestroyInteractable(interactable, presenter);
         }
 
+        private void OnDisappear(Interactable interactable)
+        {
+            interactable.Disappeared -= OnDisappear;
+            var presenter = DisplayedDictionary.GetValueByKey(interactable);
+            DestroyInteractable(interactable, presenter);
+        }
+        
         private void DestroyInteractable(Interactable interactable, InteractablePresenter presenter)
         {
-            IconRetired?.Invoke(presenter);
-            DisplayedDictionary.RemoveElement(interactable);
+            IconRetiring?.Invoke(presenter);
             Destroy(presenter.gameObject);
         }
     }

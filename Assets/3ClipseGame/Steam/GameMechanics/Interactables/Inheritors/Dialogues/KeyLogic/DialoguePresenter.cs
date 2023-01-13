@@ -3,10 +3,12 @@ using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.KeyLogic
 {
-    public class DialoguePresenter: InteractablePresenter
+    public class DialoguePresenter : InteractablePresenter
     {
         [SerializeField] private TMP_Text _hint;
 
-        public void SetNpcName(string newNpcName) => _hint.text = "Press 'F' to talk with " +  newNpcName;
+        public override void Activate() => CurrentInteractable.Activate();
+        
+        public void SetNpcName(string newNpcName) => _hint.text = "Talk with " + newNpcName;
     }
 }

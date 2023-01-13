@@ -33,6 +33,9 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.EnemiesLoot.
             var player = GameSource.Instance.GetPlayer();
             var currentEntityInventory = player.GetCurrentPlayerEntity().Inventory;
             currentEntityInventory.TryAddItem(_resource, _amount);
+            
+            Disappeared?.Invoke(this);
+            Destroy(gameObject);
         }
     }
 }

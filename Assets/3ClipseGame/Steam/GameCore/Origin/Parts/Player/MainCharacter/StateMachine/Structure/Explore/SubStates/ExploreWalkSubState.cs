@@ -42,7 +42,7 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.Player.MainCharacter.StateMac
             var forwardVector = ExploreDto.PlayerCollider.transform.forward;
             var rotatedInputVector = ExploreDto.PlayerMover.RotateWithCamera(inputVector, MoveType.StateMove, RotationType.RotateOnBeginning);
             var angle = Vector3.SignedAngle(rotatedInputVector, forwardVector, Vector3.down);
-            if(angle >= 170f || angle <= -170f) Debug.Log("Full turn");
+            // if(angle >= 170f || angle <= -170f) Debug.Log("Full turn");
             // if((angle >= 120f && angle < 170f) || ( angle <= -120f && angle > -170f)) Debug.Log("135 turn");
             // if((angle >= 80f && angle < 120f) || ( angle <= -80f && angle > -120f)) Debug.Log("90 turn");
 

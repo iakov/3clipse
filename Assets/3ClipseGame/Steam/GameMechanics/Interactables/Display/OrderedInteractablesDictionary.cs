@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Specialized;
+using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
 {
@@ -9,10 +10,32 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         
         private OrderedDictionary _dictionary = new();
 
-        public void AddElement(Interactable key, InteractablePresenter value) => _dictionary.Add(key, value);
+        public void AddElement(Interactable key, InteractablePresenter value)
+        {
+            try
+            {
+                _dictionary.Add(key, value);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+            }
+        }
 
         public void RemoveElement(Interactable key) => _dictionary.Remove(key);
-        
+
+        public void RemoveElement(int id)
+        {
+            try
+            {
+                _dictionary.RemoveAt(id);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+            }
+        }
+
         public bool Contains(Interactable key)
         {
             try
@@ -26,32 +49,60 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
             }
         }
 
-        public InteractablePresenter GetValueByID(int id) =>  _dictionary[id] as InteractablePresenter;
+        public InteractablePresenter GetValueByID(int id)
+        {
+            try
+            {
+                return _dictionary[id] as InteractablePresenter;
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+                return null;
+            }
+        }
 
-        public InteractablePresenter GetValueByKey(Interactable key) => _dictionary[key] as InteractablePresenter;
+        public InteractablePresenter GetValueByKey(Interactable key)
+        {
+            try
+            {
+                return _dictionary[key] as InteractablePresenter;
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+                return null;
+            }
+        }
 
         public InteractablePresenter GetNextElement(InteractablePresenter interactablePresenter)
         {
-            var currentID = GetIDByValue(interactablePresenter);
-            if (currentID == _dictionary.Count - 1) return interactablePresenter;
-            return _dictionary[++currentID] as InteractablePresenter;
+            var id = GetIDByValue(interactablePresenter);
+            
+            if (id == _dictionary.Count - 1) id = 0;
+            else id++;
+            
+            return _dictionary[id] as InteractablePresenter;
         }
 
         public InteractablePresenter GetPreviousElement(InteractablePresenter interactablePresenter)
         {
-            var currentID = GetIDByValue(interactablePresenter);
-            if (currentID == 0) return interactablePresenter;
-            return _dictionary[--currentID] as InteractablePresenter;
+            var id = GetIDByValue(interactablePresenter);
+
+            if (id == 0) id = _dictionary.Count - 1;
+            else id--;
+            
+            return _dictionary[id] as InteractablePresenter;
         }
 
-        private int GetIDByValue(InteractablePresenter value)
+        public int GetIDByValue(InteractablePresenter value)
         {
             for (var i = 0; i < _dictionary.Count; i++)
             {
                 if (value == GetValueByID(i)) return i;
             }
 
-            return -1;
+            return 0;
         }
     }
 }
