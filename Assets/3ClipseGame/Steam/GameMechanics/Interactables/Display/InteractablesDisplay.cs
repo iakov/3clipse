@@ -9,7 +9,9 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         [SerializeField] private DetectedInteractablesHolder _interactablesHolder;
         [SerializeField] private Transform _iconsParent;
 
+        
         public event Action<InteractablePresenter> IconRetiring;
+        public event Action IconRetired;
         public event Action<InteractablePresenter> IconCreated;
 
         public readonly OrderedInteractablesDictionary DisplayedDictionary = new();
@@ -28,40 +30,47 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
 
         private void DisplayNewInteractable(Interactable interactable)
         {
-            var presenter = CreatePresenter(interactable);
-            DisplayedDictionary.AddElement(interactable, presenter);
-            interactable.Disappeared += OnDisappear;
-            IconCreated?.Invoke(presenter);
+            if(DisplayedDictionary.Contains(interactable)) return;
+            
+            interactable.Disappeared += DestructPresenter;
+            StructPresenter(interactable);
+        }
+
+        private void StructPresenter(Interactable interactable)
+        {
+            var presenterInstance = CreatePresenter(interactable);
+            DisplayedDictionary.AddElement(interactable, presenterInstance);
+            IconCreated?.Invoke(presenterInstance);
         }
 
         private InteractablePresenter CreatePresenter(Interactable interactable)
         {
-            var originalPresenter = interactable.GetNewPresenter();
-            var presenter = Instantiate(originalPresenter, _iconsParent);
-            presenter.ChangeInteractable(interactable);
-            presenter.gameObject.SetActive(false);
-            return presenter;
+            var detectedPresenterPrefab = interactable.GetNewPresenter();
+            var presenterInstance = Instantiate(detectedPresenterPrefab, _iconsParent);
+            presenterInstance.ChangeInteractable(interactable);
+            return presenterInstance;
         }
         
         private void RemoveInteractable(Interactable interactable)
         {
-            if (DisplayedDictionary.Contains(interactable) == false) return;
+            if(DisplayedDictionary.Contains(interactable) == false) return;
             
-            interactable.Disappeared -= OnDisappear;
-            var presenter = DisplayedDictionary.GetValueByKey(interactable);
-            DestroyInteractable(interactable, presenter);
+            interactable.Disappeared -= DestructPresenter;
+            DestructPresenter(interactable);
         }
 
-        private void OnDisappear(Interactable interactable)
+        private void DestructPresenter(Interactable interactable)
         {
-            interactable.Disappeared -= OnDisappear;
             var presenter = DisplayedDictionary.GetValueByKey(interactable);
-            DestroyInteractable(interactable, presenter);
+            
+            IconRetiring?.Invoke(presenter);
+            DeletePresenter(interactable, presenter);
+            IconRetired?.Invoke();
         }
         
-        private void DestroyInteractable(Interactable interactable, InteractablePresenter presenter)
+        private void DeletePresenter(Interactable interactable, InteractablePresenter presenter)
         {
-            IconRetiring?.Invoke(presenter);
+            DisplayedDictionary.RemoveElement(interactable);
             Destroy(presenter.gameObject);
         }
     }

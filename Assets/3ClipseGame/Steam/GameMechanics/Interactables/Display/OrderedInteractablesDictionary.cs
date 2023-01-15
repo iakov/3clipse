@@ -41,7 +41,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
             try
             {
                 var element = _dictionary[key];
-                return true;
+                return element != null;
             }
             catch (Exception e)
             {

@@ -11,27 +11,27 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         private void OnEnable()
         {
             _interactablesDisplay.IconCreated += OnIconCreated;
-            _interactablesDisplay.IconRetiring += OnIconRetiring;
+            _interactablesDisplay.IconRetired += OnIconRetired;
         }
         
         private void OnDisable()
         {
             _interactablesDisplay.IconCreated -= OnIconCreated;
-            _interactablesDisplay.IconRetiring -= OnIconRetiring;
+            _interactablesDisplay.IconRetired -= OnIconRetired;
         }
 
-        private void OnIconCreated(InteractablePresenter newIcon)
+        private void OnIconCreated(InteractablePresenter _)
         {
             var iconsAmount = _interactablesDisplay.DisplayedDictionary.Count;
             SwitchInteractHint(true);
             if(iconsAmount == 2) SwitchScrollHint(true);
         }
 
-        private void OnIconRetiring(InteractablePresenter retiringIcon)
+        private void OnIconRetired()
         {
             var iconsAmount = _interactablesDisplay.DisplayedDictionary.Count;
-            if (iconsAmount == 1) SwitchInteractHint(false);
-            else if(iconsAmount == 2) SwitchScrollHint(false);
+            if (iconsAmount == 0) SwitchInteractHint(false);
+            else if(iconsAmount == 1) SwitchScrollHint(false);
         }
 
         private void SwitchInteractHint(bool isActive)

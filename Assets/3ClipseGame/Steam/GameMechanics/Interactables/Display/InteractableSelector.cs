@@ -7,9 +7,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         [SerializeField] private InteractablesInputProcessor _inputProcessor;
         [SerializeField] private InteractablesDisplay _interactablesDisplay;
 
-        private OrderedInteractablesDictionary _dictionary => _interactablesDisplay.DisplayedDictionary;
-
-        private int _currentID;
+        private InteractablePresenter _currentPresenter;
 
         private void OnEnable()
         {
@@ -33,65 +31,53 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Display
         
         private void OnIconCreated(InteractablePresenter presenter)
         {
-            if(_dictionary.Count != 1) return;
-            presenter.gameObject.SetActive(true);
+            if (_interactablesDisplay.DisplayedDictionary.Count == 1) _currentPresenter = presenter;
+            else presenter.gameObject.SetActive(false);
         }
         
         private void OnIconRetiring(InteractablePresenter presenter)
         {
-            var current = _dictionary.GetValueByID(_currentID);
-            if(current != presenter) return;
+            if(presenter != _currentPresenter) return;
             
-            DeleteIcon(current);
-        }
-
-        private void DeleteIcon(InteractablePresenter current)
-        {
-            _dictionary.RemoveElement(_currentID);
-            if (_dictionary.Count == 0) return;
-            SelectNext(current);
+            if (_interactablesDisplay.DisplayedDictionary.Count == 1) _currentPresenter = null;
+            else SelectNextIcon();
         }
         
         private void SelectNextIcon()
         {
-            var current = _dictionary.GetValueByID(_currentID);
-            SelectNext(current);
+            SelectNext(_currentPresenter);
         }
 
         private void SelectNext(InteractablePresenter current)
         {
-            if(current == null) return;
+            if(_currentPresenter == null) return;
             
             current.gameObject.SetActive(false);
-            var newElement = _dictionary.GetNextElement(current);
-            newElement.gameObject.SetActive(true);
-            
-            _currentID = _dictionary.GetIDByValue(newElement);
+            _currentPresenter = _interactablesDisplay.DisplayedDictionary.GetNextElement(current);
+            _currentPresenter.gameObject.SetActive(true);
         }
 
         private void SelectPreviousIcon()
         {
-            var current = _dictionary.GetValueByID(_currentID);
-            SelectPrevious(current);
+            SelectPrevious(_currentPresenter);
         }
 
         private void SelectPrevious(InteractablePresenter current)
         {
-            if(current == null) return;
+            if(_currentPresenter == null) return;
             
             current.gameObject.SetActive(false);
-            var newElement = _dictionary.GetPreviousElement(current);
-            newElement.gameObject.SetActive(true);
-
-            _currentID = _dictionary.GetIDByValue(newElement);
+            _currentPresenter = _interactablesDisplay.DisplayedDictionary.GetPreviousElement(current);
+            _currentPresenter.gameObject.SetActive(true);
         }
 
         private void ActivateCurrent()
         {
-            if(_dictionary.Count == 0) return;
-            
-            var current = _dictionary.GetValueByID(_currentID);
-            current.Activate();
+            if (_currentPresenter == null) return;
+
+            var deletingIcon = _currentPresenter;
+            SelectNextIcon();
+            deletingIcon.Activate();
         }
     }
 }
