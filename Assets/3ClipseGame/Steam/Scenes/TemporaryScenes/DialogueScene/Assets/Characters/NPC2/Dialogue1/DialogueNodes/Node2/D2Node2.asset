@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c41bdf9a71944f3ca76b275ac5c5880b, type: 3}
+  m_Name: D2Node2
+  m_EditorClassIdentifier: 
+  _dialogueLine: {fileID: 11400000, guid: c7ef207b2ce9d00498c8e26e8fa56ada, type: 2}
+  _nextNodes:
+  - {fileID: 11400000, guid: 446486f2e50fd494ea49bad7ca795dab, type: 2}
+  - {fileID: 11400000, guid: 917fb4158f6f17c46916809355aca712, type: 2}

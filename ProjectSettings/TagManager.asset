@@ -3,22 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Entity
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Decals
+  - Physical Decals
+  - Ignore Light
+  - Post Processing
+  - Walkable
+  - Climable
+  - Fully Transparent
+  - Player
   - 
   - 
   - 

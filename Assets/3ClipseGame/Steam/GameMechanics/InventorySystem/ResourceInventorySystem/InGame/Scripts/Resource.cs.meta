@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 68a8abac7bc3226498f4701792aaffa5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - uiImage: {fileID: 21300000, guid: 3f62bf0c020702f4ebd19513b15ab479, type: 3}
+  - lootPrefab: {fileID: 2440630397707749845, guid: aa90c69688926e44fa5a48b671b05835, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

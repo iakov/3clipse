@@ -1,0 +1,114 @@
+{
+    "name": "HUDInputMap",
+    "maps": [
+        {
+            "name": "HUDActions",
+            "id": "ae8d0ee5-ee0e-4338-8cc4-8911ac11bec3",
+            "actions": [
+                {
+                    "name": "ToggleMainMenu",
+                    "type": "Button",
+                    "id": "20841473-99bd-433a-83a0-4f3524412efb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShowElementalWheel",
+                    "type": "Button",
+                    "id": "b16af61f-1d5f-4ceb-ac9d-37108dc5da8a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LootScrollForward",
+                    "type": "Button",
+                    "id": "b3797aec-0c3c-4b0f-acb2-fd5e466af57f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LootScrollBack",
+                    "type": "Button",
+                    "id": "4e4998ce-7605-4c58-8256-f1c156888ff0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "994e0683-481c-46ae-983c-cca3fd0f6f0e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8570186c-a1fe-4951-9bf8-ba491430a5d0",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleMainMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2637e3c-cb47-4cbb-b0f1-b1861b10b3fb",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShowElementalWheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "65b08f2f-1736-4290-85f1-841bd8879ea1",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LootScrollForward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f894f43f-2322-4de1-884e-ec564933ab15",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0bd4ed1c-6f1c-43a7-af1c-f140491493ce",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LootScrollBack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

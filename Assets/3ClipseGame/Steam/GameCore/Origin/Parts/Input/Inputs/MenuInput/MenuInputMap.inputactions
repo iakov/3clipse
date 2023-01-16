@@ -1,0 +1,34 @@
+{
+    "name": "MenuInputActions",
+    "maps": [
+        {
+            "name": "MenuActions",
+            "id": "824c7fbe-c376-4fee-802c-2a7f67568dd0",
+            "actions": [
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "9e4e0332-7eac-4102-bc76-2417c93b8f65",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7d95e648-b35f-4853-888f-8191a8619642",
+                    "path": "*/{Cancel}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -1,0 +1,19 @@
+{
+    "name": "game-origin",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d7ced1483da3c473293337f62202940a",
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:230134b660f2f405394842789ac9cbc1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,20 @@
+{
+    "name": "loot-system",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d7ced1483da3c473293337f62202940a",
+        "GUID:11cfd462ea2e3449da604d8747d332f1",
+        "GUID:230134b660f2f405394842789ac9cbc1",
+        "GUID:d04284f8a56291c4aa378daf5cf52aab",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
