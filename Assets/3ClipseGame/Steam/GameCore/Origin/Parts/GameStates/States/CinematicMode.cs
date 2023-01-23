@@ -1,4 +1,3 @@
-using _3ClipseGame.Steam.GameCore.Origin.Parts.Input;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
@@ -11,8 +10,6 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
             UIManager.SwitchHUD(false);
             UIManager.SwitchDialogue(true);
             
-            // GameSource.Instance.GetInputManager().DisableAll();
-            // PointerManager.SwitchPointerMode(CursorMode);
             PointerManager.SwitchPointerMode(CursorLockMode.None);
             StartCoroutine(TrackBlendCompletion(EndEnter));
         }
