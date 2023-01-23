@@ -13,10 +13,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
         
         private string _characterName;
 
-        private void Awake()
-        {
-            _characterName = _narrationCharacter.CharacterName;
-        }
+        private void Awake() => _characterName = _narrationCharacter.CharacterName;
 
         public override event Action<Interactable> Disappeared;
 

@@ -29,7 +29,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
 
         private void OnClick()
         {
-            _dialogueNodeChannel.RaiseGetDialogueChoice(_transitionChoice);
+            _dialogueNodeChannel.RaiseReceiveDialogueChoice(_transitionChoice);
             if (_choiceNextNode != null)
                 _dialogueNodeChannel.RaiseRequestDialogueNode(_choiceNextNode);
             else

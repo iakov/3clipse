@@ -15,9 +15,9 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
         public DialogueNodeCallback OnDialogueNodeRequested;
         public DialogueNodeCallback OnDialogueNodeStarted;
         public DialogueNodeCallback OnDialogueNodeEnd;
-        public DialogueNodeCallback OnDialogueNodeDraw;
+        public DialogueNodeCallback OnDialogueNodeDisplayed;
 
-        public DialogueChoiceCallback OnDialogueChoiceGot;
+        public DialogueChoiceCallback OnDialogueChoiceReceived;
 
         public DialogueCallback OnDialogueEnd;
 
@@ -27,9 +27,9 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
         
         public void RaiseEndDialogueNode(DialogueNode.DialogueNode node) => OnDialogueNodeEnd?.Invoke(node);
 
-        public void RaiseDrawDialogueNode(DialogueNode.DialogueNode node) => OnDialogueNodeDraw?.Invoke(node);
+        public void RaiseDisplayDialogueNode(DialogueNode.DialogueNode node) => OnDialogueNodeDisplayed?.Invoke(node);
 
-        public void RaiseGetDialogueChoice(Choice choice) => OnDialogueChoiceGot?.Invoke(choice);
+        public void RaiseReceiveDialogueChoice(Choice choice) => OnDialogueChoiceReceived?.Invoke(choice);
 
         public void RaiseEndDialogue(Dialogue dialogue) => OnDialogueEnd?.Invoke(dialogue);
     }

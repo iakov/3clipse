@@ -20,17 +20,15 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
         {
             _dialogueNodeChannel.OnDialogueNodeStarted += OnDialogueNodeStarted;
             _dialogueNodeChannel.OnDialogueNodeEnd += OnDialogueNodeEnd;
-            _dialogueNodeChannel.OnDialogueNodeDraw += VisitedByChoiceNode;
+            _dialogueNodeChannel.OnDialogueNodeDisplayed += VisitedByChoiceNode;
             _dialogueNodeChannel.OnDialogueEnd += OnDialogueEnd;
-
-            _choicesBoxTransform.gameObject.SetActive(false);
         }
 
         private void OnDestroy()
         {
             _dialogueNodeChannel.OnDialogueNodeStarted -= OnDialogueNodeStarted;
             _dialogueNodeChannel.OnDialogueNodeEnd -= OnDialogueNodeEnd;
-            _dialogueNodeChannel.OnDialogueNodeDraw -= VisitedByChoiceNode;
+            _dialogueNodeChannel.OnDialogueNodeDisplayed -= VisitedByChoiceNode;
             _dialogueNodeChannel.OnDialogueEnd -= OnDialogueEnd;
         }
 
@@ -42,13 +40,8 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
 
         private void OnDialogueNodeEnd(DialogueNode node)
         {
-            _speakerName.text = "";
-            _dialogueText.text = "";
-
             foreach (Transform child in _choicesBoxTransform)
-            {
                 Destroy(child.gameObject);
-            }
 
             _choicesBoxTransform.gameObject.SetActive(false);
         }

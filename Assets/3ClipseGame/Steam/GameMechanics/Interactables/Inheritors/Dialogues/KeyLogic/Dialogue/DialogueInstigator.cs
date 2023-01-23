@@ -12,46 +12,38 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
         private void Awake()
         {
             _dialogueNodeChannel.OnDialogueNodeRequested += TryStartDialogueNode;
-            // _dialogueNodeChannel.OnDialogueNodeEnd += TryEndDialogueNode;
-            _dialogueNodeChannel.OnDialogueChoiceGot += SetChoice;
+            _dialogueNodeChannel.OnDialogueChoiceReceived += SetChoice;
             _dialogueNodeChannel.OnDialogueEnd += TryEndCurrentDialogue;
         }
 
         private void OnDestroy()
         {
             _dialogueNodeChannel.OnDialogueNodeRequested -= TryStartDialogueNode;
-            // _dialogueNodeChannel.OnDialogueNodeEnd -= TryEndDialogueNode;
-            _dialogueNodeChannel.OnDialogueChoiceGot -= SetChoice;
+            _dialogueNodeChannel.OnDialogueChoiceReceived -= SetChoice;
             _dialogueNodeChannel.OnDialogueEnd -= TryEndCurrentDialogue;
         }
 
         public void TryStartDialogue(Dialogue dialogue)
         {
-            if (_currentDialogue == null || _currentDialogue.CurrentDialogueNode == null)
-            {
-                _currentDialogue = dialogue;
-                var firstNode = _currentDialogue.StartDialogue();
-                TryStartDialogueNode(firstNode);
-            }
-            else
-            {
-                throw new DialogueException("Can't start dialogue when another one is running!");
-            }
+            var isCanStartDialogue = CanStartDialogue(_currentDialogue);
+            if (isCanStartDialogue == false) throw new DialogueException("Can't start dialogue when another one is running!");
+            
+            _currentDialogue = dialogue;
+            var firstNode = _currentDialogue.StartDialogue();
+            TryStartDialogueNode(firstNode);
         }
 
         private void TryEndDialogue(Dialogue dialogue)
         {
-            if (_currentDialogue == dialogue)
-            {
-                dialogue.EndDialogue();
-                _dialogueNodeChannel.RaiseEndDialogueNode(dialogue.CurrentDialogueNode);
-                TryEndDialogueNode(dialogue.CurrentDialogueNode);
-                _currentDialogue = null;
-            }
-            else
-            {
-                throw new DialogueException("Trying to stop a dialogue that isn't running!");
-            }
+            var isCurrentDialogueEqualsDialogue = _currentDialogue == dialogue;
+            if (isCurrentDialogueEqualsDialogue == false) throw new DialogueException("Trying to stop a dialogue that isn't running!");
+            
+            dialogue.EndDialogue();
+                
+            _dialogueNodeChannel.RaiseEndDialogueNode(dialogue.CurrentDialogueNode);
+            TryEndDialogueNode(dialogue.CurrentDialogueNode);
+                
+            _currentDialogue = null;
         }
 
         private void TryStartDialogueNode(DialogueNode.DialogueNode node)
@@ -59,14 +51,15 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
             _dialogueNodeChannel.RaiseEndDialogueNode(_currentDialogue.CurrentDialogueNode);
             _currentDialogue.StartDialogueNode(node);
 
-            if (_currentDialogue.CurrentDialogueNode == null)
+            var isDialogueNodeFinal = _currentDialogue.CurrentDialogueNode == null;
+            if (isDialogueNodeFinal)
             {
                 TryEndDialogue(_currentDialogue);
             }
             else
             {
-                if (_currentDialogue.CurrentDialogueNode.GetType() == typeof(ChoiceDialogueNode)) 
-                    _dialogueNodeChannel.RaiseDrawDialogueNode(_currentDialogue.CurrentDialogueNode);
+                if (_currentDialogue.CurrentDialogueNode is ChoiceDialogueNode)
+                    _dialogueNodeChannel.RaiseDisplayDialogueNode(_currentDialogue.CurrentDialogueNode);
                 _dialogueNodeChannel.RaiseStartDialogueNode(_currentDialogue.CurrentDialogueNode);
             }
         }
@@ -76,5 +69,12 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.Dialogues.Ke
         private void SetChoice(Choice choice) => _currentDialogue.Choice = choice;
 
         private void TryEndCurrentDialogue(Dialogue dialogue) => TryEndDialogue(_currentDialogue);
+
+        private bool CanStartDialogue(Dialogue dialogue)
+        {
+            if (dialogue == null || dialogue.CurrentDialogueNode == null)
+                return true;
+            return false;
+        }
     }
 }
