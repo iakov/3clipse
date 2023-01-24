@@ -1,4 +1,3 @@
-using _3ClipseGame.Steam.GameCore.Origin.Parts.Input;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
@@ -7,12 +6,8 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
     {
         public override void StartEnter()
         {
-            UIManager.SwitchMenu(false);
-            UIManager.SwitchHUD(false);
-            UIManager.SwitchDialogue(true);
+            UIManager.HideEverything();
             
-            // GameSource.Instance.GetInputManager().DisableAll();
-            // PointerManager.SwitchPointerMode(CursorMode);
             PointerManager.SwitchPointerMode(CursorLockMode.None);
             StartCoroutine(TrackBlendCompletion(EndEnter));
         }

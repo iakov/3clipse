@@ -1,15 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameCore.Origin.Parts.UserInterface
 {
     public class UIManager : MonoBehaviour
     {
-        [SerializeField] private GameObject menuVisualObject;
-        [SerializeField] private GameObject hudVisualObject;
-        [SerializeField] private GameObject dialoguesVisualObject;
+        private List<GameObject> _currentPanels = new();
 
-        public void SwitchHUD(bool isActive) => hudVisualObject.SetActive(isActive);
-        public void SwitchMenu(bool isActive) => menuVisualObject.SetActive(isActive);
-        public void SwitchDialogue(bool isActive) => dialoguesVisualObject.SetActive(isActive);
+        public void DrawNewPanel(GameObject panel, DrawMode drawMode)
+        {
+            if (drawMode == DrawMode.Mono) HideEverything();
+            
+            panel.SetActive(true);
+            _currentPanels.Add(panel);
+        }
+
+        public void HideEverything()
+        {
+            foreach (var displayedPanel in _currentPanels) 
+                HidePanel(displayedPanel);
+        }
+
+        public void HidePanel(GameObject panel)
+        {
+            panel.SetActive(false);
+            _currentPanels.Remove(panel);
+        }
     }
 }

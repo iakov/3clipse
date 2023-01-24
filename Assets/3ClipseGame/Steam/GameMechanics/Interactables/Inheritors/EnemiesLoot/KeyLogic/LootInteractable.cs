@@ -7,7 +7,7 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.EnemiesLoot.
 {
     public class LootInteractable : Interactable
     {
-        [SerializeField] private GameObject _lootPresenter;
+        [SerializeField] private LootPresenter _lootPresenter;
         
         public override event Action<Interactable> Disappeared;
         
@@ -21,11 +21,10 @@ namespace _3ClipseGame.Steam.GameMechanics.Interactables.Inheritors.EnemiesLoot.
         }
         
         public override InteractablePresenter GetNewPresenter()
-        { 
-            var newPresenter = _lootPresenter.GetComponent<LootPresenter>();
-            newPresenter.SetResource(_resource);
-            newPresenter.SetAmount(_amount);
-            return newPresenter;
+        {
+            _lootPresenter.SetResource(_resource);
+            _lootPresenter.SetAmount(_amount);
+            return _lootPresenter;
         }
 
         public override void Activate()

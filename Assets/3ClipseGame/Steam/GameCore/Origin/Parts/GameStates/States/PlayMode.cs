@@ -1,10 +1,13 @@
 using _3ClipseGame.Steam.GameCore.Origin.Parts.Input;
+using _3ClipseGame.Steam.GameCore.Origin.Parts.UserInterface;
 using UnityEngine;
 
 namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
 {
     public class PlayMode : GameMode
     {
+        [SerializeField] private GameObject _hudObject;
+        
         public override void StartEnter()
         {
             GameSource.Instance.GetPlayer().GetCurrentPlayerEntity().TakeControl();
@@ -15,8 +18,7 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
         private void EndEnter()
         {
             EndEnterInput();
-            UIManager.SwitchHUD(true);
-            UIManager.SwitchDialogue(false);
+            UIManager.DrawNewPanel(_hudObject, DrawMode.Mono);
             GameSource.Instance.GetInputManager().Enable(InputType.Movement);
             Time.timeScale = TimeScale;
         }
@@ -30,7 +32,7 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
 
         public override void Exit()
         {
-            UIManager.SwitchHUD(false);
+            UIManager.HidePanel(_hudObject);
             ExitInput();
         }
 
@@ -39,7 +41,6 @@ namespace _3ClipseGame.Steam.GameCore.Origin.Parts.GameStates.States
             var inputAccessor = GameSource.Instance.GetInputManager();
             GameSource.Instance.GetPlayer().GetCurrentPlayerEntity().LoseControl();
             inputAccessor.Disable(InputType.Movement);
-            // inputAccessor.Disable(InputType.HUD);
             inputAccessor.Disable(InputType.Camera);
         }
     }
