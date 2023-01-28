@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace _3ClipseGame.Steam.Scenes.GameScenes.StartScreenScene.Scripts.Buttons
+namespace Packages.LeanTween.Presets
 {
     public class HighlightOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {

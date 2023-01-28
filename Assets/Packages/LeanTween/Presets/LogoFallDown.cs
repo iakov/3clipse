@@ -2,7 +2,7 @@ using System.Collections;
 using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace _3ClipseGame.Steam.Scenes.GameScenes.StartScreen.Scripts.Tweening
+namespace Packages.LeanTween.Presets
 {
     public class LogoFallDown : MonoBehaviour
     {
